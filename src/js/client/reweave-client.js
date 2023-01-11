@@ -33,9 +33,42 @@ window.HTMLWidgets.dataframeToD3 = function (df) {
 
 const maxwell = {};
 
+maxwell.instances = {};
+
+maxwell.set = function (root, segs, newValue) {
+    for (let i = 0; i < segs.length - 1; ++i) {
+        if (!root[segs[i]]) {
+            root[segs[i]] = {};
+        }
+        root = root[segs[i]];
+    }
+    root[segs[segs.length - 1]] = newValue;
+};
+
+// Lightly adapted from https://stackoverflow.com/a/59563339
+maxwell.EventEmitter = class {
+    constructor() {
+        this.callbacks = {};
+    }
+
+    on(event, cb) {
+        if (!this.callbacks[event]) {
+            this.callbacks[event] = [];
+        }
+        this.callbacks[event].push(cb);
+    }
+
+    emit(event, data) {
+        let cbs = this.callbacks[event];
+        if (cbs) {
+            cbs.forEach(cb => cb(data));
+        }
+    }
+};
+
 maxwell.findLeafletWidgets = function () {
     const widgets = [...document.querySelectorAll(".html-widget.leaflet")];
-    console.log("Found " + widgets.length + " widgets");
+    console.log("Found " + widgets.length + " leaflet widgets");
     return widgets.map(function (widget) {
         const id = widget.id;
         const dataNode = document.querySelector("[data-for=\"" + id + "\"");
@@ -51,6 +84,28 @@ maxwell.findLeafletWidgets = function () {
             heading: heading
         };
     });
+};
+
+maxwell.findPlotlyWidgets = function () {
+    const widgets = [...document.querySelectorAll(".html-widget.plotly")];
+    console.log("Found " + widgets.length + " plotly widgets");
+    const slider = widgets[0];
+    slider.on("plotly_sliderchange", function (e) {
+        console.log("Slider change ", e);
+    });
+};
+
+maxwell.findDataPanes = function (widgets) {
+    const dataPanes = document.querySelectorAll(".mxcw-widgetPane");
+    if (dataPanes.length > 0) {
+        if (dataPanes.length !== widgets.length) {
+            throw "Error during reweaving - emitted " + dataPanes.length + " data panes for " + widgets.length + " widgets";
+        } else {
+            return dataPanes;
+        }
+    } else {
+        return null;
+    }
 };
 
 maxwell.leafletiseCoords = function (coords) {
@@ -84,15 +139,25 @@ maxwell.divIcon = function (label, className) {
 };
 
 maxwell.addMarkers = function (lat, lon, icon, label, labelOptions, paneOptions, group) {
+    const pane = paneOptions.pane;
     // Note that labelOnlyMarkers are spat out in https://github.com/rstudio/leaflet/blob/main/R/layers.R#L826
     // We detect this through the special case of a width set to 1 and use a div icon which is much
     // easier to configure than the HTMLwidgets strategy of a permanently open tooltip attached to the marker
     if (!icon) {
         const markerIcon = new L.Icon.Default();
         markerIcon.options.shadowSize = [0, 0];
-        L.marker([lat, lon], Object.assign({}, {icon: markerIcon}, paneOptions)).addTo(group);
+        const marker = L.marker([lat, lon], Object.assign({}, {icon: markerIcon}, paneOptions)).addTo(group);
         const divIcon = maxwell.divIcon(label, labelOptions.className);
-        L.marker([lat, lon], Object.assign({}, {icon: divIcon}, paneOptions)).addTo(group);
+        const labelMarker = L.marker([lat, lon], Object.assign({}, {icon: divIcon}, paneOptions)).addTo(group);
+        maxwell.set(maxwell.instances, [pane, label], {marker, labelMarker});
+        const paneInstance = maxwell.globalOptions.paneMap[pane];
+        const clickHandler = function () {
+            paneInstance.emitter.emit("click", label);
+        };
+        if (paneInstance) {
+            marker.on("click", clickHandler);
+            labelMarker.on("click", clickHandler);
+        }
     } else {
         const Licon = icon.iconWidth === 1 ?
             maxwell.divIcon(label) :
@@ -169,52 +234,68 @@ maxwell.addDocumentListeners = function (instance) {
     });
 };
 
-maxwell.registerListeners = function (instance) {
-    instance.addEventListener("updateActiveGroup", function (event) {
-        instance.activeGroup = event.detail.activeGroup;
-    });
-    instance.addEventListener("updateActiveGroup", function (event) {
-        instance.panes.forEach(function (pane, i) {
-            if (i === event.detail.activeGroup) {
-                pane.classList.add("mxcw-activeMapPane");
-            } else {
-                pane.classList.remove("mxcw-activeMapPane");
-            }
-        });
-        instance.widgets.forEach(function (widget, i) {
-            if (i === event.detail.activeGroup) {
-                widget.section.classList.add("mxcw-activeSection");
-            } else {
-                widget.section.classList.remove("mxcw-activeSection");
-            }
-        });
+maxwell.toggleActiveClass = function (nodes, selectedIndex, clazz) {
+    nodes.forEach(function (node, i) {
+        if (i === selectedIndex) {
+            node.classList.add(clazz);
+        } else {
+            node.classList.remove(clazz);
+        }
     });
 };
 
+maxwell.registerListeners = function (instance) {
+    instance.emitter.on("updateActiveGroup", function (event) {
+        instance.activeGroup = event.activeGroup;
+    });
+    instance.emitter.on("updateActiveGroup", function (event) {
+        maxwell.toggleActiveClass(instance.panes, event.activeGroup, "mxcw-activeMapPane");
+        const sections = instance.widgets.map(widget => widget.section);
+        maxwell.toggleActiveClass(sections, event.activeGroup, "mxcw-activeSection");
+    });
+    if (instance.dataPanes) {
+        instance.emitter.on("updateActiveGroup", function (event) {
+            maxwell.toggleActiveClass(instance.dataPanes, event.activeGroup, "mxcw-activeWidgetPane");
+        });
+    }
+};
+
 // Pattern explained at https://medium.com/@zandaqo/eventtarget-the-future-of-javascript-event-systems-205ae32f5e6b
-class maxwell_Leaflet extends EventTarget {
+class maxwell_Leaflet {
     constructor(options) {
-        super();
+        this.emitter = new maxwell.EventEmitter();
         Object.assign(this, options);
         maxwell.registerListeners(this);
     }
     updateActiveGroup(activeGroup) {
         if (activeGroup !== this.activeGroup) {
-            this.dispatchEvent(new CustomEvent("updateActiveGroup", {
-                detail: { activeGroup: activeGroup }
-            }));
+            this.emitter.emit("updateActiveGroup", { activeGroup } );
         }
     }
 }
 
-maxwell.instantiateLeaflet = function (selector) {
+maxwell.applyView = function (map, xData) {
+    const bounds = xData.fitBounds;
+    const setView = xData.setView;
+    if (bounds) {
+        map.fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]]);
+    } else if (setView) {
+        map.setView(setView[0], setView[1]);
+    } else {
+        console.error("Unable to find map view information in widget data ", xData);
+    }
+};
+
+maxwell.instantiateLeaflet = function (selector, options) {
+    options = options || {};
+    options.paneMap = options.paneMap || {};
+    maxwell.globalOptions = options;
     const widgets = maxwell.findLeafletWidgets();
     const node = document.querySelector(selector);
     const map = L.map(node);
 
     const data0 = widgets[0].data.x;
-    const bounds = data0.fitBounds;
-    map.fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]]);
+    maxwell.applyView(map, data0);
 
     const tiles = maxwell.findCall(data0.calls, "addTiles");
     L.tileLayer(tiles.args[0], tiles.args[3]).addTo(map);
@@ -225,12 +306,17 @@ maxwell.instantiateLeaflet = function (selector) {
         map: map,
         widgets: widgets,
         panes: panes,
+        dataPanes: maxwell.findDataPanes(widgets),
         activeGroup: null
     });
     maxwell.leafletInstance = instance;
     instance.updateActiveGroup(0);
 
     maxwell.addDocumentListeners(instance);
+
+    HTMLWidgets.addPostRenderHandler(function () {
+        maxwell.findPlotlyWidgets();
+    });
 
     return instance;
 };

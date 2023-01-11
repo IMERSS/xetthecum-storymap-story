@@ -25,12 +25,12 @@ h2 {
 }
 
 .mxcw-map {
-    height: 70%;
+    height: 65%;
 }
 
 .mxcw-data {
-    font-size: 60px;
-    padding: 2rem;
+    height: 35%
+
 }
 
 .mxcw-content {
@@ -54,6 +54,15 @@ h2 {
 
 .mxcw-mapPane.mxcw-activeMapPane {
     opacity: 1;
+}
+
+.mxcw-widgetPane {
+    display: none;
+    padding: 2em;
+}
+
+.mxcw-widgetPane.mxcw-activeWidgetPane {
+    display: block;
 }
 
 .mxcw-content .section {
