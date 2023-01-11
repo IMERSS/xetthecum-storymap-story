@@ -6,9 +6,9 @@ based on [R Markdown](https://rmarkdown.rstudio.com/).
 
 You can browse the published output of this project in these documents:
 
-* [Raw Storymapping Output](https://imerss.github.io/howe-sound-mapping/docs/R-Markdown-AHSBR_Map_1.html)
+* [Raw Storymapping Output](https://imerss.github.io/howe-sound-mapping/R-Markdown-AHSBR_Map_1.html)
 * [Storymapping Reknitted into Scrollytelling 
-Interface](https://imerss.github.io/howe-sound-mapping/docs/R-Markdown-AHSBR_Map_1-Rewoven.html)
+Interface](https://imerss.github.io/howe-sound-mapping/R-Markdown-AHSBR_Map_1-Rewoven.html)
 
 This was built using R and R Markdown, using free tools such as git, R and R studio, and publish and host it for free using
 [GitHub Pages](https://pages.github.com/).
