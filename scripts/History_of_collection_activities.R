@@ -291,8 +291,22 @@ heatMap <- leaflet() %>%
   addTiles(options = providerTileOptions(opacity = 0.5)) %>%
   addRasterImage(hillshade, opacity = 0.8) %>%
   addPolygons(data = coastline, color = "black", weight = 1.5, fillOpacity = 0, fillColor = NA) %>%
-  addPolygons(data = history.1900, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_layerId = "1900")) %>% 
-  # addPolygons(data = gridded.history, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0) %>% 
+  # This indices need to agree with positions in array "year"
+  addPolygons(data = history.1900, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 0)) %>%
+  addPolygons(data = history.1910, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 1)) %>%
+  addPolygons(data = history.1920, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 2)) %>%
+  addPolygons(data = history.1930, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 3)) %>%
+  addPolygons(data = history.1940, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 4)) %>%
+  addPolygons(data = history.1950, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 5)) %>%
+  addPolygons(data = history.1960, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 6)) %>%
+  addPolygons(data = history.1970, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 7)) %>%
+  addPolygons(data = history.1980, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 8)) %>%
+  addPolygons(data = history.1990, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 9)) %>%
+  addPolygons(data = history.2000, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 10)) %>%
+  addPolygons(data = history.2010, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 11)) %>%
+  addPolygons(data = history.2020, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 12)) %>%
+# Note that we repeat 2020's data for 2022 since the grid analysis didn't conclude
+  addPolygons(data = history.2020, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 13)) %>%
   addLegend(position = 'topright',
             colors = viridis_pal(option = "D")(t),
             labels = values) %>%

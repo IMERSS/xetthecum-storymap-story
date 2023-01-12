@@ -56,6 +56,10 @@ h2 {
     opacity: 1;
 }
 
+.mxcw-mapSubPane.mxcw-mapPane {
+    transition-duration: 0ms;
+}
+
 .mxcw-widgetPane {
     display: none;
     padding: 2em;

@@ -80,19 +80,28 @@ maxwell.findLeafletWidgets = function () {
         return {
             node: widget,
             data: data,
+            subPanes: [],
             section: section,
             heading: heading
         };
     });
 };
 
-maxwell.findPlotlyWidgets = function () {
+maxwell.findPlotlyWidgets = function (instance) {
     const widgets = [...document.querySelectorAll(".html-widget.plotly")];
+    const panes = [...document.querySelectorAll(".mxcw-widgetPane")];
     console.log("Found " + widgets.length + " plotly widgets");
+    // TODO: Assume just one widget for now, the slider
     const slider = widgets[0];
+    const pane = slider.closest(".mxcw-widgetPane");
+    const index = panes.indexOf(pane);
+    console.log("Plotly widget's pane index is " + index);
+
     slider.on("plotly_sliderchange", function (e) {
         console.log("Slider change ", e);
+        instance.emitter.emit("updateSubPaneIndex", {paneIndex: index, subPaneIndex: e.slider.active});
     });
+    instance.emitter.emit("updateSubPaneIndex", {paneIndex: index, subPaneIndex: 0});
 };
 
 maxwell.findDataPanes = function (widgets) {
@@ -123,11 +132,6 @@ maxwell.resolveVectorOptions = function (options, index) {
 // Another demultiplexing for dataframe args
 maxwell.projectArgs = function (args, index) {
     return args.map(arg => Array.isArray(arg) ? arg[index] : arg);
-};
-
-maxwell.leafletPolyMethods = {
-    addPolygons: "polygon",
-    addPolylines: "polyline"
 };
 
 maxwell.divIcon = function (label, className) {
@@ -170,23 +174,53 @@ maxwell.addMarkers = function (lat, lon, icon, label, labelOptions, paneOptions,
     // from https://github.com/rstudio/leaflet/blob/main/javascript/src/methods.js#L189
 };
 
-maxwell.widgetToPane = function (map, calls, index) {
-    const paneName = "maxwell-pane-" + index;
+maxwell.allocatePane = function (map, index, subLayerIndex) {
+    let paneName = "maxwell-pane-" + index;
+    if (subLayerIndex !== undefined) {
+        paneName += "-subpane-" + subLayerIndex;
+    }
     const pane = map.createPane(paneName);
     pane.classList.add("mxcw-mapPane");
+    if (subLayerIndex !== undefined) {
+        pane.classList.add("mxcw-mapSubPane");
+    }
     const paneOptions = {
         pane: paneName
     };
     const group = L.layerGroup(paneOptions).addTo(map);
+    return {paneName, pane, paneOptions, group};
+};
+
+// Allocate a polygonal leaflet call into a pane or subpane
+maxwell.assignToPane = function (callArgs, polyMethod, paneInfo) {
+    const shapes = callArgs[0],
+        options = Object.assign({}, callArgs[3], paneInfo.paneOptions);
+    shapes.forEach((shape, index) =>
+        L[polyMethod](maxwell.leafletiseCoords(shape),
+            maxwell.resolveVectorOptions(options, index)).addTo(paneInfo.group));
+};
+
+maxwell.leafletPolyMethods = {
+    addPolygons: "polygon",
+    addPolylines: "polyline"
+};
+
+maxwell.leafletWidgetToPane = function (map, widget, index) {
+    const calls = widget.data.x.calls;
+    const paneInfo = maxwell.allocatePane(map, index);
+    const {paneOptions, group} = paneInfo;
     calls.forEach(function (call) {
         // See https://github.com/rstudio/leaflet/blob/main/javascript/src/methods.js#L550
         const polyMethod = maxwell.leafletPolyMethods[call.method];
         if (polyMethod) {
-            const shapes = call.args[0],
-                options = Object.assign({}, call.args[3], paneOptions);
-            shapes.forEach((shape, index) =>
-                L[polyMethod](maxwell.leafletiseCoords(shape),
-                    maxwell.resolveVectorOptions(options, index)).addTo(group));
+            const subLayerIndex = call.args[3].mx_subLayerIndex;
+            if (subLayerIndex !== undefined) {
+                const subPaneInfo = maxwell.allocatePane(map, index, subLayerIndex);
+                maxwell.assignToPane(call.args, polyMethod, subPaneInfo);
+                widget.subPanes[subLayerIndex] = subPaneInfo;
+            } else {
+                maxwell.assignToPane(call.args, polyMethod, paneInfo);
+            }
         } else if (call.method === "addRasterImage") {
         // args: url, bounds, opacity
             const opacity = call.args[2] ?? 1.0;
@@ -209,7 +243,7 @@ maxwell.widgetToPane = function (map, calls, index) {
             console.log("Unknown R leaflet method " + call.method + " discarded");
         }
     });
-    return pane;
+    widget.pane = paneInfo.pane;
 };
 
 // Search through an HTMLWidgets "calls" structure for a method with particular name
@@ -218,7 +252,7 @@ maxwell.findCall = function (calls, method) {
 };
 
 maxwell.addDocumentListeners = function (instance) {
-    const widgets = instance.widgets;
+    const widgets = instance.leafletWidgets;
     widgets.forEach(function (widget, i) {
         widget.heading.addEventListener("click", () => instance.updateActiveGroup(i));
     });
@@ -244,23 +278,42 @@ maxwell.toggleActiveClass = function (nodes, selectedIndex, clazz) {
     });
 };
 
+maxwell.setSubPaneVisibility = function (instance, event) {
+    const subPanes = instance.leafletWidgets[event.paneIndex].subPanes.map(paneInfo => paneInfo.pane);
+    console.log("updateSlider subPanes ", subPanes);
+    maxwell.toggleActiveClass(subPanes, event.subPaneIndex, "mxcw-activeMapPane");
+};
+
 maxwell.registerListeners = function (instance) {
+    const widgets = instance.leafletWidgets;
     instance.emitter.on("updateActiveGroup", function (event) {
         instance.activeGroup = event.activeGroup;
     });
+    instance.emitter.on("updateSubPaneIndex", function (event) {
+        instance.subPaneIndices[event.paneIndex] = event.subPaneIndex;
+    });
     instance.emitter.on("updateActiveGroup", function (event) {
-        maxwell.toggleActiveClass(instance.panes, event.activeGroup, "mxcw-activeMapPane");
-        const sections = instance.widgets.map(widget => widget.section);
-        maxwell.toggleActiveClass(sections, event.activeGroup, "mxcw-activeSection");
+        maxwell.toggleActiveClass(widgets.map(widget => widget.pane), event.activeGroup, "mxcw-activeMapPane");
+        maxwell.toggleActiveClass(widgets.map(widget => widget.section), event.activeGroup, "mxcw-activeSection");
     });
     if (instance.dataPanes) {
         instance.emitter.on("updateActiveGroup", function (event) {
-            maxwell.toggleActiveClass(instance.dataPanes, event.activeGroup, "mxcw-activeWidgetPane");
+            const paneIndex = event.activeGroup;
+            maxwell.toggleActiveClass(instance.dataPanes, paneIndex, "mxcw-activeWidgetPane");
+            // Trigger update of panes which are brought into visibility - hide all others too - naturally this would all be much nicer with a functional pattern
+            const allPanes = Object.keys(instance.subPaneIndices);
+            allPanes.forEach(paneIndex => maxwell.setSubPaneVisibility(instance, {paneIndex: paneIndex, subPaneIndex: -1}));
+            // Re-expose what was previously visible
+            instance.emitter.emit("updateSubPaneIndex", {paneIndex: paneIndex, subPaneIndex: instance.subPaneIndices[paneIndex]});
+        });
+        instance.emitter.on("updateSubPaneIndex", function (event) {
+            if (event.paneIndex === instance.activeGroup) {
+                maxwell.setSubPaneVisibility(instance, event);
+            }
         });
     }
 };
 
-// Pattern explained at https://medium.com/@zandaqo/eventtarget-the-future-of-javascript-event-systems-205ae32f5e6b
 class maxwell_Leaflet {
     constructor(options) {
         this.emitter = new maxwell.EventEmitter();
@@ -290,24 +343,25 @@ maxwell.instantiateLeaflet = function (selector, options) {
     options = options || {};
     options.paneMap = options.paneMap || {};
     maxwell.globalOptions = options;
-    const widgets = maxwell.findLeafletWidgets();
+    const leafletWidgets = maxwell.findLeafletWidgets();
     const node = document.querySelector(selector);
     const map = L.map(node);
 
-    const data0 = widgets[0].data.x;
+    const data0 = leafletWidgets[0].data.x;
     maxwell.applyView(map, data0);
 
     const tiles = maxwell.findCall(data0.calls, "addTiles");
     L.tileLayer(tiles.args[0], tiles.args[3]).addTo(map);
 
-    const panes = widgets.map((widget, i) => maxwell.widgetToPane(map, widget.data.x.calls, i));
+    leafletWidgets.forEach((widget, i) => maxwell.leafletWidgetToPane(map, widget, i));
+
     const instance = new maxwell_Leaflet({
         container: node,
         map: map,
-        widgets: widgets,
-        panes: panes,
-        dataPanes: maxwell.findDataPanes(widgets),
-        activeGroup: null
+        leafletWidgets: leafletWidgets, // Array of {node, data, section, heading} for each section holding a Leaflet widget
+        dataPanes: maxwell.findDataPanes(leafletWidgets),
+        activeGroup: null,
+        subPaneIndices: {}
     });
     maxwell.leafletInstance = instance;
     instance.updateActiveGroup(0);
@@ -315,7 +369,7 @@ maxwell.instantiateLeaflet = function (selector, options) {
     maxwell.addDocumentListeners(instance);
 
     HTMLWidgets.addPostRenderHandler(function () {
-        maxwell.findPlotlyWidgets();
+        maxwell.findPlotlyWidgets(instance);
     });
 
     return instance;

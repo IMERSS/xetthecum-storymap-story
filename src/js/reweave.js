@@ -65,6 +65,7 @@ const movePlotlyWidgets = function (template, sections, container) {
         const index = sections.indexOf(closest);
         console.log("Found section at index " + index);
         if (index !== -1) {
+            other.setAttribute("data-section-index", "" + index);
             divs[index].appendChild(other);
         } else {
             console.log("Ignoring widget at index " + i + " since it has no sibling map");
