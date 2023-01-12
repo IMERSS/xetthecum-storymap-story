@@ -37,7 +37,7 @@ Explore the region's flora by selecting from the biogeoclimatic units displayed 
 While Indigenous knowledge of Átl’ka7tsem's plant life traces back to time immemorial, Western scientific documentation of the region's flora dates to 1897, with the early collection efforts of James Anderson and Albert J. Hill. Over the last century and a half, the activities of botanists increased in the 1920s, and from the 1960s through the 1980s, before massively expanding in the 21st century with the advent of iNaturalist, with many thousands of observations made by community members through the <a href = "https://www.squamishenvironment.ca/projects/biodiversity-squamish/">Howe Sound Biodiversity project</a>.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-source("scripts/History_of_collection_activities.R")
+source("scripts/History_of_collection_activities.R", encoding="UTF-8")
 heatMap
 speciesPlot
 # animate(
