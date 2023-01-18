@@ -92,16 +92,18 @@ maxwell.findPlotlyWidgets = function (instance) {
     const panes = [...document.querySelectorAll(".mxcw-widgetPane")];
     console.log("Found " + widgets.length + " plotly widgets");
     // TODO: Assume just one widget for now, the slider
-    const slider = widgets[0];
-    const pane = slider.closest(".mxcw-widgetPane");
-    const index = panes.indexOf(pane);
-    console.log("Plotly widget's pane index is " + index);
+    if (widgets.length > 0) {
+        const slider = widgets[0];
+        const pane = slider.closest(".mxcw-widgetPane");
+        const index = panes.indexOf(pane);
+        console.log("Plotly widget's pane index is " + index);
 
-    slider.on("plotly_sliderchange", function (e) {
-        console.log("Slider change ", e);
-        instance.emitter.emit("updateSubPaneIndex", {paneIndex: index, subPaneIndex: e.slider.active});
-    });
-    instance.emitter.emit("updateSubPaneIndex", {paneIndex: index, subPaneIndex: 0});
+        slider.on("plotly_sliderchange", function (e) {
+            console.log("Slider change ", e);
+            instance.emitter.emit("updateSubPaneIndex", {paneIndex: index, subPaneIndex: e.slider.active});
+        });
+        instance.emitter.emit("updateSubPaneIndex", {paneIndex: index, subPaneIndex: 0});
+    }
 };
 
 maxwell.findDataPanes = function (widgets) {
