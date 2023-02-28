@@ -1,26 +1,26 @@
 {
-    "name": "r-scrollytelling-template",
-    "description": "Template repository for publishing R Markdown scrollytelling map-based stories to GitHub Pages",
+    "name": "howe-sound-mapping",
+    "description": "Story mapping for Howe Sound Biosphere Region",
     "version": "0.0.1",
     "author": "IMERSS, Transition Salt Spring",
     "scripts": {
         "lint": "fluid-lint-all",
-        "build": "node src/js/reweave.js"
+        "build": "node src/js/reknit.js"
     },
     "dependencies": {},
     "devDependencies": {
         "infusion": "4.6.0",
-        "minimist": "1.2.6",
-        "linkedom": "0.14.21",
-        "terser": "5.16.1",
+        "papaparse": "5.3.2",
+        "json5": "2.2.3",
+        "linkedom": "0.14.22",
         "fs-extra": "11.1.0",
-        "eslint": "8.30.0",
+        "eslint": "8.35.0",
         "eslint-config-fluid": "2.1.1",
-        "fluid-lint-all": "1.2.3"
+        "fluid-lint-all": "1.2.6"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/IMERSS/r-scrollytelling-template"
+        "url": "https://github.com/IMERSS/howe-sound-mapping"
     },
     "engines": {
         "node": ">=14.0.0"

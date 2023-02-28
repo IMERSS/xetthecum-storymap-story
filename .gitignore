@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+.Rproj.user
+
+.Rhistory
+
+.DS_Store
+
