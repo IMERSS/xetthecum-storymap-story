@@ -175,7 +175,6 @@ history <- data.frame(year,obs,spp,ind,cum.obs,cum.spp,cum.ind)
 # 
 # speciesPlot
 
-
 speciesPlot <- plot_ly(width = 700, height = 420)
 
 speciesPlot <- speciesPlot %>%
@@ -283,6 +282,7 @@ history.1990 <- filter(gridded.history, year == 1990)
 history.2000 <- filter(gridded.history, year == 2000)
 history.2010 <- filter(gridded.history, year == 2010)
 history.2020 <- filter(gridded.history, year == 2020)
+history.2022 <- filter(gridded.history, year == 2022)
 
 # Plot map
 
@@ -305,8 +305,7 @@ heatMap <- leaflet() %>%
   addPolygons(data = history.2000, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 10)) %>%
   addPolygons(data = history.2010, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 11)) %>%
   addPolygons(data = history.2020, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 12)) %>%
-# Note that we repeat 2020's data for 2022 since the grid analysis didn't conclude
-  addPolygons(data = history.2020, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 13)) %>%
+  addPolygons(data = history.2022, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 13)) %>%
   addLegend(position = 'topright',
             colors = viridis_pal(option = "D")(t),
             labels = values) %>%

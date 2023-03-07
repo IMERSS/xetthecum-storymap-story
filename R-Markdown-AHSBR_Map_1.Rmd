@@ -1,14 +1,14 @@
 ---
 title: Átl’ka7tsem/Howe Sound Biosphere Vegetation Analysis
 author: Andrew Simon, Antranig Basman & Murray Journeay
-date: January 9th, 2022
+date: March 6th, 2023
 output: html_document
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
 ---
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
- plants <- read.csv("tabular_data/vascular_plant_summary_resynthesized_2023-03-05.csv")
+ plants <- read.csv("tabular_data/Howe_Sound_vascular_plant_records_consolidated.csv")
 ```
 
 ## Introduction
