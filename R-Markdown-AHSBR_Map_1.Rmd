@@ -21,7 +21,7 @@ observed <- plant.summary %>% filter(iNatObservationStatus == 'observed')
 
 ## Howe Sound's vascular plant diversity
 
-Over one thousand vascular plant species are known to occur within the Átl’ka7tsem/Howe Sound Biosphere, represented by `r nrow(plants)` species occurrence records. This diverse flora spans ten biogeoclimatic units, from lowland coastal western hemlock forests and associated woodland communities to high elevation subalpine and alpine plant communities.
+Over one thousand vascular plant species are known to occur within the Átl’ka7tsem/Howe Sound Biosphere, represented by `r nrow(plants)` species occurrence records. This diverse flora spans nine biogeoclimatic units, from lowland coastal western hemlock forests and associated woodland communities to high elevation subalpine and alpine plant communities.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 source("scripts/Vascular_plant_map_script.R")
@@ -31,10 +31,9 @@ speciesMap
 
 Explore the region's flora by selecting from the biogeoclimatic units displayed on the map:
 
-* Alpine (CMA)
-* Engelmann spruce subalpine fir communities (ESSFmw)
-* Mountain hemlock communities (MHmm)
-* Coastal western hemlock communities (CWHxm,vm,ms,ds,dm)
+* Alpine Tundra zone (CMAunp)
+* Mountain Hemlock zone (MHmm1, MHmm2)
+* Coastal Western Hemlock zone (CWHdm, CWHds1, CWHms1, CWHvm1, CWHvm2, CWHxm1)
 
 ## History of collection activities within the region
 

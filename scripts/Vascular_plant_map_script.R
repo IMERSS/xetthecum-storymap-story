@@ -2,11 +2,12 @@
 
 # Load libraries
 
-library(sf)
-library(leaflet)
 library(dplyr)
+library(leaflet)
 library(raster)
 library(reshape2)
+library(scales)
+library(sf)
 library(viridis)
 
 # Source dependencies
@@ -69,13 +70,17 @@ BEC$SUBZONE <- NULL
 
 # Note: I do not think that the palette is mapping with the MAP_LABEL feature as intended!
 
-BEC.zones <- BEC$MAP_LABEL
-types <- BEC.zones %>% unique
-index <- c(9,1,6,5,7,2,8,4,3,11,10)
-# index <- c(3,11,6,7,5,10,4,8,9,1,2) # inverse palette
-types <- types[order(index)]
-t <- length(types)
-pal <- leaflet::colorFactor(viridis_pal(option = "D")(t), domain = types)
+BEC$MAP_LABEL <- as.factor(BEC$MAP_LABEL)
+
+unique(BEC$MAP_LABEL)
+
+palette = data.frame(
+            cat = c("CWHxm1","CWHdm","CWHvm2","CWHvm1","CWHds1","CWHms1","MHmm1","MHmm2","CMAunp"), 
+# Reverse   cat = c("CMAunp", "MHmm2", "MHmm1", "CWHms1","CWHds1","CWHvm1","CWHvm2","CWHdm","CWHxm1"),
+            col = c("#440154FF", "#472D7BFF","#3B528BFF","#2C728EFF","#21908CFF","#27AD81FF","#5DC863FF","#AADC32FF", "#FDE725FF")
+)
+
+BEC <- base::merge(BEC, palette, by.x ="MAP_LABEL", by.y="cat")
 
 # Load additional map layers
 
@@ -88,7 +93,6 @@ coastline <- mx_read("spatial_data/vectors/Islands_and_Mainland")
 # Layer 3: watershed boundary
 watershed.boundary <- mx_read("spatial_data/vectors/Howe_Sound")
 
-
 # Plot map
 
 speciesMap <- leaflet() %>%
@@ -96,11 +100,9 @@ speciesMap <- leaflet() %>%
   addTiles(options = providerTileOptions(opacity = 0.5)) %>%
   addRasterImage(hillshade, opacity = 0.8) %>%
   addPolygons(data = coastline, color = "black", weight = 1.5, fillOpacity = 0, fillColor = NA) %>%
-  addPolygons(data = BEC, fillColor = ~pal(MAP_LABEL), fillOpacity = 0.6, weight = 0) %>% 
-  addLegend(position = 'topright',
-            colors = viridis_pal(option = "D")(t),
-            labels = types) %>%
-  addPolygons(data = watershed.boundary, color = "black", weight = 4, fillOpacity = 0)
+  addPolygons(data = BEC, fillColor = BEC$col, fillOpacity = 0.6, weight = 0) %>% 
+  addPolygons(data = watershed.boundary, color = "black", weight = 4, fillOpacity = 0) %>%
+  #addLegend(position = 'topright', pal = ~col, groupvalues = BEC$MAP_LABEL)
 
 #Note that this statement is only effective in standalone R
 print(speciesMap)
