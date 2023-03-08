@@ -21,7 +21,7 @@ observed <- plant.summary %>% filter(iNatObservationStatus == 'observed')
 
 ## Howe Sound's vascular plant diversity
 
-Over one thousand vascular plant species are known to occur within the Átl’ka7tsem/Howe Sound Biosphere, represented by `r nrow(plants)` species occurrence records. This diverse flora spans nine biogeoclimatic units, from lowland coastal western hemlock forests and associated woodland communities to high elevation subalpine and alpine plant communities.
+Over one thousand vascular plant species are known to occur within the Átl’ka7tsem/Howe Sound Biosphere, represented by `r nrow(plants)` occurrence records. This diverse flora spans nine biogeoclimatic units, from lowland coastal western hemlock forests and associated woodland communities to high elevation subalpine and alpine plant communities.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 source("scripts/Vascular_plant_map_script.R")
@@ -37,7 +37,7 @@ Explore the region's flora by selecting from the biogeoclimatic units displayed 
 
 ## History of collection activities within the region
 
-While Indigenous knowledge of Átl’ka7tsem's plant life traces back to time immemorial, Western scientific documentation of the region's flora dates to 1897, with the early collection efforts of James Anderson and Albert J. Hill. Over the last century and a half, the activities of botanists increased in the 1920s, and from the 1960s through the 1980s, before massively expanding in the 21st century with the advent of iNaturalist, with many thousands of observations made by community members through the <a href = "https://www.squamishenvironment.ca/projects/biodiversity-squamish/">Howe Sound Biodiversity project</a>.
+While Indigenous knowledge of Átl’ka7tsem's plant life traces back to time immemorial, Western scientific documentation of the region's flora dates to 1897, with the early collection efforts of James Anderson and Albert J. Hill. Over the last century and a half, efforts to document the regional flora were most concentrated in the 1920s, and from the 1960s through the 1980s, before expanding significantly in the 21st century with the advent of iNaturalist, with many thousands of observations made by community members through the <a href = "https://www.squamishenvironment.ca/projects/biodiversity-squamish/">Howe Sound Biodiversity project</a>.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 source("scripts/History_of_collection_activities.R", encoding="UTF-8")
@@ -57,7 +57,7 @@ speciesPlot
 
 ## Community science contributions
 
-Through the combined efforts of `r length(unique(plants$recordedBy))` individuals to date, the Átl’ka7tsem/Howe Sound community has documented `r nrow(plant.summary)` species, confirming `r round((nrow(confirmed)/(nrow(confirmed)+nrow(reported))*100), digits = 0)` percent of the historically reported vascular plant diversity and adding `r nrow(new)` new species reports to the list. Community members have now documented `r round((nrow(observed)/(nrow(plant.summary))*100), digits = 0)` percent of the regional plant diversity on iNaturalist.
+Through the combined efforts of `r length(unique(plants$recordedBy))` individuals, the Átl’ka7tsem/Howe Sound naturalist community has documented `r nrow(plant.summary)` species, confirming `r round((nrow(confirmed)/(nrow(confirmed)+nrow(reported))*100), digits = 0)` percent of the historically reported vascular plant diversity and adding `r nrow(new)` new species reports to the list. Community members have now documented `r round((nrow(observed)/(nrow(plant.summary))*100), digits = 0)` percent of the regional plant diversity on iNaturalist.
 
 ```{r, echo=FALSE, message=FALSE}
 # source("scripts/Community_science_contributions.R")
