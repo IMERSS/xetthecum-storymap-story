@@ -5,10 +5,10 @@
         options: {
             template: "%maxwell/src/html/template.html"
         }
-        }],
+    }],
     copyJobs: [{
-        source: "%maxwell/src/js/client/reweave-client.js",
-        target: "%maxwell/docs/js/reweave-client.js"
+        source: "%maxwell/src/js/client/reknit-client.js",
+        target: "%maxwell/docs/js/reknit-client.js"
     }, {
         source: "%maxwell/src/js/client/plotly-2.1.1.js",
         target: "%maxwell/docs/js/plotly-2.1.1.js"

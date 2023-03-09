@@ -25,49 +25,65 @@ const hideLeafletWidgets = function (container) {
         widget.removeAttribute("style");
     });
     const sections = widgets.map(widget => widget.closest(".section.level2"));
+    console.log("Found " + sections.length + " sections holding Leaflet widgets");
     return sections;
 };
 
-// Move plotly widgets which have siblings which are maps into children of the .mxcw-data pane
+/** Compute figures to move to data pane, by searching for selector `.data-pane`, and if any parent is found
+ * with class `figure`, widening the scope to that
+ * @param {Element} container - The DOM container to be searched for elements to move
+ * @return {Element[]} - An array of DOM elements to be moved to the data pane
+ */
+const figuresToMove = function (container) {
+    const toMoves = [...container.querySelectorAll(".data-pane")];
+    const widened = toMoves.map(function (toMove) {
+        const figure = toMove.closest(".figure");
+        return figure || toMove;
+    });
+    return widened;
+};
+
+/** Move plotly widgets which have siblings which are maps into children of the .mxcw-data pane
+ * @param {Document} template - The document for the template structure into which markup is being integrated
+ * @param {Element[]} sections - The array of section elements found holding leaflet maps
+ * @param {Element} container - The container node with class `.main-container` found in the original knitted markup
+ * @return {Element[]} An array of data panes corresponding to the input section nodes
+ */
 const movePlotlyWidgets = function (template, sections, container) {
     const data = template.querySelector(".mxcw-data");
     if (!data) {
         throw "Error in template structure - data pane not found with class mxcw-data";
     }
-    const divs = sections.map(() => {
+    const dataDivs = sections.map(() => {
         const div = template.createElement("div");
         div.setAttribute("class", "mxcw-widgetPane");
         data.appendChild(div);
         return div;
     });
 
-    const others = [...container.querySelectorAll(".html-widget.plotly")];
-    console.log("Found " + others.length + " Plotly widgets in " + sections.length + " heading sections");
-    others.forEach(function (other, i) {
-        const closest = other.closest(".section.level2");
+    const plotlys = [...container.querySelectorAll(".html-widget.plotly")];
+    console.log("Found " + plotlys.length + " Plotly widgets in " + sections.length + " heading sections");
+    const toDatas = figuresToMove(container);
+    console.log("Found " + toDatas.length + " elements to move to data pane");
+    const toMoves = [...plotlys, ...toDatas];
+    toMoves.forEach(function (toMove, i) {
+        const closest = toMove.closest(".section.level2");
         const index = sections.indexOf(closest);
-        console.log("Found section at index " + index);
+        console.log("Found section for plotly widget at index " + index);
         if (index !== -1) {
-            other.setAttribute("data-section-index", "" + index);
-            divs[index].appendChild(other);
+            toMove.setAttribute("data-section-index", "" + index);
+            dataDivs[index].appendChild(toMove);
         } else {
             console.log("Ignoring widget at index " + i + " since it has no sibling map");
         }
     });
-    return divs;
+    return dataDivs;
 };
 
-const removeImageMaps = function (container) {
-    // Remove old image maps which haven't yet been converted - these stick out
-    const images = container.querySelectorAll("img");
-    images.forEach(image => image.remove());
-};
-
-const reweaveFile = async function (infile, outfile, options) {
+const reknitFile = async function (infile, outfile, options) {
     const document = parseDocument(resolvePath(infile));
     const container = document.querySelector(".main-container");
     const sections = hideLeafletWidgets(container);
-    removeImageMaps(container);
     const template = parseDocument(resolvePath(options.template));
     movePlotlyWidgets(template, sections, container);
     container.querySelector("h1").remove();
@@ -92,7 +108,7 @@ const copyDep = function (source, target) {
 
 const reknit = async function () {
     const config = loadJSON5File("%maxwell/config.json5");
-    await asyncForEach(config.reknitJobs, async (rec) => reweaveFile(rec.infile, rec.outfile, rec.options));
+    await asyncForEach(config.reknitJobs, async (rec) => reknitFile(rec.infile, rec.outfile, rec.options));
 
     config.copyJobs.forEach(function (dep) {
         copyDep(dep.source, dep.target);
