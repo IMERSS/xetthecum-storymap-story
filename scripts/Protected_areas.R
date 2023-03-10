@@ -13,31 +13,17 @@ library(viridis)
 
 source("scripts/utils.R")
 
-# Read 
+# Read occurrence data (plants x protected area)
 
-plants.gridded <- read.csv("tabular_data/1km_gridded_vascular_plant_records_2022-12-24_WGS84.csv")
-metadata <- read.csv("tabular_data/1km_grid_metadata.csv")
-
-# Assign BEC map labels to gridded plant data
-
-plants.gridded$MAP_LABEL <- metadata$MAP_LABEL[match(unlist(plants.gridded$id), metadata$id)]
-  
-# Summarize plant species by BEC unit
-
-bec.plants <- plants.gridded %>% group_by(MAP_LABEL) %>% 
-                    summarize(taxa = paste(sort(unique(scientific)),collapse=", "))
+plants.x.protected.area <- read.csv("tabular_data/plants_x_protected_areas.csv")
 
 # Load Protected Areas Shape
 
-BEC <- mx_read("spatial_data/vectors/BEC")
+protected.areas <- mx_read("spatial_data/vectors/Protected_Areas")
 
-BEC$TAXA <- bec.plants$taxa[match(unlist(BEC$MAP_LABEL), bec.plants$MAP_LABEL)]
+# Create labels
 
-# Simplify BEC shape
-
-# First create comprehensive description field
-
-BEC$DESC <- paste(BEC$VRNTNM, BEC$SBZNNM, BEC$ZONE_NAME, "Zone", sep = " ")
+protected.areas$label <- paste(protected.areas$prtctdA, ":", BEC$SBZNNM, BEC$ZONE_NAME, "Zone", sep = " ")
 
 # Remove unnecessary variables
 
