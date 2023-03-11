@@ -71,9 +71,11 @@ Integrate some of Ben Keen's code to show photos some of the most commonly docum
 
 ## Vascular plant diversity within Howe Sound's protected areas
 
-```{r, echo=FALSE, message=FALSE}
-# source("scripts/Protected_areas.R")
-# speciesMap
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source("scripts/Protected_areas.R")
+
+protectedAreaMap
+protected.area.plot 
 ```
 
 Summary of plant diversity documented within protected areas; call to action

@@ -1,10 +1,11 @@
-# Map vascular plant diversity in Átl’ka7tsem by BEC unit
+# Map Átl’ka7tsem's vascular plant diversity in relation to protected areas
 
 # Load libraries
 
 library(sf)
 library(leaflet)
 library(dplyr)
+library(plotly)
 library(raster)
 library(reshape2)
 library(viridis)
@@ -13,64 +14,19 @@ library(viridis)
 
 source("scripts/utils.R")
 
-# Read 
+# Read occurrence data (plants x protected area)
 
-plants.gridded <- read.csv("tabular_data/1km_gridded_vascular_plant_records_2022-12-24_WGS84.csv")
-metadata <- read.csv("tabular_data/1km_grid_metadata.csv")
-
-# Assign BEC map labels to gridded plant data
-
-plants.gridded$MAP_LABEL <- metadata$MAP_LABEL[match(unlist(plants.gridded$id), metadata$id)]
-  
-# Summarize plant species by BEC unit
-
-bec.plants <- plants.gridded %>% group_by(MAP_LABEL) %>% 
-                    summarize(taxa = paste(sort(unique(scientific)),collapse=", "))
+plants.x.protected.area <- read.csv("tabular_data/plants_x_protected_areas.csv")
 
 # Load Protected Areas Shape
 
-BEC <- mx_read("spatial_data/vectors/BEC")
+protected.areas <- mx_read("spatial_data/vectors/Protected_Areas")
 
-BEC$TAXA <- bec.plants$taxa[match(unlist(BEC$MAP_LABEL), bec.plants$MAP_LABEL)]
+# Create labels
 
-# Simplify BEC shape
+protected.areas$prtct__[is.na(protected.areas$prtct__)] <- 0
 
-# First create comprehensive description field
-
-BEC$DESC <- paste(BEC$VRNTNM, BEC$SBZNNM, BEC$ZONE_NAME, "Zone", sep = " ")
-
-# Remove unnecessary variables
-
-BEC$ZONE <- NULL
-BEC$VRNTNM <- NULL
-BEC$SBZNNM <-  NULL
-BEC$PHASE <-  NULL
-BEC$OBJECTID <-  NULL
-BEC$NTRLDSTRB1 <-  NULL
-BEC$NTRLDSTRBN <-  NULL
-BEC$FTRLNGTH <-  NULL
-BEC$FTRR <-  NULL
-BEC$BGC_LABEL <- NULL
-BEC$FTRCLSSSK <- NULL
-BEC$PHASE_NAME <- NULL
-BEC$VARIANT <- NULL
-BEC$ZONE_NAME <- NULL
-BEC$SUBZONE <- NULL
-
-# Create color palette for BEC Zones
-
-# Following rough elevational gradient:  
-# CDFmm, CWHxm1, CWHdm, CWHvm1, CWHvm2, CWHds1, CWHms1, MHmm1, MHmm2, ESSFmw2, CMAunp
-
-# Note: I do not think that the palette is mapping with the MAP_LABEL feature as intended!
-
-BEC.zones <- BEC$MAP_LABEL
-types <- BEC.zones %>% unique
-index <- c(9,1,6,5,7,2,8,4,3,11,10)
-# index <- c(3,11,6,7,5,10,4,8,9,1,2) # inverse palette
-types <- types[order(index)]
-t <- length(types)
-pal <- leaflet::colorFactor(viridis_pal(option = "D")(t), domain = types)
+protected.areas$label <- paste(protected.areas$prtctdA, ":", protected.areas$prtct__, "species", sep = " ")
 
 # Load additional map layers
 
@@ -83,19 +39,55 @@ coastline <- mx_read("spatial_data/vectors/Islands_and_Mainland")
 # Layer 3: watershed boundary
 watershed.boundary <- mx_read("spatial_data/vectors/Howe_Sound")
 
+# Note: for the following map, species can be mapped to protected areas based on the 
+# catalog called as 'plants.x.protected.area' 
+
+# Create color palette
+
+palette = data.frame(
+  cat = unique(protected.areas$prtctAT),
+  colors = c('#8b4513', '#008000', '#4682b4', '#4b0082', '#ff0000', '#00ff00', '#00ffff', '#0000ff', '#ffff54', '#ff69b4', '#ffe4c4')
+)
+
+protected.areas <- base::merge(protected.areas, palette, by.x ="prtctAT", by.y="cat")
 
 # Plot map
 
-speciesMap <- leaflet() %>%
+protectedAreaMap <- leaflet() %>%
   setView(-123.2194, 49.66076, zoom = 8.5) %>%
   addTiles(options = providerTileOptions(opacity = 0.5)) %>%
   addRasterImage(hillshade, opacity = 0.8) %>%
   addPolygons(data = coastline, color = "black", weight = 1.5, fillOpacity = 0, fillColor = NA) %>%
-  addPolygons(data = BEC, fillColor = ~pal(MAP_LABEL), fillOpacity = 0.6, weight = 0) %>% 
-  addLegend(position = 'topright',
-            colors = viridis_pal(option = "D")(t),
-            labels = types) %>%
-  addPolygons(data = watershed.boundary, color = "black", weight = 4, fillOpacity = 0)
+  addPolygons(data = watershed.boundary, color = "black", weight = 4, fillOpacity = 0) %>% 
+addPolygons(data = protected.areas, fillColor = protected.areas$colors, fillOpacity = 0.8, weight = 0,
+            label = paste(protected.areas$prtctdA, ":", protected.areas$prtct__, "species", sep = " "))
 
 #Note that this statement is only effective in standalone R
-print(speciesMap)
+print(protectedAreaMap)
+
+
+# Create dataframe summarizing plant diversity by protected area type
+
+types <- as.factor(unique(protected.areas$prtctAT))
+count <- vector(mode="numeric", length=length(types))
+
+protected.area.summary <- data.frame(types,count)
+
+protected.area.summary$count <- protected.areas$prtctd_r__[match(unlist(protected.area.summary$types), protected.areas$prtctAT)]
+
+protected.area.summary <- protected.area.summary[order(protected.area.summary$types),]
+
+protected.area.summary$types <- factor(protected.area.summary$types, levels = unique(protected.area.summary$types)[order(protected.area.summary$count, decreasing = TRUE)])
+
+# Create Plotly bar plot showing species diversity represented within protected area types
+
+protected.area.plot <- plot_ly(
+                          data = protected.area.summary,
+                          y = ~types,
+                          x = ~count,
+                          color = ~types,
+                          colors = colors,
+                          type = "bar"
+                            ) %>% layout(xaxis = list(categoryorder = "category ascending"))
+
+protected.area.plot 
