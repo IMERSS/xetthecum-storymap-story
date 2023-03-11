@@ -7,6 +7,11 @@
         }
     }],
     copyJobs: [{
+        source: "%infusion/dist/infusion-framework.js",
+        target: "%maxwell/docs/js/infusion-framework.js",
+        replaceSource: "sourceMappingURL=infusion-framework.js.map",
+        replaceTarget: "sourceMappingURL=../../node_modules/infusion/dist/infusion-framework.js.map"
+    }, {
         source: "%maxwell/src/js/client/reknit-client.js",
         target: "%maxwell/docs/js/reknit-client.js"
     }, {

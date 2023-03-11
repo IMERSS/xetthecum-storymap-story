@@ -107,8 +107,8 @@ tab on your repository's settings, as shown in the image below:
 ![GitHub Pages configuration](img/gh-pages.png)
 
 You can find our what URL your markup will be published at by looking in the [docs](docs) directory of your own
-repository. For example, the [docs/R-Markdown-Background-Rewoven.html](docs/R-Markdown-Background-Rewoven.html)
-file is published at [https://imerss.github.io/r-scrollytelling-template/R-Markdown-Background-Rewoven.html](https://imerss.github.io/r-scrollytelling-template/R-Markdown-Background-Rewoven.html).
+repository. For example, the [docs/R-Markdown-Background-Reknitted.html](docs/R-Markdown-Background-Reknitted.html)
+file is published at [https://imerss.github.io/r-scrollytelling-template/R-Markdown-Background-Reknitted.html](https://imerss.github.io/r-scrollytelling-template/R-Markdown-Background-Reknitted.html).
 
 The overall URL of your documents published in GitHub pages will start with `https://<your-account>.github.io/<your-repository>`.
 

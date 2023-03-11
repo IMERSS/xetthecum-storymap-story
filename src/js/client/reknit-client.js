@@ -31,38 +31,21 @@ window.HTMLWidgets.dataframeToD3 = function (df) {
     return results;
 };
 
-const maxwell = {};
+const maxwell = fluid.registerNamespace("maxwell");
 
-maxwell.set = function (root, segs, newValue) {
-    for (let i = 0; i < segs.length - 1; ++i) {
-        if (!root[segs[i]]) {
-            root[segs[i]] = {};
-        }
-        root = root[segs[i]];
-    }
-    root[segs[segs.length - 1]] = newValue;
-};
+/**
+ * An integer
+ *
+ * @typedef {Number} Integer
+ */
 
-// Lightly adapted from https://stackoverflow.com/a/59563339
-maxwell.EventEmitter = class {
-    constructor() {
-        this.callbacks = {};
-    }
-
-    on(event, cb) {
-        if (!this.callbacks[event]) {
-            this.callbacks[event] = [];
-        }
-        this.callbacks[event].push(cb);
-    }
-
-    emit(event, data) {
-        let cbs = this.callbacks[event];
-        if (cbs) {
-            cbs.forEach(cb => cb(data));
-        }
-    }
-};
+/**
+ * A "call" structure instantiating an HTMLWidget
+ *
+ * @typedef {Object} HTMLWidgetCall
+ * @property {String} method - The name of the method call
+ * @property {Object[]} args - The arguments to the call
+ */
 
 /**
  * Information about a scrollable section element of a scrollytelling interface
@@ -83,35 +66,13 @@ maxwell.EventEmitter = class {
  */
 
 /**
- * Searches the current document for HTMLWidgets nodes representing Leaflet widgets, their surrounding
- * section and heading notes, and returns a structure respresenting them.
- *
- * @return {LeafletWidgetInfo[]} An array of structures representing the Leaflet widgets
+ * A Leaflet Map
+ * @typedef {Object} LeafletMap
  */
-maxwell.findLeafletWidgets = function () {
-    const widgets = [...document.querySelectorAll(".html-widget.leaflet")];
-    console.log("Found " + widgets.length + " leaflet widgets");
-    return widgets.map(function (widget) {
-        const id = widget.id;
-        const dataNode = document.querySelector("[data-for=\"" + id + "\"");
-        console.log("Got data node ", dataNode);
-        const data = JSON.parse(dataNode.innerHTML);
-        console.log("Got data ", data);
-        const section = widget.closest(".section.level2");
-        const heading = section.querySelector("h2");
-        return {
-            node: widget,
-            data: data,
-            subPanes: [],
-            section: section,
-            heading: heading
-        };
-    });
-};
 
-maxwell.findPlotlyWidgets = function (instance) {
+maxwell.findPlotlyWidgets = function (that) {
     const widgets = [...document.querySelectorAll(".html-widget.plotly")];
-    const panes = [...document.querySelectorAll(".mxcw-widgetPane")];
+    const panes = that.dataPanes;
     console.log("Found " + widgets.length + " plotly widgets");
     // TODO: Assume just one widget for now, the slider
     if (widgets.length > 0) {
@@ -122,22 +83,19 @@ maxwell.findPlotlyWidgets = function (instance) {
 
         slider.on("plotly_sliderchange", function (e) {
             console.log("Slider change ", e);
-            instance.emitter.emit("updateSubPaneIndex", {paneIndex: index, subPaneIndex: e.slider.active});
+            that.applier.change(["activeSubPanes", index], e.slider.active);
         });
-        instance.emitter.emit("updateSubPaneIndex", {paneIndex: index, subPaneIndex: 0});
+        // Initialises with the assumption that the 0th subpane should be initially active - makes sense for choropleths
+        // but what about others?
+        that.applier.change(["activeSubPanes", index], 0);
     }
 };
 
-maxwell.findDataPanes = function (widgets) {
-    const dataPanes = document.querySelectorAll(".mxcw-widgetPane");
-    if (dataPanes.length > 0) {
-        if (dataPanes.length !== widgets.length) {
-            throw "Error during reweaving - emitted " + dataPanes.length + " data panes for " + widgets.length + " widgets";
-        } else {
-            return dataPanes;
-        }
+maxwell.checkDataPanes = function (dataPanes, widgets) {
+    if (dataPanes.length !== widgets.length) {
+        throw "Error during reknitting - emitted " + dataPanes.length + " data panes for " + widgets.length + " widgets";
     } else {
-        return null;
+        return [...dataPanes];
     }
 };
 
@@ -192,6 +150,7 @@ maxwell.addMarkers = function (lat, lon, iconOrRadius, options, label, labelOpti
         const labelMarker = L.marker([lat, lon], {icon: divIcon, ...paneOptions}).addTo(group);
         const paneInstance = maxwell.globalOptions.paneMap[pane];
         const clickHandler = function () {
+            // TODO: This will become a component
             paneInstance.emitter.emit("click", label);
         };
         if (paneInstance) {
@@ -282,7 +241,7 @@ maxwell.decodeLayoutId = function (call) {
 };
 
 /** Decodes all the calls in a leaflet widget and allocates them to an appropriate pane or subpane of the overall
- * @param {Leaflet.Map }map - The map holding the pane to which the widget's calls should be assigned
+ * @param {LeafletMap} map - The map holding the pane to which the widget's calls should be assigned
  * @param {LeafletWidgetInfo} widget - The information structure for the widget as returned from findLeafletWidgets. This will
  * be modified by the call to add a member `pane` indicating the base pane to which the widget is allocated (this may
  * be overriden by a `layerId` entry in a particular `call` entry for the widget)
@@ -339,26 +298,41 @@ maxwell.leafletWidgetToPane = function (map, widget, index) {
     widget.pane = paneInfo.pane;
 };
 
+maxwell.decodeLeafletWidgets = function (leafletWidgets, map) {
+    leafletWidgets.forEach((widget, i) => maxwell.leafletWidgetToPane(map, widget, i));
+};
+
+/**
+ * Decodes the document structure surrounding an array of DOM nodes representing Leaflet widgets
+ * @param {HTMLElement[]} widgets - The array of DOM nodes representing Leaflet widgets
+ * @param {LeafletMap} map - The map holding the pane to which the widget's calls should be assigned
+ * @return {LeafletWidgetInfo[]} An array of structures representing the Leaflet widgets
+ */
+maxwell.mapLeafletWidgets = function (widgets, map) {
+    console.log("Found " + widgets.length + " leaflet widgets");
+    const togo = [...widgets].map(function (widget) {
+        const id = widget.id;
+        const dataNode = document.querySelector("[data-for=\"" + id + "\"");
+        console.log("Got data node ", dataNode);
+        const data = JSON.parse(dataNode.innerHTML);
+        console.log("Got data ", data);
+        const section = widget.closest(".section.level2");
+        const heading = section.querySelector("h2");
+        return {
+            node: widget,
+            data: data,
+            subPanes: [],
+            section: section,
+            heading: heading
+        };
+    });
+    maxwell.decodeLeafletWidgets(togo, map);
+    return togo;
+};
+
 // Search through an HTMLWidgets "calls" structure for a method with particular name
 maxwell.findCall = function (calls, method) {
     return calls.find(call => call.method === method);
-};
-
-maxwell.addDocumentListeners = function (instance) {
-    const sectionHolders = instance.sectionHolders;
-    sectionHolders.forEach(function (sectionHolder, i) {
-        sectionHolder.heading.addEventListener("click", () => instance.updateActiveSection(i));
-    });
-    const content = document.querySelector(".mxcw-content");
-    content.addEventListener("scroll", function () {
-        const scrollTop = content.scrollTop;
-        const offsets = sectionHolders.map(widget => widget.section.offsetTop);
-        let index = offsets.findIndex(offset => offset > (scrollTop - 10));
-        if (index === -1) {
-            index = sectionHolders.length - 1;
-        }
-        instance.updateActiveSection(index);
-    });
 };
 
 maxwell.toggleActiveClass = function (nodes, selectedIndex, clazz) {
@@ -371,85 +345,17 @@ maxwell.toggleActiveClass = function (nodes, selectedIndex, clazz) {
     });
 };
 
-maxwell.setSubPaneVisibility = function (instance, event) {
-    const subPanes = instance.leafletWidgets[event.paneIndex].subPanes.map(paneInfo => paneInfo.pane);
-    console.log("updateSlider subPanes ", subPanes);
-    maxwell.toggleActiveClass(subPanes, event.subPaneIndex, "mxcw-activeMapPane");
+maxwell.updateActiveWidgetSubPanes = function (that, effectiveActiveSubpanes) {
+    effectiveActiveSubpanes.forEach((subPaneIndex, index) => {
+        const subPanes = that.leafletWidgets[index].subPanes.map(paneInfo => paneInfo.pane);
+        maxwell.toggleActiveClass(subPanes, subPaneIndex, "mxcw-activeMapPane");
+    });
 };
 
-maxwell.registerListeners = function (instance) {
-    const sectionHolders = instance.sectionHolders;
-    const widgets = instance.leafletWidgets;
-    instance.emitter.on("updateActiveSection", function (event) {
-        instance.activeSection = event.activeSection;
-    });
-    instance.emitter.on("updateActivePane", function (event) {
-        instance.activePane = event.activePane;
-    });
-    instance.emitter.on("updateActiveSection", function (event) {
-        const activePane = instance.sectionIndexToWidgetIndex(event.activeSection);
-        instance.updateActivePane(activePane);
-    });
-
-
-    instance.emitter.on("updateSubPaneIndex", function (event) {
-        instance.subPaneIndices[event.paneIndex] = event.subPaneIndex;
-    });
-    instance.emitter.on("updateActiveSection", function (event) {
-        maxwell.toggleActiveClass(sectionHolders.map(sectionHolder => sectionHolder.section), event.activeSection, "mxcw-activeSection");
-    });
-    instance.emitter.on("updateActivePane", function (event) {
-        const activePane = event.activePane;
-        const widgetPanes = widgets.map(widget => widget.pane);
-        maxwell.toggleActiveClass(widgetPanes, -1, "mxcw-activeMapPane");
-        widgetPanes[activePane].style.display = "block";
-        const zoom = maxwell.flyToBounds(instance.map, widgets[activePane].data.x);
-        zoom.then(function () {
-            maxwell.toggleActiveClass(widgetPanes, activePane, "mxcw-activeMapPane");
-            window.setTimeout(function () {
-                widgetPanes.forEach(function (pane, index) {
-                    const visibility = (index === activePane ? "block" : "none");
-                    console.log("Set visibility of index " + index + " to " + visibility);
-                    pane.style.display = visibility;
-                });
-            }, 1);
-        });
-    });
-    if (instance.dataPanes) {
-        instance.emitter.on("updateActivePane", function (event) {
-            const paneIndex = event.activePane;
-            maxwell.toggleActiveClass(instance.dataPanes, paneIndex, "mxcw-activeWidgetPane");
-            // Trigger update of panes which are brought into visibility - hide all others too - naturally this would all be much nicer with a functional pattern
-            const allPanes = Object.keys(instance.subPaneIndices);
-            allPanes.forEach(paneIndex => maxwell.setSubPaneVisibility(instance, {paneIndex: paneIndex, subPaneIndex: -1}));
-            // Re-expose what was previously visible
-            instance.emitter.emit("updateSubPaneIndex", {paneIndex: paneIndex, subPaneIndex: instance.subPaneIndices[paneIndex]});
-        });
-        instance.emitter.on("updateSubPaneIndex", function (event) {
-            if (event.paneIndex === instance.activePane) {
-                maxwell.setSubPaneVisibility(instance, event);
-            }
-        });
-    }
-};
-
-class maxwell_Leaflet {
-    constructor(options) {
-        this.emitter = new maxwell.EventEmitter();
-        Object.assign(this, options);
-    }
-    updateActiveSection(activeSection) {
-        if (activeSection !== this.activeSection) {
-            this.emitter.emit("updateActiveSection", { activeSection } );
-        }
-    }
-    updateActivePane(activePane) {
-        if (activePane !== this.activePane) {
-            this.emitter.emit("updateActivePane", { activePane } );
-        }
-    }
-}
-
+/** Apply the map bounds found either in a fitBounds or setView call attached to the supplied widget data
+ * @param {LeafletMap} map - The map to which the view is to be applied
+ * @param {Object} xData - The "data.x" member of the HTMLWidgets Leaflet instantiator
+ */
 maxwell.applyView = function (map, xData) {
     const bounds = xData.fitBounds;
     const setView = xData.setView;
@@ -462,12 +368,12 @@ maxwell.applyView = function (map, xData) {
     }
 };
 
-maxwell.flyToBounds = function (map, xData, delay) {
+maxwell.flyToBounds = function (map, xData, durationInMs) {
     return new Promise(function (resolve) {
         const bounds = xData.fitBounds;
         if (bounds) {
             map.flyToBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]], {
-                duration: delay / 1000
+                duration: durationInMs / 1000
             });
             map.once("moveend zoomend", resolve);
         } else {
@@ -488,49 +394,176 @@ maxwell.decodeLocationId = function (widget) {
     }
 };
 
-maxwell.instantiateLeaflet = function (selector, options) {
-    options = options || {};
-    options.paneMap = options.paneMap || {};
-    maxwell.globalOptions = options;
-    const leafletWidgets = maxwell.findLeafletWidgets();
-    const node = document.querySelector(selector);
-    const map = L.map(node);
+maxwell.makeLeafletMap = function (node) {
+    return L.map(fluid.unwrap(node));
+};
 
+fluid.defaults("maxwell.scrollyPage", {
+    gradeNames: ["fluid.viewComponent", "fluid.resourceLoader"],
+    container: "body",
+    paneMap: {
+        // Map of paneName to objects holding an emitter on which "click" is firable - currently only used in
+        // Maxwell proper with maxwell.siteSelectable in order to make sites selectable. Should become lensed
+        // components I guess.
+    },
+    resources: {
+        plotlyReady: {
+            promiseFunc: "maxwell.HTMLWidgetsPostRender"
+        }
+    },
+    selectors: {
+        leafletWidgets: ".html-widget.leaflet",
+        dataPanes: ".mxcw-widgetPane",
+        leafletMap: ".mxcw-map",
+        content: ".mxcw-content"
+    },
+    components: {
+        map: {
+            type: "maxwell.scrollyLeafletMap",
+            container: "{scrollyPage}.dom.leafletMap"
+        }
+    },
+    members: {
+        leafletWidgets: "@expand:maxwell.mapLeafletWidgets({that}.dom.leafletWidgets, {that}.map.map)",
+        sectionHolders: "@expand:{that}.resolveSectionHolders()",
+        dataPanes: "@expand:maxwell.checkDataPanes({that}.dom.dataPanes, {that}.leafletWidgets)"
+    },
+    invokers: {
+        sectionIndexToWidgetIndex: "fluid.identity",
+        resolveSectionHolders: "fluid.identity({that}.leafletWidgets)"
+    },
+    model: {
+        activeSection: 0,
+        activePane: 0,
+        // Map of pane indices to active subpanes
+        activeSubPanes: [],
+        // Map of pane indices to active subpanes, with inactive panes having their subpane index set to -1
+        effectiveActiveSubpanes: [],
+        // Prevent the component trying to render until plotly's postRenderHandler has fired
+        plotlyReady: "{that}.resources.plotlyReady.parsed"
+    },
+    modelListeners: {
+        activeSection: {
+            namespace: "updateClasses",
+            funcName: "maxwell.updateSectionClasses",
+            args: ["{that}", "{change}.value"]
+        },
+        updateActiveMapPane: {
+            path: "activePane",
+            funcName: "maxwell.updateActiveMapPane",
+            args: ["{that}", "{change}.value"]
+        },
+        updateActiveWidgetPane: {
+            path: "activePane",
+            funcName: "maxwell.updateActiveWidgetPane",
+            args: ["{that}", "{change}.value"]
+        },
+        updateActiveWidgetSubPanes: {
+            path: "effectiveActiveSubpanes",
+            funcName: "maxwell.updateActiveWidgetSubPanes",
+            args: ["{that}", "{change}.value"]
+        }
+    },
+    modelRelay: {
+        sectionToPane: {
+            source: "activeSection",
+            target: "activePane",
+            func: "{that}.sectionIndexToWidgetIndex"
+        },
+        subPanesToEffective: {
+            target: "effectiveActiveSubpanes",
+            func: "maxwell.subPanesToEffective",
+            args: ["{that}.model.activePane", "{that}.model.activeSubPanes"]
+        }
+    },
+    listeners: {
+        "onCreate.registerSectionListeners": "maxwell.registerSectionListeners({that})",
+        // This will initialise subPaneIndices quite late
+        "onCreate.findPlotlyWidgets": "maxwell.findPlotlyWidgets({that}, {that}.dataPanes)"
+    }
+});
+
+// Convert the HTMLWidgets postRenderHandler into a promise
+maxwell.HTMLWidgetsPostRender = function () {
+    const togo = fluid.promise();
+    HTMLWidgets.addPostRenderHandler(function () {
+        togo.resolve(true);
+    });
+    return togo;
+};
+
+maxwell.updateSectionClasses = function (that, activeSection) {
+    maxwell.toggleActiveClass(that.sectionHolders.map(sectionHolder => sectionHolder.section), activeSection, "mxcw-activeSection");
+};
+
+/**
+ * Convert the pane and subpane selection index state to an array of effectively active panes
+ * @param {Integer} activePane - The currently active pane
+ * @param {Integer[]} activeSubPanes - The array of currently active subpanes
+ * @return {Integer[]} An array of pane visibility flags, with inactive panes having subpane index censored to -1
+ */
+maxwell.subPanesToEffective = function (activePane, activeSubPanes) {
+    return activeSubPanes.map((activeSubPane, index) => index === activePane ? activeSubPane : -1);
+};
+
+maxwell.updateActiveMapPane = function (that, activePane) {
+    const widgets = [...that.leafletWidgets];
+    const widgetPanes = widgets.map(widget => widget.pane);
+    maxwell.toggleActiveClass(widgetPanes, -1, "mxcw-activeMapPane");
+    widgetPanes[activePane].style.display = "block";
+    const zoom = maxwell.flyToBounds(that.map.map, widgets[activePane].data.x, that.map.options.zoomDuration);
+    zoom.then(function () {
+        maxwell.toggleActiveClass(widgetPanes, activePane, "mxcw-activeMapPane");
+        window.setTimeout(function () {
+            widgetPanes.forEach(function (pane, index) {
+                const visibility = (index === activePane ? "block" : "none");
+                console.log("Set visibility of index " + index + " to " + visibility);
+                pane.style.display = visibility;
+            });
+        }, 1);
+    });
+};
+
+maxwell.registerSectionListeners = function (that) {
+    const sectionHolders = that.sectionHolders;
+    sectionHolders.forEach(function (sectionHolder, i) {
+        sectionHolder.heading.addEventListener("click", () => that.applier.change("activeSection", i));
+    });
+    const content = that.dom.locate("content")[0];
+    content.addEventListener("scroll", function () {
+        const scrollTop = content.scrollTop;
+        const offsets = sectionHolders.map(widget => widget.section.offsetTop);
+        let index = offsets.findIndex(offset => offset > (scrollTop - 10));
+        if (index === -1) {
+            index = sectionHolders.length - 1;
+        }
+        that.applier.change("activeSection", index);
+    });
+};
+
+maxwell.updateActiveWidgetPane = function (that, activePane) {
+    maxwell.toggleActiveClass(that.dataPanes, activePane, "mxcw-activeWidgetPane");
+};
+
+fluid.defaults("maxwell.scrollyLeafletMap", {
+    gradeNames: "fluid.viewComponent",
+    members: {
+        map: "@expand:maxwell.makeLeafletMap({that}.container)"
+    },
+    zoomDuration: 2000,
+    listeners: {
+        "onCreate.getTiles": "maxwell.applyZerothTiles({scrollyPage}.leafletWidgets, {that}.map)",
+        "onCreate.applyView": "maxwell.applyZerothView({scrollyPage}.leafletWidgets, {that}.map)"
+    }
+});
+
+maxwell.applyZerothTiles = function (leafletWidgets, map) {
     const data0 = leafletWidgets[0].data.x;
-    maxwell.applyView(map, data0);
-
     const tiles = maxwell.findCall(data0.calls, "addTiles");
     L.tileLayer(tiles.args[0], tiles.args[3]).addTo(map);
+};
 
-    leafletWidgets.forEach((widget, i) => maxwell.leafletWidgetToPane(map, widget, i));
-
-    const instance = new maxwell_Leaflet({
-        container: node,
-        map: map,
-        leafletWidgets: leafletWidgets, // Array of {node, data, section, heading} for each section holding a Leaflet widget
-        dataPanes: maxwell.findDataPanes(leafletWidgets),
-        activeSection: null,
-        activePane: null,
-        subPaneIndices: {},
-        sectionHolders: leafletWidgets,
-        zoomDuration: 2000,
-        sectionIndexToWidgetIndex: x => x
-    });
-    maxwell.leafletInstance = instance;
-
-    if (maxwell.mapDirectorySections) {
-        Object.assign(instance, maxwell.mapDirectorySections());
-        instance.sectionHolders = instance.communitySections;
-    }
-
-    maxwell.registerListeners(instance);
-    instance.updateActiveSection(0);
-
-    maxwell.addDocumentListeners(instance);
-
-    HTMLWidgets.addPostRenderHandler(function () {
-        maxwell.findPlotlyWidgets(instance);
-    });
-
-    return instance;
+maxwell.applyZerothView = function (leafletWidgets, map) {
+    const data0 = leafletWidgets[0].data.x;
+    maxwell.applyView(map, data0);
 };
