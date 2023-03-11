@@ -2,12 +2,13 @@
 
 # Load libraries
 
-library(sf)
-library(leaflet)
+library(Dict)
 library(dplyr)
+library(leaflet)
 library(plotly)
 library(raster)
 library(reshape2)
+library(sf)
 library(viridis)
 
 # Source dependencies
@@ -45,11 +46,11 @@ watershed.boundary <- mx_read("spatial_data/vectors/Howe_Sound")
 # Create color palette
 
 palette = data.frame(
-  cat = unique(protected.areas$prtctAT),
+  types = unique(protected.areas$prtctAT),
   colors = c('#8b4513', '#008000', '#4682b4', '#4b0082', '#ff0000', '#00ff00', '#00ffff', '#0000ff', '#ffff54', '#ff69b4', '#ffe4c4')
 )
 
-protected.areas <- base::merge(protected.areas, palette, by.x ="prtctAT", by.y="cat")
+protected.areas$colors <- palette$colors[match(unlist(protected.areas$prtctAT), palette$types)]
 
 # Plot map
 
@@ -81,12 +82,22 @@ protected.area.summary$types <- factor(protected.area.summary$types, levels = un
 
 # Create Plotly bar plot showing species diversity represented within protected area types
 
+# First add color palette matching with map
+
+protected.area.summary$colors <- palette$colors[match(unlist(protected.area.summary$types), palette$types)]
+
+colormap <- setNames(object = protected.area.summary$colors,
+                     nm = protected.area.summary$types)
+
+# Plot
+
 protected.area.plot <- plot_ly(
                           data = protected.area.summary,
                           y = ~types,
                           x = ~count,
                           color = ~types,
-                          colors = colors,
+                          colors = colormap,
+                          opacity = 0.8,
                           type = "bar"
                             ) %>% layout(xaxis = list(categoryorder = "category ascending"))
 
