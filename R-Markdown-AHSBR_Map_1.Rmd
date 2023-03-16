@@ -40,7 +40,9 @@ Explore the region's flora by selecting from the biogeoclimatic units displayed 
 While Indigenous knowledge of Átl’ḵa7tsem's plant life traces back to time immemorial, Western scientific documentation of the region's flora dates to 1897, with the early collection efforts of James Anderson and Albert J. Hill. Over the last century and a half, efforts to document the regional flora were most concentrated in the 1920s, and from the 1960s through the 1980s, before expanding significantly in the 21st century with the advent of iNaturalist, with many thousands of observations made by community members through the <a href = "https://www.squamishenvironment.ca/projects/biodiversity-squamish/">Howe Sound Biodiversity project</a>.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-source("scripts/History_of_collection_activities.R", encoding="UTF-8")
+# According to https://stackoverflow.com/questions/5031630/how-to-source-r-file-saved-using-utf-8-encoding this strange strategy is now necessary since the 
+# file contains a character outside the Unicode BMP
+eval(parse("scripts/History_of_collection_activities.R", encoding="UTF-8"))
 heatMap
 speciesPlot
 # animate(
@@ -57,7 +59,7 @@ speciesPlot
 
 ## Community science contributions
 
-Through the combined efforts of `r length(unique(plants$recordedBy))` individuals, the Ãtl'ka7tsem/Howe Sound naturalist community has documented `r nrow(plant.summary)` species, confirming `r round((nrow(confirmed)/(nrow(confirmed)+nrow(reported))*100), digits = 0)` percent of the historically reported vascular plant diversity and adding `r nrow(new)` new species reports to the list. Community members have now documented `r round((nrow(observed)/(nrow(plant.summary))*100), digits = 0)` percent of the regional plant diversity on iNaturalist.
+Through the combined efforts of `r length(unique(plants$recordedBy))` individuals, the Átl’ḵa7tsem/Howe Sound naturalist community has documented `r nrow(plant.summary)` species, confirming `r round((nrow(confirmed)/(nrow(confirmed)+nrow(reported))*100), digits = 0)` percent of the historically reported vascular plant diversity and adding `r nrow(new)` new species reports to the list. Community members have now documented `r round((nrow(observed)/(nrow(plant.summary))*100), digits = 0)` percent of the regional plant diversity on iNaturalist.
 
 ```{r, echo=FALSE, message=FALSE}
 # source("scripts/Community_science_contributions.R")
