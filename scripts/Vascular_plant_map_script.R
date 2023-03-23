@@ -8,6 +8,7 @@ library(raster)
 library(reshape2)
 library(scales)
 library(sf)
+library(rjson)
 library(viridis)
 
 # Source dependencies
@@ -33,10 +34,15 @@ plants.gridded$MAP_LABEL <- metadata$MAP_LABEL[match(unlist(plants.gridded$id), 
 bec.plants <- plants.gridded %>% group_by(MAP_LABEL) %>% 
                     summarize(taxa = paste(sort(unique(scientific)),collapse=", "))
 
+# Write summarised plants to JSON file for viz
+
+write(rjson::toJSON(bec.plants), "viz_data/Vascular-regionTaxa.json")
+
 # Load BEC Zones shape
 
 BEC <- mx_read("spatial_data/vectors/BEC")
 
+# TODO: This is not greatly helpful since it explodes the 9 basic selections for the BEC zones into the 71 for each polygon.
 BEC$TAXA <- bec.plants$taxa[match(unlist(BEC$MAP_LABEL), bec.plants$MAP_LABEL)]
 
 # Simplify BEC shape
@@ -93,16 +99,21 @@ coastline <- mx_read("spatial_data/vectors/Islands_and_Mainland")
 # Layer 3: watershed boundary
 watershed.boundary <- mx_read("spatial_data/vectors/Howe_Sound")
 
+# Attach the region's label as an "mx_regionId" option in the output data
+labelToOption <- function (label) {
+  return (list(mx_regionId = label))
+}
+
 # Plot map
 
-speciesMap <- leaflet() %>%
+speciesMap <- leaflet(options=list(mx_mapId="Vascular")) %>%
   setView(-123.2194, 49.66076, zoom = 8.5) %>%
   addTiles(options = providerTileOptions(opacity = 0.5)) %>%
   addRasterImage(hillshade, opacity = 0.8) %>%
-  addPolygons(data = coastline, color = "black", weight = 1.5, fillOpacity = 0, fillColor = NA) %>%
-  addPolygons(data = BEC, fillColor = BEC$col, fillOpacity = 0.6, weight = 0) %>% 
-  addPolygons(data = watershed.boundary, color = "black", weight = 4, fillOpacity = 0) %>%
-  #addLegend(position = 'topright', pal = ~col, groupvalues = BEC$MAP_LABEL)
+  addPolygons(data = coastline, color = "black", weight = 1.5, fill = FALSE) %>%
+  addPolygons(data = BEC, fillColor = BEC$col, fillOpacity = 0.6, weight = 3, stroke = FALSE, options = labelToOption(BEC$MAP_LABEL)) %>%
+  addPolygons(data = watershed.boundary, color = "black", weight = 4, fill = FALSE) %>%
+    #addLegend(position = 'topright', pal = ~col, groupvalues = BEC$MAP_LABEL)
 
 #Note that this statement is only effective in standalone R
 print(speciesMap)

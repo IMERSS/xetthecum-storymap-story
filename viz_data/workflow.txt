@@ -1,0 +1,3 @@
+Right now Vascular-regionTaxa.json gets copied out to imerss-bioinfo and then synthesized back to
+Howe-Sound-Scrolly-Life.json.lz4 via Howe Sound/fusion.json5 and Howe Sound/vizConfig-scrolly.json5 -
+in future we will be able to do this in-place.

@@ -5,16 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
-    <link rel="stylesheet" href="css/maxwell.css" />
+	<link rel="stylesheet" href="css/imerss-viz-all.css" />
+	<link rel="stylesheet" href="css/xetthecum-shared.css" />
+	<link rel="stylesheet" href="css/maxwell.css" />
 
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
 	<script src="js/plotly-2.1.1.js"></script>
 	<script src="js/htmlwidgets.js"></script>
 	<script src="js/htmlwidgets-plotly.js"></script>
 	<script src="js/infusion-framework.js"></script>
+	<script src="js/imerss-viz-all.js"></script>
 
     <script src="js/reknit-client.js"></script>
-    
+	<script src="js/imerss-viz-reknit.js"></script>
+	<script src="js/howe.js"></script>
+	<style>
+		body {
+			/* Override definition which shouldn't be in xetthecum-shared.css" */
+			margin: 8px
+		}
+		.mxcw-widgetPane {
+			padding: 1em
+		}
+		.fl-imerss-container {
+			flex-direction: column;
+			margin-top: 0px;
+		}
+		.fld-imerss-region {
+			padding: 3px;
+		}
+	</style>
+
     <title>Átl’ḵa7tsem/Howe Sound Biosphere Vegetation Analysis</title>
 </head>
 <body>
@@ -23,12 +44,12 @@
 	</h1>
 	<div class="mxcw-container">
 		<div class="mxcw-leftPane">
-		    <div class="mxcw-map">
+		    <div class="mxcw-map fld-imerss-nodismiss-map">
 		    </div>
-		    <div class="mxcw-data">
+		    <div class="mxcw-data fld-imerss-nodismiss-map">
 		    </div>
 		</div>
-		<div class="mxcw-content">
+		<div class="mxcw-content fld-imerss-nodismiss-map">
 		</div>
     </div>
     <script>

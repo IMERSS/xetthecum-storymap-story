@@ -3,7 +3,20 @@
         infile: "%maxwell/docs/R-Markdown-AHSBR_Map_1.html",
         outfile: "%maxwell/docs/R-Markdown-AHSBR_Map_1-Reknitted.html",
         options: {
-            template: "%maxwell/src/html/template.html"
+            template: "%maxwell/src/html/template.html",
+            paneHandlers: {
+                Vascular: {
+                    type: "maxwell.scrollyPaneHandler",
+                    options: {
+                        gradeNames: [ "hortis.scrollyMapLoader", "maxwell.scrollyVizBinder", "maxwell.howeVizBinder"],
+                        resourceBase: ".",
+                        markupTemplate: "%resourceBase/html/imerss-viz-scrolly.html",
+                        phyloMap: "%resourceBase/json/kingdomPhyloMap.json",
+                        renderMarkup: true,
+                        vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life.json.lz4"
+                    }
+                }
+            }
         }
     }],
     copyJobs: [{
@@ -11,9 +24,6 @@
         target: "%maxwell/docs/js/infusion-framework.js",
         replaceSource: "sourceMappingURL=infusion-framework.js.map",
         replaceTarget: "sourceMappingURL=../../node_modules/infusion/dist/infusion-framework.js.map"
-    }, {
-        source: "%maxwell/src/js/client/reknit-client.js",
-        target: "%maxwell/docs/js/reknit-client.js"
     }, {
         source: "%maxwell/src/js/client/plotly-2.1.1.js",
         target: "%maxwell/docs/js/plotly-2.1.1.js"
@@ -24,7 +34,49 @@
         source: "%maxwell/src/js/client/htmlwidgets-plotly.js",
         target: "%maxwell/docs/js/htmlwidgets-plotly.js"
     }, {
+        source: "%maxwell/src/js/client/reknit-client.js",
+        target: "%maxwell/docs/js/reknit-client.js"
+    }, {
+        source: "%maxwell/src/js/client/imerss-viz-reknit.js",
+        target: "%maxwell/docs/js/imerss-viz-reknit.js"
+    }, {
+        source: "%maxwell/src/js/client/howe.js",
+        target: "%maxwell/docs/js/howe.js"
+    }, {
         source: "%maxwell/src/css/maxwell.css",
         target: "%maxwell/docs/css/maxwell.css"
+    }, {
+        source: "%imerss-bioinfo/docs/js/imerss-viz-all.js",
+        target: "%maxwell/docs/js/imerss-viz-all.js"
+    }, {
+        source: "%imerss-bioinfo/docs/js/imerss-viz-all.js.map",
+        target: "%maxwell/docs/js/imerss-viz-all.js.map"
+    }, {
+        source: "%imerss-bioinfo/src/client/img/Arrow-up.svg",
+        target: "%maxwell/docs/img/Arrow-up.svg"
+    },  {
+        source: "%imerss-bioinfo/src/client/img/Arrow-down.svg",
+        target: "%maxwell/docs/img/Arrow-down.svg"
+    },  {
+        source: "%imerss-bioinfo/src/client/img/up-arrow.svg",
+        target: "%maxwell/docs/img/up-arrow.svg"
+    },  {
+        source: "%imerss-bioinfo/src/client/img/external-link.svg",
+        target: "%maxwell/docs/img/external-link.svg"
+    }, {
+        source: "%imerss-bioinfo/docs/css/imerss-viz-all.css",
+        target: "%maxwell/docs/css/imerss-viz-all.css"
+    }, {
+        source: "%imerss-bioinfo/docs/css/xetthecum-shared.css",
+        target: "%maxwell/docs/css/xetthecum-shared.css"
+    }, {
+        source: "%maxwell/src/html/imerss-viz-scrolly.html",
+        target: "%maxwell/docs/html/imerss-viz-scrolly.html"
+    }, {
+        source: "%imerss-bioinfo/src/client/json/kingdomPhyloMap.json",
+        target: "%maxwell/docs/json/kingdomPhyloMap.json"
+    }, {
+        source: "%maxwell/viz_data/Howe-Sound-Scrolly-Life.json.lz4",
+        target: "%maxwell/docs/data/Howe-Sound-Scrolly-Life.json.lz4"
     }]
 }

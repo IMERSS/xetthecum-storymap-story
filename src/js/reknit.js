@@ -102,6 +102,14 @@ maxwell.reknitFile = async function (infile, outfile, options) {
     });
     const target = template.querySelector(".mxcw-content");
     target.appendChild(container);
+    const paneHandlers = options.paneHandlers;
+    if (paneHandlers) {
+        const paneMapText = "maxwell.scrollyPaneHandlers = " + JSON.stringify(paneHandlers) + ";\n";
+        const scriptNode = template.createElement("script");
+        scriptNode.innerHTML = paneMapText;
+        const head = template.querySelector("head");
+        head.appendChild(scriptNode);
+    }
     const outMarkup = "<!DOCTYPE html>" + template.documentElement.outerHTML;
     maxwell.writeFile(fluid.module.resolvePath(outfile), outMarkup);
 };
@@ -110,6 +118,10 @@ maxwell.reknitFile = async function (infile, outfile, options) {
 
 const copyDep = function (source, target, replaceSource, replaceTarget) {
     const targetPath = fluid.module.resolvePath(target);
+    const sourceModule = fluid.module.refToModuleName(source);
+    if (sourceModule && sourceModule !== "maxwell") {
+        require(sourceModule);
+    }
     const sourcePath = fluid.module.resolvePath(source);
     if (replaceSource) {
         const text = fs.readFileSync(sourcePath, "utf8");

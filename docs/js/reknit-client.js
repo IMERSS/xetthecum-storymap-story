@@ -31,7 +31,8 @@ window.HTMLWidgets.dataframeToD3 = function (df) {
     return results;
 };
 
-const maxwell = fluid.registerNamespace("maxwell");
+// noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
+var maxwell = fluid.registerNamespace("maxwell");
 
 /**
  * An integer
@@ -202,14 +203,30 @@ maxwell.allocatePane = function (map, index, subLayerIndex, overridePane) {
     return {paneName, pane, paneOptions, group};
 };
 
+maxwell.resolvePaneHandler = function (paneHandler) {
+    if (paneHandler) {
+        fluid.getForComponent(paneHandler, "handlePoly");
+        fluid.getForComponent(paneHandler, "polyOptions");
+        return paneHandler;
+    } else {
+        return {
+            polyOptions: fluid.identity,
+            handlePoly: fluid.identity
+        };
+    }
+};
+
 // Allocate a polygonal leaflet call into a pane or subpane
-maxwell.assignPolyToPane = function (callArgs, polyMethod, paneInfo) {
+maxwell.assignPolyToPane = function (rawPaneHandler, callArgs, polyMethod, paneInfo) {
     const shapes = callArgs[0],
         options = Object.assign({}, callArgs[3], paneInfo.paneOptions);
+    const paneHandler = maxwell.resolvePaneHandler(rawPaneHandler);
     shapes.forEach(function (shape, index) {
         const r = v => maxwell.resolveVectorOptions(v, index);
         const args = maxwell.projectArgs(callArgs, index);
-        const polygon = L[polyMethod](maxwell.leafletiseCoords(shape), r(options)).addTo(paneInfo.group);
+        const shapeOptions = r(options);
+        const finalOptions = paneHandler.polyOptions(shapeOptions);
+        const polygon = L[polyMethod](maxwell.leafletiseCoords(shape), finalOptions).addTo(paneInfo.group);
         const label = args[6];
         const labelOptions = args[7];
         if (label) {
@@ -217,6 +234,7 @@ maxwell.assignPolyToPane = function (callArgs, polyMethod, paneInfo) {
             polygon.bindPopup(label, {closeButton: false, ...labelOptions});
             maxwell.hoverPopup(polygon, paneInfo.paneOptions);
         }
+        paneHandler.handlePoly(polygon, shapeOptions);
     });
 };
 
@@ -241,17 +259,23 @@ maxwell.decodeLayoutId = function (call) {
 };
 
 /** Decodes all the calls in a leaflet widget and allocates them to an appropriate pane or subpane of the overall
+ * @param {maxwell.scrollyPage} scrollyPage - The overall scrollyPage component
  * @param {LeafletMap} map - The map holding the pane to which the widget's calls should be assigned
  * @param {LeafletWidgetInfo} widget - The information structure for the widget as returned from findLeafletWidgets. This will
  * be modified by the call to add a member `pane` indicating the base pane to which the widget is allocated (this may
- * be overriden by a `layerId` entry in a particular `call` entry for the widget)
+ * be overriden by a `layerId` entry in a particular `call` entry for the widget), as well as an optional member mapId
  * @param {Integer} index - The index of the widget/section heading in the document structure
  */
-maxwell.leafletWidgetToPane = function (map, widget, index) {
+maxwell.leafletWidgetToPane = function (scrollyPage, map, widget, index) {
     const calls = widget.data.x.calls;
+    widget.paneHandlerName = widget.data.x?.options?.mx_mapId;
+    const paneHandler = widget.paneHandlerName && maxwell.paneHandlerForName(scrollyPage, widget.paneHandlerName);
     const paneInfo = maxwell.allocatePane(map, index);
     const {paneOptions, group} = paneInfo;
     calls.forEach(function (call) {
+        // TODO: Current assumption is that any choice of layoutId converts to a direct assignment to the same-named pane -
+        // which is useful for assigning to "baseMap" e.g. in the community directory but not good for e.g. Howe Sound assignment
+        // to clickable "communities".
         const overridePane = maxwell.decodeLayoutId(call);
         let overridePaneInfo, overridePaneOptions, overrideGroup;
         if (overridePane) {
@@ -265,13 +289,15 @@ maxwell.leafletWidgetToPane = function (map, widget, index) {
             // TODO: Note that because we can't tunnel arguments other than layerId for addRasterImage, we should move
             // the subLayerIndex system (used for Howe Sound choropleth) over to layerId as well to support future
             // uses of raster images in a choropleth
+            // TODO: We should probably demultiplex these arguments up front so that we can support multiplex assignment of
+            // layerId and subLayerIndex on the R side
             const subLayerIndex = call.args[3].mx_subLayerIndex;
             if (subLayerIndex !== undefined) {
                 const subPaneInfo = maxwell.allocatePane(map, index, subLayerIndex);
-                maxwell.assignPolyToPane(call.args, polyMethod, subPaneInfo);
+                maxwell.assignPolyToPane(paneHandler, call.args, polyMethod, subPaneInfo);
                 widget.subPanes[subLayerIndex] = subPaneInfo;
             } else {
-                maxwell.assignPolyToPane(call.args, polyMethod, overridePaneInfo || paneInfo);
+                maxwell.assignPolyToPane(paneHandler, call.args, polyMethod, overridePaneInfo || paneInfo);
             }
         } else if (call.method === "addRasterImage") {
             // args: url, bounds, opacity
@@ -298,17 +324,33 @@ maxwell.leafletWidgetToPane = function (map, widget, index) {
     widget.pane = paneInfo.pane;
 };
 
-maxwell.decodeLeafletWidgets = function (leafletWidgets, map) {
-    leafletWidgets.forEach((widget, i) => maxwell.leafletWidgetToPane(map, widget, i));
+/**
+ * @param {maxwell.scrollyPage} scrollyPage - The overall scrollyPage component
+ * @param {LeafletWidgetInfo[]} leafletWidgets - Array of partially completed leaflet widget structures
+ * @param {LeafletMap} map - The map holding the pane to which the widget's calls should be assigned
+ */
+maxwell.decodeLeafletWidgets = function (scrollyPage, leafletWidgets, map) {
+    leafletWidgets.forEach((widget, i) => maxwell.leafletWidgetToPane(scrollyPage, map, widget, i));
+};
+
+maxwell.leafletWidgetsToIndex = function (leafletWidgets) {
+    const togo = {};
+    leafletWidgets.forEach(function (widget, index) {
+        if (widget.paneHandlerName) {
+            togo[widget.paneHandlerName] = index;
+        }
+    });
+    return togo;
 };
 
 /**
  * Decodes the document structure surrounding an array of DOM nodes representing Leaflet widgets
+ * @param {maxwell.scrollyPage} scrollyPage - The overall scrollyPage component
  * @param {HTMLElement[]} widgets - The array of DOM nodes representing Leaflet widgets
  * @param {LeafletMap} map - The map holding the pane to which the widget's calls should be assigned
  * @return {LeafletWidgetInfo[]} An array of structures representing the Leaflet widgets
  */
-maxwell.mapLeafletWidgets = function (widgets, map) {
+maxwell.mapLeafletWidgets = function (scrollyPage, widgets, map) {
     console.log("Found " + widgets.length + " leaflet widgets");
     const togo = [...widgets].map(function (widget) {
         const id = widget.id;
@@ -326,7 +368,7 @@ maxwell.mapLeafletWidgets = function (widgets, map) {
             heading: heading
         };
     });
-    maxwell.decodeLeafletWidgets(togo, map);
+    maxwell.decodeLeafletWidgets(scrollyPage, togo, map);
     return togo;
 };
 
@@ -382,20 +424,30 @@ maxwell.flyToBounds = function (map, xData, durationInMs) {
     });
 };
 
-/** Currently used to support Salish Sea Community Directory - decode from the widget's section id whether it
- * represents a location map and assign this into the widget structure
- * @param {LeafletWidgetInfo} widget - The information structure for the widget - this will be modified to include
- * a `locationId` element.
- */
-maxwell.decodeLocationId = function (widget) {
-    const id = widget.section.id;
-    if (id.startsWith("location-map-")) {
-        widget.locationId = id.substring("location-map-".length);
-    }
-};
-
 maxwell.makeLeafletMap = function (node) {
     return L.map(fluid.unwrap(node));
+};
+
+/**
+ * Given a paneHandler component, determine which data pane its contents should be rendered into, by indirecting
+ * into the sectionNameToIndex structure.
+ * @param {maxwell.scrollyPaneHandler} handler - The paneHandler to be looked up
+ * @param {maxwell.scrollyPage} scrollyPage - The overall scrollyPage component
+ * @return {jQuery} A jQuery-wrapped container node suitable for instantiating a component.
+ */
+maxwell.dataPaneForPaneHandler = function (handler, scrollyPage) {
+    const key = fluid.getForComponent(handler, "options.paneKey");
+    const sectionNameToIndex = fluid.getForComponent(scrollyPage, "sectionNameToIndex");
+    const index = sectionNameToIndex[key];
+    if (index === undefined) {
+        fluid.fail("Unable to look up section handler with name " + key + " to a data pane index");
+    }
+    return fluid.container(scrollyPage.dataPanes[index]);
+};
+
+maxwell.paneHandlerForName = function (scrollyPage, paneName) {
+    const paneHandlers = fluid.queryIoCSelector(scrollyPage, "maxwell.scrollyPaneHandler", true);
+    return paneHandlers.find(handler => handler.options.paneKey === paneName);
 };
 
 fluid.defaults("maxwell.scrollyPage", {
@@ -423,10 +475,19 @@ fluid.defaults("maxwell.scrollyPage", {
             container: "{scrollyPage}.dom.leafletMap"
         }
     },
+    dynamicComponents: {
+        paneHandlers: {
+            sources: "{that}.model.paneHandlers",
+            type: "{source}.type",
+            options: "{source}.options"
+        }
+    },
     members: {
-        leafletWidgets: "@expand:maxwell.mapLeafletWidgets({that}.dom.leafletWidgets, {that}.map.map)",
+        leafletWidgets: "@expand:maxwell.mapLeafletWidgets({that}, {that}.dom.leafletWidgets, {that}.map.map)",
         sectionHolders: "@expand:{that}.resolveSectionHolders()",
-        dataPanes: "@expand:maxwell.checkDataPanes({that}.dom.dataPanes, {that}.leafletWidgets)"
+        dataPanes: "@expand:maxwell.checkDataPanes({that}.dom.dataPanes, {that}.leafletWidgets)",
+        // Populated by mapLeafletWidgets as it gets mapId out of its options - note that this depends on sectionIndexToWidgetIndex remaining the identity
+        sectionNameToIndex: "@expand:maxwell.leafletWidgetsToIndex({that}.leafletWidgets)"
     },
     invokers: {
         sectionIndexToWidgetIndex: "fluid.identity",
@@ -440,7 +501,8 @@ fluid.defaults("maxwell.scrollyPage", {
         // Map of pane indices to active subpanes, with inactive panes having their subpane index set to -1
         effectiveActiveSubpanes: [],
         // Prevent the component trying to render until plotly's postRenderHandler has fired
-        plotlyReady: "{that}.resources.plotlyReady.parsed"
+        plotlyReady: "{that}.resources.plotlyReady.parsed",
+        paneHandlers: "@expand:fluid.getGlobalValue(maxwell.scrollyPaneHandlers)"
     },
     modelListeners: {
         activeSection: {
@@ -567,3 +629,25 @@ maxwell.applyZerothView = function (leafletWidgets, map) {
     const data0 = leafletWidgets[0].data.x;
     maxwell.applyView(map, data0);
 };
+
+
+fluid.defaults("maxwell.scrollyPaneHandler", {
+    gradeNames: "fluid.viewComponent",
+    paneKey: "{sourcePath}",
+    members: {
+        container: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
+    }
+});
+
+fluid.defaults("maxwell.templateScrollyPaneHandler", {
+    gradeNames: "fluid.templateRenderingView",
+    rendererTemplateResources: {
+        template: false,
+        markup: true
+    },
+    invokers: {
+        renderMarkup: "fluid.identity({that}.resources.markup.parsed)"
+    },
+    paneKey: "{sourcePath}",
+    parentContainer: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
+});
