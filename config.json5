@@ -50,17 +50,19 @@
         target: "%maxwell/docs/js/imerss-viz-all.js"
     }, {
         source: "%imerss-bioinfo/docs/js/imerss-viz-all.js.map",
-        target: "%maxwell/docs/js/imerss-viz-all.js.map"
+        target: "%maxwell/docs/js/imerss-viz-all.js.map",
+        replaceSource: "\"sourceRoot\":\"../..\"",
+        replaceTarget: "\"sourceRoot\":\"../../../bagatelle/\""
     }, {
         source: "%imerss-bioinfo/src/client/img/Arrow-up.svg",
         target: "%maxwell/docs/img/Arrow-up.svg"
-    },  {
+    }, {
         source: "%imerss-bioinfo/src/client/img/Arrow-down.svg",
         target: "%maxwell/docs/img/Arrow-down.svg"
-    },  {
+    }, {
         source: "%imerss-bioinfo/src/client/img/up-arrow.svg",
         target: "%maxwell/docs/img/up-arrow.svg"
-    },  {
+    }, {
         source: "%imerss-bioinfo/src/client/img/external-link.svg",
         target: "%maxwell/docs/img/external-link.svg"
     }, {

@@ -21,8 +21,14 @@ fluid.defaults("maxwell.scrollyVizBinder", {
         handlePoly: "maxwell.scrollyViz.handlePoly({that}, {arguments}.0, {arguments}.1)"
     },
     distributeOptions: {
-        target: "{that hortis.leafletMap}.options.gradeNames",
-        record: "maxwell.bareRegionsExtra"
+        bareRegionExtra: {
+            target: "{that hortis.leafletMap}.options.gradeNames",
+            record: "maxwell.bareRegionsExtra"
+        },
+        checklistRanks: {
+            target: "{that sunburst > checklist}.options.filterRanks",
+            record: ["family", "phylum", "class", "order", "species"]
+        }
     }
 });
 
