@@ -10,7 +10,12 @@ fluid.defaults("maxwell.scrollyVizBinder", {
     gradeNames: "maxwell.templateScrollyPaneHandler",
     listeners: {
         // Override the built-in old fashioned rendering
-        "onResourcesLoaded.renderMarkup": "fluid.identity"
+        "onResourcesLoaded.renderMarkup": "fluid.identity",
+        "sunburstLoaded.listenHash": {
+            funcName: "maxwell.scrollyViz.listenHash",
+            args: "{that}",
+            priority: "after:fluid-componentConstruction"
+        }
     },
     // Override non-rendering selector from hortis.scrollyMapLoader
     selectors: { // The map does not render
@@ -111,4 +116,17 @@ maxwell.scrollyViz.handlePoly = function (paneHandler, Lpolygon, shapeOptions) {
             map.events.selectRegion.fire(region, region);
         });
     }
+};
+
+maxwell.scrollyViz.listenHash = function (paneHandler) {
+    const map = paneHandler.map;
+    window.addEventListener("hashchange", function () {
+        const hash = location.hash;
+        if (hash.startsWith("#region:")) {
+            const region = hash.substring("#region:".length);
+            map.events.selectRegion.fire(region, region);
+        } else {
+            map.events.clearMapSelection.fire();
+        }
+    });
 };
