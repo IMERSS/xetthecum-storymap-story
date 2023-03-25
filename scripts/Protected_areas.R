@@ -19,6 +19,8 @@ source("scripts/utils.R")
 
 plants.x.protected.area <- read.csv("tabular_data/plants_x_protected_areas.csv")
 
+plants.x.protected.area$X <- NULL
+
 # Load Protected Areas Shape
 
 protected.areas <- mx_read("spatial_data/vectors/Protected_Areas")
@@ -66,7 +68,6 @@ addPolygons(data = protected.areas, fillColor = protected.areas$colors, fillOpac
 #Note that this statement is only effective in standalone R
 print(protectedAreaMap)
 
-
 # Create dataframe summarizing plant diversity by protected area type
 
 types <- as.factor(unique(protected.areas$prtctAT))
@@ -102,3 +103,34 @@ protected.area.plot <- plot_ly(
                             ) %>% layout(xaxis = list(categoryorder = "category ascending"))
 
 protected.area.plot 
+
+# Prepare CSVs to export catalog data for each Protected Area Type
+
+unique(plants.x.protected.area$protectedAreaType)
+
+OECM.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Other Effective Area-Based Conservation Measure')
+A.Park.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'A - Park')
+Private.Conservation.Area.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Privately Owned Conservation Area')
+WHA.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Wildlife Habitat Areas')
+PA.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Protected Area')
+S2S.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Sea To Sky Wildland Zones')
+MBS.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Migratory Bird Sanctuary')
+Conservancy.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Conservancy')
+ER.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Ecological Reserve')
+OGMA.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Old Growth Management Areas (Mapped Legal)')
+WMA.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Wildlife Management Area')
+
+write.csv(OECM.plants, "outputs/AHSBR_OECM_vascular_plants.csv", row.names = FALSE)
+write.csv(A.Park.plants, "outputs/AHSBR_Class_A_Parks_vascular_plants.csv", row.names = FALSE)
+write.csv(Private.Conservation.Area.plants, "outputs/AHSBR_Private_Conservation_Area_vascular_plants.csv", row.names = FALSE)
+write.csv(WHA.plants, "outputs/AHSBR_Wildlife_Habitat_Area_vascular_plants.csv", row.names = FALSE)
+write.csv(PA.plants, "outputs/AHSBR_Protected_Area_vascular_plants.csv", row.names = FALSE)
+write.csv(S2S.plants, "outputs/AHSBR_Sea_to_Sky_Wildland_Zones_vascular_plants.csv", row.names = FALSE)
+write.csv(MBS.plants, "outputs/AHSBR_Migratory_Bird_Sanctuary_vascular_plants.csv", row.names = FALSE)
+write.csv(Conservancy.plants, "outputs/AHSBR_Conservancy_vascular_plants.csv", row.names = FALSE)
+write.csv(ER.plants, "outputs/AHSBR_Ecological_Reserve_vascular_plants.csv", row.names = FALSE)
+write.csv(OGMA.plants, "outputs/AHSBR_Old_Growth_Management_Areas_vascular_plants.csv", row.names = FALSE)
+write.csv(WMA.plants, "outputs/AHSBR_Wildlife_Management_Area_vascular_plants.csv", row.names = FALSE)
+
+
+
