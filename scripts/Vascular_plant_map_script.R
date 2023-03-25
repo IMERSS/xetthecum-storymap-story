@@ -118,7 +118,7 @@ speciesMap <- leaflet(options=list(mx_mapId="Vascular")) %>%
 #Note that this statement is only effective in standalone R
 print(speciesMap)
 
-# Export CSVs of vascular plant records by BEC unit
+# Export CSVs: vascular plant records by BEC unit
 
 unique(plants.gridded$MAP_LABEL)
 
