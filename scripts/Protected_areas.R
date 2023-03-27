@@ -100,7 +100,8 @@ protected.area.plot <- plot_ly(
                           colors = colormap,
                           opacity = 0.8,
                           type = "bar"
-                            ) %>% layout(xaxis = list(categoryorder = "category ascending"))
+                            ) %>% layout(xaxis = list(categoryorder = "category ascending")) %>%
+                                  layout(yaxis= list(title = ""))
 
 protected.area.plot 
 

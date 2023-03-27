@@ -1,7 +1,7 @@
 ---
 title: Átl’ḵa7tsem/Howe Sound Biosphere Vegetation Analysis
-author: Andrew Simon, Antranig Basman & Murray Journeay
-date: March 6th, 2023
+author: Antranig Basman, Judith Holm, Murray Journeay & Andrew Simon
+date: March 26th, 2023
 output: html_document
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
@@ -27,7 +27,7 @@ Over one thousand vascular plant species are known to occur within the Átl’�
 source("scripts/Vascular_plant_map_script.R")
 speciesMap
 ```
-### Map 1. Ecological communities
+*Map 1. Ecological communities*
 
 Explore the region's flora by selecting from the biogeoclimatic units displayed on the map:
 
@@ -55,17 +55,20 @@ speciesPlot
 #    res = 100,
 #    end_pause = 120)
 ```
-### Figure 1. Historical collection activities
+*Map 2. Historical collection activities*
+*Figure 1. Historical collection activities*
 
 ## Community science contributions
 
-Through the combined efforts of `r length(unique(plants$recordedBy))` individuals, the Átl’ḵa7tsem/Howe Sound naturalist community has documented `r nrow(plant.summary)` species, confirming `r round((nrow(confirmed)/(nrow(confirmed)+nrow(reported))*100), digits = 0)` percent of the historically reported vascular plant diversity and adding `r nrow(new)` new species reports to the list. Community members have now documented `r round((nrow(observed)/(nrow(plant.summary))*100), digits = 0)` percent of the regional plant diversity on iNaturalist.
+Through the combined efforts of `r length(unique(plants$recordedBy))` individuals, the Átl’ḵa7tsem/Howe Sound naturalist community has documented `r nrow(plant.summary)` species, confirming `r round((nrow(confirmed)/(nrow(confirmed)+nrow(reported))*100), digits = 0)` percent of the historically reported vascular plant diversity and adding `r nrow(new)` new species reports to the list. Community members have now documented `r round((nrow(observed)/(nrow(plant.summary))*100), digits = 0)` percent of the plant diversity known to the region on iNaturalist.
 
 ```{r, echo=FALSE, message=FALSE}
-# source("scripts/Community_science_contributions.R")
-# speciesMap
+source("scripts/Community_science_contributions.R")
+reportingStatusMap
+reportingStatusFig
 ```
-### Figure 2: Pie charts / bar plots summarizing how well documented plant families are (e.g., Bio Galiano stats)
+*Map 3. Species Reporting Status*
+*Figure 2: Species Reporting Status*
 
 ## Top contributions to our knowledge of the regional plant diversity
 
@@ -79,6 +82,8 @@ source("scripts/Protected_areas.R")
 protectedAreaMap
 protected.area.plot 
 ```
+*Map 4. Protected Areas*
+*Figure 3. Species Reported by Protected Area*
 
 Summary of plant diversity documented within protected areas; call to action
 
