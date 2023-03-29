@@ -14,7 +14,7 @@
         "json5": "2.2.3",
         "linkedom": "0.14.25",
         "fs-extra": "11.1.1",
-        "eslint": "8.36.0",
+        "eslint": "8.37.0",
         "eslint-config-fluid": "2.1.1",
         "fluid-lint-all": "1.2.9"
     },
