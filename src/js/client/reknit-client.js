@@ -71,6 +71,11 @@ var maxwell = fluid.registerNamespace("maxwell");
  * @typedef {Object} LeafletMap
  */
 
+/**
+ * A Leaflet LayerGroup
+ * @typedef {Object} LeafletLayerGroup
+ */
+
 maxwell.findPlotlyWidgets = function (that) {
     const widgets = [...document.querySelectorAll(".html-widget.plotly")];
     const panes = that.dataPanes;
@@ -178,6 +183,25 @@ maxwell.addMarkers = function (lat, lon, iconOrRadius, options, label, labelOpti
     // from https://github.com/rstudio/leaflet/blob/main/javascript/src/methods.js#L189
 };
 
+/**
+ * Information about an allocated Leaflet pane
+ *
+ * @typedef {SectionHolder} PaneInfo
+ * @property {String} paneName - The name of the pane, in the form "maxwell-pane-n"
+ * @property {HTMLElement} pane - The HTML element for the allocated pane
+ * @property {LayerGroup} group - The root LayerGroup allocated for the pane
+ * @property {Object} paneOptions - Options to be mixed in to any layers in order to allocate them to this pane,
+ * being the member {pane: paneName}
+ */
+
+/** Allocates a pane to hold controls at the specified index and subIndex values
+ * @param {LeafletMap} map - The Leaflet Map in which the pane is to be allocated
+ * @param {Integer} index - The index of the pane to be allocated
+ * @param {Integer} [subLayerIndex] - Optional subindex of the pane
+ * @param {String} [overridePane] - An optional override pane in case the default algorithm choice is to be overriden - in
+ * case, e.g. that the material is destined for a base map pane
+ * @return {PaneInfo} - The allocated paneInfo structure
+ */
 maxwell.allocatePane = function (map, index, subLayerIndex, overridePane) {
     let paneName = "maxwell-pane-" + (index === undefined ? overridePane : index);
     if (subLayerIndex !== undefined) {
@@ -195,6 +219,7 @@ maxwell.allocatePane = function (map, index, subLayerIndex, overridePane) {
             pane.classList.add("mxcw-mapSubPane");
         }
         group = L.layerGroup(paneOptions).addTo(map);
+        // We used to jam these onto the map so they could be found - now they go into paneInfo in our own records
         map["mx-group-" + paneName] = group;
     } else {
         group = map["mx-group-" + paneName];
@@ -321,7 +346,7 @@ maxwell.leafletWidgetToPane = function (scrollyPage, map, widget, index) {
             console.log("Unknown R leaflet method " + call.method + " discarded");
         }
     });
-    widget.pane = paneInfo.pane;
+    widget.paneInfo = paneInfo;
 };
 
 /**
@@ -333,6 +358,7 @@ maxwell.decodeLeafletWidgets = function (scrollyPage, leafletWidgets, map) {
     leafletWidgets.forEach((widget, i) => maxwell.leafletWidgetToPane(scrollyPage, map, widget, i));
 };
 
+// Index the collection of leafletWidget components by paneHandlerName
 maxwell.leafletWidgetsToIndex = function (leafletWidgets) {
     const togo = {};
     leafletWidgets.forEach(function (widget, index) {
@@ -428,6 +454,16 @@ maxwell.makeLeafletMap = function (node) {
     return L.map(fluid.unwrap(node));
 };
 
+maxwell.paneKeyToIndex = function (handler, scrollyPage) {
+    const key = fluid.getForComponent(handler, "options.paneKey");
+    const sectionNameToIndex = fluid.getForComponent(scrollyPage, "sectionNameToIndex");
+    const index = sectionNameToIndex[key];
+    if (index === undefined) {
+        fluid.fail("Unable to look up section handler with name " + key + " to a data pane index");
+    }
+    return index;
+};
+
 /**
  * Given a paneHandler component, determine which data pane its contents should be rendered into, by indirecting
  * into the sectionNameToIndex structure.
@@ -436,13 +472,13 @@ maxwell.makeLeafletMap = function (node) {
  * @return {jQuery} A jQuery-wrapped container node suitable for instantiating a component.
  */
 maxwell.dataPaneForPaneHandler = function (handler, scrollyPage) {
-    const key = fluid.getForComponent(handler, "options.paneKey");
-    const sectionNameToIndex = fluid.getForComponent(scrollyPage, "sectionNameToIndex");
-    const index = sectionNameToIndex[key];
-    if (index === undefined) {
-        fluid.fail("Unable to look up section handler with name " + key + " to a data pane index");
-    }
+    const index = maxwell.paneKeyToIndex(handler, scrollyPage);
     return fluid.container(scrollyPage.dataPanes[index]);
+};
+
+maxwell.leafletWidgetForPaneHandler = function (handler, scrollyPage) {
+    const index = maxwell.paneKeyToIndex(handler, scrollyPage);
+    return scrollyPage.leafletWidgets[index];
 };
 
 maxwell.paneHandlerForName = function (scrollyPage, paneName) {
@@ -450,13 +486,15 @@ maxwell.paneHandlerForName = function (scrollyPage, paneName) {
     return paneHandlers.find(handler => handler.options.paneKey === paneName);
 };
 
+
+
 fluid.defaults("maxwell.scrollyPage", {
     gradeNames: ["fluid.viewComponent", "fluid.resourceLoader"],
     container: "body",
     paneMap: {
         // Map of paneName to objects holding an emitter on which "click" is firable - currently only used in
-        // Maxwell proper with maxwell.siteSelectable in order to make sites selectable. Should become lensed
-        // components I guess.
+        // Maxwell proper with maxwell.siteSelectable in order to make sites selectable. This will be
+        // migrated to paneHandler
     },
     resources: {
         plotlyReady: {
@@ -505,8 +543,8 @@ fluid.defaults("maxwell.scrollyPage", {
         paneHandlers: "@expand:fluid.getGlobalValue(maxwell.scrollyPaneHandlers)"
     },
     modelListeners: {
-        activeSection: {
-            namespace: "updateClasses",
+        updateClasses: {
+            path: "activeSection",
             funcName: "maxwell.updateSectionClasses",
             args: ["{that}", "{change}.value"]
         },
@@ -569,8 +607,8 @@ maxwell.subPanesToEffective = function (activePane, activeSubPanes) {
 };
 
 maxwell.updateActiveMapPane = function (that, activePane) {
-    const widgets = [...that.leafletWidgets];
-    const widgetPanes = widgets.map(widget => widget.pane);
+    const widgets = that.leafletWidgets;
+    const widgetPanes = widgets.map(widget => widget.paneInfo.pane);
     maxwell.toggleActiveClass(widgetPanes, -1, "mxcw-activeMapPane");
     widgetPanes[activePane].style.display = "block";
     const zoom = maxwell.flyToBounds(that.map.map, widgets[activePane].data.x, that.map.options.zoomDuration);
@@ -630,17 +668,32 @@ maxwell.applyZerothView = function (leafletWidgets, map) {
     maxwell.applyView(map, data0);
 };
 
-
-fluid.defaults("maxwell.scrollyPaneHandler", {
+fluid.defaults("maxwell.paneHandler", {
     gradeNames: "fluid.viewComponent",
     paneKey: "{sourcePath}",
+    paneIndex: "@expand:maxwell.paneKeyToIndex({that}, {maxwell.scrollyPage})",
+    leafletWidget: "@expand:maxwell.leafletWidgetForPaneHandler({that}, {maxwell.scrollyPage})",
+    modelRelay: {
+        isVisible: {
+            args: ["{maxwell.scrollyPage}.model.activePane", "{that}.options.paneIndex"],
+            func: (activePane, paneIndex) => activePane === paneIndex,
+            target: "isVisible"
+        }
+    }
+});
+
+fluid.defaults("maxwell.scrollyPaneHandler", {
+    gradeNames: "maxwell.paneHandler",
+
     members: {
         container: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
     }
 });
 
 fluid.defaults("maxwell.templateScrollyPaneHandler", {
-    gradeNames: "fluid.templateRenderingView",
+    gradeNames: ["maxwell.paneHandler", "fluid.templateRenderingView"],
+    // Bodge the sunburst loader to being a traditional templateRenderingView so that its markup arrives earlier -
+    // In practice didn't manage to break the race condition. Port this into core imerss-viz
     rendererTemplateResources: {
         template: false,
         markup: true
@@ -648,6 +701,5 @@ fluid.defaults("maxwell.templateScrollyPaneHandler", {
     invokers: {
         renderMarkup: "fluid.identity({that}.resources.markup.parsed)"
     },
-    paneKey: "{sourcePath}",
     parentContainer: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
 });

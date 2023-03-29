@@ -7,7 +7,7 @@ h2 {
 }
 
 .main-container {
-    padding-bottom: 50em;
+    padding-bottom: 80vh;
 }
 
 .mxcw-banner {
@@ -48,6 +48,7 @@ h2 {
 
 .mxcw-mapPane {
     opacity: 0;
+    /* TODO: move over to "visibility" */
     transition-property: opacity;
     transition-duration: 400ms;
 }

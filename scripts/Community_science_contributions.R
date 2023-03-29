@@ -136,7 +136,7 @@ reportingStatusFig <- reportingStatusFig %>% add_trace(x = ~new.no, name = 'New'
                          marker = list(color = '#7562b4',
                                        line = list(color = '#7562b4',
                                                    width = 1)))
-reportingStatusFig <- reportingStatusFig %>% layout(barmode = 'stack',
+reportingStatusFig <- reportingStatusFig %>% layout(barmode = 'stack', autosize=F, height=140,
                       xaxis = list(title = "Species Reported"),
                       yaxis = list(title ="Records")) %>% 
   layout(yaxis= list(showticklabels = FALSE)) %>%

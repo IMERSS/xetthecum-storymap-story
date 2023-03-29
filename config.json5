@@ -46,6 +46,9 @@
         source: "%maxwell/src/css/maxwell.css",
         target: "%maxwell/docs/css/maxwell.css"
     }, {
+        source: "%maxwell/src/css/howe.css",
+        target: "%maxwell/docs/css/howe.css"
+    }, {
         source: "%imerss-bioinfo/docs/js/imerss-viz-all.js",
         target: "%maxwell/docs/js/imerss-viz-all.js"
     }, {

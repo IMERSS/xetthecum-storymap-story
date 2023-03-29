@@ -62,7 +62,7 @@ speciesPlot
 
 Through the combined efforts of `r length(unique(plants$recordedBy))` individuals, the Átl’ḵa7tsem/Howe Sound naturalist community has documented `r nrow(plant.summary)` species, confirming `r round((nrow(confirmed)/(nrow(confirmed)+nrow(reported))*100), digits = 0)` percent of the historically reported vascular plant diversity and adding `r nrow(new)` new species reports to the list. Community members have now documented `r round((nrow(observed)/(nrow(plant.summary))*100), digits = 0)` percent of the plant diversity known to the region on iNaturalist.
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 source("scripts/Community_science_contributions.R")
 reportingStatusMap
 reportingStatusFig

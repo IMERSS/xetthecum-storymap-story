@@ -1,0 +1,79 @@
+body {
+    /* Override definition which shouldn't be in xetthecum-shared.css" */
+    margin: 8px
+}
+.mxcw-widgetPane {
+    padding: 1em
+}
+.mxcw-container {
+    height: calc(100vh - 10rem)
+}
+.fl-imerss-container {
+    flex-direction: column;
+    margin-top: 0px;
+}
+.fld-imerss-region {
+    padding: 3px;
+}
+.mxcw-widgetPane {
+    height: 100%;
+}
+.mxcw-noStretch {
+    height: 100%;
+    max-height: 100%;
+}
+.mxcw-map {
+    height: 50%;
+}
+.mxcw-data {
+    height: 50%;
+}
+/* Taken from R Leaflet's ".info" */
+.mxcw-legend {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: #555;
+    color: #eee;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    /* Solution from https://stackoverflow.com/a/21335440 */
+    visibility: visible;
+    transition-property: opacity, visibility;
+    transition-duration: 400ms;
+}
+
+.mxcw-hidden.mxcw-legend {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* As in xetthecum.css */
+.fld-imerss-legend-preview {
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    outline: 1px solid #353030;
+    margin: 2px;
+    position: relative;
+    top: 3px;
+}
+
+.fld-imerss-map-legend > span {
+    display: inline-block;
+    font-size: 1.3rem;
+    margin-left: 2rem;
+    margin-bottom: 0.4rem;
+}
+
+.fld-imerss-legend-label {
+    display: inline-block;
+    font-size: 0.9rem;
+    width: 8rem;
+    margin-left: 6px;
+    position: relative;
+    top: -2px;
+}
+
+.fld-imerss-selected .fld-imerss-legend-preview {
+    outline: 3px solid #FCFF63;
+}

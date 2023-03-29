@@ -34,9 +34,11 @@ plants.gridded$MAP_LABEL <- metadata$MAP_LABEL[match(unlist(plants.gridded$id), 
 bec.plants <- plants.gridded %>% group_by(MAP_LABEL) %>% 
                     summarize(taxa = paste(sort(unique(scientific)),collapse=", "))
 
+vascularData <- structure(list(palette = palette, taxa = bec.plants))
+
 # Write summarised plants to JSON file for viz
 
-write(rjson::toJSON(bec.plants), "viz_data/Vascular-regionTaxa.json")
+write(rjson::toJSON(vascularData), "viz_data/Vascular-plotData.json")
 
 # Load BEC Zones shape
 

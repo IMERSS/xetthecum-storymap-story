@@ -1,5 +1,7 @@
 "use strict";
 
+/* global L */
+
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
@@ -30,6 +32,10 @@ fluid.defaults("maxwell.scrollyVizBinder", {
             target: "{that hortis.leafletMap}.options.gradeNames",
             record: "maxwell.bareRegionsExtra"
         },
+        map: {
+            target: "{that hortis.leafletMap}.options.members.map",
+            record: "{scrollyLeafletMap}.map"
+        },
         checklistRanks: {
             target: "{that sunburst > checklist}.options.filterRanks",
             record: ["family", "phylum", "class", "order", "species"]
@@ -37,9 +43,85 @@ fluid.defaults("maxwell.scrollyVizBinder", {
     }
 });
 
+fluid.registerNamespace("maxwell.legendKey");
+
+maxwell.legendKey.rowTemplate = "<div class=\"fld-imerss-legend-row %rowClass\">" +
+    "<span class=\"fld-imerss-legend-icon\"></span>" +
+    "<span class=\"fld-imerss-legend-preview %previewClass\" style=\"%previewStyle\"></span>" +
+    "<span class=\"fld-imerss-legend-label\">%keyLabel</span>" +
+    "</div>";
+
+
+maxwell.legendKey.renderMarkup = function (markup, clazz, className) {
+    const style = hortis.fillColorToStyle(clazz.fillColor || clazz.color);
+    const normal = hortis.normaliseToClass(className);
+    return fluid.stringTemplate(markup, {
+        rowClass: "fld-imerss-legend-row-" + normal,
+        previewClass: "fld-imerss-class-" + normal,
+        previewStyle: "background-color: " + style.fillColor,
+        keyLabel: className
+    });
+};
+
+// cf. Xetthecum's hortis.legendKey.drawLegend
+maxwell.legendKey.drawLegend = function (map) {
+    const regionRows = fluid.transform(map.regions, function (troo, regionName) {
+        return maxwell.legendKey.renderMarkup(maxwell.legendKey.rowTemplate, map.regions[regionName], regionName);
+    });
+    const markup = Object.values(regionRows).join("\n");
+    const legend = L.control({position: "bottomright"});
+    const container = document.createElement("div");
+    container.classList.add("mxcw-legend");
+    container.innerHTML = markup;
+    legend.onAdd = function () {
+        return container;
+    };
+    legend.addTo(map.map);
+    map.clazzToLegendNodes = fluid.transform(map.regions, function (troo, regionName) {
+        const rowSel = ".fld-imerss-legend-row-" + hortis.normaliseToClass(regionName);
+        const row = container.querySelector(rowSel);
+        row.addEventListener("click", function () {
+            map.events.selectRegion.fire(regionName, regionName);
+        });
+    });
+    return container;
+};
+
+maxwell.legendVisible = function (container, isVisible) {
+    container.classList[isVisible ? "remove" : "add"]("mxcw-hidden");
+};
+
+// Addon grade for hortis.leafletMap - all this stuff needs to go upstairs into LeafletMapWithBareRegions
 fluid.defaults("maxwell.bareRegionsExtra", {
+    // These two from withRegions, pull up into withLegend
+    selectors: {
+        // key is from Xetthecum, selector is ours - we don't have "keys", normalise this
+        legendKeys: ".mxcw-legend"
+    },
+    modelListeners: {
+        legend: {
+            path: "selectedRegions.*",
+            func: "hortis.legendKey.selectRegion",
+            args: ["{that}", "{change}.value", "{change}.path"]
+        },
+        legendVisible: {
+            path: "{paneHandler}.model.isVisible",
+            func: "maxwell.legendVisible",
+            args: ["{that}.legendContainer", "{change}.value"]
+        },
+        regionToHash: {
+            path: "mapBlockTooltipId",
+            func: "maxwell.scrollyViz.updateRegionHash",
+            args: ["{that}", "{change}"]
+        }
+    },
+    members: {
+        legendContainer: "@expand:maxwell.legendKey.drawLegend({that}, {paneHandler})"
+    },
     listeners: {
-        "buildMap.drawRegions": "maxwell.drawBareRegions({that}, {scrollyPage})"
+        "buildMap.drawRegions": "maxwell.drawBareRegions({that}, {scrollyPage})",
+        //                                                                          class,       community       source
+        "selectRegion.regionSelection": "hortis.leafletMap.regionSelection({that}, {arguments}.0, {arguments}.1, {arguments}.2)"
     }
 });
 
@@ -124,9 +206,15 @@ maxwell.scrollyViz.listenHash = function (paneHandler) {
         const hash = location.hash;
         if (hash.startsWith("#region:")) {
             const region = hash.substring("#region:".length);
-            map.events.selectRegion.fire(region, region);
+            map.events.selectRegion.fire(region, region, "hash");
         } else {
             map.events.clearMapSelection.fire();
         }
     });
+};
+
+maxwell.scrollyViz.updateRegionHash = function (paneHandler, change) {
+    if (!change.transaction.fullSources.hash) {
+        window.history.pushState(null, null, change.value ? "#region:" + change.value : "#");
+    }
 };
