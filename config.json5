@@ -15,6 +15,9 @@
                         renderMarkup: true,
                         vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life.json.lz4"
                     }
+                },
+                TopContributions: {
+                    type: "maxwell.iNatComponentsPaneHandler"
                 }
             }
         }
@@ -39,6 +42,9 @@
     }, {
         source: "%maxwell/src/js/client/imerss-viz-reknit.js",
         target: "%maxwell/docs/js/imerss-viz-reknit.js"
+    }, {
+        source: "%maxwell/src/js/client/inat-components-build.js",
+        target: "%maxwell/docs/js/inat-components-build.js"
     }, {
         source: "%maxwell/src/js/client/howe.js",
         target: "%maxwell/docs/js/howe.js"

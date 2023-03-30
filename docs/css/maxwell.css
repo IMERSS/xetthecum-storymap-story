@@ -48,7 +48,7 @@ h2 {
 
 .mxcw-mapPane {
     opacity: 0;
-    // TODO: move over to "visibility"
+    /* TODO: move over to "visibility" */
     transition-property: opacity;
     transition-duration: 400ms;
 }

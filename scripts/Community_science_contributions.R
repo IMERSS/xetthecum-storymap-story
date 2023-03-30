@@ -15,6 +15,7 @@ library(sf)
 library(stringr)
 library(tidyr)
 library(viridis)
+library(jsonlite)
 
 library(plotly)
 
@@ -61,11 +62,6 @@ records <- rbind(new.taxa.records,confirmed.taxa.records,reported.taxa.records)
 taxa.status <- records %>% group_by(status) %>% 
   summarize(taxa = paste(sort(unique(scientific)),collapse=", "))
 
-# Write summarised plants to JSON file for viz 
-# (selection states corresponding with bar plot selections: 'new', 'historic','confirmed')
-
-write(rjson::toJSON(taxa.status), "viz_data/Vascular-statusTaxa.json")
-
 ### PLOT GRIDDED HEATMAPS 
 
 # Load map layers
@@ -98,14 +94,14 @@ pal <- leaflet::colorFactor(viridis_pal(option = "D")(t), domain = values)
 
 # Plot map
 
-reportingStatusMap <- leaflet() %>%
+reportingStatusMap <- leaflet(options=list(mx_mapId="Status")) %>%
   setView(-123.2194, 49.66076, zoom = 8.5) %>%
   addTiles(options = providerTileOptions(opacity = 0.5)) %>%
   addRasterImage(hillshade, opacity = 0.8) %>%
   addPolygons(data = coastline, color = "black", weight = 1.5, fillOpacity = 0, fillColor = NA) %>%
-  addPolygons(data = gridded.confirmed.records, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 0)) %>%
-  addPolygons(data = gridded.historic.records, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 1)) %>%
-  addPolygons(data = gridded.new.records, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 2)) %>%
+  addPolygons(data = gridded.confirmed.records, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = labelToOption("confirmed")) %>%
+  addPolygons(data = gridded.historic.records, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = labelToOption("historic")) %>%
+  addPolygons(data = gridded.new.records, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = labelToOption("new")) %>%
   addLegend(position = 'topright',
             colors = viridis_pal(option = "D")(t),
             labels = values) %>%
@@ -125,7 +121,7 @@ reporting.status <- data.frame(y, confirmed.no, historic.no, new.no)
 
 reportingStatusFig <- plot_ly(reporting.status, x = ~confirmed.no, y = ~y, type = 'bar', orientation = 'h', name = 'Confirmed',
                       
-                        marker = list(color = '#5a96d2',
+                      marker = list(color = '#5a96d2',
                              line = list(color = '#5a96d2',
                                          width = 1)))
 reportingStatusFig <- reportingStatusFig %>% add_trace(x = ~historic.no, name = 'Historic',
@@ -143,6 +139,14 @@ reportingStatusFig <- reportingStatusFig %>% layout(barmode = 'stack', autosize=
   layout(yaxis= list(title = ""))
 
 reportingStatusFig
+
+reportingPal <- list(confirmed = '#5a96d2', historic = '#decb90', new = '#7562b4')
+
+# Write summarised plants to JSON file for viz 
+# (selection states corresponding with bar plot selections: 'new', 'historic','confirmed')
+statusData <- structure(list(palette = reportingPal, taxa = taxa.status))
+
+write(jsonlite::toJSON(statusData), "viz_data/Status-plotData.json")
 
 # Export CSVs for confirmed, historic and new reports
 

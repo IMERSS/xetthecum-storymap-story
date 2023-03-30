@@ -22,9 +22,14 @@ body {
     height: 100%;
     max-height: 100%;
 }
+
 .mxcw-map {
     height: 50%;
 }
+.mxcw-hideMap {
+    height: 0;
+}
+
 .mxcw-data {
     height: 50%;
 }
@@ -76,4 +81,16 @@ body {
 
 .fld-imerss-selected .fld-imerss-legend-preview {
     outline: 3px solid #FCFF63;
+}
+
+/* Reach deep into the "general-module-panel" inside the iNat components and adjust its height */
+#inat-components > div > div:last-child {
+    height: calc(100vh - 350px);
+    overflow-y: auto;
+    /** Half the "grid gap" of 8px */
+    padding-right: 4px;
+}
+
+#inat-components > div {
+    padding-top: 40px;
 }

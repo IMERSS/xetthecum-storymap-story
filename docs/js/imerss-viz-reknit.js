@@ -7,6 +7,38 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
+maxwell.toggleClass = function (container, isVisible, clazz, inverse) {
+    container.classList[isVisible ^ inverse ? "remove" : "add"](clazz);
+};
+
+fluid.defaults("maxwell.iNatComponentsPaneHandler", {
+    gradeNames: "maxwell.scrollyPaneHandler",
+    scriptLocation: "js/inat-components-build.js",
+    events: { // TODO: Better as a resource
+        scriptLoaded: null
+    },
+    listeners: {
+        "onCreate.injectScript" : "maxwell.reactScriptInjector"
+    },
+    modelListeners: {
+        paneVisible: {
+            path: "{paneHandler}.model.isVisible",
+            func: "maxwell.toggleClass",
+            args: ["{scrollyLeafletMap}.container.0", "{change}.value", "mxcw-hideMap", true]
+        }
+    }
+});
+
+maxwell.reactScriptInjector = function (that) {
+    const host = document.createElement("div");
+    host.id = "inat-components";
+    that.container[0].appendChild(host);
+    const script = document.createElement("script");
+    script.onload = that.events.scriptLoaded.fire(that);
+    script.src = that.options.scriptLocation;
+    document.head.appendChild(script);
+};
+
 // mixin grade which mediates event flow from viz to Leaflet pane
 fluid.defaults("maxwell.scrollyVizBinder", {
     gradeNames: "maxwell.templateScrollyPaneHandler",
@@ -87,10 +119,6 @@ maxwell.legendKey.drawLegend = function (map) {
     return container;
 };
 
-maxwell.legendVisible = function (container, isVisible) {
-    container.classList[isVisible ? "remove" : "add"]("mxcw-hidden");
-};
-
 // Addon grade for hortis.leafletMap - all this stuff needs to go upstairs into LeafletMapWithBareRegions
 fluid.defaults("maxwell.bareRegionsExtra", {
     // These two from withRegions, pull up into withLegend
@@ -106,8 +134,8 @@ fluid.defaults("maxwell.bareRegionsExtra", {
         },
         legendVisible: {
             path: "{paneHandler}.model.isVisible",
-            func: "maxwell.legendVisible",
-            args: ["{that}.legendContainer", "{change}.value"]
+            func: "maxwell.toggleClass",
+            args: ["{that}.legendContainer", "{change}.value", "mxcw-hidden"]
         },
         regionToHash: {
             path: "mapBlockTooltipId",

@@ -283,6 +283,63 @@ maxwell.decodeLayoutId = function (call) {
     return argPos && call.args[argPos];
 };
 
+maxwell.decodeNonLeafletHandler = function (widget) {
+    const nameHolder = [...widget.node.classList].find(clazz => clazz.startsWith("mxcw-paneName-"));
+    return nameHolder.substring("mxcw-paneName-".length);
+};
+
+maxwell.decodeLeafletWidgetCall = function (options, call) {
+    const {map, widget, index, paneInfo, paneHandler} = options;
+    const {paneOptions, group} = paneInfo;
+    // TODO: Current assumption is that any choice of layoutId converts to a direct assignment to the same-named pane -
+    // which is useful for assigning to "baseMap" e.g. in the community directory but not good for e.g. Howe Sound assignment
+    // to clickable "communities".
+    const overridePane = maxwell.decodeLayoutId(call);
+    let overridePaneInfo, overridePaneOptions, overrideGroup;
+    if (overridePane) {
+        overridePaneInfo = maxwell.allocatePane(map, undefined, undefined, overridePane);
+        overridePaneOptions = overridePaneInfo.paneOptions;
+        overrideGroup = overridePaneInfo.group;
+    }
+    // See https://github.com/rstudio/leaflet/blob/main/javascript/src/methods.js#L550
+    const polyMethod = maxwell.leafletPolyMethods[call.method];
+    if (polyMethod) {
+        // TODO: Note that because we can't tunnel arguments other than layerId for addRasterImage, we should move
+        // the subLayerIndex system (used for Howe Sound choropleth) over to layerId as well to support future
+        // uses of raster images in a choropleth
+        // TODO: We should probably demultiplex these arguments up front so that we can support multiplex assignment of
+        // layerId and subLayerIndex on the R side
+        const subLayerIndex = call.args[3].mx_subLayerIndex;
+        if (subLayerIndex !== undefined) {
+            const subPaneInfo = maxwell.allocatePane(map, index, subLayerIndex);
+            maxwell.assignPolyToPane(paneHandler, call.args, polyMethod, subPaneInfo);
+            widget.subPanes[subLayerIndex] = subPaneInfo;
+        } else {
+            maxwell.assignPolyToPane(paneHandler, call.args, polyMethod, overridePaneInfo || paneInfo);
+        }
+    } else if (call.method === "addRasterImage") {
+        // args: url, bounds, opacity
+        const opacity = call.args[2] ?? 1.0;
+        L.imageOverlay(call.args[0], call.args[1], Object.assign({}, {
+            opacity: opacity
+        }, overridePaneOptions || paneOptions)).addTo(overrideGroup || group);
+    } else if (call.method === "addMarkers" || call.method === "addCircleMarkers") {
+        // Very limited support currently - just for labelOnlyMarkers used in fire history
+        // args: lat, lng, icon || radius, layerId, group, options, popup, popupOptions,
+        // clusterOptions, clusterId, label, labelOptions, crosstalkOptions
+        const markerArgs = [call.args[0], call.args[1], call.args[2], call.args[5], call.args[10], call.args[11], paneOptions, group];
+        if (Array.isArray(call.args[0])) {
+            for (let i = 0; i < call.args[0].length; ++i) {
+                maxwell.addMarkers.apply(null, maxwell.projectArgs(markerArgs, i));
+            }
+        } else {
+            maxwell.addMarkers.apply(null, markerArgs);
+        }
+    } else {
+        console.log("Unknown R leaflet method " + call.method + " discarded");
+    }
+};
+
 /** Decodes all the calls in a leaflet widget and allocates them to an appropriate pane or subpane of the overall
  * @param {maxwell.scrollyPage} scrollyPage - The overall scrollyPage component
  * @param {LeafletMap} map - The map holding the pane to which the widget's calls should be assigned
@@ -292,60 +349,12 @@ maxwell.decodeLayoutId = function (call) {
  * @param {Integer} index - The index of the widget/section heading in the document structure
  */
 maxwell.leafletWidgetToPane = function (scrollyPage, map, widget, index) {
-    const calls = widget.data.x.calls;
-    widget.paneHandlerName = widget.data.x?.options?.mx_mapId;
+    widget.paneHandlerName = widget.data ? widget.data.x?.options?.mx_mapId : maxwell.decodeNonLeafletHandler(widget);
     const paneHandler = widget.paneHandlerName && maxwell.paneHandlerForName(scrollyPage, widget.paneHandlerName);
     const paneInfo = maxwell.allocatePane(map, index);
-    const {paneOptions, group} = paneInfo;
-    calls.forEach(function (call) {
-        // TODO: Current assumption is that any choice of layoutId converts to a direct assignment to the same-named pane -
-        // which is useful for assigning to "baseMap" e.g. in the community directory but not good for e.g. Howe Sound assignment
-        // to clickable "communities".
-        const overridePane = maxwell.decodeLayoutId(call);
-        let overridePaneInfo, overridePaneOptions, overrideGroup;
-        if (overridePane) {
-            overridePaneInfo = maxwell.allocatePane(map, undefined, undefined, overridePane);
-            overridePaneOptions = overridePaneInfo.paneOptions;
-            overrideGroup = overridePaneInfo.group;
-        }
-        // See https://github.com/rstudio/leaflet/blob/main/javascript/src/methods.js#L550
-        const polyMethod = maxwell.leafletPolyMethods[call.method];
-        if (polyMethod) {
-            // TODO: Note that because we can't tunnel arguments other than layerId for addRasterImage, we should move
-            // the subLayerIndex system (used for Howe Sound choropleth) over to layerId as well to support future
-            // uses of raster images in a choropleth
-            // TODO: We should probably demultiplex these arguments up front so that we can support multiplex assignment of
-            // layerId and subLayerIndex on the R side
-            const subLayerIndex = call.args[3].mx_subLayerIndex;
-            if (subLayerIndex !== undefined) {
-                const subPaneInfo = maxwell.allocatePane(map, index, subLayerIndex);
-                maxwell.assignPolyToPane(paneHandler, call.args, polyMethod, subPaneInfo);
-                widget.subPanes[subLayerIndex] = subPaneInfo;
-            } else {
-                maxwell.assignPolyToPane(paneHandler, call.args, polyMethod, overridePaneInfo || paneInfo);
-            }
-        } else if (call.method === "addRasterImage") {
-            // args: url, bounds, opacity
-            const opacity = call.args[2] ?? 1.0;
-            L.imageOverlay(call.args[0], call.args[1], Object.assign({}, {
-                opacity: opacity
-            }, overridePaneOptions || paneOptions)).addTo(overrideGroup || group);
-        } else if (call.method === "addMarkers" || call.method === "addCircleMarkers") {
-            // Very limited support currently - just for labelOnlyMarkers used in fire history
-            // args: lat, lng, icon || radius, layerId, group, options, popup, popupOptions,
-            // clusterOptions, clusterId, label, labelOptions, crosstalkOptions
-            const markerArgs = [call.args[0], call.args[1], call.args[2], call.args[5], call.args[10], call.args[11], paneOptions, group];
-            if (Array.isArray(call.args[0])) {
-                for (let i = 0; i < call.args[0].length; ++i) {
-                    maxwell.addMarkers.apply(null, maxwell.projectArgs(markerArgs, i));
-                }
-            } else {
-                maxwell.addMarkers.apply(null, markerArgs);
-            }
-        } else {
-            console.log("Unknown R leaflet method " + call.method + " discarded");
-        }
-    });
+    if (widget.data) {
+        widget.data.x.calls.forEach(call => maxwell.decodeLeafletWidgetCall({map, widget, index, paneInfo, paneHandler}, call));
+    }
     widget.paneInfo = paneInfo;
 };
 
@@ -380,9 +389,9 @@ maxwell.mapLeafletWidgets = function (scrollyPage, widgets, map) {
     console.log("Found " + widgets.length + " leaflet widgets");
     const togo = [...widgets].map(function (widget) {
         const id = widget.id;
-        const dataNode = document.querySelector("[data-for=\"" + id + "\"");
+        const dataNode = id ? document.querySelector("[data-for=\"" + id + "\"") : null;
         console.log("Got data node ", dataNode);
-        const data = JSON.parse(dataNode.innerHTML);
+        const data = dataNode ? JSON.parse(dataNode.innerHTML) : null;
         console.log("Got data ", data);
         const section = widget.closest(".section.level2");
         const heading = section.querySelector("h2");
@@ -611,7 +620,8 @@ maxwell.updateActiveMapPane = function (that, activePane) {
     const widgetPanes = widgets.map(widget => widget.paneInfo.pane);
     maxwell.toggleActiveClass(widgetPanes, -1, "mxcw-activeMapPane");
     widgetPanes[activePane].style.display = "block";
-    const zoom = maxwell.flyToBounds(that.map.map, widgets[activePane].data.x, that.map.options.zoomDuration);
+    const data = widgets[activePane].data;
+    const zoom = data ? maxwell.flyToBounds(that.map.map, data.x, that.map.options.zoomDuration) : fluid.promise().resolve();
     zoom.then(function () {
         maxwell.toggleActiveClass(widgetPanes, activePane, "mxcw-activeMapPane");
         window.setTimeout(function () {
@@ -684,7 +694,6 @@ fluid.defaults("maxwell.paneHandler", {
 
 fluid.defaults("maxwell.scrollyPaneHandler", {
     gradeNames: "maxwell.paneHandler",
-
     members: {
         container: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
     }

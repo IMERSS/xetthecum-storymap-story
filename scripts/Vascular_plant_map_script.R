@@ -8,7 +8,7 @@ library(raster)
 library(reshape2)
 library(scales)
 library(sf)
-library(rjson)
+library(jsonlite)
 library(viridis)
 
 # Source dependencies
@@ -38,7 +38,7 @@ vascularData <- structure(list(palette = palette, taxa = bec.plants))
 
 # Write summarised plants to JSON file for viz
 
-write(rjson::toJSON(vascularData), "viz_data/Vascular-plotData.json")
+write(jsonlite::toJSON(vascularData), "viz_data/Vascular-plotData.json")
 
 # Load BEC Zones shape
 

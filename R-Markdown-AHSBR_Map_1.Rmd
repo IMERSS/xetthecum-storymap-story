@@ -72,7 +72,10 @@ reportingStatusFig
 
 ## Top contributions to our knowledge of the regional plant diversity
 
-Integrate some of Ben Keen's code to show photos some of the most commonly documented plants, recent observations, top observers?
+Photos of most commonly documented plants, recent observations and top observers across the region, taken from
+the most recent [iNaturalist](http://inaturalist.org/) data. Visualisation code courtesy of [Ben Keen](https://github.com/benkeen).
+
+<span class="mxcw-nonLeafletPane mxcw-paneName-TopContributions html-widget leaflet"></span>
 
 ## Vascular plant diversity within Howe Sound's protected areas
 
