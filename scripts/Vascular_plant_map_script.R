@@ -101,11 +101,6 @@ coastline <- mx_read("spatial_data/vectors/Islands_and_Mainland")
 # Layer 3: watershed boundary
 watershed.boundary <- mx_read("spatial_data/vectors/Howe_Sound")
 
-# Attach the region's label as an "mx_regionId" option in the output data
-labelToOption <- function (label) {
-  return (list(mx_regionId = label))
-}
-
 # Plot map
 
 speciesMap <- leaflet(options=list(mx_mapId="Vascular")) %>%

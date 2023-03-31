@@ -7,3 +7,8 @@ mx_read <- function (filename) {
    dropped <- st_zm(st_data, drop = T, what = "ZM")
    return(lat_lon(dropped));
 }
+
+# Attach the region's label as an "mx_regionId" option in the output data
+labelToOption <- function (label) {
+  return (list(mx_regionId = label))
+}

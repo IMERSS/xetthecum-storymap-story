@@ -8,6 +8,7 @@ var maxwell = fluid.registerNamespace("maxwell");
 var hortis = fluid.registerNamespace("hortis");
 
 maxwell.toggleClass = function (container, isVisible, clazz, inverse) {
+    console.log("toggleClass ", container, " isVisible ", isVisible, " clazz ", clazz);
     container.classList[isVisible ^ inverse ? "remove" : "add"](clazz);
 };
 
@@ -149,7 +150,12 @@ fluid.defaults("maxwell.bareRegionsExtra", {
     listeners: {
         "buildMap.drawRegions": "maxwell.drawBareRegions({that}, {scrollyPage})",
         //                                                                          class,       community       source
-        "selectRegion.regionSelection": "hortis.leafletMap.regionSelection({that}, {arguments}.0, {arguments}.1, {arguments}.2)"
+        "selectRegion.regionSelection": "hortis.leafletMap.regionSelection({that}, {arguments}.0, {arguments}.1, {arguments}.2)",
+        "onCreate.legendVisible": {
+            path: "{paneHandler}.model.isVisible",
+            func: "maxwell.toggleClass",
+            args: ["{that}.legendContainer", "{paneHandler}.model.isVisible", "mxcw-hidden"]
+        }
     }
 });
 
@@ -215,9 +221,7 @@ maxwell.scrollyViz.polyOptions = function (paneHandler, shapeOptions) {
 };
 
 maxwell.scrollyViz.handlePoly = function (paneHandler, Lpolygon, shapeOptions) {
-    const className = paneHandler.options.paneKey;
     const region = shapeOptions.mx_regionId;
-    console.log("Got polygon ", Lpolygon, " for pane " + className + " and region " + region);
     // cf.hortis.leafletMap.withRegions.drawRegions
     if (region) {
         Lpolygon.on("click", function () {

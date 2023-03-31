@@ -255,7 +255,6 @@ maxwell.assignPolyToPane = function (rawPaneHandler, callArgs, polyMethod, paneI
         const label = args[6];
         const labelOptions = args[7];
         if (label) {
-            console.log("Assigned label " + label + " to polygon index " + index + " for pane " + paneInfo.paneName);
             polygon.bindPopup(label, {closeButton: false, ...labelOptions});
             maxwell.hoverPopup(polygon, paneInfo.paneOptions);
         }
@@ -492,7 +491,7 @@ maxwell.leafletWidgetForPaneHandler = function (handler, scrollyPage) {
 
 maxwell.paneHandlerForName = function (scrollyPage, paneName) {
     const paneHandlers = fluid.queryIoCSelector(scrollyPage, "maxwell.scrollyPaneHandler", true);
-    return paneHandlers.find(handler => handler.options.paneKey === paneName);
+    return paneHandlers.find(handler => fluid.getForComponent(handler, "options.paneKey") === paneName);
 };
 
 
@@ -624,6 +623,9 @@ maxwell.updateActiveMapPane = function (that, activePane) {
     const zoom = data ? maxwell.flyToBounds(that.map.map, data.x, that.map.options.zoomDuration) : fluid.promise().resolve();
     zoom.then(function () {
         maxwell.toggleActiveClass(widgetPanes, activePane, "mxcw-activeMapPane");
+        // This is a hack to cause SVG plotly widgets to resize themselves e.g. the Species Reported bar -
+        // find a better solution
+        window.dispatchEvent(new Event("resize"));
         window.setTimeout(function () {
             widgetPanes.forEach(function (pane, index) {
                 const visibility = (index === activePane ? "block" : "none");
@@ -689,8 +691,15 @@ fluid.defaults("maxwell.paneHandler", {
             func: (activePane, paneIndex) => activePane === paneIndex,
             target: "isVisible"
         }
+    },
+    listeners: {
+        "onCreate.addPaneClass": "maxwell.paneHandler.addPaneClass"
     }
 });
+
+maxwell.paneHandler.addPaneClass = function (that) {
+    that.container[0].classList.add("mxcw-widgetPane-" + that.options.paneKey);
+};
 
 fluid.defaults("maxwell.scrollyPaneHandler", {
     gradeNames: "maxwell.paneHandler",

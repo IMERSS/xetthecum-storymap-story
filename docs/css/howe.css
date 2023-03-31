@@ -83,6 +83,11 @@ body {
     outline: 3px solid #FCFF63;
 }
 
+/* Fix the height of the "Status" viz to account for the bar widget above it */
+.mxcw-widgetPane-Status.mxcw-noStretch {
+    height: calc(100% - 135px);
+}
+
 /* Reach deep into the "general-module-panel" inside the iNat components and adjust its height */
 #inat-components > div > div:last-child {
     height: calc(100vh - 350px);
