@@ -22,6 +22,8 @@ h2 {
     display: flex;
     flex-direction: column;
     width: 65%;
+    /* For God's sake I really mean it! */
+    min-width: 65%;
 }
 
 .mxcw-map {
