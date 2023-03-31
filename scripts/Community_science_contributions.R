@@ -140,13 +140,18 @@ reportingStatusFig <- reportingStatusFig %>% layout(barmode = 'stack', autosize=
 
 reportingStatusFig
 
-reportingPal <- list(confirmed = '#5a96d2', historic = '#decb90', new = '#7562b4')
+# Strange structure to mirror that in Vascular
+reportingPal <- data.frame(cat = c("confirmed", "historic", "new"),
+                          col = c('#5a96d2','#decb90', '#7562b4'))
+
+# We need to convert out of "tibble" so that JSON can recognise it
+statusTaxa <- list(MAP_LABEL=reportingPal$cat, taxa = pull(taxa.status, -1))
 
 # Write summarised plants to JSON file for viz 
 # (selection states corresponding with bar plot selections: 'new', 'historic','confirmed')
-statusData <- structure(list(palette = reportingPal, taxa = taxa.status))
+statusData <- structure(list(palette = reportingPal, taxa = statusTaxa))
 
-write(jsonlite::toJSON(statusData), "viz_data/Status-plotData.json")
+write(rjson::toJSON(statusData), "viz_data/Status-plotData.json")
 
 # Export CSVs for confirmed, historic and new reports
 

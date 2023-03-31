@@ -63,7 +63,7 @@ protectedAreaMap <- leaflet() %>%
   addRasterImage(hillshade, opacity = 0.8) %>%
   addPolygons(data = coastline, color = "black", weight = 1.5, fillOpacity = 0, fillColor = NA) %>%
   addPolygons(data = watershed.boundary, color = "black", weight = 4, fillOpacity = 0) %>% 
-addPolygons(data = protected.areas, fillColor = protected.areas$colors, fillOpacity = 0.8, weight = 0,
+  addPolygons(data = protected.areas, fillColor = protected.areas$colors, fillOpacity = 0.8, weight = 0,
             label = paste(protected.areas$prtctdA, ":", protected.areas$prtct__, "species", sep = " "))
 
 #Note that this statement is only effective in standalone R
@@ -104,7 +104,7 @@ protected.area.plot <- plot_ly(
                           opacity = 0.8,
                           type = "bar"
                             ) %>% layout(xaxis = list(categoryorder = "category ascending")) %>%
-                                  layout(yaxis= list(title = ""))
+                                  layout(yaxis = list(title = "", width=1024))
 
 protected.area.plot 
 

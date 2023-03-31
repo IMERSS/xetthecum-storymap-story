@@ -8,7 +8,7 @@ library(raster)
 library(reshape2)
 library(scales)
 library(sf)
-library(jsonlite)
+library(rjson)
 library(viridis)
 
 # Source dependencies
@@ -33,12 +33,6 @@ plants.gridded$MAP_LABEL <- metadata$MAP_LABEL[match(unlist(plants.gridded$id), 
 
 bec.plants <- plants.gridded %>% group_by(MAP_LABEL) %>% 
                     summarize(taxa = paste(sort(unique(scientific)),collapse=", "))
-
-vascularData <- structure(list(palette = palette, taxa = bec.plants))
-
-# Write summarised plants to JSON file for viz
-
-write(jsonlite::toJSON(vascularData), "viz_data/Vascular-plotData.json")
 
 # Load BEC Zones shape
 
@@ -87,6 +81,12 @@ palette = data.frame(
 # Reverse   cat = c("CMAunp", "MHmm2", "MHmm1", "CWHms1","CWHds1","CWHvm1","CWHvm2","CWHdm","CWHxm1"),
             col = c("#440154FF", "#472D7BFF","#3B528BFF","#2C728EFF","#21908CFF","#27AD81FF","#5DC863FF","#AADC32FF", "#FDE725FF")
 )
+
+vascularData <- structure(list(palette = palette, taxa = bec.plants))
+
+# Write summarised plants to JSON file for viz
+
+write(jsonlite::toJSON(vascularData), "viz_data/Vascular-plotData.json")
 
 BEC <- base::merge(BEC, palette, by.x ="MAP_LABEL", by.y="cat")
 

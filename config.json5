@@ -13,9 +13,20 @@
                         markupTemplate: "%resourceBase/html/imerss-viz-scrolly.html",
                         phyloMap: "%resourceBase/json/kingdomPhyloMap.json",
                         renderMarkup: true,
-                        vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life.json.lz4"
+                        vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4"
                     }
-                },
+                },/*
+                Status: {
+                    type: "maxwell.scrollyPaneHandler",
+                    options: {
+                        gradeNames: [ "hortis.scrollyMapLoader", "maxwell.scrollyVizBinder", "maxwell.howeVizBinder"],
+                        resourceBase: ".",
+                        markupTemplate: "%resourceBase/html/imerss-viz-scrolly.html",
+                        phyloMap: "%resourceBase/json/kingdomPhyloMap.json",
+                        renderMarkup: true,
+                        vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Status.json.lz4"
+                    }
+                },*/
                 TopContributions: {
                     type: "maxwell.iNatComponentsPaneHandler"
                 }
@@ -87,7 +98,7 @@
         source: "%imerss-bioinfo/src/client/json/kingdomPhyloMap.json",
         target: "%maxwell/docs/json/kingdomPhyloMap.json"
     }, {
-        source: "%maxwell/viz_data/Howe-Sound-Scrolly-Life.json.lz4",
-        target: "%maxwell/docs/data/Howe-Sound-Scrolly-Life.json.lz4"
+        source: "%maxwell/viz_data/Howe-Sound-Scrolly-Life-Vascular.json.lz4",
+        target: "%maxwell/docs/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4"
     }]
 }
