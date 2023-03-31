@@ -1,6 +1,6 @@
 ---
 title: Átl’ḵa7tsem/Howe Sound Biosphere Vegetation Analysis
-author: Antranig Basman, Judith Holm, Murray Journeay & Andrew Simon
+author: Antranig Basman, Judith Holm, Ben Keen, Murray Journeay & Andrew Simon
 date: March 26th, 2023
 output: html_document
 knit: (function(inputFile, encoding) {
@@ -60,7 +60,7 @@ speciesPlot
 
 ## Community science contributions
 
-Through the combined efforts of `r length(unique(plants$recordedBy))` individuals, the Átl’ḵa7tsem/Howe Sound naturalist community has documented `r nrow(plant.summary)` species, confirming `r round((nrow(confirmed)/(nrow(confirmed)+nrow(reported))*100), digits = 0)` percent of the historically reported vascular plant diversity and adding `r nrow(new)` new species reports to the list. Community members have now documented `r round((nrow(observed)/(nrow(plant.summary))*100), digits = 0)` percent of the plant diversity known to the region on iNaturalist.
+Through the combined efforts of `r length(unique(plants$recordedBy))` individuals, the Átl’ḵa7tsem/Howe Sound naturalist community has now documented a total of `r nrow(plant.summary)` vascular plant species. Based on search efforts over the last decade, `r round((nrow(confirmed)/(nrow(confirmed)+nrow(reported))*100), digits = 0)` percent of the historically reported plant diversity has been confirmed and `r nrow(new)` new species reports added to the list. Community members have now documented `r round((nrow(observed)/(nrow(plant.summary))*100), digits = 0)` percent of the plant diversity known to the region on iNaturalist.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 source("scripts/Community_science_contributions.R")
@@ -72,8 +72,7 @@ reportingStatusFig
 
 ## Top contributions to our knowledge of the regional plant diversity
 
-Photos of most commonly documented plants, recent observations and top observers across the region, taken from
-the most recent [iNaturalist](http://inaturalist.org/) data. Visualisation code courtesy of [Ben Keen](https://github.com/benkeen).
+You can contribute to this growing record of the regional plant diversity by submitting your observations to the [Atl'ka7tsem Howe Sound Biosphere Region iNaturalist project.](https://www.inaturalist.org/projects/atl-ka7tsem-howe-sound-biosphere-region) Here, you can browse photos of some of the most commonly documented plants, as well as recent observations and top observers across the region, based on [iNaturalist](http://inaturalist.org/) data. Visualisation code courtesy of [Ben Keen](https://github.com/benkeen).
 
 <span class="mxcw-nonLeafletPane mxcw-paneName-TopContributions html-widget leaflet"></span>
 
@@ -82,13 +81,17 @@ the most recent [iNaturalist](http://inaturalist.org/) data. Visualisation code 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 source("scripts/Protected_areas.R")
 
+native.plants <- read.csv("outputs/AHSBR_native_vascular_plant_species.csv")
+protected.plants <- read.csv("outputs/AHSBR_protected_native_vascular_plant_species.csv")
+
 protectedAreaMap
 protected.area.plot 
 ```
 *Map 4. Protected Areas*
 *Figure 3. Species Reported by Protected Area*
 
-Summary of plant diversity documented within protected areas; call to action
+Based on our current knowledge, `r round(nrow(protected.plants)/nrow(native.plants)*100)` percent of the native plant diversity known to Átl’ḵa7tsem/Howe Sound has been reported within protected areas. While this preliminary evaluation is limited due to biases in sampling effort and other deficiencies in the data, it represents a starting point for a more thorough assessment of progress being made toward goals of conserving our regional habitat diversity. Please help improve our understanding of the distribution of vascular plants and other biodiversity the region by reporting your observations to the [Atl'ka7tsem Howe Sound Biosphere Region iNaturalist project.](https://www.inaturalist.org/projects/atl-ka7tsem-howe-sound-biosphere-region)
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

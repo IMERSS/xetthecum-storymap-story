@@ -9,6 +9,7 @@ library(plotly)
 library(raster)
 library(reshape2)
 library(sf)
+library(stringr)
 library(viridis)
 
 # Source dependencies
@@ -81,6 +82,8 @@ protected.area.summary <- protected.area.summary[order(protected.area.summary$ty
 
 protected.area.summary$types <- factor(protected.area.summary$types, levels = unique(protected.area.summary$types)[order(protected.area.summary$count, decreasing = TRUE)])
 
+
+
 # Create Plotly bar plot showing species diversity represented within protected area types
 
 # First add color palette matching with map
@@ -107,8 +110,6 @@ protected.area.plot
 
 # Prepare CSVs to export catalog data for each Protected Area Type
 
-unique(plants.x.protected.area$protectedAreaType)
-
 OECM.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Other Effective Area-Based Conservation Measure')
 A.Park.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'A - Park')
 Private.Conservation.Area.plants <- plants.x.protected.area %>% filter(protectedAreaType == 'Privately Owned Conservation Area')
@@ -134,4 +135,18 @@ write.csv(OGMA.plants, "outputs/AHSBR_Old_Growth_Management_Areas_vascular_plant
 write.csv(WMA.plants, "outputs/AHSBR_Wildlife_Management_Area_vascular_plants.csv", row.names = FALSE)
 
 
+## Prepare summary of native plant diversity protected in the area
 
+plant.summary <- read.csv("tabular_data/vascular_plant_summary_resynthesized_2023-03-05.csv")
+
+native.plants <- plant.summary %>% filter(establishmentMeans == 'native')
+
+protected.plants <- unique(plants.x.protected.area$scientificName)
+
+protected.plants <- protected.plants %>% paste(collapse = '|')
+  
+protected.plants <- plant.summary %>% filter(str_detect(scientificName, protected.plants))
+
+write.csv(native.plants, "outputs/AHSBR_native_vascular_plant_species.csv")
+
+write.csv(protected.plants, "outputs/AHSBR_protected_native_vascular_plant_species.csv")
