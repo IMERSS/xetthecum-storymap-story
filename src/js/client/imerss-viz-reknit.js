@@ -151,6 +151,7 @@ fluid.defaults("maxwell.bareRegionsExtra", {
         "buildMap.drawRegions": "maxwell.drawBareRegions({that}, {scrollyPage})",
         //                                                                          class,       community       source
         "selectRegion.regionSelection": "hortis.leafletMap.regionSelection({that}, {arguments}.0, {arguments}.1, {arguments}.2)",
+        // BUG only one of the legendVisible modelListeners fires onCreate! Perhaps because of the namespace?
         "onCreate.legendVisible": {
             path: "{paneHandler}.model.isVisible",
             func: "maxwell.toggleClass",
