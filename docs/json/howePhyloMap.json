@@ -1,0 +1,20 @@
+{
+    "kingdom:Animalia": {
+        "colour": "#f26522"
+    },
+    "kingdom:Chromista": {
+        "colour": "#009fd3"
+    },
+    "kingdom:Plantae": {
+        "colour": "#8cc63f"
+    },
+    "kingdom:Protozoa": {
+        "colour": "#1eb28f"
+    },
+    "kingdom:Fungi": {
+        "colour": "#f06"
+    },
+    "phylum:Tracheophyta": {
+        "taxonPic": "%resourceBase/img/12993632-large.jpeg"
+    }
+}

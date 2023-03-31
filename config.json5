@@ -11,7 +11,7 @@
                         gradeNames: [ "hortis.scrollyMapLoader", "maxwell.scrollyVizBinder", "maxwell.howeVizBinder"],
                         resourceBase: ".",
                         markupTemplate: "%resourceBase/html/imerss-viz-scrolly.html",
-                        phyloMap: "%resourceBase/json/kingdomPhyloMap.json",
+                        phyloMap: "%resourceBase/json/howePhyloMap.json",
                         renderMarkup: true,
                         vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4"
                     }
@@ -22,7 +22,7 @@
                         gradeNames: [ "hortis.scrollyMapLoader", "maxwell.scrollyVizBinder", "maxwell.howeVizBinder", "maxwell.howeStatusBinder"],
                         resourceBase: ".",
                         markupTemplate: "%resourceBase/html/imerss-viz-scrolly.html",
-                        phyloMap: "%resourceBase/json/kingdomPhyloMap.json",
+                        phyloMap: "%resourceBase/json/howePhyloMap.json",
                         renderMarkup: true,
                         vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Status.json.lz4",
                         markup: {
@@ -89,6 +89,9 @@
         source: "%imerss-bioinfo/src/client/img/external-link.svg",
         target: "%maxwell/docs/img/external-link.svg"
     }, {
+        source: "%maxwell/img/12993632-large.jpeg",
+        target: "%maxwell/docs/img/12993632-large.jpeg"
+    }, {
         source: "%imerss-bioinfo/docs/css/imerss-viz-all.css",
         target: "%maxwell/docs/css/imerss-viz-all.css"
     }, {
@@ -98,8 +101,8 @@
         source: "%maxwell/src/html/imerss-viz-scrolly.html",
         target: "%maxwell/docs/html/imerss-viz-scrolly.html"
     }, {
-        source: "%imerss-bioinfo/src/client/json/kingdomPhyloMap.json",
-        target: "%maxwell/docs/json/kingdomPhyloMap.json"
+        source: "%maxwell/viz_data/howePhyloMap.json",
+        target: "%maxwell/docs/json/howePhyloMap.json"
     }, {
         source: "%maxwell/viz_data/Howe-Sound-Scrolly-Life-Vascular.json.lz4",
         target: "%maxwell/docs/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4"
@@ -108,3 +111,5 @@
         target: "%maxwell/docs/data/Howe-Sound-Scrolly-Life-Status.json.lz4"
     }]
 }
+
+

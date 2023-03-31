@@ -221,7 +221,6 @@ maxwell.scrollyViz.polyOptions = function (paneHandler, shapeOptions) {
 };
 
 maxwell.scrollyViz.handlePoly = function (paneHandler, Lpolygon, shapeOptions) {
-    const className = paneHandler.options.paneKey;
     const region = shapeOptions.mx_regionId;
     // cf.hortis.leafletMap.withRegions.drawRegions
     if (region) {
