@@ -40,9 +40,12 @@ maxwell.reactScriptInjector = function (that) {
     document.head.appendChild(script);
 };
 
-// mixin grade which mediates event flow from viz to Leaflet pane
+// mixin grade which mediates event flow from IMERSS viz to Leaflet pane
 fluid.defaults("maxwell.scrollyVizBinder", {
     gradeNames: "maxwell.templateScrollyPaneHandler",
+    resourceBase: ".",
+    markupTemplate: "%resourceBase/html/imerss-viz-scrolly.html",
+    renderMarkup: true,
     listeners: {
         // Override the built-in old fashioned rendering
         "onResourcesLoaded.renderMarkup": "fluid.identity",

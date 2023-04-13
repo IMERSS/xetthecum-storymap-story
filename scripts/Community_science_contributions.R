@@ -134,9 +134,10 @@ reportingStatusFig <- reportingStatusFig %>% add_trace(x = ~new.no, name = 'New'
                                                    width = 1)))
 reportingStatusFig <- reportingStatusFig %>% layout(barmode = 'stack', autosize=F, height=140, showlegend=FALSE,
                       xaxis = list(title = "Species Reported"),
-                      yaxis = list(title ="Records")) %>% 
-  layout(yaxis= list(showticklabels = FALSE)) %>%
-  layout(yaxis= list(title = ""))
+                      yaxis = list(title = "Records")) %>% 
+  layout(meta = list(mx_widgetId = "reportingStatus")) %>%
+  layout(yaxis = list(showticklabels = FALSE)) %>%
+  layout(yaxis = list(title = ""))
 
 reportingStatusFig
 

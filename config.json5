@@ -7,27 +7,23 @@
             paneHandlers: {
                 Vascular: {
                     type: "maxwell.scrollyPaneHandler",
-                    options: {
-                        gradeNames: [ "hortis.scrollyMapLoader", "maxwell.scrollyVizBinder", "maxwell.howeVizBinder"],
-                        resourceBase: ".",
-                        markupTemplate: "%resourceBase/html/imerss-viz-scrolly.html",
-                        phyloMap: "%resourceBase/json/howePhyloMap.json",
-                        renderMarkup: true,
-                        vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4"
+                    gradeNames: [ "hortis.scrollyMapLoader", "maxwell.scrollyVizBinder", "maxwell.howeVizBinder"],
+                    vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4"
+                },
+                History: {
+                    type: "maxwell.scrollyPaneHandler",
+                    widgets: {
+                        speciesPlot: {
+                            type: "maxwell.choroplethSlider"
+                        }
                     }
                 },
                 Status: {
                     type: "maxwell.scrollyPaneHandler",
-                    options: {
-                        gradeNames: [ "hortis.scrollyMapLoader", "maxwell.scrollyVizBinder", "maxwell.howeVizBinder", "maxwell.howeStatusBinder"],
-                        resourceBase: ".",
-                        markupTemplate: "%resourceBase/html/imerss-viz-scrolly.html",
-                        phyloMap: "%resourceBase/json/howePhyloMap.json",
-                        renderMarkup: true,
-                        vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Status.json.lz4",
-                        markup: {
-                            region: "Selected reporting status: %region"
-                        }
+                    gradeNames: [ "hortis.scrollyMapLoader", "maxwell.scrollyVizBinder", "maxwell.howeVizBinder", "maxwell.howeStatusBinder"],
+                    vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Status.json.lz4",
+                    markup: {
+                        region: "Selected reporting status: %region"
                     }
                 },
                 TopContributions: {

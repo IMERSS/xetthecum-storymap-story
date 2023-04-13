@@ -76,24 +76,33 @@ var maxwell = fluid.registerNamespace("maxwell");
  * @typedef {Object} LeafletLayerGroup
  */
 
-maxwell.findPlotlyWidgets = function (that) {
+maxwell.findPlotlyWidgetId = function (widget) {
+    return widget.layout?.meta?.mx_widgetId;
+};
+
+maxwell.findPlotlyWidgets = function (scrollyPage) {
     const widgets = [...document.querySelectorAll(".html-widget.plotly")];
-    const panes = that.dataPanes;
+    const panes = scrollyPage.dataPanes;
     console.log("Found " + widgets.length + " plotly widgets");
     // TODO: Assume just one widget for now, the slider
     if (widgets.length > 0) {
         const slider = widgets[0];
         const pane = slider.closest(".mxcw-widgetPane");
+        const widgetId = maxwell.findPlotlyWidgetId(slider);
         const index = panes.indexOf(pane);
-        console.log("Plotly widget's pane index is " + index);
+        console.log("Plotly widget's pane index is " + index + " with id " + widgetId);
+        const paneHandlerName = scrollyPage.leafletWidgets[index].paneHandlerName;
+        // cf. leafletWidgetToPane
+        const paneHandler = paneHandlerName && maxwell.paneHandlerForName(scrollyPage, paneHandlerName);
+
 
         slider.on("plotly_sliderchange", function (e) {
             console.log("Slider change ", e);
-            that.applier.change(["activeSubPanes", index], e.slider.active);
+            scrollyPage.applier.change(["activeSubPanes", index], e.slider.active);
         });
         // Initialises with the assumption that the 0th subpane should be initially active - makes sense for choropleths
         // but what about others?
-        that.applier.change(["activeSubPanes", index], 0);
+        scrollyPage.applier.change(["activeSubPanes", index], 0);
     }
 };
 
@@ -228,6 +237,11 @@ maxwell.allocatePane = function (map, index, subLayerIndex, overridePane) {
     return {paneName, pane, paneOptions, group};
 };
 
+/** Gets a paneHandler component fully ready for handling polygon options, or returns
+ * a placeholder if this is a section with no actual leaflet widget (e.g. an inatComponents pane)
+ * @param {paneHandler} [paneHandler] - An optional paneHandler component
+ * @return {paneHandler} A paneHandler component with resolved members, or a placeholder
+ */
 maxwell.resolvePaneHandler = function (paneHandler) {
     if (paneHandler) {
         fluid.getForComponent(paneHandler, "handlePoly");
@@ -495,6 +509,14 @@ maxwell.paneHandlerForName = function (scrollyPage, paneName) {
 };
 
 
+maxwell.resolvePaneHandlers = function () {
+    // Written into the markup by maxwell.reknitFile in reknit.js
+    const rawPaneHandlers = maxwell.scrollyPaneHandlers;
+    return fluid.transform(rawPaneHandlers, paneHandler => ({
+        type: paneHandler.type,
+        options: fluid.censorKeys(paneHandler, ["type"])
+    }));
+};
 
 fluid.defaults("maxwell.scrollyPage", {
     gradeNames: ["fluid.viewComponent", "fluid.resourceLoader"],
@@ -548,7 +570,7 @@ fluid.defaults("maxwell.scrollyPage", {
         effectiveActiveSubpanes: [],
         // Prevent the component trying to render until plotly's postRenderHandler has fired
         plotlyReady: "{that}.resources.plotlyReady.parsed",
-        paneHandlers: "@expand:fluid.getGlobalValue(maxwell.scrollyPaneHandlers)"
+        paneHandlers: "@expand:maxwell.resolvePaneHandlers()"
     },
     modelListeners: {
         updateClasses: {
@@ -705,6 +727,10 @@ fluid.defaults("maxwell.scrollyPaneHandler", {
     gradeNames: "maxwell.paneHandler",
     members: {
         container: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
+    },
+    invokers: {
+        polyOptions: "fluid.identity",
+        handlePoly: "fluid.identity"
     }
 });
 

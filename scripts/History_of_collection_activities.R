@@ -199,7 +199,8 @@ for (i in 1:length(year)) {
     speciesPlot <- speciesPlot %>% add_lines(x=yearRange, y=sppRange, line=list(color='green'), type='scatter', mode='lines', visible = i == 1)
 }
 
-speciesPlot <- layout(speciesPlot, sliders = list(list(active=0, steps = steps)))
+speciesPlot <- layout(speciesPlot, meta = list(mx_widgetId = "speciesPlot"), 
+                      sliders = list(list(active=0, steps = steps)))
 
 speciesPlot
 
@@ -287,7 +288,7 @@ history.2022 <- filter(gridded.history, year == 2022)
 
 # Plot map
 
-heatMap <- leaflet() %>%
+heatMap <- leaflet(options=list(mx_mapId="History")) %>%
   setView(-123.2194, 49.66076, zoom = 8.5) %>%
   addTiles(options = providerTileOptions(opacity = 0.5)) %>%
   addRasterImage(hillshade, opacity = 0.8) %>%
