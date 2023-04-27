@@ -119,16 +119,18 @@ new.no <- c(nrow(new))
 
 reporting.status <- data.frame(y, confirmed.no, historic.no, new.no)
 
-reportingStatusFig <- plot_ly(reporting.status, x = ~confirmed.no, y = ~y, type = 'bar', orientation = 'h', name = 'Confirmed',
+reportingStatusFig <- plot_ly(reporting.status, x = ~confirmed.no, y = ~y, type = 'bar', orientation = 'h', name = 'confirmed',
                       
                       marker = list(color = '#5a96d2',
                              line = list(color = '#5a96d2',
                                          width = 1)))
-reportingStatusFig <- reportingStatusFig %>% add_trace(x = ~historic.no, name = 'Historic',
+
+# These names need to agree with those applied as labels to the map regions
+reportingStatusFig <- reportingStatusFig %>% add_trace(x = ~historic.no, name = 'historic',
                          marker = list(color = '#decb90',
                                        line = list(color = '#decb90',
                                                    width = 1)))
-reportingStatusFig <- reportingStatusFig %>% add_trace(x = ~new.no, name = 'New',
+reportingStatusFig <- reportingStatusFig %>% add_trace(x = ~new.no, name = 'new',
                          marker = list(color = '#7562b4',
                                        line = list(color = '#7562b4',
                                                    width = 1)))

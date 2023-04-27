@@ -42,10 +42,14 @@ maxwell.reactScriptInjector = function (that) {
 
 // mixin grade which mediates event flow from IMERSS viz to Leaflet pane
 fluid.defaults("maxwell.scrollyVizBinder", {
-    gradeNames: "maxwell.templateScrollyPaneHandler",
+    // Put these last to continue to override "container" member due to FLUID-5800
+    gradeNames: ["hortis.scrollyMapLoader", "maxwell.scrollyPaneHandler", "maxwell.templateScrollyPaneHandler"],
     resourceBase: ".",
     markupTemplate: "%resourceBase/html/imerss-viz-scrolly.html",
     renderMarkup: true,
+    events: {
+        selectRegion: null
+    },
     listeners: {
         // Override the built-in old fashioned rendering
         "onResourcesLoaded.renderMarkup": "fluid.identity",
@@ -71,10 +75,6 @@ fluid.defaults("maxwell.scrollyVizBinder", {
         map: {
             target: "{that hortis.leafletMap}.options.members.map",
             record: "{scrollyLeafletMap}.map"
-        },
-        checklistRanks: {
-            target: "{that sunburst > checklist}.options.filterRanks",
-            record: ["family", "phylum", "class", "order", "species"]
         }
     }
 });
@@ -206,7 +206,7 @@ hortis.leafletMap.showSelectedRegions = function (map, selectedRegions) {
     const noSelection = map.model.mapBlockTooltipId === null;
     Object.keys(map.regions).forEach(function (key) {
         const lineFeature = map.classes[key].color;
-        const opacity = noSelection ? "0.6" : selectedRegions[key] ? "1.0" : "0.3";
+        const opacity = noSelection ? "0.6" : selectedRegions[key] ? "0.8" : "0.5";
         style.setProperty(hortis.regionOpacity(key), opacity);
         style.setProperty(hortis.regionBorder(key), selectedRegions[key] ? "#FEF410" : (lineFeature ? fluid.colour.arrayToString(lineFeature) : "none"));
     });

@@ -1,6 +1,6 @@
 "use strict";
 
-/* global L, HTMLWidgets */
+/* global L, HTMLWidgets, Plotly */
 
 window.HTMLWidgets = window.HTMLWidgets || {};
 
@@ -62,7 +62,6 @@ var maxwell = fluid.registerNamespace("maxwell");
  * @typedef {SectionHolder} LeafletWidgetInfo
  * @property {HTMLElement} [widget] - The DOM node holding the widget
  * @property {Object} data - The `data` entry associated with the widget
- * @property {HTMLElement} [pane] - The pane to which the widget is allocated in the target map
  * @property {Array} subPanes - Any subpanes to which the widget's calls are allocated
  */
 
@@ -80,30 +79,90 @@ maxwell.findPlotlyWidgetId = function (widget) {
     return widget.layout?.meta?.mx_widgetId;
 };
 
+fluid.defaults("maxwell.choroplethSlider", {
+    gradeNames: "maxwell.widgetHandler",
+    invokers: {
+        bindWidget: "maxwell.choroplethSlider.bind"
+    }
+});
+
+maxwell.choroplethSlider.bind = function (element, scrollyPage, paneHandler, that) {
+    that.element = element;
+    const slider = element;
+    const paneIndex = paneHandler.options.paneIndex;
+
+    slider.on("plotly_sliderchange", function (e) {
+        console.log("Slider change ", e);
+        scrollyPage.applier.change(["activeSubPanes", paneIndex], e.slider.active);
+    });
+    // Initialises with the assumption that the 0th subpane should be initially active - makes sense for choropleths
+    // but what about others?
+    scrollyPage.applier.change(["activeSubPanes", paneIndex], 0);
+};
+
+fluid.defaults("maxwell.regionSelectionBar", {
+    gradeNames: "maxwell.widgetHandler",
+    invokers: {
+        bindWidget: "maxwell.regionSelectionBar.bind"
+    }
+});
+
+maxwell.regionSelectionBar.bind = function (element, scrollyPage, paneHandler, that) {
+    that.element = element;
+    const bar = element;
+    const vizBinder = paneHandler;
+    const names = fluid.getMembers(element.data, "name");
+    // In theory this should be done via some options distribution, or at the very least, an IoCSS-driven model
+    // listener specification
+    vizBinder.events.sunburstLoaded.addListener(() => {
+        const map = vizBinder.map;
+        map.applier.modelChanged.addListener({path: "selectedRegions.*"}, function (selected, oldSelected, segs) {
+            const changed = fluid.peek(segs);
+            const index = names.indexOf(changed);
+            Plotly.restyle(element, {
+                // Should agree with .fld-imerss-selected but seems that plotly cannot be reached via CSS
+                "marker.line": selected ? {
+                    color: "#FCFF63",
+                    width: 2
+                } : {
+                    color: "#000000",
+                    width: 0
+                }
+            }, index);
+        });
+    }, "plotlyRegion", "after:fluid-componentConstruction");
+
+    bar.on("plotly_click", function (e) {
+        const regionName = e.points[0].data.name;
+        vizBinder.map.events.selectRegion.fire(regionName, regionName);
+    });
+};
+
 maxwell.findPlotlyWidgets = function (scrollyPage) {
     const widgets = [...document.querySelectorAll(".html-widget.plotly")];
     const panes = scrollyPage.dataPanes;
+
     console.log("Found " + widgets.length + " plotly widgets");
-    // TODO: Assume just one widget for now, the slider
-    if (widgets.length > 0) {
-        const slider = widgets[0];
-        const pane = slider.closest(".mxcw-widgetPane");
-        const widgetId = maxwell.findPlotlyWidgetId(slider);
+    widgets.forEach(function (widget) {
+        const pane = widget.closest(".mxcw-widgetPane");
+        const widgetId = maxwell.findPlotlyWidgetId(widget);
         const index = panes.indexOf(pane);
+
         console.log("Plotly widget's pane index is " + index + " with id " + widgetId);
         const paneHandlerName = scrollyPage.leafletWidgets[index].paneHandlerName;
         // cf. leafletWidgetToPane
         const paneHandler = paneHandlerName && maxwell.paneHandlerForName(scrollyPage, paneHandlerName);
-
-
-        slider.on("plotly_sliderchange", function (e) {
-            console.log("Slider change ", e);
-            scrollyPage.applier.change(["activeSubPanes", index], e.slider.active);
-        });
-        // Initialises with the assumption that the 0th subpane should be initially active - makes sense for choropleths
-        // but what about others?
-        scrollyPage.applier.change(["activeSubPanes", index], 0);
-    }
+        if (widgetId) {
+            const handler = maxwell.widgetHandlerForName(paneHandler, widgetId);
+            if (handler) {
+                handler.bindWidget(widget, scrollyPage, paneHandler, handler);
+            } else {
+                console.log("No widget handler configured for widget with id ", widgetId);
+            }
+        } else {
+            console.log("Warning: no widget id found for plotly widget ", widget);
+        }
+    });
 };
 
 maxwell.checkDataPanes = function (dataPanes, widgets) {
@@ -504,18 +563,26 @@ maxwell.leafletWidgetForPaneHandler = function (handler, scrollyPage) {
 };
 
 maxwell.paneHandlerForName = function (scrollyPage, paneName) {
-    const paneHandlers = fluid.queryIoCSelector(scrollyPage, "maxwell.scrollyPaneHandler", true);
+    const paneHandlers = fluid.queryIoCSelector(scrollyPage, "maxwell.paneHandler", true);
     return paneHandlers.find(handler => fluid.getForComponent(handler, "options.paneKey") === paneName);
 };
 
+maxwell.widgetHandlerForName = function (paneHandler, widgetId) {
+    const widgetHandlers = fluid.queryIoCSelector(paneHandler, "maxwell.widgetHandler", true);
+    return widgetHandlers.find(handler => fluid.getForComponent(handler, "options.widgetKey") === widgetId);
+};
+
+maxwell.unflattenOptions = function (records) {
+    return fluid.transform(records, record => ({
+        type: record.type,
+        options: fluid.censorKeys(record, ["type"])
+    }));
+};
 
 maxwell.resolvePaneHandlers = function () {
     // Written into the markup by maxwell.reknitFile in reknit.js
     const rawPaneHandlers = maxwell.scrollyPaneHandlers;
-    return fluid.transform(rawPaneHandlers, paneHandler => ({
-        type: paneHandler.type,
-        options: fluid.censorKeys(paneHandler, ["type"])
-    }));
+    return maxwell.unflattenOptions(rawPaneHandlers);
 };
 
 fluid.defaults("maxwell.scrollyPage", {
@@ -543,9 +610,10 @@ fluid.defaults("maxwell.scrollyPage", {
             container: "{scrollyPage}.dom.leafletMap"
         }
     },
+    paneHandlers: "@expand:maxwell.resolvePaneHandlers()",
     dynamicComponents: {
         paneHandlers: {
-            sources: "{that}.model.paneHandlers",
+            sources: "{that}.options.paneHandlers",
             type: "{source}.type",
             options: "{source}.options"
         }
@@ -569,8 +637,7 @@ fluid.defaults("maxwell.scrollyPage", {
         // Map of pane indices to active subpanes, with inactive panes having their subpane index set to -1
         effectiveActiveSubpanes: [],
         // Prevent the component trying to render until plotly's postRenderHandler has fired
-        plotlyReady: "{that}.resources.plotlyReady.parsed",
-        paneHandlers: "@expand:maxwell.resolvePaneHandlers()"
+        plotlyReady: "{that}.resources.plotlyReady.parsed"
     },
     modelListeners: {
         updateClasses: {
@@ -716,7 +783,20 @@ fluid.defaults("maxwell.paneHandler", {
     },
     listeners: {
         "onCreate.addPaneClass": "maxwell.paneHandler.addPaneClass"
+    },
+    resolvedWidgets: "@expand:maxwell.unflattenOptions({that}.options.widgets)",
+    dynamicComponents: {
+        widgets: {
+            sources: "{that}.options.resolvedWidgets",
+            type: "{source}.type",
+            options: "{source}.options"
+        }
     }
+});
+
+fluid.defaults("maxwell.widgetHandler", {
+    gradeNames: "fluid.component",
+    widgetKey: "{sourcePath}"
 });
 
 maxwell.paneHandler.addPaneClass = function (that) {

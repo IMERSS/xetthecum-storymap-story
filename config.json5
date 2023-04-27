@@ -7,7 +7,7 @@
             paneHandlers: {
                 Vascular: {
                     type: "maxwell.scrollyPaneHandler",
-                    gradeNames: [ "hortis.scrollyMapLoader", "maxwell.scrollyVizBinder", "maxwell.howeVizBinder"],
+                    gradeNames: [ "maxwell.scrollyVizBinder", "maxwell.howeVizBinder"],
                     vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4"
                 },
                 History: {
@@ -20,10 +20,15 @@
                 },
                 Status: {
                     type: "maxwell.scrollyPaneHandler",
-                    gradeNames: [ "hortis.scrollyMapLoader", "maxwell.scrollyVizBinder", "maxwell.howeVizBinder", "maxwell.howeStatusBinder"],
+                    gradeNames: [ "maxwell.scrollyVizBinder", "maxwell.howeVizBinder", "maxwell.howeStatusBinder"],
                     vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Status.json.lz4",
                     markup: {
                         region: "Selected reporting status: %region"
+                    },
+                    widgets: {
+                        reportingStatus: {
+                            type: "maxwell.regionSelectionBar"
+                        }
                     }
                 },
                 TopContributions: {

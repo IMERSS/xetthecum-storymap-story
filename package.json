@@ -10,11 +10,11 @@
     "dependencies": {},
     "devDependencies": {
         "infusion": "4.6.0",
-        "imerss-bioinfo": "1.6.0",
+        "imerss-bioinfo": "1.7.0",
         "json5": "2.2.3",
         "linkedom": "0.14.25",
         "fs-extra": "11.1.1",
-        "eslint": "8.37.0",
+        "eslint": "8.39.0",
         "eslint-config-fluid": "2.1.1",
         "fluid-lint-all": "1.2.9"
     },

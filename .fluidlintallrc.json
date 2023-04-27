@@ -7,7 +7,7 @@
     },
     "eslint": {
         "js": {
-            "excludes": ["./src/js/client/plotly-2.1.1.js", "src/js/client/htmlwidgets.js", "src/js/client/htmlwidgets-plotly.js"]
+            "excludes": ["./src/js/client/plotly-2.1.1.js", "src/js/client/htmlwidgets.js", "src/js/client/htmlwidgets-plotly.js", "src/js/client/inat-components-build.js"]
         },
         "json": {
         }

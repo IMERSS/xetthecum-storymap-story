@@ -108,7 +108,7 @@ speciesMap <- leaflet(options=list(mx_mapId="Vascular")) %>%
   addTiles(options = providerTileOptions(opacity = 0.5)) %>%
   addRasterImage(hillshade, opacity = 0.8) %>%
   addPolygons(data = coastline, color = "black", weight = 1.5, fill = FALSE) %>%
-  addPolygons(data = BEC, fillColor = BEC$col, fillOpacity = 0.6, weight = 3, stroke = FALSE, options = labelToOption(BEC$MAP_LABEL)) %>%
+  addPolygons(data = BEC, fillColor = BEC$col, fillOpacity = 0.6, weight = 2, stroke = FALSE, options = labelToOption(BEC$MAP_LABEL)) %>%
   addPolygons(data = watershed.boundary, color = "black", weight = 4, fill = FALSE) %>%
     #addLegend(position = 'topright', pal = ~col, groupvalues = BEC$MAP_LABEL)
 
