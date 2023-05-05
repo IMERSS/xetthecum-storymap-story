@@ -10,6 +10,7 @@ library(raster)
 library(reshape2)
 library(sf)
 library(stringr)
+library(jsonlite)
 library(viridis)
 
 # Source dependencies
@@ -55,9 +56,12 @@ palette = data.frame(
 
 protected.areas$colors <- palette$colors[match(unlist(protected.areas$prtctAT), palette$types)]
 
+protectedData <- list(mapTitle = "Map 4. Protected Areas")
+write(jsonlite::toJSON(protectedData, auto_unbox = TRUE, pretty = TRUE), "viz_data/Protected-plotData.json")
+
 # Plot map
 
-protectedAreaMap <- leaflet() %>%
+protectedAreaMap <- leaflet(options=list(mx_mapId="Protected")) %>%
   setView(-123.2194, 49.66076, zoom = 8.5) %>%
   addTiles(options = providerTileOptions(opacity = 0.5)) %>%
   addRasterImage(hillshade, opacity = 0.8) %>%
@@ -83,7 +87,6 @@ protected.area.summary <- protected.area.summary[order(protected.area.summary$ty
 protected.area.summary$types <- factor(protected.area.summary$types, levels = unique(protected.area.summary$types)[order(protected.area.summary$count, decreasing = TRUE)])
 
 
-
 # Create Plotly bar plot showing species diversity represented within protected area types
 
 # First add color palette matching with map
@@ -103,7 +106,7 @@ protected.area.plot <- plot_ly(
                           colors = colormap,
                           opacity = 0.8,
                           type = "bar"
-                            ) %>% layout(xaxis = list(categoryorder = "category ascending")) %>%
+                            ) %>% layout(xaxis = list(categoryorder = "category ascending", title = "Species Reported by Protected Area")) %>%
                                   layout(yaxis = list(title = "", width=1024))
 
 protected.area.plot 

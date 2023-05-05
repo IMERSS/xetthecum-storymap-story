@@ -135,7 +135,7 @@ reportingStatusFig <- reportingStatusFig %>% add_trace(x = ~new.no, name = 'new'
                                        line = list(color = '#7562b4',
                                                    width = 1)))
 reportingStatusFig <- reportingStatusFig %>% layout(barmode = 'stack', autosize=F, height=140, showlegend=FALSE,
-                      xaxis = list(title = "Species Reported"),
+                      xaxis = list(title = "Species Reporting Status"),
                       yaxis = list(title = "Records")) %>% 
   layout(meta = list(mx_widgetId = "reportingStatus")) %>%
   layout(yaxis = list(showticklabels = FALSE)) %>%
@@ -143,18 +143,16 @@ reportingStatusFig <- reportingStatusFig %>% layout(barmode = 'stack', autosize=
 
 reportingStatusFig
 
-# Strange structure to mirror that in Vascular
-reportingPal <- data.frame(cat = c("confirmed", "historic", "new"),
-                          col = c('#5a96d2','#decb90', '#7562b4'))
+reportingPal <- list("confirmed" = "#5a96d2", "historic" = "#decb90", "new" = "#7562b4")
 
-# We need to convert out of "tibble" so that JSON can recognise it
-statusTaxa <- list(MAP_LABEL=reportingPal$cat, taxa = pull(taxa.status, -1))
+# Convert taxa to named list so that JSON can recognise it
+statusTaxa <- split(x = taxa.status$taxa, f=taxa.status$status)
 
 # Write summarised plants to JSON file for viz 
 # (selection states corresponding with bar plot selections: 'new', 'historic','confirmed')
-statusData <- structure(list(palette = reportingPal, taxa = statusTaxa))
+statusData <- structure(list(palette = reportingPal, taxa = statusTaxa, mapTitle = "Map 3. Species Reporting Status"))
 
-write(rjson::toJSON(statusData), "viz_data/Status-plotData.json")
+write(jsonlite::toJSON(statusData, auto_unbox = TRUE, pretty = TRUE), "viz_data/Status-plotData.json")
 
 # Export CSVs for confirmed, historic and new reports
 

@@ -81,34 +81,60 @@ maxwell.findPlotlyWidgetId = function (widget) {
 
 fluid.defaults("maxwell.choroplethSlider", {
     gradeNames: "maxwell.widgetHandler",
-    invokers: {
-        bindWidget: "maxwell.choroplethSlider.bind"
+    listeners: {
+        "bindWidget.impl": "maxwell.choroplethSlider.bind"
     }
 });
 
-maxwell.choroplethSlider.bind = function (element, scrollyPage, paneHandler, that) {
-    that.element = element;
+maxwell.choroplethSlider.bind = function (element, that, paneHandler, scrollyPage) {
     const slider = element;
     const paneIndex = paneHandler.options.paneIndex;
 
     slider.on("plotly_sliderchange", function (e) {
         console.log("Slider change ", e);
         scrollyPage.applier.change(["activeSubPanes", paneIndex], e.slider.active);
+        if (that.timer) {
+            window.clearInterval(that.timer);
+            delete that.timer;
+        }
     });
     // Initialises with the assumption that the 0th subpane should be initially active - makes sense for choropleths
     // but what about others?
     scrollyPage.applier.change(["activeSubPanes", paneIndex], 0);
 };
 
-fluid.defaults("maxwell.regionSelectionBar", {
-    gradeNames: "maxwell.widgetHandler",
-    invokers: {
-        bindWidget: "maxwell.regionSelectionBar.bind"
+fluid.defaults("maxwell.withSliderAnimation", {
+    delay: 1000,
+    listeners: {
+        "bindWidget.withSliderAnimation": {
+            priority: "after:impl",
+            funcName: "maxwell.withSliderAnimation.bind"
+        }
     }
 });
 
-maxwell.regionSelectionBar.bind = function (element, scrollyPage, paneHandler, that) {
-    that.element = element;
+maxwell.withSliderAnimation.bind = function (element, that, paneHandler, scrollyPage) {
+    const limit = element.data.length;
+    const paneIndex = paneHandler.options.paneIndex;
+    that.timer = window.setInterval(function () {
+        const current = scrollyPage.model.activeSubPanes[paneIndex];
+        const next = (current + 1) % limit;
+        // This updates the slider position and label, but not the plot
+        Plotly.relayout(element, {"sliders.0.active": next});
+        // This updates visibility of the plot - unknown why this doesn't happen from the former
+        Plotly.restyle(element, {visible: element.layout.sliders[0].steps[next].args[1]});
+        scrollyPage.applier.change(["activeSubPanes", paneIndex], next);
+    }, that.options.delay);
+};
+
+fluid.defaults("maxwell.regionSelectionBar", {
+    gradeNames: "maxwell.widgetHandler",
+    listeners: {
+        "bindWidget.regionSelectionBar": "maxwell.regionSelectionBar.bind"
+    }
+});
+
+maxwell.regionSelectionBar.bind = function (element, that, paneHandler) {
     const bar = element;
     const vizBinder = paneHandler;
     const names = fluid.getMembers(element.data, "name");
@@ -155,7 +181,7 @@ maxwell.findPlotlyWidgets = function (scrollyPage) {
         if (widgetId) {
             const handler = maxwell.widgetHandlerForName(paneHandler, widgetId);
             if (handler) {
-                handler.bindWidget(widget, scrollyPage, paneHandler, handler);
+                handler.events.bindWidget.fire(widget, handler, paneHandler, scrollyPage, paneHandler);
             } else {
                 console.log("No widget handler configured for widget with id ", widgetId);
             }
@@ -323,15 +349,15 @@ maxwell.assignPolyToPane = function (rawPaneHandler, callArgs, polyMethod, paneI
         const r = v => maxwell.resolveVectorOptions(v, index);
         const args = maxwell.projectArgs(callArgs, index);
         const shapeOptions = r(options);
-        const finalOptions = paneHandler.polyOptions(shapeOptions);
-        const polygon = L[polyMethod](maxwell.leafletiseCoords(shape), finalOptions).addTo(paneInfo.group);
         const label = args[6];
         const labelOptions = args[7];
+        const finalOptions = paneHandler.polyOptions(shapeOptions, label, labelOptions);
+        const polygon = L[polyMethod](maxwell.leafletiseCoords(shape), finalOptions).addTo(paneInfo.group);
         if (label) {
             polygon.bindPopup(label, {closeButton: false, ...labelOptions});
             maxwell.hoverPopup(polygon, paneInfo.paneOptions);
         }
-        paneHandler.handlePoly(polygon, shapeOptions);
+        paneHandler.handlePoly(polygon, shapeOptions, label, labelOptions);
     });
 };
 
@@ -368,7 +394,7 @@ maxwell.decodeLeafletWidgetCall = function (options, call) {
     // to clickable "communities".
     const overridePane = maxwell.decodeLayoutId(call);
     let overridePaneInfo, overridePaneOptions, overrideGroup;
-    if (overridePane) {
+    if (overridePane && typeof(overridePane) === "string") { // tmap will allocate a vector layoutId, ignore it
         overridePaneInfo = maxwell.allocatePane(map, undefined, undefined, overridePane);
         overridePaneOptions = overridePaneInfo.paneOptions;
         overrideGroup = overridePaneInfo.group;
@@ -520,16 +546,18 @@ maxwell.applyView = function (map, xData) {
 maxwell.flyToBounds = function (map, xData, durationInMs) {
     return new Promise(function (resolve) {
         const bounds = xData.fitBounds;
-        if (bounds) {
+        if (bounds && map._loaded) {
             map.flyToBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]], {
                 duration: durationInMs / 1000
             });
             map.once("moveend zoomend", resolve);
         } else {
+            maxwell.applyView(map, xData);
             resolve();
         }
     });
 };
+
 
 maxwell.makeLeafletMap = function (node) {
     return L.map(fluid.unwrap(node));
@@ -640,7 +668,7 @@ fluid.defaults("maxwell.scrollyPage", {
         plotlyReady: "{that}.resources.plotlyReady.parsed"
     },
     modelListeners: {
-        updateClasses: {
+        updateSectionClasses: {
             path: "activeSection",
             funcName: "maxwell.updateSectionClasses",
             args: ["{that}", "{change}.value"]
@@ -754,20 +782,123 @@ fluid.defaults("maxwell.scrollyLeafletMap", {
     zoomDuration: 2000,
     listeners: {
         "onCreate.getTiles": "maxwell.applyZerothTiles({scrollyPage}.leafletWidgets, {that}.map)",
-        "onCreate.applyView": "maxwell.applyZerothView({scrollyPage}.leafletWidgets, {that}.map)"
+        // "onCreate.applyView": "maxwell.applyZerothView({scrollyPage}.leafletWidgets, {that}.map)"
     }
 });
 
 maxwell.applyZerothTiles = function (leafletWidgets, map) {
     const data0 = leafletWidgets[0].data.x;
     const tiles = maxwell.findCall(data0.calls, "addTiles");
-    L.tileLayer(tiles.args[0], tiles.args[3]).addTo(map);
+    if (tiles) {
+        L.tileLayer(tiles.args[0], tiles.args[3]).addTo(map);
+    } else {
+        const pTiles = maxwell.findCall(data0.calls, "addProviderTiles");
+        L.tileLayer.provider(pTiles.args[0], pTiles.args[3]).addTo(map);
+    }
 };
 
 maxwell.applyZerothView = function (leafletWidgets, map) {
     const data0 = leafletWidgets[0].data.x;
     maxwell.applyView(map, data0);
 };
+
+
+// Pane info widgets which appear immediately below map
+
+fluid.defaults("maxwell.withPaneInfo", {
+    components: {
+        paneInfo: {
+            type: "maxwell.paneInfo",
+            options: {
+                parentContainer: "{paneHandler}.options.parentContainer"
+            }
+        }
+    }
+});
+
+fluid.defaults("maxwell.paneInfo", {
+    gradeNames: ["maxwell.withRegionName", "maxwell.withMapTitle", "maxwell.withDownloadLink", "fluid.templateRenderingView"],
+    resources: {
+        template: {
+            url: "html/pane-info.html"
+        }
+    },
+    injectionType: "prepend"
+});
+
+fluid.defaults("maxwell.withRegionName", {
+    markup: {
+        region: "Selected biogeoclimatic region: <span class=\"fl-imerss-region-key\">%region</span> %regionLabel"
+    },
+    selectors: {
+        regionDisplay: ".fld-imerss-region"
+    },
+    invokers: {
+        renderRegionName: "maxwell.renderRegionName({that}.dom.regionDisplay, {that}.options.markup.region, {paneHandler}.options.regionLabels, {arguments}.0)"
+    },
+    distributeOptions: {
+        target: "{paneHandler hortis.leafletMap}.options.modelListeners.regionTextDisplay",
+        record: {
+            // TOOD: rename mapBlockTooltipId to selectedRegion
+            path: "{that}.model.mapBlockTooltipId",
+            listener: "{maxwell.withRegionName}.renderRegionName",
+            args: "{change}.value"
+        }
+    }
+});
+
+maxwell.renderRegionName = function (target, template, regionLabels, region, that) {
+    const text = fluid.stringTemplate(template, {
+        region: region || "None",
+        regionLabel: region && regionLabels ? "(" + regionLabels[region] + ")" : ""
+    });
+    target.html(text);
+};
+
+fluid.defaults("maxwell.withMapTitle", {
+    selectors: {
+        mapTitle: ".fld-imerss-map-title"
+    },
+    listeners: {
+        "onCreate.renderMapTitle": "maxwell.renderMapTitle({that}.dom.mapTitle, {paneHandler}.options.mapTitle)"
+    }
+});
+
+maxwell.renderMapTitle = function (element, text) {
+    element.text(text);
+};
+
+fluid.defaults("maxwell.withDownloadLink", {
+    selectors: {
+        downloadControl: ".fld-imerss-download",
+        downloadLink: ".fld-imerss-download-link"
+    },
+    invokers: {
+        "renderDownloadLink": "maxwell.renderDownloadLink({that}, {paneHandler}.options.downloadTemplate, {arguments}.0)"
+    },
+    distributeOptions: {
+        target: "{paneHandler hortis.leafletMap}.options.modelListeners.downloadLinkDisplay",
+        record: {
+            // TOOD: rename mapBlockTooltipId to selectedRegion
+            path: "{that}.model.mapBlockTooltipId",
+            listener: "{maxwell.withDownloadLink}.renderDownloadLink",
+            args: "{change}.value"
+        }
+    }
+});
+
+maxwell.renderDownloadLink = function (paneInfo, downloadTemplate, regionName) {
+    const downloadControl = paneInfo.locate("downloadControl");
+    if (regionName && downloadTemplate) {
+        const target = fluid.stringTemplate(downloadTemplate, {regionName});
+        paneInfo.locate("downloadLink").attr("href", target);
+        downloadControl.addClass("fl-active");
+    } else {
+        downloadControl.removeClass("fl-active");
+    }
+};
+
+// Base definitions
 
 fluid.defaults("maxwell.paneHandler", {
     gradeNames: "fluid.viewComponent",
@@ -796,8 +927,21 @@ fluid.defaults("maxwell.paneHandler", {
 
 fluid.defaults("maxwell.widgetHandler", {
     gradeNames: "fluid.component",
-    widgetKey: "{sourcePath}"
+    widgetKey: "{sourcePath}",
+    events: {
+        bindWidget: null
+    },
+    listeners: {
+        "bindWidget.first": {
+            priority: "first",
+            func: "maxwell.widgetHandler.bindFirst"
+        }
+    },
 });
+
+maxwell.widgetHandler.bindFirst = function (element, that) {
+    that.element = element;
+};
 
 maxwell.paneHandler.addPaneClass = function (that) {
     that.container[0].classList.add("mxcw-widgetPane-" + that.options.paneKey);
@@ -811,7 +955,9 @@ fluid.defaults("maxwell.scrollyPaneHandler", {
     invokers: {
         polyOptions: "fluid.identity",
         handlePoly: "fluid.identity"
-    }
+    },
+    // For consistency when binding from withPaneInfo
+    parentContainer: "{that}.container"
 });
 
 fluid.defaults("maxwell.templateScrollyPaneHandler", {

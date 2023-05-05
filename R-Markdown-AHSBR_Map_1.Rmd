@@ -27,7 +27,6 @@ Over one thousand vascular plant species are known to occur within the Átl’�
 source("scripts/Vascular_plant_map_script.R")
 speciesMap
 ```
-*Map 1. Ecological communities*
 
 Explore the region's flora by selecting from the biogeoclimatic units displayed on the map:
 
@@ -55,8 +54,6 @@ speciesPlot
 #    res = 100,
 #    end_pause = 120)
 ```
-*Map 2. Historical collection activities*
-*Figure 1. Historical collection activities*
 
 ## Community science contributions
 
@@ -67,8 +64,6 @@ source("scripts/Community_science_contributions.R")
 reportingStatusMap
 reportingStatusFig
 ```
-*Map 3. Species Reporting Status*
-*Figure 2: Species Reporting Status*
 
 ## Top contributions to our knowledge of the regional plant diversity
 

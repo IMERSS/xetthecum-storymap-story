@@ -3,18 +3,62 @@ body {
     margin: 8px
 }
 .mxcw-widgetPane {
-    padding: 1em
+    padding: 0
 }
 .mxcw-container {
-    height: calc(100vh - 10rem)
+    height: calc(100vh - 12rem)
 }
 .fl-imerss-container {
     flex-direction: column;
-    margin-top: 0px;
+    margin-top: 0;
 }
-.fld-imerss-region {
-    padding: 3px;
+.fld-imerss-pane-info {
+    padding: 1em 0.8em 0.7em 0.8em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
+
+.fld-imerss-region-pane {
+    display: flex;
+    flex-direction: column;
+}
+
+.fld-imerss-download {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    visibility: hidden;
+}
+
+.fld-imerss-download.fl-active {
+    visibility: visible;
+}
+
+.fl-imerss-region-key {
+    font-weight: bold;
+}
+
+.fld-imerss-map-title {
+    text-align: right;
+}
+
+
+.fld-imerss-download-link {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url(../img/download.svg);
+    backdrop-filter: opacity(0.7);
+    margin-left: 5px;
+}
+
+.fld-imerss-download-link:hover {
+    outline: 1px #333 solid;
+    outline-offset: 2px;
+}
+
 .mxcw-widgetPane {
     height: 100%;
 }

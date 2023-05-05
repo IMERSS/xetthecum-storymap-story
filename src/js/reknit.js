@@ -88,13 +88,36 @@ maxwell.movePlotlyWidgets = function (template, sections, container) {
     return dataDivs;
 };
 
+maxwell.transferNodeContent = function (container, template, selector) {
+    const containerNode = container.querySelector(selector);
+    const templateNode = template.querySelector(selector);
+    templateNode.innerHTML = containerNode.innerHTML;
+    containerNode.remove();
+};
+
+maxwell.integratePaneHandler = function (paneHandler, key) {
+    const plotDataFile = "%maxwell/viz_data/" + key + "-plotData.json";
+    let plotData;
+    const resolved = fluid.module.resolvePath(plotDataFile);
+    if (fs.existsSync(resolved)) {
+        plotData = maxwell.loadJSON5File(resolved);
+    } else {
+        console.log("plotData file for pane " + key + " not found");
+    }
+    const toMerge = fluid.censorKeys(plotData, ["palette", "taxa"]);
+    return {...paneHandler, ...toMerge};
+};
+
 maxwell.reknitFile = async function (infile, outfile, options) {
     const document = maxwell.parseDocument(fluid.module.resolvePath(infile));
     const container = document.querySelector(".main-container");
     const sections = maxwell.hideLeafletWidgets(container);
     const template = maxwell.parseDocument(fluid.module.resolvePath(options.template));
     maxwell.movePlotlyWidgets(template, sections, container);
-    container.querySelector("h1").remove();
+
+    maxwell.transferNodeContent(document, template, "h1");
+    maxwell.transferNodeContent(document, template, "title");
+
     await maxwell.asyncForEach(options.transforms || [], async (rec) => {
         const file = require(fluid.module.resolvePath(rec.file));
         const transform = file[rec.func];
@@ -104,7 +127,10 @@ maxwell.reknitFile = async function (infile, outfile, options) {
     target.appendChild(container);
     const paneHandlers = options.paneHandlers;
     if (paneHandlers) {
-        const paneMapText = "maxwell.scrollyPaneHandlers = " + JSON.stringify(paneHandlers) + ";\n";
+        const integratedHandlers = fluid.transform(paneHandlers, function (paneHandler, key) {
+            return maxwell.integratePaneHandler(paneHandler, key);
+        });
+        const paneMapText = "maxwell.scrollyPaneHandlers = " + JSON.stringify(integratedHandlers) + ";\n";
         const scriptNode = template.createElement("script");
         scriptNode.innerHTML = paneMapText;
         const head = template.querySelector("head");

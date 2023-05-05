@@ -8,7 +8,7 @@ library(raster)
 library(reshape2)
 library(scales)
 library(sf)
-library(rjson)
+library(jsonlite)
 library(viridis)
 
 # Source dependencies
@@ -65,28 +65,36 @@ BEC$VARIANT <- NULL
 BEC$ZONE_NAME <- NULL
 BEC$SUBZONE <- NULL
 
+becLabels <- list(CMAunp = "Coastal Mountain Heather Alpine Zone",
+                  CWHdm  = "Dry Maritime Coastal Western Hemlock Zone",
+                  CWHds1 = "Southern Dry Submaritime Coastal Western Hemlock Zone",
+                  CWHms1 = "Southern Moist Submaritime Coastal Western Hemlock Zone",
+                  CWHvm1 = "Submontane Very Wet Maritime Coastal Western Hemlock Zone",
+                  CWHvm2 = "Montane Very Wet Maritime Coastal Western Hemlock Zone",
+                  CWHxm1 = "Eastern Very Dry Maritime Coastal Western Hemlock Zone",
+                  MHmm1 = "Windward Moist Maritime Mountain Hemlock Zone",
+                  MHmm2 = "Leeward Moist Maritime Mountain Hemlock Zone")
+
 # Create color palette for BEC Zones
 
 # Following rough elevational gradient:  
 # CDFmm, CWHxm1, CWHdm, CWHvm1, CWHvm2, CWHds1, CWHms1, MHmm1, MHmm2, ESSFmw2, CMAunp
 
-# Note: I do not think that the palette is mapping with the MAP_LABEL feature as intended!
-
 BEC$MAP_LABEL <- as.factor(BEC$MAP_LABEL)
-
-unique(BEC$MAP_LABEL)
 
 palette = data.frame(
             cat = c("CWHxm1","CWHdm","CWHvm2","CWHvm1","CWHds1","CWHms1","MHmm1","MHmm2","CMAunp"), 
-# Reverse   cat = c("CMAunp", "MHmm2", "MHmm1", "CWHms1","CWHds1","CWHvm1","CWHvm2","CWHdm","CWHxm1"),
             col = c("#440154FF", "#472D7BFF","#3B528BFF","#2C728EFF","#21908CFF","#27AD81FF","#5DC863FF","#AADC32FF", "#FDE725FF")
 )
 
-vascularData <- structure(list(palette = palette, taxa = bec.plants))
+paletteHash <- split(x = palette$col, f = palette$cat)
+taxaHash <- split(x = bec.plants$taxa, f = bec.plants$MAP_LABEL)
+
+vascularData <- list(palette = paletteHash, taxa = taxaHash, mapTitle = "Map 1. Ecological communities", regionLabels = becLabels)
 
 # Write summarised plants to JSON file for viz
 
-write(jsonlite::toJSON(vascularData), "viz_data/Vascular-plotData.json")
+write(jsonlite::toJSON(vascularData, auto_unbox = TRUE, pretty = TRUE), "viz_data/Vascular-plotData.json")
 
 BEC <- base::merge(BEC, palette, by.x ="MAP_LABEL", by.y="cat")
 

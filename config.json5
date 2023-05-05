@@ -8,13 +8,16 @@
                 Vascular: {
                     type: "maxwell.scrollyPaneHandler",
                     gradeNames: [ "maxwell.scrollyVizBinder", "maxwell.howeVizBinder"],
-                    vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4"
+                    vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4",
+                    downloadTemplate: "data/tabular/AHSBR_%regionName_vascular_plants.csv"
                 },
                 History: {
                     type: "maxwell.scrollyPaneHandler",
+                    gradeNames: "maxwell.withPaneInfo",
                     widgets: {
                         speciesPlot: {
-                            type: "maxwell.choroplethSlider"
+                            type: "maxwell.choroplethSlider",
+                            gradeNames: "maxwell.withSliderAnimation"
                         }
                     }
                 },
@@ -33,6 +36,10 @@
                 },
                 TopContributions: {
                     type: "maxwell.iNatComponentsPaneHandler"
+                },
+                Protected: {
+                    type: "maxwell.scrollyPaneHandler",
+                    gradeNames: "maxwell.withPaneInfo"
                 }
             }
         }
@@ -89,6 +96,9 @@
     }, {
         source: "%imerss-bioinfo/src/client/img/external-link.svg",
         target: "%maxwell/docs/img/external-link.svg"
+    },  {
+        source: "%maxwell/img/download.svg",
+        target: "%maxwell/docs/img/download.svg"
     }, {
         source: "%maxwell/img/12993632-large.jpeg",
         target: "%maxwell/docs/img/12993632-large.jpeg"
@@ -102,6 +112,9 @@
         source: "%maxwell/src/html/imerss-viz-scrolly.html",
         target: "%maxwell/docs/html/imerss-viz-scrolly.html"
     }, {
+        source: "%maxwell/src/html/pane-info.html",
+        target: "%maxwell/docs/html/pane-info.html"
+    }, {
         source: "%maxwell/viz_data/howePhyloMap.json",
         target: "%maxwell/docs/json/howePhyloMap.json"
     }, {
@@ -110,6 +123,9 @@
     }, {
         source: "%maxwell/viz_data/Howe-Sound-Scrolly-Life-Status.json.lz4",
         target: "%maxwell/docs/data/Howe-Sound-Scrolly-Life-Status.json.lz4"
+    }, {
+        source: "%maxwell/outputs",
+        target: "%maxwell/docs/data/tabular"
     }]
 }
 

@@ -13,6 +13,7 @@ library(leaflet)
 library(raster)
 library(sf)
 library(tidyr)
+library(jsonlite)
 library(viridis)
 
 library(plotly)
@@ -286,6 +287,9 @@ history.2010 <- filter(gridded.history, year == 2010)
 history.2020 <- filter(gridded.history, year == 2020)
 history.2022 <- filter(gridded.history, year == 2022)
 
+historyData <- list(mapTitle = "Map 2. Historical collection activities")
+write(jsonlite::toJSON(historyData, auto_unbox = TRUE, pretty = TRUE), "viz_data/History-plotData.json")
+
 # Plot map
 
 heatMap <- leaflet(options=list(mx_mapId="History")) %>%
@@ -293,7 +297,7 @@ heatMap <- leaflet(options=list(mx_mapId="History")) %>%
   addTiles(options = providerTileOptions(opacity = 0.5)) %>%
   addRasterImage(hillshade, opacity = 0.8) %>%
   addPolygons(data = coastline, color = "black", weight = 1.5, fillOpacity = 0, fillColor = NA) %>%
-  # This indices need to agree with positions in array "year"
+  # These indices need to agree with positions in array "year"
   addPolygons(data = history.1900, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 0)) %>%
   addPolygons(data = history.1910, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 1)) %>%
   addPolygons(data = history.1920, fillColor = ~pal(richness), fillOpacity = 0.6, weight = 0, options = list(mx_subLayerIndex = 2)) %>%

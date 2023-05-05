@@ -50,6 +50,7 @@ fluid.defaults("maxwell.scrollyVizBinder", {
     events: {
         selectRegion: null
     },
+    regionIdFromLabel: false,
     listeners: {
         // Override the built-in old fashioned rendering
         "onResourcesLoaded.renderMarkup": "fluid.identity",
@@ -64,17 +65,27 @@ fluid.defaults("maxwell.scrollyVizBinder", {
         mapHolder: "{maxwell.scrollyLeafletMap}.container"
     },
     invokers: {
-        polyOptions: "maxwell.scrollyViz.polyOptions({that}, {arguments}.0)",
-        handlePoly: "maxwell.scrollyViz.handlePoly({that}, {arguments}.0, {arguments}.1)"
+        polyOptions: "maxwell.scrollyViz.polyOptions({that}, {arguments}.0, {arguments}.1)",
+        handlePoly: "maxwell.scrollyViz.handlePoly({that}, {arguments}.0, {arguments}.1, {arguments}.2)"
     },
     distributeOptions: {
-        bareRegionExtra: {
+        bareRegionsExtra: {
             target: "{that hortis.leafletMap}.options.gradeNames",
             record: "maxwell.bareRegionsExtra"
         },
         map: {
             target: "{that hortis.leafletMap}.options.members.map",
             record: "{scrollyLeafletMap}.map"
+        }
+    }
+});
+
+// TODO: Remember to add this to all Howe panes
+fluid.defaults("maxwell.scrollyVizBinder.withLegend", {
+    distributeOptions: {
+        withLegend: {
+            target: "{that hortis.leafletMap}.options.gradeNames",
+            record: "maxwell.bareRegionsExtra.withLegend"
         }
     }
 });
@@ -125,7 +136,21 @@ maxwell.legendKey.drawLegend = function (map) {
 
 // Addon grade for hortis.leafletMap - all this stuff needs to go upstairs into LeafletMapWithBareRegions
 fluid.defaults("maxwell.bareRegionsExtra", {
-    // These two from withRegions, pull up into withLegend
+    modelListeners: {
+        regionToHash: {
+            path: "mapBlockTooltipId",
+            func: "maxwell.scrollyViz.updateRegionHash",
+            args: ["{that}", "{change}"]
+        }
+    },
+    listeners: {
+        "buildMap.drawRegions": "maxwell.drawBareRegions({that}, {scrollyPage})",
+        //                                                                          class,       community       source
+        "selectRegion.regionSelection": "hortis.leafletMap.regionSelection({that}, {arguments}.0, {arguments}.1, {arguments}.2)"
+    }
+});
+
+fluid.defaults("maxwell.bareRegionsExtra.withLegend", {
     selectors: {
         // key is from Xetthecum, selector is ours - we don't have "keys", normalise this
         legendKeys: ".mxcw-legend"
@@ -140,20 +165,12 @@ fluid.defaults("maxwell.bareRegionsExtra", {
             path: "{paneHandler}.model.isVisible",
             func: "maxwell.toggleClass",
             args: ["{that}.legendContainer", "{change}.value", "mxcw-hidden"]
-        },
-        regionToHash: {
-            path: "mapBlockTooltipId",
-            func: "maxwell.scrollyViz.updateRegionHash",
-            args: ["{that}", "{change}"]
         }
     },
     members: {
         legendContainer: "@expand:maxwell.legendKey.drawLegend({that}, {paneHandler})"
     },
     listeners: {
-        "buildMap.drawRegions": "maxwell.drawBareRegions({that}, {scrollyPage})",
-        //                                                                          class,       community       source
-        "selectRegion.regionSelection": "hortis.leafletMap.regionSelection({that}, {arguments}.0, {arguments}.1, {arguments}.2)",
         // BUG only one of the legendVisible modelListeners fires onCreate! Perhaps because of the namespace?
         "onCreate.legendVisible": {
             path: "{paneHandler}.model.isVisible",
@@ -213,9 +230,13 @@ hortis.leafletMap.showSelectedRegions = function (map, selectedRegions) {
     });
 };
 
+maxwell.scrollyViz.regionIdForPoly = function (paneHandler, shapeOptions, label) {
+    const regionIdFromLabel = fluid.getForComponent(paneHandler, ["options", "regionIdFromLabel"]); // obviously unsatisfactory
+    return regionIdFromLabel ? label : shapeOptions.mx_regionId;
+};
 
-maxwell.scrollyViz.polyOptions = function (paneHandler, shapeOptions) {
-    const region = shapeOptions.mx_regionId;
+maxwell.scrollyViz.polyOptions = function (paneHandler, shapeOptions, label) {
+    const region = maxwell.scrollyViz.regionIdForPoly(paneHandler, shapeOptions, label);
     const overlay = {};
     if (region) {
         overlay.className = (shapeOptions.className || "") + " fld-imerss-region " + maxwell.regionClass(region);
@@ -225,8 +246,8 @@ maxwell.scrollyViz.polyOptions = function (paneHandler, shapeOptions) {
     return {...shapeOptions, ...overlay};
 };
 
-maxwell.scrollyViz.handlePoly = function (paneHandler, Lpolygon, shapeOptions) {
-    const region = shapeOptions.mx_regionId;
+maxwell.scrollyViz.handlePoly = function (paneHandler, Lpolygon, shapeOptions, label) {
+    const region = maxwell.scrollyViz.regionIdForPoly(paneHandler, shapeOptions, label);
     // cf.hortis.leafletMap.withRegions.drawRegions
     if (region) {
         Lpolygon.on("click", function () {
