@@ -10,6 +10,7 @@ library(scales)
 library(sf)
 library(jsonlite)
 library(viridis)
+library(htmlwidgets)
 
 # Source dependencies
 

@@ -781,8 +781,7 @@ fluid.defaults("maxwell.scrollyLeafletMap", {
     },
     zoomDuration: 2000,
     listeners: {
-        "onCreate.getTiles": "maxwell.applyZerothTiles({scrollyPage}.leafletWidgets, {that}.map)",
-        // "onCreate.applyView": "maxwell.applyZerothView({scrollyPage}.leafletWidgets, {that}.map)"
+        "onCreate.getTiles": "maxwell.applyZerothTiles({scrollyPage}.leafletWidgets, {that}.map)"
     }
 });
 
@@ -797,12 +796,6 @@ maxwell.applyZerothTiles = function (leafletWidgets, map) {
     }
 };
 
-maxwell.applyZerothView = function (leafletWidgets, map) {
-    const data0 = leafletWidgets[0].data.x;
-    maxwell.applyView(map, data0);
-};
-
-
 // Pane info widgets which appear immediately below map
 
 fluid.defaults("maxwell.withPaneInfo", {
@@ -810,7 +803,10 @@ fluid.defaults("maxwell.withPaneInfo", {
         paneInfo: {
             type: "maxwell.paneInfo",
             options: {
-                parentContainer: "{paneHandler}.options.parentContainer"
+                parentContainer: "{paneHandler}.options.parentContainer",
+                markup: {
+                    region: "{paneHandler}.options.regionMarkup"
+                }
             }
         }
     }
@@ -847,7 +843,7 @@ fluid.defaults("maxwell.withRegionName", {
     }
 });
 
-maxwell.renderRegionName = function (target, template, regionLabels, region, that) {
+maxwell.renderRegionName = function (target, template, regionLabels, region) {
     const text = fluid.stringTemplate(template, {
         region: region || "None",
         regionLabel: region && regionLabels ? "(" + regionLabels[region] + ")" : ""
@@ -936,7 +932,7 @@ fluid.defaults("maxwell.widgetHandler", {
             priority: "first",
             func: "maxwell.widgetHandler.bindFirst"
         }
-    },
+    }
 });
 
 maxwell.widgetHandler.bindFirst = function (element, that) {

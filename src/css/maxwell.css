@@ -50,13 +50,14 @@ h2 {
 
 .mxcw-mapPane {
     opacity: 0;
-    /* TODO: move over to "visibility" */
-    transition-property: opacity;
+    visibility: hidden;
+    transition-property: opacity, visibility;
     transition-duration: 400ms;
 }
 
 .mxcw-mapPane.mxcw-activeMapPane {
     opacity: 1;
+    visibility: visible;
 }
 
 .mxcw-mapSubPane.mxcw-mapPane {

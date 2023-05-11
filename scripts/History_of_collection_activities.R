@@ -205,36 +205,6 @@ speciesPlot <- layout(speciesPlot, meta = list(mx_widgetId = "speciesPlot"),
 
 speciesPlot
 
-# plot <- history %>% 
-#   ggplot(aes(x = year, y = cum.spp, color = 'green')) +
-#   geom_line(alpha=0.8) + 
-#   geom_point(size=2) +
-#   labs(title="Vascular plant species recorded in Átl’ka7tsem/Howe Sound 1890-2022",
-#        caption="Source: Átl’ka7tsem/Howe Sound Biosphere Region Initiative")+
-#   ylab('Reported Species')+xlab('Year') + 
-#   theme_solarized_2(light=F) +
-#   theme(text=element_text(colour="#EEEEEE"),
-#         title=element_text(colour="#EEEEEE",size=9,face = "bold"),
-#         plot.title=element_text(hjust=0.5),
-#         axis.title.x = element_blank(),
-#         panel.grid.minor.x=element_blank(),
-#         plot.margin = unit(c(0.5,1.3,0.5,0.5), "cm")) + 
-#   theme(legend.position="none") +
-#   transition_reveal(year)
-# 
-# animate(
-#   plot = plot,
-#   render = gifski_renderer(),
-#   height = 420,
-#   width = 700, 
-#   duration = 5,
-#   fps = 30,
-#   res = 100,
-#   end_pause = 120)
-
-# Supress saving gif
-# anim_save('../outputs/plants.gif')
-
 # Most historical data collected in the 1920s and between the 1960s and 1980s;
 # Large increase in observations and recorded species with the emergence of 
 # iNaturalist in 2010s; no. species reported for Howe Sound has nearly doubled 
@@ -246,7 +216,6 @@ speciesPlot
 # Note: this plot adds one layer, including cumulative series of features for multiple decades
 # to illustrate historical timeline;
 # alternatively, we might add multiple layers of gridded species richness, one for each decade
-# The final two years (2020-2022) are missing because R was not able to process that dataset
 
 # Load map layers
 

@@ -7,7 +7,7 @@
             paneHandlers: {
                 Vascular: {
                     type: "maxwell.scrollyPaneHandler",
-                    gradeNames: [ "maxwell.scrollyVizBinder", "maxwell.howeVizBinder"],
+                    gradeNames: [ "maxwell.scrollyVizBinder", "maxwell.howeVizBinder", "maxwell.scrollyVizBinder.withLegend"],
                     vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4",
                     downloadTemplate: "data/tabular/AHSBR_%regionName_vascular_plants.csv"
                 },
@@ -23,11 +23,9 @@
                 },
                 Status: {
                     type: "maxwell.scrollyPaneHandler",
-                    gradeNames: [ "maxwell.scrollyVizBinder", "maxwell.howeVizBinder", "maxwell.howeStatusBinder"],
+                    gradeNames: [ "maxwell.scrollyVizBinder", "maxwell.howeVizBinder", "maxwell.howeStatusBinder", "maxwell.scrollyVizBinder.withLegend"],
                     vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Status.json.lz4",
-                    markup: {
-                        region: "Selected reporting status: %region"
-                    },
+                    regionMarkup: "Selected reporting status: <span class=\"fl-imerss-region-key\">%region</span>",
                     widgets: {
                         reportingStatus: {
                             type: "maxwell.regionSelectionBar"
