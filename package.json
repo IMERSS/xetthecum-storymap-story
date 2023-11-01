@@ -10,7 +10,8 @@
     "dependencies": {},
     "devDependencies": {
         "infusion": "4.6.0",
-        "imerss-bioinfo": "1.7.0",
+        "imerss-bioinfo": "1.9.0",
+        "@imerss/inat-components": "2.0.1",
         "json5": "2.2.3",
         "linkedom": "0.14.25",
         "fs-extra": "11.1.1",

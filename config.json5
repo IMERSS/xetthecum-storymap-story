@@ -7,8 +7,11 @@
             paneHandlers: {
                 Vascular: {
                     type: "maxwell.scrollyPaneHandler",
-                    gradeNames: [ "maxwell.scrollyVizBinder", "maxwell.howeVizBinder", "maxwell.scrollyVizBinder.withLegend"],
+                    gradeNames: ["maxwell.withPaneInfo", "maxwell.scrollyVizBinder.withLegend", "maxwell.scrollyVizBinder"],
+                    paneInfoGrades: ["maxwell.regionPaneInfo"],
+                    regionBinderGrades: ["maxwell.withLabelledRegionName"],
                     vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4",
+                    phyloMap: "%resourceBase/json/howePhyloMap.json",
                     downloadTemplate: "data/tabular/AHSBR_%regionName_vascular_plants.csv"
                 },
                 History: {
@@ -17,27 +20,54 @@
                     widgets: {
                         speciesPlot: {
                             type: "maxwell.choroplethSlider",
-                            gradeNames: "maxwell.withSliderAnimation"
+                            gradeNames: ["maxwell.withSliderAnimation", "maxwell.withResizableWidth"]
                         }
                     }
                 },
                 Status: {
                     type: "maxwell.scrollyPaneHandler",
-                    gradeNames: [ "maxwell.scrollyVizBinder", "maxwell.howeVizBinder", "maxwell.howeStatusBinder", "maxwell.scrollyVizBinder.withLegend"],
+                    gradeNames: ["maxwell.withPaneInfo", "maxwell.scrollyVizBinder.withLegend", "maxwell.scrollyVizBinder"],
+                    paneInfoGrades: ["maxwell.statusCellPaneInfo"],
                     vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Status.json.lz4",
+                    phyloMap: "%resourceBase/json/howePhyloMap.json",
                     regionMarkup: "Selected reporting status: <span class=\"fl-imerss-region-key\">%region</span>",
                     widgets: {
                         reportingStatus: {
-                            type: "maxwell.regionSelectionBar"
+                            type: "maxwell.regionSelectionBar",
+                            gradeNames: "maxwell.regionSelectionBar.withHoist"
                         }
                     }
                 },
                 TopContributions: {
-                    type: "maxwell.iNatComponentsPaneHandler"
+                    type: "maxwell.iNatComponentsPaneHandler",
+                    iNatOptions: {
+                        taxon: {
+                            id: 211194,
+                            str: "Vascular plants"
+                        },
+                        place: {
+                            id: 121270,
+                            str: "howesound"
+                        },
+                        features: [{ // recentObservations
+                            desc: "This page lists the most recent observations of vascular plants made in the the \xc1tl\u2019\u1e35a7tsem/Howe Sound Biosphere Region. Click on any of them to go to the iNaturalist site for more information."
+                        }, { // "commonTaxa"
+                            desc: "This page lists the most commonly reported species in \xc1tl\u2019\u1e35a7tsem/Howe Sound. You can use the dropdown at the top right to filter the results to a particular year."
+                        }, { // "favourites",
+                            desc: "Any time iNaturalist users encounter an observation they like, they can choose to \"favourite\" it. This page lists the most favourited vascular plants observations made in the the \xc1tl\u2019\u1e35a7tsem/Howe Sound Biosphere Region."
+                        }
+                        ]
+                    }
                 },
                 Protected: {
                     type: "maxwell.scrollyPaneHandler",
-                    gradeNames: "maxwell.withPaneInfo"
+                    gradeNames: "maxwell.withPaneInfo",
+                    widgets: {
+                        protectedAreas: {
+                            type: "maxwell.widgetHandler",
+                            gradeNames: "maxwell.withResizableWidth"
+                        }
+                    }
                 }
             }
         }
@@ -47,6 +77,12 @@
         target: "%maxwell/docs/js/infusion-framework.js",
         replaceSource: "sourceMappingURL=infusion-framework.js.map",
         replaceTarget: "sourceMappingURL=../../node_modules/infusion/dist/infusion-framework.js.map"
+    }, { // TODO: Extend module-relative addressing to 3rd-party modules
+        source: "%maxwell/node_modules/@imerss/inat-components/dist/standalone.min.js",
+        target: "%maxwell/docs/js/inat-components-standalone.min.js"
+    }, {
+        source: "%maxwell/src/css/*.css",
+        target: "%maxwell/docs/css"
     }, {
         source: "%maxwell/src/js/client/plotly-2.1.1.js",
         target: "%maxwell/docs/js/plotly-2.1.1.js"
@@ -63,17 +99,8 @@
         source: "%maxwell/src/js/client/imerss-viz-reknit.js",
         target: "%maxwell/docs/js/imerss-viz-reknit.js"
     }, {
-        source: "%maxwell/src/js/client/inat-components-build.js",
-        target: "%maxwell/docs/js/inat-components-build.js"
-    }, {
-        source: "%maxwell/src/js/client/howe.js",
-        target: "%maxwell/docs/js/howe.js"
-    }, {
-        source: "%maxwell/src/css/maxwell.css",
-        target: "%maxwell/docs/css/maxwell.css"
-    }, {
-        source: "%maxwell/src/css/howe.css",
-        target: "%maxwell/docs/css/howe.css"
+        source: "%maxwell/src/js/client/paneHandlers.js",
+        target: "%maxwell/docs/js/paneHandlers.js"
     }, {
         source: "%imerss-bioinfo/docs/js/imerss-viz-all.js",
         target: "%maxwell/docs/js/imerss-viz-all.js"

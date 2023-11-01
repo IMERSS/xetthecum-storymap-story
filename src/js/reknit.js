@@ -3,6 +3,8 @@
 "use strict";
 
 const fs = require("fs-extra"),
+    glob = require("glob"),
+    path = require("path"),
     linkedom = require("linkedom"),
     fluid = require("infusion");
 
@@ -108,7 +110,7 @@ maxwell.integratePaneHandler = function (paneHandler, key) {
     return {...paneHandler, ...toMerge};
 };
 
-maxwell.reknitFile = async function (infile, outfile, options) {
+maxwell.reknitFile = async function (infile, outfile, options, config) {
     const document = maxwell.parseDocument(fluid.module.resolvePath(infile));
     const container = document.querySelector(".main-container");
     const sections = maxwell.hideLeafletWidgets(container);
@@ -118,16 +120,19 @@ maxwell.reknitFile = async function (infile, outfile, options) {
     maxwell.transferNodeContent(document, template, "h1");
     maxwell.transferNodeContent(document, template, "title");
 
-    await maxwell.asyncForEach(options.transforms || [], async (rec) => {
+    const transforms = (config.transforms || []).concat(options.transforms || []);
+
+    await maxwell.asyncForEach(transforms || [], async (rec) => {
         const file = require(fluid.module.resolvePath(rec.file));
         const transform = file[rec.func];
-        await transform(document, container);
+        await transform(document, container, template, {infile, outfile, options}, config);
     });
     const target = template.querySelector(".mxcw-content");
     target.appendChild(container);
     const paneHandlers = options.paneHandlers;
     if (paneHandlers) {
         const integratedHandlers = fluid.transform(paneHandlers, function (paneHandler, key) {
+            // TODO: Allow prefix to be contributed representing entire page, e.g. "Mollusca-"
             return maxwell.integratePaneHandler(paneHandler, key);
         });
         const paneMapText = "maxwell.scrollyPaneHandlers = " + JSON.stringify(integratedHandlers) + ";\n";
@@ -138,6 +143,21 @@ maxwell.reknitFile = async function (infile, outfile, options) {
     }
     const outMarkup = "<!DOCTYPE html>" + template.documentElement.outerHTML;
     maxwell.writeFile(fluid.module.resolvePath(outfile), outMarkup);
+};
+
+// TODO: copy up synchronous copyGlob
+const copyGlob = function (sourcePattern, targetDir) {
+    console.log("copyGlob ", sourcePattern);
+    const fileNames = glob.sync(sourcePattern);
+    console.log("Got files ", fileNames);
+    fileNames.forEach(filePath => {
+        const fileName = path.basename(filePath);
+        const destinationPath = path.join(targetDir, fileName);
+
+        fs.ensureDirSync(path.dirname(destinationPath));
+        fs.copyFileSync(filePath, destinationPath);
+        console.log(`Copied file: ${fileName}`);
+    });
 };
 
 /** Copy dependencies into docs directory for GitHub pages **/
@@ -153,14 +173,37 @@ const copyDep = function (source, target, replaceSource, replaceTarget) {
         const text = fs.readFileSync(sourcePath, "utf8");
         const replaced = text.replace(replaceSource, replaceTarget);
         fs.writeFileSync(targetPath, replaced, "utf8");
+        console.log(`Copied file: ${targetPath}`);
+    } else if (sourcePath.includes("*")) {
+        copyGlob(sourcePath, targetPath);
     } else {
+        fs.ensureDirSync(path.dirname(targetPath));
         fs.copySync(sourcePath, targetPath);
+        console.log(`Copied file: ${targetPath}`);
     }
 };
 
+/*
+// Currently unused - otherwise we can't load unknitted files
+const clearNonMedia = function () {
+    const directory = "docs";
+    const files = fs.readdirSync(directory, { withFileTypes: true });
+
+    files.forEach((file) => {
+        const filePath = path.join(directory, file.name);
+
+        if (file.isDirectory()) {
+            if (file.name !== "media") {
+                fs.rmSync(filePath, { recursive: true });
+            }
+        }
+    });
+};
+*/
+
 const reknit = async function () {
     const config = maxwell.loadJSON5File("%maxwell/config.json5");
-    await maxwell.asyncForEach(config.reknitJobs, async (rec) => maxwell.reknitFile(rec.infile, rec.outfile, rec.options));
+    await maxwell.asyncForEach(config.reknitJobs, async (rec) => maxwell.reknitFile(rec.infile, rec.outfile, rec.options, config));
 
     config.copyJobs.forEach(function (dep) {
         copyDep(dep.source, dep.target, dep.replaceSource, dep.replaceTarget);
@@ -168,5 +211,3 @@ const reknit = async function () {
 };
 
 reknit().then();
-
-

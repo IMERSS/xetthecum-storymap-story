@@ -75,8 +75,47 @@ var maxwell = fluid.registerNamespace("maxwell");
  * @typedef {Object} LeafletLayerGroup
  */
 
+fluid.defaults("maxwell.widgetHandler", {
+    gradeNames: "fluid.component",
+    widgetKey: "{sourcePath}",
+    events: {
+        bindWidget: null
+    },
+    listeners: {
+        "bindWidget.first": {
+            priority: "first",
+            func: "maxwell.widgetHandler.bindFirst"
+        }
+    }
+});
+
+maxwell.widgetHandler.bindFirst = function (element, that) {
+    that.element = element;
+};
+
+fluid.defaults("maxwell.withResizableWidth", {
+    resizableParent: ".mxcw-widgetPane",
+    listeners: {
+        "bindWidget.makeResizable": {
+            func: "maxwell.makeResizableWidth",
+            args: ["{arguments}.0", "{paneHandler}", "{that}.options.resizableParent"]
+        }
+    }
+});
+
 maxwell.findPlotlyWidgetId = function (widget) {
     return widget.layout?.meta?.mx_widgetId;
+};
+
+maxwell.makeResizableWidth = function (element, paneHandler, selector) {
+    // TODO: remove listener on destruction
+    window.addEventListener("resize", function () {
+        const parent = element.closest(selector);
+        const newWidth = parent.clientWidth;
+        if (newWidth > 0) {
+            Plotly.relayout(element, {width: newWidth});
+        }
+    });
 };
 
 fluid.defaults("maxwell.choroplethSlider", {
@@ -125,43 +164,6 @@ maxwell.withSliderAnimation.bind = function (element, that, paneHandler, scrolly
         Plotly.restyle(element, {visible: element.layout.sliders[0].steps[next].args[1]});
         scrollyPage.applier.change(["activeSubPanes", paneIndex], next);
     }, that.options.delay);
-};
-
-fluid.defaults("maxwell.regionSelectionBar", {
-    gradeNames: "maxwell.widgetHandler",
-    listeners: {
-        "bindWidget.regionSelectionBar": "maxwell.regionSelectionBar.bind"
-    }
-});
-
-maxwell.regionSelectionBar.bind = function (element, that, paneHandler) {
-    const bar = element;
-    const vizBinder = paneHandler;
-    const names = fluid.getMembers(element.data, "name");
-    // In theory this should be done via some options distribution, or at the very least, an IoCSS-driven model
-    // listener specification
-    vizBinder.events.sunburstLoaded.addListener(() => {
-        const map = vizBinder.map;
-        map.applier.modelChanged.addListener({path: "selectedRegions.*"}, function (selected, oldSelected, segs) {
-            const changed = fluid.peek(segs);
-            const index = names.indexOf(changed);
-            Plotly.restyle(element, {
-                // Should agree with .fld-imerss-selected but seems that plotly cannot be reached via CSS
-                "marker.line": selected ? {
-                    color: "#FCFF63",
-                    width: 2
-                } : {
-                    color: "#000000",
-                    width: 0
-                }
-            }, index);
-        });
-    }, "plotlyRegion", "after:fluid-componentConstruction");
-
-    bar.on("plotly_click", function (e) {
-        const regionName = e.points[0].data.name;
-        vizBinder.map.events.selectRegion.fire(regionName, regionName);
-    });
 };
 
 maxwell.findPlotlyWidgets = function (scrollyPage) {
@@ -236,6 +238,138 @@ maxwell.hoverPopup = function (layer, paneOptions) {
         this.closePopup();
     });
 };
+
+fluid.defaults("maxwell.withNativeLegend", {
+    modelListeners: {
+        legendVisible: {
+            path: "{paneHandler}.model.isVisible",
+            func: "maxwell.toggleClass",
+            args: ["{that}.legendContainer", "{change}.value", "mxcw-hidden"]
+        }
+    }
+});
+
+// From https://github.com/rstudio/leaflet/blob/main/javascript/src/methods.js#LL713C1-L859C3
+maxwell.addNativeLegend = function (options, map, paneHandler) {
+    const legend = L.control({position: options.position});
+    const div = L.DomUtil.create("div", options.className);
+
+    legend.onAdd = function () {
+        const colors = options.colors,
+            labels = options.labels;
+        let legendHTML = "";
+        if (options.type === "numeric") {
+            // # Formatting constants.
+            const singleBinHeight = 20;  // The distance between tick marks, in px
+            const vMargin = 8; // If 1st tick mark starts at top of gradient, how
+            // many extra px are needed for the top half of the
+            // 1st label? (ditto for last tick mark/label)
+            const tickWidth = 4;     // How wide should tick marks be, in px?
+            const labelPadding = 6;  // How much distance to reserve for tick mark?
+            // (Must be >= tickWidth)
+
+            // # Derived formatting parameters.
+
+            // What's the height of a single bin, in percentage (of gradient height)?
+            // It might not just be 1/(n-1), if the gradient extends past the tick
+            // marks (which can be the case for pretty cut points).
+            const singleBinPct = (options.extra.p_n - options.extra.p_1) / (labels.length - 1);
+            // Each bin is `singleBinHeight` high. How tall is the gradient?
+            const totalHeight = (1 / singleBinPct) * singleBinHeight + 1;
+            // How far should the first tick be shifted down, relative to the top
+            // of the gradient?
+            const tickOffset = (singleBinHeight / singleBinPct) * options.extra.p_1;
+
+            const gradSpan = $("<span/>").css({
+                "background": "linear-gradient(" + colors + ")",
+                "opacity": options.opacity,
+                "height": totalHeight + "px",
+                "width": "18px",
+                "display": "block",
+                "margin-top": vMargin + "px"
+            });
+            const leftDiv = $("<div/>").css("float", "left"),
+                rightDiv = $("<div/>").css("float", "left");
+            leftDiv.append(gradSpan);
+            $(div).append(leftDiv).append(rightDiv)
+                .append($("<br>"));
+
+            // Have to attach the div to the body at this early point, so that the
+            // svg text getComputedTextLength() actually works, below.
+            document.body.appendChild(div);
+
+            const ns = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(ns, "svg");
+            rightDiv.append(svg);
+            const g = document.createElementNS(ns, "g");
+            $(g).attr("transform", "translate(0, " + vMargin + ")");
+            svg.appendChild(g);
+
+            // max label width needed to set width of svg, and right-justify text
+            let maxLblWidth = 0;
+
+            // Create tick marks and labels
+            $.each(labels, function (i) {
+                let y = tickOffset + i * singleBinHeight + 0.5;
+
+                let thisLabel = document.createElementNS(ns, "text");
+                $(thisLabel)
+                    .text(labels[i])
+                    .attr("y", y)
+                    .attr("dx", labelPadding)
+                    .attr("dy", "0.5ex");
+                g.appendChild(thisLabel);
+                maxLblWidth = Math.max(maxLblWidth, thisLabel.getComputedTextLength());
+
+                let thisTick = document.createElementNS(ns, "line");
+                $(thisTick)
+                    .attr("x1", 0)
+                    .attr("x2", tickWidth)
+                    .attr("y1", y)
+                    .attr("y2", y)
+                    .attr("stroke-width", 1);
+                g.appendChild(thisTick);
+            });
+
+            // Now that we know the max label width, we can right-justify
+            $(svg).find("text")
+                .attr("dx", labelPadding + maxLblWidth)
+                .attr("text-anchor", "end");
+            // Final size for <svg>
+            $(svg).css({
+                width: (maxLblWidth + labelPadding) + "px",
+                height: totalHeight + vMargin * 2 + "px"
+            });
+
+            if (options.na_color && ($.inArray(options.na_label, labels) < 0) ) {
+                $(div).append("<div><i style=\"" +
+                    "background:" + options.na_color +
+                    ";opacity:" + options.opacity +
+                    ";margin-right:" + labelPadding + "px" +
+                    ";\"></i>" + options.na_label + "</div>");
+            }
+        } else {
+            if (options.na_color && ($.inArray(options.na_label, labels) < 0) ) {
+                colors.push(options.na_color);
+                labels.push(options.na_label);
+            }
+            for (let i = 0; i < colors.length; i++) {
+                legendHTML += "<i style=\"background:" + colors[i] + ";opacity:" +
+                    options.opacity + "\"></i> " + labels[i] + "<br>";
+            }
+            div.innerHTML = legendHTML;
+        }
+        if (options.title) {
+            $(div).prepend("<div style=\"margin-bottom:3px\"><strong>" +
+                options.title + "</strong></div>");
+        }
+        return div;
+    };
+    paneHandler.legendContainer = div;
+
+    legend.addTo(map);
+};
+
 
 maxwell.addMarkers = function (lat, lon, iconOrRadius, options, label, labelOptions, paneOptions, group) {
     const pane = paneOptions.pane;
@@ -349,11 +483,16 @@ maxwell.assignPolyToPane = function (rawPaneHandler, callArgs, polyMethod, paneI
         const r = v => maxwell.resolveVectorOptions(v, index);
         const args = maxwell.projectArgs(callArgs, index);
         const shapeOptions = r(options);
+        const popup = args[4];
+        const popupOptions = args[5];
         const label = args[6];
         const labelOptions = args[7];
         const finalOptions = paneHandler.polyOptions(shapeOptions, label, labelOptions);
         const polygon = L[polyMethod](maxwell.leafletiseCoords(shape), finalOptions).addTo(paneInfo.group);
-        if (label) {
+        if (popup) {
+            polygon.bindPopup(popup, {closeButton: false, ...popupOptions});
+            maxwell.hoverPopup(polygon, paneInfo.paneOptions);
+        } else if (label) {
             polygon.bindPopup(label, {closeButton: false, ...labelOptions});
             maxwell.hoverPopup(polygon, paneInfo.paneOptions);
         }
@@ -432,6 +571,10 @@ maxwell.decodeLeafletWidgetCall = function (options, call) {
             }
         } else {
             maxwell.addMarkers.apply(null, markerArgs);
+        }
+    } else if (call.method === "addLegend") {
+        if (fluid.componentHasGrade(paneHandler, "maxwell.withNativeLegend")) {
+            maxwell.addNativeLegend(call.args[0], map, paneHandler);
         }
     } else {
         console.log("Unknown R leaflet method " + call.method + " discarded");
@@ -547,6 +690,7 @@ maxwell.flyToBounds = function (map, xData, durationInMs) {
     return new Promise(function (resolve) {
         const bounds = xData.fitBounds;
         if (bounds && map._loaded) {
+            map.invalidateSize();
             map.flyToBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]], {
                 duration: durationInMs / 1000
             });
@@ -746,7 +890,6 @@ maxwell.updateActiveMapPane = function (that, activePane) {
         window.setTimeout(function () {
             widgetPanes.forEach(function (pane, index) {
                 const visibility = (index === activePane ? "block" : "none");
-                console.log("Set visibility of index " + index + " to " + visibility);
                 pane.style.display = visibility;
             });
         }, 1);
@@ -762,9 +905,15 @@ maxwell.registerSectionListeners = function (that) {
     content.addEventListener("scroll", function () {
         const scrollTop = content.scrollTop;
         const offsets = sectionHolders.map(widget => widget.section.offsetTop);
-        let index = offsets.findIndex(offset => offset > (scrollTop - 10));
-        if (index === -1) {
+        // See diagram - we scroll when the next heading's top gets close enough to the viewport top
+        let index = offsets.findIndex(offset => (scrollTop + 150) < offset) - 1;
+        if (index === -2) {
             index = sectionHolders.length - 1;
+        } else if (index === -1) {
+            index = 0;
+        }
+        if (index !== that.model.activeSection) {
+            console.log("Section change: offsetTops are ", offsets, " scrollTop is " + scrollTop + " new index " + index);
         }
         that.applier.change("activeSection", index);
     });
@@ -779,7 +928,8 @@ fluid.defaults("maxwell.scrollyLeafletMap", {
     members: {
         map: "@expand:maxwell.makeLeafletMap({that}.container)"
     },
-    zoomDuration: 2000,
+    // TODO: Expose this as a top-level config option - it is 2000 in Howe/Janszen
+    zoomDuration: 100,
     listeners: {
         "onCreate.getTiles": "maxwell.applyZerothTiles({scrollyPage}.leafletWidgets, {that}.map)"
     }
@@ -796,60 +946,150 @@ maxwell.applyZerothTiles = function (leafletWidgets, map) {
     }
 };
 
+// TODO: Shouldn't everything connected with viz code go into imerss-viz-reknit.js?
 // Pane info widgets which appear immediately below map
 
-fluid.defaults("maxwell.withPaneInfo", {
-    components: {
-        paneInfo: {
-            type: "maxwell.paneInfo",
-            options: {
-                parentContainer: "{paneHandler}.options.parentContainer",
-                markup: {
-                    region: "{paneHandler}.options.regionMarkup"
-                }
-            }
-        }
-    }
-});
-
 fluid.defaults("maxwell.paneInfo", {
-    gradeNames: ["maxwell.withRegionName", "maxwell.withMapTitle", "maxwell.withDownloadLink", "fluid.templateRenderingView"],
+    gradeNames:  "fluid.templateRenderingView",
+    parentContainer: "{paneHandler}.options.parentContainer",
     resources: {
         template: {
             url: "html/pane-info.html"
         }
     },
-    injectionType: "prepend"
+    injectionType: "prepend" // So it appears earlier than the viz markup, which uses "append"
 });
 
-fluid.defaults("maxwell.withRegionName", {
+fluid.defaults("maxwell.paneInfoBinder", {
+    gradeNames: "fluid.newViewComponent",
     markup: {
-        region: "Selected biogeoclimatic region: <span class=\"fl-imerss-region-key\">%region</span> %regionLabel"
+        infoText: "Selected biogeoclimatic region: %region"
     },
     selectors: {
-        regionDisplay: ".fld-imerss-region"
+        infoText: ".fld-imerss-region"
     },
     invokers: {
-        renderRegionName: "maxwell.renderRegionName({that}.dom.regionDisplay, {that}.options.markup.region, {paneHandler}.options.regionLabels, {arguments}.0)"
+        renderPaneInfoText: "maxwell.renderRegionName({that}.dom.infoText, {that}.options.markup.infoText, {arguments}.0)"
     },
-    distributeOptions: {
-        target: "{paneHandler hortis.leafletMap}.options.modelListeners.regionTextDisplay",
-        record: {
-            // TOOD: rename mapBlockTooltipId to selectedRegion
-            path: "{that}.model.mapBlockTooltipId",
-            listener: "{maxwell.withRegionName}.renderRegionName",
+    modelListeners: {
+        renderInfoText: {
+            path: "infoSource",
+            listener: "{maxwell.paneInfoBinder}.renderPaneInfoText",
             args: "{change}.value"
         }
     }
 });
 
-maxwell.renderRegionName = function (target, template, regionLabels, region) {
+maxwell.renderRegionName = function (target, template, region) {
+    const text = fluid.stringTemplate(template, {region: region || "None"});
+    target.text(text);
+};
+
+
+// Used in Howe with "distribution" model, not currently used in bioblitz since it has more concrete grades bioblitz.js side
+fluid.defaults("maxwell.withPaneInfo", {
+    components: {
+        paneInfo: {
+            type: "maxwell.paneInfo",
+            options: {
+                gradeNames: "{withPaneInfo}.options.paneInfoGrades"
+            }
+        }
+    },
+    distributeOptions: {
+        source: "{that}.options.regionBinderGrades",
+        target: "{that > paneInfo > regionBinder}.options.gradeNames"
+    }
+    // paneInfoGrades: []
+    // regionBinderGrades
+});
+
+// Mix in to a paneInfoBinder which is already a regionBinder
+fluid.defaults("maxwell.withLabelledRegionName", {
+    markup: {
+        infoText: "Selected biogeoclimatic region: <span class=\"fl-imerss-region-key\">%region</span> %regionLabel"
+    },
+    invokers: {
+        renderPaneInfoText: "maxwell.renderLabelledRegionName({that}.dom.infoText, {that}.options.markup.infoText, {paneHandler}.options.regionLabels, {arguments}.0)"
+    }
+});
+
+maxwell.renderLabelledRegionName = function (target, template, regionLabels, region) {
     const text = fluid.stringTemplate(template, {
         region: region || "None",
         regionLabel: region && regionLabels ? "(" + regionLabels[region] + ")" : ""
     });
     target.html(text);
 };
+
+/* Thie one gets used in Howe, together with maxwell.labelledRegionPaneInfo supplied as regionBinderGrades*/
+fluid.defaults("maxwell.regionPaneInfo", {
+    gradeNames: ["maxwell.paneInfo", "maxwell.withMapTitle", "maxwell.withDownloadLink"],
+    components: {
+        regionBinder: {
+            type: "maxwell.paneInfoBinder",
+            options: {
+                container: "{paneInfo}.container",
+                markup: {
+                    infoText: "Selected biogeoclimatic region: %region"
+                },
+                selectors: {
+                    infoText: ".fld-imerss-region"
+                },
+                model: {
+                    infoSource: "{paneHandler}.model.selectedRegion"
+                }
+            }
+        }
+    }
+});
+
+fluid.defaults("maxwell.labelledRegionPaneInfo", {
+    components: {
+        regionBinder: {
+            options: {
+                gradeNames: "maxwell.withLabelledRegionName"
+            }
+        }
+    }
+});
+
+/** This one gets used in bioblitz */
+fluid.defaults("maxwell.statusCellPaneInfo", {
+    gradeNames: ["maxwell.paneInfo", "maxwell.withMapTitle", "maxwell.withDownloadLink"],
+    components: {
+        statusBinder: {
+            type: "maxwell.paneInfoBinder",
+            options: {
+                container: "{paneInfo}.container",
+                markup: {
+                    infoText: "Selected status: %region"
+                },
+                selectors: { // Call it "region" so we don't need a whole new template - port back to bioblitz and rename
+                    infoDisplay: ".fld-imerss-region"
+                },
+                model: { // Note that Howe code calls this "selectedRegion" whereas bioblitz calls it "selectedStatus"
+                    infoSource: "{paneHandler}.model.selectedRegion"
+                }
+            }
+        }/*, // AS decided we don't want, keep it in reserve - selectedCell gets relayed in from code in bioblitz.js
+        cellBinder: {
+            type: "maxwell.regionNameBinder",
+            options: {
+                container: "{paneInfo}.container",
+                markup: {
+                    region: "Selected cell: %region"
+                },
+                selectors: {
+                    regionDisplay: ".fld-imerss-cell"
+                },
+                model: {
+                    region: "{paneHandler}.model.selectedCell"
+                }
+            }
+        }*/
+    }
+});
 
 fluid.defaults("maxwell.withMapTitle", {
     selectors: {
@@ -909,7 +1149,7 @@ fluid.defaults("maxwell.paneHandler", {
         }
     },
     listeners: {
-        "onCreate.addPaneClass": "maxwell.paneHandler.addPaneClass"
+        "onCreate.addPaneClass": "maxwell.paneHandler.addPaneClass({that}, {that}.options.parentContainer)"
     },
     resolvedWidgets: "@expand:maxwell.unflattenOptions({that}.options.widgets)",
     dynamicComponents: {
@@ -921,26 +1161,9 @@ fluid.defaults("maxwell.paneHandler", {
     }
 });
 
-fluid.defaults("maxwell.widgetHandler", {
-    gradeNames: "fluid.component",
-    widgetKey: "{sourcePath}",
-    events: {
-        bindWidget: null
-    },
-    listeners: {
-        "bindWidget.first": {
-            priority: "first",
-            func: "maxwell.widgetHandler.bindFirst"
-        }
-    }
-});
 
-maxwell.widgetHandler.bindFirst = function (element, that) {
-    that.element = element;
-};
-
-maxwell.paneHandler.addPaneClass = function (that) {
-    that.container[0].classList.add("mxcw-widgetPane-" + that.options.paneKey);
+maxwell.paneHandler.addPaneClass = function (that, parentContainer) {
+    parentContainer[0].classList.add("mxcw-widgetPane-" + that.options.paneKey);
 };
 
 fluid.defaults("maxwell.scrollyPaneHandler", {
@@ -958,14 +1181,5 @@ fluid.defaults("maxwell.scrollyPaneHandler", {
 
 fluid.defaults("maxwell.templateScrollyPaneHandler", {
     gradeNames: ["maxwell.paneHandler", "fluid.templateRenderingView"],
-    // Bodge the sunburst loader to being a traditional templateRenderingView so that its markup arrives earlier -
-    // In practice didn't manage to break the race condition. Port this into core imerss-viz
-    rendererTemplateResources: {
-        template: false,
-        markup: true
-    },
-    invokers: {
-        renderMarkup: "fluid.identity({that}.resources.markup.parsed)"
-    },
     parentContainer: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
 });

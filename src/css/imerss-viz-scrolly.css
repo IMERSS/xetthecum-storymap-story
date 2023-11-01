@@ -1,0 +1,182 @@
+body {
+    /* Override definition which shouldn't be in xetthecum-shared.css" */
+    margin: 8px
+}
+.mxcw-widgetPane {
+    padding: 0
+}
+.mxcw-container {
+    height: calc(100vh - 12rem)
+}
+.fl-imerss-container {
+    flex-direction: column;
+    margin-top: 0;
+}
+.fld-imerss-pane-info {
+    padding: 1em 0.8em 0.7em 0.8em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.fld-imerss-region-pane {
+    display: flex;
+    flex-direction: column;
+}
+
+.fld-imerss-download {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    visibility: hidden;
+}
+
+.fld-imerss-download.fl-active {
+    visibility: visible;
+}
+
+.fl-imerss-region-key {
+    font-weight: bold;
+}
+
+.fld-imerss-map-title {
+    text-align: right;
+}
+
+
+.fld-imerss-download-link {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url(../img/download.svg);
+    backdrop-filter: opacity(0.7);
+    margin-left: 5px;
+}
+
+.fld-imerss-download-link:hover {
+    outline: 1px #333 solid;
+    outline-offset: 2px;
+}
+
+
+
+.mxcw-widgetPane {
+    height: 100%;
+}
+.mxcw-noStretch {
+    height: 100%;
+    max-height: 100%;
+}
+/** Prevent this jank on selecting different checklists **/
+.fld-imerss-checklist-holder {
+    /* width: 600px; */
+}
+
+.fld-imerss-taxonDisplay {
+    height: auto;
+    margin-left: 1rem;
+    /** This core definition needs to go **/
+    min-width: auto;
+}
+
+.fl-imerss-checklist-holder {
+    background: var(--imerss-eco-colour);
+}
+
+.fl-imerss-map-and-taxa {
+    flex-direction: row;
+    max-height: inherit;
+}
+
+.mxcw-map {
+    height: 50%;
+}
+.mxcw-hideMap {
+    height: 0;
+}
+
+.mxcw-data {
+    height: 50%;
+}
+/* Taken from R Leaflet's ".info" */
+.mxcw-legend {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: #555;
+    color: #eee;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    /* Solution from https://stackoverflow.com/a/21335440 */
+    visibility: visible;
+    transition-property: opacity, visibility;
+    transition-duration: 400ms;
+}
+
+.mxcw-hidden.mxcw-legend {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* As in xetthecum.css */
+.fld-imerss-legend-preview {
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    outline: 1px solid #353030;
+    margin: 2px;
+    position: relative;
+    top: 3px;
+}
+
+.fld-imerss-map-legend > span {
+    display: inline-block;
+    font-size: 1.3rem;
+    margin-left: 2rem;
+    margin-bottom: 0.4rem;
+}
+
+.fld-imerss-legend-label {
+    display: inline-block;
+    font-size: 0.9rem;
+    width: 8rem;
+    margin-left: 6px;
+    position: relative;
+    top: -2px;
+}
+
+.fld-imerss-selected .fld-imerss-legend-preview {
+    outline: 2px solid #FCFF63;
+}
+
+/** Magic sauce allows resizing of widget smaller than "natural width" of .fl-imerss-checklist-outer */
+.fl-imerss-checklist-widgets {
+    width: 0;
+}
+
+.fl-imerss-checklist-outer {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin-top: -8px; /* No idea why this is necessary */
+}
+
+.fl-imerss-map-and-taxa > * {
+    flex-grow: 1;
+}
+
+.fl-imerss-taxa {
+    display: none;
+}
+
+/* Reach deep into the "general-module-panel" inside the iNat components and adjust its height */
+#inat-components > div > div:last-child {
+    height: calc(100vh - 350px);
+    overflow-y: auto;
+    /** Half the "grid gap" of 8px */
+    padding-right: 4px;
+}
+
+#inat-components > div {
+    padding-top: 40px;
+}

@@ -22,15 +22,17 @@ roundpoly <- function (poly, digits) {
 
 round_sf <- function (fc, digits) {
   # https://gis.stackexchange.com/questions/329110/removing-empty-polygon-from-sf-object-in-r
-  simple  <- fc %>% st_simplify(preserveTopology = TRUE, dTolerance = 5) %>% filter(!st_is_empty(.))
+  simple  <- fc %>% st_simplify(preserveTopology = TRUE, dTolerance = 5) %>% dplyr::filter(!st_is_empty(.))
   geom <- simple$geometry
   geom <- lapply(geom, function (one) {
     if (inherits(one, "MULTIPOLYGON")) {
       one <- roundmulti(one, digits)
     } else if (inherits(one, "POLYGON")) {
       one <- roundpoly(one, digits)
+    } else if (inherits(one, "XY")) {
+      one <- round(one)
     } else if (!st_is_empty(one)) {
-      stop(paste("I don't know what it is ", class(one)))  
+      stop(paste("I don't know what it is ", class(one)))
     }
   })
   simple$geometry <- st_sfc(geom)

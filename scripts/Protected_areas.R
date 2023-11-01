@@ -107,7 +107,8 @@ protected.area.plot <- plot_ly(
                           opacity = 0.8,
                           type = "bar"
                             ) %>% layout(xaxis = list(categoryorder = "category ascending", title = "Species Reported by Protected Area")) %>%
-                                  layout(yaxis = list(title = "", width=1024))
+                                  layout(yaxis = list(title = "", width=1024)) %>%
+                                  layout(meta = list(mx_widgetId = "protectedAreas"))
 
 protected.area.plot 
 

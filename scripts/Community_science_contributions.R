@@ -119,7 +119,7 @@ new.no <- c(nrow(new))
 
 reporting.status <- data.frame(y, confirmed.no, historic.no, new.no)
 
-reportingStatusFig <- plot_ly(reporting.status, x = ~confirmed.no, y = ~y, type = 'bar', orientation = 'h', name = 'confirmed',
+reportingStatusFig <- plot_ly(height = 140, reporting.status, x = ~confirmed.no, y = ~y, type = 'bar', orientation = 'h', name = 'confirmed',
                       
                       marker = list(color = '#5a96d2',
                              line = list(color = '#5a96d2',
@@ -134,12 +134,13 @@ reportingStatusFig <- reportingStatusFig %>% add_trace(x = ~new.no, name = 'new'
                          marker = list(color = '#7562b4',
                                        line = list(color = '#7562b4',
                                                    width = 1)))
-reportingStatusFig <- reportingStatusFig %>% layout(barmode = 'stack', autosize=F, height=140, showlegend=FALSE,
+reportingStatusFig <- reportingStatusFig %>% layout(barmode = 'stack', autosize=T, height=140, showlegend=FALSE,
                       xaxis = list(title = "Species Reporting Status"),
                       yaxis = list(title = "Records")) %>% 
   layout(meta = list(mx_widgetId = "reportingStatus")) %>%
   layout(yaxis = list(showticklabels = FALSE)) %>%
-  layout(yaxis = list(title = ""))
+  layout(yaxis = list(title = "")) %>%
+  config(displayModeBar = FALSE, responsive = TRUE)
 
 reportingStatusFig
 
