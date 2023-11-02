@@ -1,7 +1,5 @@
 ---
 title: Átl’ḵa7tsem/Howe Sound Biosphere Vegetation Analysis
-author: Antranig Basman, Judith Holm, Ben Keen, Murray Journeay & Andrew Simon
-date: March 26th, 2023
 output: html_document
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
@@ -88,6 +86,11 @@ protected.area.plot
 
 Based on our current knowledge, `r round(nrow(protected.plants)/nrow(native.plants)*100)` percent of the native plant diversity known to Átl’ḵa7tsem/Howe Sound has been reported within protected areas. While this preliminary evaluation is limited due to biases in sampling effort and other deficiencies in the data, it represents a starting point for a more thorough assessment of progress being made toward goals of conserving our regional habitat diversity. Please help improve our understanding of the distribution of vascular plants and other biodiversity the region by reporting your observations to the [Atl'ka7tsem Howe Sound Biosphere Region iNaturalist project.](https://www.inaturalist.org/projects/atl-ka7tsem-howe-sound-biosphere-region)
 
+## Authors
+
+Antranig Basman, Judith Holm, Ben Keen, Murray Journeay & Andrew Simon
+
+March 26th, 2023
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

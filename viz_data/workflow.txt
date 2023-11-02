@@ -1,3 +1,6 @@
-Right now Vascular-regionTaxa.json gets copied out to imerss-bioinfo and then synthesized back to
-Howe-Sound-Scrolly-Life.json.lz4 via Howe Sound/fusion.json5 and Howe Sound/vizConfig-scrolly.json5 -
+The input file is 1km_gridded_vascular_plant_records_2022-12-24_WGS84.csv leading to Howe Sound/Howe-Sound-reintegrated.csv
+
+Right now Vascular-plotData.json and Status-plotData.json get copied out to imerss-bioinfo and then synthesized back to
+Howe-Sound-Scrolly-Life-Vascular.json.lz4 and Howe-Sound-Scrolly-Life-Status.json.lz4 via
+Howe Sound/fusion.json5 and Howe Sound/vizConfig-scrolly.json5 -
 in future we will be able to do this in-place.
