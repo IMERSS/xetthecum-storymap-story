@@ -131,9 +131,6 @@
         source: "%imerss-bioinfo/docs/css/imerss-viz-all.css",
         target: "%maxwell/docs/css/imerss-viz-all.css"
     }, {
-        source: "%imerss-bioinfo/docs/css/xetthecum-shared.css",
-        target: "%maxwell/docs/css/xetthecum-shared.css"
-    }, {
         source: "%maxwell/src/html/imerss-viz-scrolly.html",
         target: "%maxwell/docs/html/imerss-viz-scrolly.html"
     }, {

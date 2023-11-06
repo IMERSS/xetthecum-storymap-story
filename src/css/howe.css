@@ -8,3 +8,16 @@
     margin-top: -30px;
     margin-bottom: 20px;
 }
+
+.mxcw-widgetPane-Protected div {
+    text-align: end;
+}
+
+.mxcw-widgetPane-Protected p {
+    margin-block-start: 1em;
+    margin-block-end: 0;
+}
+
+.mxcw-widgetPane-Protected .fld-imerss-pane-info {
+    display: none;
+}

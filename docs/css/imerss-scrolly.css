@@ -48,6 +48,14 @@ h2 {
     cursor: pointer;
 }
 
+.mxcw-content .section {
+    padding: 8px;
+}
+
+.mxcw-content img {
+    width: 100%;
+}
+
 .mxcw-mapPane {
     opacity: 0;
     visibility: hidden;
@@ -71,10 +79,6 @@ h2 {
 
 .mxcw-widgetPane.mxcw-activeWidgetPane {
     display: block;
-}
-
-.mxcw-content .section {
-    padding: 8px;
 }
 
 .mxcw-activeSection {
@@ -119,4 +123,36 @@ body .mx-header ::-webkit-scrollbar-thumb {
 /* Override Xetthecum definition */
 .fl-imerss-container {
     margin: 0px;
+}
+
+/* Styling for native legends */
+
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+
+.legend i {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+    opacity: 0.7;
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgb(0 0 0 / 20%);
+    border-radius: 5px;
+}
+
+.mxcw-hidden.legend {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
 }
