@@ -7,8 +7,7 @@
             paneHandlers: {
                 Vascular: {
                     type: "maxwell.scrollyPaneHandler",
-                    gradeNames: ["maxwell.withPaneInfo", "maxwell.scrollyVizBinder.withLegend", "maxwell.scrollyVizBinder"],
-                    paneInfoGrades: ["maxwell.regionPaneInfo"],
+                    gradeNames: ["maxwell.withRegionPaneInfo", "maxwell.scrollyVizBinder.withLegend", "maxwell.scrollyVizBinder"],
                     regionBinderGrades: ["maxwell.withLabelledRegionName"],
                     vizFile: "%resourceBase/data/Howe-Sound-Scrolly-Life-Vascular.json.lz4",
                     phyloMap: "%resourceBase/json/howePhyloMap.json",
@@ -16,7 +15,6 @@
                 },
                 History: {
                     type: "maxwell.scrollyPaneHandler",
-                    gradeNames: "maxwell.withPaneInfo",
                     widgets: {
                         speciesPlot: {
                             type: "maxwell.choroplethSlider",
