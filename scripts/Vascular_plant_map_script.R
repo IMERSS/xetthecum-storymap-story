@@ -23,7 +23,7 @@ source("scripts/utils.R")
 
 # First read vascular plant data
 
-plants.gridded <- read.csv("tabular_data/1km_gridded_vascular_plant_records_2022-12-24_WGS84.csv")
+plants.gridded <- read.csv("tabular_data/gridded_plants_WGS84.csv")
 metadata <- read.csv("tabular_data/1km_grid_metadata.csv")
 
 # Assign BEC map labels to gridded plant data
@@ -33,7 +33,7 @@ plants.gridded$MAP_LABEL <- metadata$MAP_LABEL[match(unlist(plants.gridded$id), 
 # Summarize plant species by BEC unit
 
 bec.plants <- plants.gridded %>% group_by(MAP_LABEL) %>% 
-                    summarize(taxa = paste(sort(unique(scientific)),collapse=", "))
+                    summarize(taxa = paste(sort(unique(scientificName)),collapse=", "))
 
 # Load BEC Zones shape
 

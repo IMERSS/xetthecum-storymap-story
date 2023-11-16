@@ -25,7 +25,7 @@ source("scripts/utils.R")
 
 # Read records and summary
 
-plants <- read.csv("tabular_data/1km_gridded_vascular_plant_records_2022-12-24_WGS84.csv")
+plants <- read.csv("tabular_data/gridded_plants_WGS84.csv")
 
 summary <- read.csv("tabular_data/vascular_plant_summary_resynthesized_2023-03-05.csv")
 
@@ -46,21 +46,21 @@ confirmed.taxa <- confirmed.taxa %>% paste(collapse = "|")
 reported.taxa <- unique(reported$scientificName)
 reported.taxa <- reported.taxa %>% paste(collapse = "|")
 
-new.taxa.records <- plants %>% filter(str_detect(scientific, new.taxa))
+new.taxa.records <- plants %>% filter(str_detect(scientificName, new.taxa))
 new.taxa.records$status <- 'new'
 
-confirmed.taxa.records <- plants %>% filter(str_detect(scientific,confirmed.taxa))
+confirmed.taxa.records <- plants %>% filter(str_detect(scientificName,confirmed.taxa))
 confirmed.taxa.records$status <- 'confirmed'
 
-reported.taxa.records <- plants %>% filter(str_detect(scientific, reported.taxa))
+reported.taxa.records <- plants %>% filter(str_detect(scientificName, reported.taxa))
 reported.taxa.records$status <- 'historic'
 
-records <- rbind(new.taxa.records,confirmed.taxa.records,reported.taxa.records)
+records <- rbind(new.taxa.records, confirmed.taxa.records, reported.taxa.records)
 
 # Summarise plant species by reporting status
 
 taxa.status <- records %>% group_by(status) %>% 
-  summarize(taxa = paste(sort(unique(scientific)),collapse=", "))
+  summarize(taxa = paste(sort(unique(scientificName)),collapse=", "))
 
 ### PLOT GRIDDED HEATMAPS 
 
