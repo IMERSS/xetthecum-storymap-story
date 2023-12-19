@@ -1,20 +1,17 @@
-# Átl’ka7tsem/Howe Sound Biosphere Vegetation Analysis
+# R Markdown Scrollytelling Template Repository
 
-This project hosts a structure for building out and publishing a map-based scrollytelling
-interface for the [Átl’ka7tsem/Howe Sound Biosphere Reserve](https://en.unesco.org/biosphere/eu-na/atlka7tsem_howe-sound)
-based on [R Markdown](https://rmarkdown.rstudio.com/).
-
-You can browse the published output of this project in these documents:
-
-* [Raw Storymapping Output](https://imerss.github.io/howe-sound-mapping/R-Markdown-AHSBR_Map_1.html)
-* [Storymapping Reknitted into Scrollytelling Interface](https://imerss.github.io/howe-sound-mapping/R-Markdown-AHSBR_Map_1-Reknitted.html)
-
-This was built using R and R Markdown, using free tools such as git, R and R studio, and publish and host it for free using
+This project hosts a skeleton structure suitable for building out and publishing a map-based scrollytelling
+interface based on [R Markdown](https://rmarkdown.rstudio.com/). You can build your own scrollytelling interface
+using R and R Markdown, using free tools such as git, R and R studio, and publish and host it for free using
 [GitHub Pages](https://pages.github.com/).
 
 These files were distilled from work done for the
 [Maxwell Creek Watershed Project](https://transitionsaltspring.com/maxwell-creek-watershed-project/) which is being
 undertaken by [Transition Salt Spring](https://transitionsaltspring.com/).
+
+You can browse the kind of scrollytelling interface which can be produced in the
+[Maxwell Project's GitHub pages](https://imerss.github.io/maxwell/). You can browse this own template
+repository's output at [R-Markdown-Background-Reknitted.html](https://imerss.github.io/r-scrollytelling-template/R-Markdown-Background-Reknitted.html).
 
 As a general guide to the potential of storymapping frameworks to use data to tell stories, you can visit two
 thoroughly elaborated [data explorations](https://www.data-arc.org/my-front-page/example-data-explorations/) from
@@ -23,7 +20,7 @@ using two mature storymapping frameworks, [ESRI/ArcGIS Storymaps](https://storym
 
 Here we operate a homegrown approach showing how readily available and widely understood open source tools can be
 orchestrated to produce a basic end-to-end authoring and hosting environment.
-Consult [Knitting Data Communities](https://lichen-community-systems/knitting-data-communities/) for some values
+Consult [Knitting Data Communities](https://lichen-community-systems.github.io/knitting-data-communities/) for some values
 underlying this work.
 
 ## Installation instructions
@@ -117,4 +114,4 @@ The overall URL of your documents published in GitHub pages will start with `htt
 To suggest improvements to these instructions and publishing system, please
 [raise an issue](https://github.com/IMERSS/r-scrollytelling-template/issues). For a wider background
 surrounding this project and its philosophy, please go to
-[Knitting Data Communities](https://lichen-community-systems/knitting-data-communities/).
+[Knitting Data Communities](https://lichen-community-systems.github.io/knitting-data-communities/).
