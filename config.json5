@@ -1,7 +1,7 @@
 {
     reknitJobs: [{
-        infile: "%maxwell/docs/R-Markdown-Background.html",
-        outfile: "%maxwell/docs/R-Markdown-Background-Reknitted.html",
+        infile: "%maxwell/docs/Xetthecum-Storymap.html",
+        outfile: "%maxwell/docs/Xetthecum-Storymap-Reknitted.html",
         options: {
             template: "%maxwell/src/html/template.html",
             paneHandlers: {

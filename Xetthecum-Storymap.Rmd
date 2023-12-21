@@ -1,5 +1,5 @@
 ---
-title: Xetthecum Cultural Mapping Project
+title: Xetthecum Ecocultural Mapping Project
 author: IMERSS biodiversity informatics working group
 date: December 20th, 2023
 output: html_document
@@ -11,7 +11,7 @@ knit: (function(inputFile, encoding) {
 Welcome to Xetthecum (in Hul’q’umi’num’ followed by English), an area on Galiano Island BC that is of ecological and cultural significance. Complex in its ecology, cultural history, and contemporary land-use, the boundary of Xetthecum is roughly delimited by the extent of the [Greig Creek](#region:GreigCreek) watershed, including the watercourse descending from [Laughlin Lake](#region:LaughlinLake) to [Retreat Cove](#region:RetreatCove), spanning residential and agricultural lands, protected and covenanted areas, and a public shore access.
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/vector_map_script.R")
+source("scripts/intro_map_script.R")
 introMap <- mx_intro_map()
 introMap
 ```
@@ -43,4 +43,4 @@ There were efforts made by someone named Ken to protect a hidden cave called Shq
 Vandalism Concerns:
 Florence expressed concern about ongoing issues related to vandalism and damage occurring at the caves, highlighting the need to protect and respect these important cultural spaces.
 
-Shqula’tsus —”a refuge, was protected by Ken (it is not on a map), a hidden cave”
+Shqula’tsus — "a refuge, was protected by Ken (it is not on a map), a hidden cave"
