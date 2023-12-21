@@ -22,7 +22,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Caves
 
-Spiritual cave Shhwuli’wun - praying for the spirit of the deer
+![Spiritual cave Shhwuli’wun - praying for the spirit of the deer
+](img/CaveIllustration.png)
+
 
 Florence’s grandpa said the cave: if you take care of the deer when you kill a deer for food, its spirit will come and go; if you respect it when you kill it, it will always come back; respect the body and its parts; make use of its skin; the hooves and the skin were even used in the Big House.
 
@@ -44,3 +46,7 @@ Vandalism Concerns:
 Florence expressed concern about ongoing issues related to vandalism and damage occurring at the caves, highlighting the need to protect and respect these important cultural spaces.
 
 Shqula’tsus —”a refuge, was protected by Ken (it is not on a map), a hidden cave”
+
+```{r, echo=FALSE, message=FALSE}
+
+```
