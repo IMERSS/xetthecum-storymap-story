@@ -1,25 +1,46 @@
 ---
-title: R Scrollytelling Template Project
+title: Xetthecum Cultural Mapping Project
 author: IMERSS biodiversity informatics working group
-date: December 30th, 2022
+date: December 20th, 2023
 output: html_document
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
 ---
 ## Introduction
 
-This project hosts a skeleton structure suitable for building out and publishing a map-based scrollytelling
-interface based on R Markdown. You can build your own scrollytelling interface using R and R Markdown,
-using free tools such as git, R and R studio, and publish and host it for free using [GitHub Pages](https://pages.github.com/).
-
-This first section renders a basic vector map layer represented as an ESRI Shapefile, perhaps
-[exported from a GIS system such as QGIS](https://docs.qgis.org/3.22/en/docs/user_manual/managing_data_source/supported_data.html#esri-shapefile-format).
+Welcome to Xetthecum (in Hul’q’umi’num’ followed by English), an area on Galiano Island BC that is of ecological and cultural significance. Complex in its ecology, cultural history, and contemporary land-use, the boundary of Xetthecum is roughly delimited by the extent of the [Greig Creek](#region:GreigCreek) watershed, including the watercourse descending from [Laughlin Lake](#region:LaughlinLake) to [Retreat Cove](#region:RetreatCove), spanning residential and agricultural lands, protected and covenanted areas, and a public shore access.
 
 ```{r, echo=FALSE, message=FALSE}
 source("scripts/vector_map_script.R")
-baseMap
+introMap <- mx_intro_map()
+introMap
 ```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## Caves
+
+Spiritual cave Shhwuli’wun - praying for the spirit of the deer
+
+Florence’s grandpa said the cave: if you take care of the deer when you kill a deer for food, its spirit will come and go; if you respect it when you kill it, it will always come back; respect the body and its parts; make use of its skin; the hooves and the skin were even used in the Big House.
+
+Deer Island (Parker):
+There's a mention that Parker Island was known as 'Deer Island' where deer ceremonies occurred.
+
+Spiritual Significance:
+Florence mentioned that her grandfather used a specific cave called Shhwuli’wun as a sacred place for praying, particularly for the spirit of the deer.
+She recalled feeling emotional at this cave, mentioning that after her experience there, her mother passed away.
+
+Ceremonial Importance:
+Retreat Cove, including its caves, served as locations for private ceremonies within the Penelakut community.
+Florence emphasized the significance of these caves for specific rituals, including training for ceremonies such as puberty rites.
+
+Protective Measures:
+There were efforts made by someone named Ken to protect a hidden cave called Shqula’tsus, suggesting a community concern for safeguarding these culturally important sites.
+
+Vandalism Concerns:
+Florence expressed concern about ongoing issues related to vandalism and damage occurring at the caves, highlighting the need to protect and respect these important cultural spaces.
+
+Shqula’tsus —”a refuge, was protected by Ken (it is not on a map), a hidden cave”
