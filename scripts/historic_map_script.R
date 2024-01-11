@@ -18,7 +18,7 @@ source("scripts/utils.R")
 # #Layer 3: Eelgrass vector
 # LaughlinLake <- mx_read("spatial_data/vectors/LaughlinLake")
 
-
+# Note currently disused
 mx_historic_map <- function () {
   title <- "Historic and Cultural Significance";
   

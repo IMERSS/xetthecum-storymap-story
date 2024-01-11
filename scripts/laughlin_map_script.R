@@ -20,10 +20,10 @@ LaughlinLake <- mx_read("spatial_data/vectors/LaughlinLake")
 
 
 mx_laughlin_map <- function () {
-  title <- "Xetthecum Introduction";
+  title <- "Laughlin Lake";
   
   # Plot map
-  laughlinMap <- leaflet(options=list(mx_mapId="Introduction")) %>%
+  laughlinMap <- leaflet(options=list(mx_mapId="Laughlin")) %>%
     fitBounds(-123.511, 48.952, -123.500, 48.946) %>%
     addTiles(options = providerTileOptions(opacity = 0.5)) %>%
     addPolylines(data = GreigCreek,

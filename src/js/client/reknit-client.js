@@ -595,6 +595,7 @@ maxwell.leafletWidgetToPane = function (scrollyPage, map, widget, index) {
     let paneHandler = widget.paneHandlerName && maxwell.paneHandlerForName(scrollyPage, widget.paneHandlerName);
     if (!paneHandler) {
         // Automatically construct a default scrollyPaneHandler to deal with simple non-interactive vignettes
+        // Note this is bugged due to https://fluidproject.atlassian.net/browse/FLUID-6777 and only works in the absence of plotly (e.g. Maxwell)
         const new_id = "auto-paneHandler-" + index;
         widget.paneHandlerName = new_id;
         const options = {
@@ -801,6 +802,7 @@ maxwell.resolvePaneHandlers = function () {
 fluid.defaults("maxwell.scrollyPage", {
     gradeNames: ["fluid.viewComponent", "fluid.resourceLoader"],
     container: "body",
+    // zoomDuration: 100,
     paneMap: {
         // Map of paneName to objects holding an emitter on which "click" is firable - currently only used in
         // Maxwell proper with maxwell.siteSelectable in order to make sites selectable. This will be
@@ -820,7 +822,10 @@ fluid.defaults("maxwell.scrollyPage", {
     components: {
         map: {
             type: "maxwell.scrollyLeafletMap",
-            container: "{scrollyPage}.dom.leafletMap"
+            container: "{scrollyPage}.dom.leafletMap",
+            options: {
+                zoomDuration: "{scrollyPage}.options.zoomDuration"
+            }
         }
     },
     paneHandlers: "@expand:maxwell.resolvePaneHandlers()",
@@ -970,7 +975,6 @@ fluid.defaults("maxwell.scrollyLeafletMap", {
     members: {
         map: "@expand:maxwell.makeLeafletMap({that}.container)"
     },
-    // TODO: Expose this as a top-level config option - it is 2000 in Howe/Janszen
     zoomDuration: 100,
     listeners: {
         "onCreate.getTiles": "maxwell.applyZerothTiles({scrollyPage}.leafletWidgets, {that}.map)"
@@ -1217,7 +1221,10 @@ fluid.defaults("maxwell.paneHandler", {
     gradeNames: "fluid.viewComponent",
     paneKey: "{sourcePath}",
     paneIndex: "@expand:maxwell.paneKeyToIndex({that}, {maxwell.scrollyPage})",
-    leafletWidget: "@expand:maxwell.leafletWidgetForPaneHandler({that}, {maxwell.scrollyPage})",
+    members: {
+        container: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
+    },
+
     modelRelay: {
         isVisible: {
             args: ["{maxwell.scrollyPage}.model.activePane", "{that}.options.paneIndex"],
@@ -1235,7 +1242,9 @@ fluid.defaults("maxwell.paneHandler", {
             type: "{source}.type",
             options: "{source}.options"
         }
-    }
+    },
+    // For consistency when binding from withPaneInfo
+    parentContainer: "{that}.container"
 });
 
 
@@ -1243,11 +1252,10 @@ maxwell.paneHandler.addPaneClass = function (that, parentContainer) {
     parentContainer[0].classList.add("mxcw-widgetPane-" + that.options.paneKey);
 };
 
-fluid.defaults("maxwell.scrollyPaneHandler", {
+fluid.defaults("maxwell.leafletPaneHandler", {
     gradeNames: "maxwell.paneHandler",
-    members: {
-        container: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
-    },
+
+    leafletWidget: "@expand:maxwell.leafletWidgetForPaneHandler({that}, {maxwell.scrollyPage})",
     invokers: {
         polyOptions: "fluid.identity",
         handlePoly: "fluid.identity",
@@ -1255,12 +1263,20 @@ fluid.defaults("maxwell.scrollyPaneHandler", {
     },
     events: {
         markerClick: null
-    },
-    // For consistency when binding from withPaneInfo
-    parentContainer: "{that}.container"
+    }
 });
 
-fluid.defaults("maxwell.templateScrollyPaneHandler", {
+fluid.defaults("maxwell.mapHidingPaneHandler", {
+    modelListeners: {
+        paneVisible: {
+            path: "{paneHandler}.model.isVisible",
+            func: "maxwell.toggleClass",
+            args: ["{scrollyLeafletMap}.container.0", "{change}.value", "mxcw-hideMap", true]
+        }
+    }
+});
+
+fluid.defaults("maxwell.templatePaneHandler", {
     gradeNames: ["maxwell.paneHandler", "fluid.templateRenderingView"],
     parentContainer: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
 });

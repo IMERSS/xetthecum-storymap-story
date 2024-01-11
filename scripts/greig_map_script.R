@@ -20,10 +20,10 @@ LaughlinLake <- mx_read("spatial_data/vectors/LaughlinLake")
 
 
 mx_greig_map <- function () {
-  title <- "Xetthecum Introduction";
+  title <- "Greig Creek";
   
   # Plot map
-  greigMap <- leaflet(options=list(mx_mapId="Introduction")) %>%
+  greigMap <- leaflet(options=list(mx_mapId="Greig")) %>%
     fitBounds(-123.506, 48.949, -123.496, 48.940) %>%
     addTiles(options = providerTileOptions(opacity = 0.5)) %>%
     addPolylines(data = GreigCreek,

@@ -110,6 +110,22 @@ maxwell.integratePaneHandler = function (paneHandler, key) {
     return {...paneHandler, ...toMerge};
 };
 
+maxwell.makeRootLinkage = function (targetGrade, options) {
+    // cf. fluid.makeGradeLinkage
+    const linkageName = targetGrade + "-maxwellRoot";
+    const optionsText = JSON.stringify(options);
+    return `
+    fluid.defaults("${linkageName}", {
+        gradeNames: "fluid.component",
+        distributeOptions: {
+            record: ${optionsText},
+            target: "{/ ${targetGrade}}.options"
+        }
+    });
+    fluid.constructSingle([], "${linkageName}");
+    `;
+};
+
 maxwell.reknitFile = async function (infile, outfile, options, config) {
     const document = maxwell.parseDocument(fluid.module.resolvePath(infile));
     const container = document.querySelector(".main-container");
@@ -135,9 +151,11 @@ maxwell.reknitFile = async function (infile, outfile, options, config) {
             // TODO: Allow prefix to be contributed representing entire page, e.g. "Mollusca-"
             return maxwell.integratePaneHandler(paneHandler, key);
         });
-        const paneMapText = "maxwell.scrollyPaneHandlers = " + JSON.stringify(integratedHandlers) + ";\n";
+        const scrollyPaneHandlers = "maxwell.scrollyPaneHandlers = " + JSON.stringify(integratedHandlers) + ";\n";
+        const scrollyPageOptions = options.scrollyPageOptions || {};
+        const scrollyPageLinkage = maxwell.makeRootLinkage("maxwell.scrollyPage", scrollyPageOptions);
         const scriptNode = template.createElement("script");
-        scriptNode.innerHTML = paneMapText;
+        scriptNode.innerHTML = scrollyPaneHandlers + scrollyPageLinkage;
         const head = template.querySelector("head");
         head.appendChild(scriptNode);
     }
@@ -145,7 +163,6 @@ maxwell.reknitFile = async function (infile, outfile, options, config) {
     maxwell.writeFile(fluid.module.resolvePath(outfile), outMarkup);
 };
 
-// TODO: copy up synchronous copyGlob
 const copyGlob = function (sourcePattern, targetDir) {
     console.log("copyGlob ", sourcePattern);
     const fileNames = glob.sync(sourcePattern);

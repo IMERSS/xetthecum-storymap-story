@@ -21,71 +21,28 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Caves
-<!-- Need to figure out how to remove the map -->
+
+The caves at Xetthecum have significant spiritual and cultural significance for the Hul’q’umi’num’ speaking peoples of this region. It is said that the caves were a location where one prayed for the spirit of the deer, and where the spirit of humans and deer merge. Retreat Cove, including its caves, served as a location for private ceremonies within the Penelakut community. Penelakut elders have emphasized the need to protect and respect these important cultural spaces. Until now, the caves have not been protected and are at risk of being damaged by vandalism and tourism/overuse.
 
 ![Spiritual cave Shhwuli’wun - praying for the spirit of the deer
-](img/CaveIllustration.png)
+](img/CaveIllustration.png){.data-pane}
 
+<div class="data-pane">
+<p><b>Shqula’tsus</b> — "a refuge, was protected by Ken (it is not on a map), a hidden cave"</p>
+<p><b><i>Shhwuli’wun</i></b> - Spiritual cave, praying for the spirit of the deer
+</div>
 
-Florence’s grandpa said the cave: if you take care of the deer when you kill a deer for food, its spirit will come and go; if you respect it when you kill it, it will always come back; respect the body and its parts; make use of its skin; the hooves and the skin were even used in the Big House.
-
-Deer Island (Parker):
-There's a mention that Parker Island was known as 'Deer Island' where deer ceremonies occurred.
-
-Spiritual Significance:
-Florence mentioned that her grandfather used a specific cave called Shhwuli’wun as a sacred place for praying, particularly for the spirit of the deer.
-She recalled feeling emotional at this cave, mentioning that after her experience there, her mother passed away.
-
-Ceremonial Importance:
-Retreat Cove, including its caves, served as locations for private ceremonies within the Penelakut community.
-Florence emphasized the significance of these caves for specific rituals, including training for ceremonies such as puberty rites.
-
-Protective Measures:
-There were efforts made by someone named Ken to protect a hidden cave called Shqula’tsus, suggesting a community concern for safeguarding these culturally important sites.
-
-Vandalism Concerns:
-Florence expressed concern about ongoing issues related to vandalism and damage occurring at the caves, highlighting the need to protect and respect these important cultural spaces.
-
-Shqula’tsus —”a refuge, was protected by Ken (it is not on a map), a hidden cave”
+<span class="mxcw-nonLeafletPane mxcw-paneName-Caves html-widget leaflet"></span>
 
 ## Historic and Cultural Significance
 
-For generations, Galiano's Indigenous communities have nurtured and honored the land. They've passed down traditions of sustainable resource use, respecting forests, freshwater sources, and oceans that provide life's essentials.
+Xetthecum holds profound historical significance for the Penelakut community, serving as a crucial site for resource gathering as well as cultural practices essential to the cultural fabric and spiritual growth of the community.
 
+Resource gathering: Florence and her family gathered an array of resources from this place, including essential foods such as berries, fruit and shellfish as well as medicinal plants. Littleneck clams were harvested during the spring and summer night tides. Other essential marine life, such as butter clams, cockles, and fish like dog (coho) salmon, were gathered at Retreat Cove and Greig Creek. Florence mentions gathering licorice fern root from maple trees near Retreat Cove, illustrating the specific location's significance for traditional harvesting practices. These resources sustained the community and formed a core part of their diet and traditional practices.
 
-Xetthecum is a place of private ceremonial importance to the Penelakut 
+Spiritual significance: The site holds significant spiritual value, particularly through the caves utilised for prayers, ceremonies, and the merging of spirits, notably those of humans and deer. (link to Florence’s story of crying in the cave?)
 
-The bay was a source of food. There were littlenecks in the spring towards the summer. These would be gathered during the night tides; the family would go there to gather traditional medicines at Laughlin Lake, such as a plant that has features similar to corn, like husk and silk. (Typha?, no it was another plant that was important); Florence and her family would gather food and medicines from all over the island depending on the season or what was needed. They are places on the island that were places of prayer and ceremony; Gathered at Xetthecum: Fireweed, xatisi, was used for stuffing sleep mats/beds (today can be found along Retreat Cove Road and at Laughlin Lake, AS); Mushrooms, kwmusuliqw or mumsilit; Octopus, xelex uwe, was speared usually at night; Protect the food sources. There are a lot of foods and medicines that are no longer there anymore
-
-Food gathered in the bay in spring and summer: lots of ‘littlenecks’ there; low tides in winter at night; Wild blackberries were picked all the way from the Lighthouse down to Retreat Cove; they would wake at 5am with her granny and walk and collect the berries; 
-
-Florence’s family would go to Retreat Cove to harvest butterclams and littlenecks; Someone (Florence mentioned a name but I did not catch it?) would go to pick shellfish in the Spring; No clams on west beach near Hunterston Farms (Florence was disappointed in it); The delta at the mouth of Greig Creek: where they would harvest shellfish: inc. butterclams; Manilla, butter clams, littlenecks (Florence’s mom did not gather oysters); Shellfish laid overtop of kelp and then stepped on to get the water out; Ironwood singed in fire and then used to poke clams and stuck in the mud by the fire to cook them; Cedar bark turned to string/rope — also used to string up clams by the fire; After cooked, they would smoke the shellfish; Cockles–another important seafood harvested at Retreat Cove; Dog salmon released there when Ken was still alive (in Greig Creek)—confirm with Keith et al. (according to the records we have, it was Coho Salmon); Smelts would go by and move in circles, seagulls trying to get them; Florence’s family would sometimes travel to Retreat Cove in the racing canoe; They would pull in near Retreat Island; Florence’s grandfather would walk to Laughlin Lake for medicine; The fish had been restocked in Greig Creek just before the blasting happened near the mouth of Greig Creek
-
-
-Historical Significance:
-Xetthecum held profound historical significance for the Penelakut community, serving as a crucial site for various traditional practices and resource gathering.
-
-
-Traditional Practices: The location played a vital role in hosting traditional practices, notably puberty rites for both boys and girls, which were conducted within caves. Florence James discusses the importance of caves for puberty rites (Qw’uneem for boys and Xwutl’us for girls), showcasing their historical significance in the community's cultural practices. These rites were essential to the cultural fabric and spiritual growth of the community, symbolising a connection to their heritage and spiritual beliefs. 
-
-Resource Gathering: Beyond its role in cultural ceremonies, Xetthecum was a primary resource-gathering area. Florence and her family gathered an array of resources from this place, including berries, fruit, and potentially shellfish. The bay provided not only essential foods but also medicinal resources, supporting both sustenance and ceremonial purposes for the community.
-
-Cultural Significance:
-Xetthecum's significance extended beyond its historical role; it was deeply entrenched in the cultural practices and spiritual beliefs of the Penelakut people.
-
-Spiritual Connection: The site held significant spiritual value, particularly through the caves utilised for prayers, ceremonies, and the merging of spirits, notably those of humans and deer. The emotional experience Florence had in the cave, followed by her mother's passing, highlights the profound spiritual importance attributed to Xetthecum.
-
-Cultural Practices: The practices observed at Xetthecum were intricately tied to cultural rituals and beliefs. These traditions, including ceremonies associated with the deer and puberty rites, were foundational elements of the community's cultural identity and historical heritage, emphasising the enduring importance of the site within the Penelakut culture.
-
-
-“Xetthecum, acknowledged as a site of private ceremonial significance to the Penelakut people, held profound cultural and historical importance. This bay area served as more than just a coastal location; it was a pivotal source of sustenance and cultural practices for the community.
-The bay, particularly Xetthecum, played a vital role in the Penelakut's livelihood. It provided a rich array of food resources, notably littleneck clams, harvested during the spring and summer night tides. Beyond shellfish, other essential marine life, such as butter clams, cockles, and fish like dog salmon, were gathered at Retreat Cove and Greig Creek. These resources sustained the community and formed a core part of their diet and traditional practices.
-Moreover, Xetthecum was not only a hub for food but also a source of traditional medicines. The area yielded plants resembling corn husk and silk that were utilised for their medicinal properties. This emphasised the bay's significance beyond sustenance, encompassing the procurement of essential medicinal resources vital to the Penelakut's well-being.
-The community engaged in specific and time-honoured gathering techniques, such as laying shellfish over kelp and using ironwood in cooking methods, demonstrating a deep understanding of the environment and the utilisation of natural resources in their practices.
-Regular and seasonal gatherings were part of the Penelakut's cultural fabric, with activities like collecting wild blackberries and clam harvesting at Retreat Cove forming integral parts of their routines. Furthermore, historical records indicated conscious efforts to restock fish populations, emphasising their commitment to maintaining and enhancing local marine life.
-In essence, Xetthecum was not merely a geographical location but a sacred space embodying cultural heritage, serving as a crucial provider of sustenance, traditional medicines, and a testament to the Penelakut's deep-rooted connection with the land and sea.”
-
-Galiano Island has a rich cultural history, once cultivated by Indigenous peoples using controlled burns and selective logging. However, colonial practices disrupted traditional land use. Indigenous harvesting methods aimed to sustainably utilize forests. The island's ecosystems hold spiritual significance for Indigenous communities, with specific areas like Retreat Cove and Grieg Creek serving as important fishing and ceremonial sites.
+Cultural significance: Regular and seasonal gatherings were part of the Penelakut's cultural fabric, with activities like collecting wild blackberries and clam harvesting at Retreat Cove forming integral parts of their routines. 
 
 ## Retreat Cove
 
@@ -147,13 +104,11 @@ deltaMap
 
 The Delta area shows the impact of colonial practices on freshwater ecosystems, leading to alterations in streams, wetlands, and riparian areas due to resource extraction, logging, and agriculture. These activities have disrupted the natural flow and stability of water bodies.
 
-![Greig Creek intertidal delta
-](img/Intertidal)
+![Greig Creek intertidal delta](img/Intertidal.jpg)
 
 ## Cultural Values: Marine
 
-![The marine life
-](img/Subtidal)
+![The marine life](img/Subtidal.jpg)
 
 Xetthecum (Retreat Cove/Island) is one of the few marine locations on the shoreline of Galiano itself that has been an important place for fishing and harvesting shellfish. Its desirability as a habitat for rockfish in particular has since become so notable that it has been designated a marine protected area—in which fishing is banned—in order to conserve these long-lived species that are slow to reproduce.  As the tide is not too fast, Xetthecum was once also a good area for other creatures, such as clams, pun'eq' (geoduck) and dog fish. It is important that community members are able to harvest and consume these foods without getting sick, therefore environmental health of the ocean is vital.
 

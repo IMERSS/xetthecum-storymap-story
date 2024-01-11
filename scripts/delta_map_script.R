@@ -20,20 +20,18 @@ LaughlinLake <- mx_read("spatial_data/vectors/LaughlinLake")
 #Layer 4: Delta vector
 Delta <- mx_read("spatial_data/vectors/Delta")
 
-
-
 mx_delta_map <- function () {
-  title <- "Xetthecum Introduction";
+  title <- "Delta";
   
   # Plot map
-  deltaMap <- leaflet(options=list(mx_mapId="Introduction")) %>%
+  deltaMap <- leaflet(options=list(mx_mapId="Delta")) %>%
     fitBounds(-123.503, 48.942, -123.500, 48.940) %>%
     addTiles(options = providerTileOptions(opacity = 0.5)) %>%
     addPolygons(data = Delta,
               fillColor = "lightskyblue",
               fillOpacity = 0.7,
               weight = 1,
-              options=list(mx_layerId="RetreatCove"))
+              options=list(mx_layerId="Delta"))
  
   
   # Draw the gridded data in a funny way so that richness, cell_id etc. can be tunneled through options one at a time

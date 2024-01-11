@@ -20,10 +20,10 @@ LaughlinLake <- mx_read("spatial_data/vectors/LaughlinLake")
 
 
 mx_retreat_map <- function () {
-  title <- "Xetthecum Introduction";
+  title <- "Retreat Cove";
   
   # Plot map
-  retreatMap <- leaflet(options=list(mx_mapId="Introduction")) %>%
+  retreatMap <- leaflet(options=list(mx_mapId="Retreat")) %>%
     fitBounds(-123.502, 48.941, -123.499, 48.939) %>%
     addTiles(options = providerTileOptions(opacity = 0.5)) %>%
     addPolylines(data = GreigCreek,

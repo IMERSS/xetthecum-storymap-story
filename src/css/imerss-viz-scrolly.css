@@ -97,6 +97,10 @@ body {
     height: 50%;
     /** Otherwise we get jank on selecting smaller/greater checklists somehow */
     min-height: 50%;
+    transition-property: height;
+    /** Somehow this works when hiding but not when showing
+     transition-duration: 400ms;
+     */
 }
 
 .mxcw-hideMap {

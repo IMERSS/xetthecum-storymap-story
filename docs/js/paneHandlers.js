@@ -6,7 +6,7 @@
 var maxwell = fluid.registerNamespace("maxwell");
 
 fluid.defaults("maxwell.iNatComponentsPaneHandler", {
-    gradeNames: ["maxwell.scrollyPaneHandler", "maxwell.templateScrollyPaneHandler"],
+    gradeNames: ["maxwell.paneHandler", "maxwell.templatePaneHandler", "maxwell.mapHidingPaneHandler"],
     taxonId: null,
     taxonName: null,
     containerId: "inat-components",
