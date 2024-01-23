@@ -1,0 +1,39 @@
+.fld-imerss-region-subtidal {
+    fill: url(#marine);
+    background-repeat: repeat;
+}
+
+.fld-imerss-region-lake-laughlin-lake {
+    fill: url(#lacustrine);
+    background-repeat: repeat;
+}
+
+.fld-imerss-region-wetland {
+    fill: url(#wetland);
+    background-repeat: repeat;
+}
+
+.fld-imerss-region-clearcut {
+    fill: url(#recently-harvested);
+    background-repeat: repeat;
+}
+
+.fld-imerss-region-pole-sapling {
+    fill: url(#pole-sapling);
+    background-repeat: repeat;
+}
+
+.fld-imerss-region-young-forest {
+    fill: url(#young-forest);
+    background-repeat: repeat;
+}
+
+.fld-imerss-region-mature-forest {
+    fill: url(#mature-forest);
+    background-repeat: repeat;
+}
+
+.fld-imerss-region-woodland {
+    fill: url(#woodland);
+    background-repeat: repeat;
+}

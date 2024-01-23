@@ -11,12 +11,30 @@ library(stringr)
 
 source("scripts/utils.R")
 
-#Layer 1: GreigCreek vector
+# intro map should 
+
+#Layer 1: Greig Creek vector
 GreigCreek <- mx_read("spatial_data/vectors/GreigCreek")
-#Layer 2: Delta vector
+#Layer 2: Retreat Cove vector
 RetreatCove <- mx_read("spatial_data/vectors/RetreatCove")
-#Layer 3: Eelgrass vector
+#Layer 3: Laughlin Lake vector
 LaughlinLake <- mx_read("spatial_data/vectors/LaughlinLake")
+#Layer 4: Eelgrass
+EelgrassSimplified <- mx_read("spatial_data/vectors/EelgrassSimplified")
+#Layer 5: Forests
+Forests <- mx_read("spatial_data/vectors/Forests")
+#Layer 6: Freshwater
+Freshwater <- mx_read("spatial_data/vectors/Freshwater")
+#Layer 7: Anthropogenic
+Anthropogenic <- mx_read("spatial_data/vectors/Anthropogenic")
+#Layer 8: MarineLittoral
+MarineLittoral <- mx_read("spatial_data/vectors/MarineLittoral")
+#Layer 9: WoodlandsRockOutcrops
+WoodlandsRockOutcrops <- mx_read("spatial_data/vectors/WoodlandsRockOutcrops")
+#Layer 10: ProjectBoundary
+ProjectBoundary <- mx_read("spatial_data/vectors/ProjectBoundary")
+#Layer 11: Streams
+Streams <- mx_read("spatial_data/vectors/Streams")
 
 
 mx_intro_map <- function () {
@@ -25,7 +43,7 @@ mx_intro_map <- function () {
   # Plot map
   introMap <- leaflet(options=list(mx_mapId="Introduction")) %>%
     fitBounds(-123.513, 48.954, -123.491, 48.936) %>%
-    addTiles(options = providerTileOptions(opacity = 0.5)) %>%
+    addProviderTiles(providers$CartoDB.Positron) %>%
     addPolylines(data = GreigCreek,
                 stroke = TRUE,
                 smoothFactor = 0.5,
@@ -42,7 +60,47 @@ mx_intro_map <- function () {
                 fillColor = "lightskyblue",
                 fillOpacity = 0.7,
                 weight = 1,
-                options=list(mx_layerId="LaughlinLake"))
+                options=list(mx_layerId="LaughlinLake")) %>%
+    addPolygons(data = EelgrassSimplified,
+                fillColor = "lightskyblue",
+                fillOpacity = 0.7,
+                weight = 1,
+                options=list(mx_layerId="EelgrassSimplified")) %>%
+    addPolygons(data = Forests,
+                fillColor = "lightskyblue",
+                fillOpacity = 0.7,
+                weight = 1,
+                options=list(mx_layerId="Forests")) %>%
+    addPolygons(data = Freshwater,
+                fillColor = "lightskyblue",
+                fillOpacity = 0.7,
+                weight = 1,
+                options=list(mx_layerId="Freshwater")) %>%
+    addPolygons(data = Anthropogenic,
+                fillColor = "lightskyblue",
+                fillOpacity = 0.7,
+                weight = 1,
+                options=list(mx_layerId="Anthropogenic")) %>%
+    addPolygons(data = MarineLittoral,
+                fillColor = "lightskyblue",
+                fillOpacity = 0.7,
+                weight = 1,
+                options=list(mx_layerId="MarineLittoral")) %>%
+    addPolygons(data = WoodlandsRockOutcrops,
+                fillColor = "lightskyblue",
+                fillOpacity = 0.7,
+                weight = 1,
+                options=list(mx_layerId="WoodlandsRockOutcrops")) %>%
+    addPolygons(data = ProjectBoundary,
+                fillColor = "lightskyblue",
+                fillOpacity = 0.7,
+                weight = 1,
+                options=list(mx_layerId="ProjectBoundary")) %>%
+    addPolygons(data = Streams,
+                fillColor = "lightskyblue",
+                fillOpacity = 0.7,
+                weight = 1,
+                options=list(mx_layerId="Streams"))
  
   
   # Draw the gridded data in a funny way so that richness, cell_id etc. can be tunneled through options one at a time
