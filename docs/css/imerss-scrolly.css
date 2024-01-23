@@ -1,22 +1,75 @@
+@font-face {
+    font-family: "Noto Sans";
+    src: url("fonts/Noto_Sans/NotoSansVariable.ttf");
+  }
+
+:root {
+    --text-brown: #362F24;
+    --page-background: #F2FCD6;
+    --panel-background: #E7DDCD;
+    --content-inactive-panel-background: #FCFDF7;
+    --content-active-panel-background: #FFFDFD;
+    --content-active-panel-border: #695F50;
+    --content-inactive-text-color: #878585;
+}
+  
+
+
 #header {
     display: none;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #F2FCD6;
+    font-family: "Noto Sans", Helvetica, sans-serif;
+    background: var(--page-background);
     margin: 1rem;
+    margin-top: 0px;
+    color: var(--text-brown);
+}
+
+h1 {
+    margin-block-start: 0px;
+    margin: 0px;
+    font-size: 24px;
+    font-weight: normal;
 }
 
 h2 {
     margin-block-start: 0px;
-    margin: 1rem auto;
+    margin: 0px auto 1.5rem auto;
     text-align: center;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 p {
-    font-size: 18px;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-brown);
+    font-weight: bold;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0px;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    gap: 0.5rem;
+}
+
+nav a {
+    padding: 0.5rem 1rem;
+    font-size: 20px;
+}
+
+.active-nav-item {
+    border-bottom: 4px solid var(--text-brown);
 }
 
 .main-container {
@@ -24,10 +77,6 @@ p {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-}
-
-.mxcw-banner {
-    font-size: 36px;
 }
 
 .mxcw-container {
@@ -41,7 +90,7 @@ p {
     width: 65%;
     /* For God's sake I really mean it! */
     min-width: 65%;
-    background: #E7DDCD;
+    background-color: var(--panel-background);
 
 }
 
@@ -60,7 +109,7 @@ p {
     padding: 1rem;
     height: calc(100vh - 100px);
     overflow-y: scroll;
-    background: #E7DDCD;
+    background-color: var(--panel-background);
 
 }
 
@@ -70,8 +119,8 @@ p {
 
 .mxcw-content .section {
     padding: 2rem;
-    background-color: #FCFDF7;
-    color: #878585;
+    background-color: var(--content-inactive-panel-background);
+    color: var(--content-inactive-text-color);
 }
 
 .mxcw-content img {
@@ -82,7 +131,7 @@ p {
     opacity: 0;
     visibility: hidden;
     transition-property: opacity, visibility;
-    transition-duration: 200ms;
+    transition-duration: 400ms;
 }
 
 .mxcw-mapPane.mxcw-activeMapPane {
@@ -104,11 +153,11 @@ p {
 }
 
 .mxcw-content .mxcw-activeSection {
-    background-color: #FFFDFD;
-    outline: 4px solid #695F50;
-    color: #362F24;
+    background-color: var(--content-active-panel-background);
+    outline: 4px solid var(--content-active-panel-border);
+    color: var(--text-brown);
     transition-property: background-color, outline;
-    transition-duration: 200ms;
+    transition-duration: 400ms;
 }
 
 .mxcw-mapLabel {
