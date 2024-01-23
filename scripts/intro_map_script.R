@@ -70,7 +70,7 @@ mx_intro_map <- function () {
                 fillColor = "lightskyblue",
                 fillOpacity = 0.7,
                 weight = 1,
-                options=list(mx_layerId="Forests")) %>%
+                options=list(mx_layerId="Forests", className="fld-imerss-region-woodland")) %>%
     addPolygons(data = Freshwater,
                 fillColor = "lightskyblue",
                 fillOpacity = 0.7,
