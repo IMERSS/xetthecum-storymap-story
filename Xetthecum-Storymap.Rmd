@@ -47,9 +47,9 @@ Cultural significance: Regular and seasonal gatherings were part of the Penelaku
 ## Retreat Cove
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/retreat_map_script.R")
-retreatMap <- mx_retreat_map()
-retreatMap
+#source("scripts/retreat_map_script.R")
+#retreatMap <- mx_retreat_map()
+#retreatMap
 ```
 
 Rosemary Georgeson: “I used to spend time up in Xetthecum with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.”
@@ -67,9 +67,9 @@ Retreat Cove, a marine location, has been significant for fishing and was a habi
 ## Grieg Creek
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/greig_map_script.R")
-greigMap <- mx_greig_map()
-greigMap
+#source("scripts/greig_map_script.R")
+#greigMap <- mx_greig_map()
+#greigMap
 ```
 
 Grieg Creek, once home to abundant salmon, now sees efforts to restore these vital fish populations. Indigenous and non-Indigenous communities are working together to enhance habitats, fostering the return of these cherished fish.
@@ -79,9 +79,9 @@ Efforts are being made to restore Coho and Chum salmon populations in Grieg Cree
 ## Laughlin Lake
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/laughlin_map_script.R")
-laughlinMap <- mx_laughlin_map()
-laughlinMap
+#source("scripts/laughlin_map_script.R")
+#laughlinMap <- mx_laughlin_map()
+#laughlinMap
 ```
 
 Cat tails: you can eat the base of the plant, looks like celery, you can eat it; when you cut the top to use the bullrush, you can use the root as a vegetables
@@ -97,9 +97,9 @@ Laughlin Lake represents a complex wetland ecosystem supporting a diversity of p
 ## Delta
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/delta_map_script.R")
-deltaMap <- mx_delta_map()
-deltaMap
+#source("scripts/delta_map_script.R")
+#deltaMap <- mx_delta_map()
+#deltaMap
 ```
 
 The Delta area shows the impact of colonial practices on freshwater ecosystems, leading to alterations in streams, wetlands, and riparian areas due to resource extraction, logging, and agriculture. These activities have disrupted the natural flow and stability of water bodies.

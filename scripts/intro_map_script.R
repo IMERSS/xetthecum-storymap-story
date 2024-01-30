@@ -11,31 +11,31 @@ library(stringr)
 
 source("scripts/utils.R")
 
-# intro map should 
-
-#Layer 1: Greig Creek vector
-GreigCreek <- mx_read("spatial_data/vectors/GreigCreek")
-#Layer 2: Retreat Cove vector
-RetreatCove <- mx_read("spatial_data/vectors/RetreatCove")
-#Layer 3: Laughlin Lake vector
-LaughlinLake <- mx_read("spatial_data/vectors/LaughlinLake")
-#Layer 4: Eelgrass
+# import datasets
+Agricultural <- mx_read("spatial_data/vectors/Agricultural")
+Cultural <- mx_read("spatial_data/vectors/Agricultural")
+Clearcut <- mx_read("spatial_data/vectors/Agricultural")
+CoastalBluff <- mx_read("spatial_data/vectors/Agricultural")
+DavidsonCreek <- mx_read("spatial_data/vectors/Agricultural")
+Developed <- mx_read("spatial_data/vectors/Agricultural")
+Dock <- mx_read("spatial_data/vectors/Agricultural")
 EelgrassSimplified <- mx_read("spatial_data/vectors/EelgrassSimplified")
-#Layer 5: Forests
-Forests <- mx_read("spatial_data/vectors/Forests")
-#Layer 6: Freshwater
-Freshwater <- mx_read("spatial_data/vectors/Freshwater")
-#Layer 7: Anthropogenic
-Anthropogenic <- mx_read("spatial_data/vectors/Anthropogenic")
-#Layer 8: MarineLittoral
-MarineLittoral <- mx_read("spatial_data/vectors/MarineLittoral")
-#Layer 9: WoodlandsRockOutcrops
-WoodlandsRockOutcrops <- mx_read("spatial_data/vectors/WoodlandsRockOutcrops")
-#Layer 10: ProjectBoundary
+GreigCreek <- mx_read("spatial_data/vectors/GreigCreek")
+LaughlinLake <- mx_read("spatial_data/vectors/LaughlinLake")
+MatureForest <- mx_read("spatial_data/vectors/Agricultural")
+PoleSapling <- mx_read("spatial_data/vectors/Agricultural")
+Pond <- mx_read("spatial_data/vectors/Agricultural")
 ProjectBoundary <- mx_read("spatial_data/vectors/ProjectBoundary")
-#Layer 11: Streams
-Streams <- mx_read("spatial_data/vectors/Streams")
+Riparian <- mx_read("spatial_data/vectors/Agricultural")
+Road <- mx_read("spatial_data/vectors/Agricultural")
+Rural <- mx_read("spatial_data/vectors/Agricultural")
+Shoreline <- mx_read("spatial_data/vectors/Agricultural")
+Subtidal <- mx_read("spatial_data/vectors/Agricultural")
+Wetland <- mx_read("spatial_data/vectors/Agricultural")
+Woodland <- mx_read("spatial_data/vectors/Agricultural")
+YoungForest <- mx_read("spatial_data/vectors/Agricultural")
 
+layerStyling <- read.csv("spatial_data/vectors/layerStyling.csv")
 
 mx_intro_map <- function () {
   title <- "Xetthecum Introduction";
@@ -43,77 +43,21 @@ mx_intro_map <- function () {
   # Plot map
   introMap <- leaflet(options=list(mx_mapId="Introduction")) %>%
     fitBounds(-123.513, 48.954, -123.491, 48.936) %>%
-    addProviderTiles(providers$CartoDB.Positron) %>%
-    addPolylines(data = GreigCreek,
-                stroke = TRUE,
-                smoothFactor = 0.5,
-                fillColor = "lightskyblue",
-                fillOpacity = 0.7,
-                weight = 1,
-                options=list(mx_layerId="GreigCreek")) %>%
-    addPolygons(data = RetreatCove,
-              fillColor = "lightskyblue",
-              fillOpacity = 0.7,
-              weight = 1,
-              options=list(mx_layerId="RetreatCove")) %>%
-    addPolygons(data = LaughlinLake,
-                fillColor = "lightskyblue",
-                fillOpacity = 0.7,
-                weight = 1,
-                options=list(mx_layerId="LaughlinLake")) %>%
-    addPolygons(data = EelgrassSimplified,
-                fillColor = "lightskyblue",
-                fillOpacity = 0.7,
-                weight = 1,
-                options=list(mx_layerId="EelgrassSimplified")) %>%
-    addPolygons(data = Forests,
-                fillColor = "lightskyblue",
-                fillOpacity = 0.7,
-                weight = 1,
-                options=list(mx_layerId="Forests", className="fld-imerss-region-woodland")) %>%
-    addPolygons(data = Freshwater,
-                fillColor = "lightskyblue",
-                fillOpacity = 0.7,
-                weight = 1,
-                options=list(mx_layerId="Freshwater")) %>%
-    addPolygons(data = Anthropogenic,
-                fillColor = "lightskyblue",
-                fillOpacity = 0.7,
-                weight = 1,
-                options=list(mx_layerId="Anthropogenic")) %>%
-    addPolygons(data = MarineLittoral,
-                fillColor = "lightskyblue",
-                fillOpacity = 0.7,
-                weight = 1,
-                options=list(mx_layerId="MarineLittoral")) %>%
-    addPolygons(data = WoodlandsRockOutcrops,
-                fillColor = "lightskyblue",
-                fillOpacity = 0.7,
-                weight = 1,
-                options=list(mx_layerId="WoodlandsRockOutcrops")) %>%
-    addPolygons(data = ProjectBoundary,
-                fillColor = "lightskyblue",
-                fillOpacity = 0.7,
-                weight = 1,
-                options=list(mx_layerId="ProjectBoundary")) %>%
-    addPolygons(data = Streams,
-                fillColor = "lightskyblue",
-                fillOpacity = 0.7,
-                weight = 1,
-                options=list(mx_layerId="Streams"))
- 
+    addProviderTiles(providers$CartoDB.Positron)
   
-  # Draw the gridded data in a funny way so that richness, cell_id etc. can be tunneled through options one at a time
-  # for (i in 1:nrow(choropleth)) {
-  #   row <- choropleth[i,]
-  #   introMap <- introMap %>% addPolygons(data = row, fillColor = pal(row$richness), fillOpacity = 0.4, weight = 0,
-  #                                                popup = paste("Richness:", row$richness), 
-  #                                                popupOptions = popupOptions(closeButton = FALSE),
-  #                                                options = mx_diversityRowToOptions(row))
-  # }
+    for (i in 1:nrow(layerStyling)) {
+      row <- layerStyling[i,]
+      introMap <- introMap %>% addPolygons(data = mx_read(paste("spatial_data/vectors/",row$Layer, sep="")), 
+                                          fillColor = row$fillColor, 
+                                          fillOpacity = as.numeric(row$fillOpacity), 
+                                          weight = 0,
+                                          options = list(mx_layerId = row$Layer, className = row$ClassName))
+    }
   
   #Note that this statement is only effective in standalone R
   print(introMap) 
   
 
 }
+
+mx_intro_map()

@@ -14,7 +14,6 @@ source("scripts/utils.R")
 #Layer 1: GreigCreek vector
 GreigCreek <- mx_read("spatial_data/vectors/GreigCreek")
 #Layer 2: Delta vector
-RetreatCove <- mx_read("spatial_data/vectors/RetreatCove")
 #Layer 3: Eelgrass vector
 LaughlinLake <- mx_read("spatial_data/vectors/LaughlinLake")
 
@@ -33,11 +32,7 @@ mx_retreat_map <- function () {
                 fillOpacity = 0.1,
                 weight = 0.5,
                 options=list(mx_layerId="GreigCreek")) %>%
-    addPolygons(data = RetreatCove,
-              fillColor = "lightskyblue",
-              fillOpacity = 0.7,
-              weight = 1,
-              options=list(mx_layerId="RetreatCove")) %>%
+ 
     addPolygons(data = LaughlinLake,
                 fillColor = "lightskyblue",
                 fillOpacity = 0.1,
