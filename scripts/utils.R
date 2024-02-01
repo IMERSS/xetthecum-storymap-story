@@ -71,3 +71,10 @@ mx_writeJSON = function (data, filename) {
   write(jsonlite::toJSON(data, auto_unbox = TRUE, pretty = TRUE), filename)
 }
 
+timedFread <- function (toread) {
+  start <- Sys.time()
+  frame <- data.table::fread(toread)
+  end <- Sys.time()
+  message("Read ", nrow(frame), " rows from ", toread, " in ", (end - start), "s")
+  frame
+}

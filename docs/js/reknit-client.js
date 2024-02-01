@@ -236,7 +236,7 @@ fluid.defaults("maxwell.withNativeLegend", {
         legendVisible: {
             path: "{paneHandler}.model.isVisible",
             func: "maxwell.toggleClass",
-            args: ["{that}.legendContainer", "{change}.value", "mxcw-hidden"]
+            args: ["{that}.legendContainer", "{change}.value", "mxcw-hidden", true]
         }
     }
 });
@@ -781,6 +781,11 @@ maxwell.paneHandlerForName = function (scrollyPage, paneName) {
     return paneHandlers.find(handler => fluid.getForComponent(handler, "options.paneKey") === paneName);
 };
 
+maxwell.paneHandlerForIndex = function (scrollyPage, paneIndex) {
+    const paneHandlers = fluid.queryIoCSelector(scrollyPage, "maxwell.paneHandler", true);
+    return paneHandlers.find(handler => fluid.getForComponent(handler, "options.paneIndex") === paneIndex);
+};
+
 maxwell.widgetHandlerForName = function (paneHandler, widgetId) {
     const widgetHandlers = fluid.queryIoCSelector(paneHandler, "maxwell.widgetHandler", true);
     return widgetHandlers.find(handler => fluid.getForComponent(handler, "options.widgetKey") === widgetId);
@@ -868,6 +873,11 @@ fluid.defaults("maxwell.scrollyPage", {
             funcName: "maxwell.updateActiveMapPane",
             args: ["{that}", "{change}.value"]
         },
+        mapVisible: {
+            path: "activePane",
+            funcName: "maxwell.updateMapVisible",
+            args: ["{that}", "{change}.value"]
+        },
         updateActiveWidgetPane: {
             path: "activePane",
             funcName: "maxwell.updateActiveWidgetPane",
@@ -946,6 +956,12 @@ maxwell.updateActiveMapPane = function (that, activePane) {
     });
 };
 
+maxwell.updateMapVisible = function (that, activePane) {
+    const paneHandler = maxwell.paneHandlerForIndex(that, activePane);
+    const isVisible = !fluid.componentHasGrade(paneHandler, "maxwell.mapHidingPaneHandler");
+    maxwell.toggleClass(that.map.container[0], isVisible, "mxcw-hideMap", true);
+};
+
 maxwell.registerSectionListeners = function (that) {
     const sectionHolders = that.sectionHolders;
     sectionHolders.forEach(function (sectionHolder, i) {
@@ -986,7 +1002,10 @@ maxwell.makeLeafletMap = function (node) {
 };
 
 maxwell.applyZerothTiles = function (leafletWidgets, map) {
-    const data0 = leafletWidgets[0].data.x;
+    // TODO: Hadn't we implemented this in some other instance of the framework?
+    const firstMap = leafletWidgets.findIndex(widget => !!widget.data);
+
+    const data0 = leafletWidgets[firstMap].data.x;
     const tiles = maxwell.findCall(data0.calls, "addTiles");
     if (tiles) {
         L.tileLayer(tiles.args[0], tiles.args[3]).addTo(map);
@@ -1266,14 +1285,8 @@ fluid.defaults("maxwell.leafletPaneHandler", {
     }
 });
 
+// Tag interpreted by maxwell.updateMapVisible
 fluid.defaults("maxwell.mapHidingPaneHandler", {
-    modelListeners: {
-        paneVisible: {
-            path: "{paneHandler}.model.isVisible",
-            func: "maxwell.toggleClass",
-            args: ["{scrollyLeafletMap}.container.0", "{change}.value", "mxcw-hideMap", true]
-        }
-    }
 });
 
 fluid.defaults("maxwell.templatePaneHandler", {

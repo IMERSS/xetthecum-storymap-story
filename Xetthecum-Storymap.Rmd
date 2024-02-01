@@ -1,11 +1,27 @@
 ---
-title: Xetthecum Cultural Mapping Project
+title: Xetthecum Digital Ecocultural Mapping 
 author: IMERSS biodiversity informatics working group
-date: December 20th, 2023
+date: February 1st, 2023
 output: html_document
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
 ---
+## Land Acknowledgement
+
+In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat Cove), Galiano Island resides within the trans-boundary bioregion of the Salish Sea, a pristine expanse that has been tended to and cherished by the Coast Salish people since time immemorial. The island rests within the shared, asserted, and unceded traditional territories of the Penelakut, Lamalcha, and Hwlitsum First Nations, as well as the shared, asserted, and ceded traditional territories of Tsawwassen First Nation. Additionally, we acknowledge the territories of all other Hul’q’umi’num’-speaking peoples who hold rights and responsibilities in this region.
+
+<div class="data-pane">
+<p>As residents on Galiano Island and learners in this work, we are grateful for the opportunity to be a part of the intricate tapestry of cultural and ecological diversity that weaves us together in this place. We commit to acknowledging the history and ongoing presence of Indigenous Peoples in this area and strive to foster relationships that honor and respect the rights, traditions, and contributions of the Coast Salish and Hul’q’umi’num’-speaking peoples.</p>
+
+<p>May our work on this digital ecocultural mapping project and presence on this island contribute to a future that recognizes the importance of reconciliation, collaboration, and the rightful place of Indigenous knowledge in shaping the well-being of the Salish Sea and its inhabitants.</p>
+
+<img style="width:100%" src="img/headline-20220218_172216.jpg"/>
+
+<p>Xetthecum (Retreat Cove), Galiano Island, BC, Canada</p>
+</div>
+
+<span class="mxcw-nonLeafletPane mxcw-paneName-Acknowledgement html-widget leaflet"></span>
+
 ## Introduction
 
 Welcome to Xetthecum (in Hul’q’umi’num’ followed by English), an area on Galiano Island BC that is of ecological and cultural significance. Complex in its ecology, cultural history, and contemporary land-use, the boundary of Xetthecum is roughly delimited by the extent of the [Greig Creek](#region:GreigCreek) watershed, including the watercourse descending from [Laughlin Lake](#region:LaughlinLake) to [Retreat Cove](#region:RetreatCove), spanning residential and agricultural lands, protected and covenanted areas, and a public shore access.
@@ -47,9 +63,9 @@ Cultural significance: Regular and seasonal gatherings were part of the Penelaku
 ## Retreat Cove
 
 ```{r, echo=FALSE, message=FALSE}
-#source("scripts/retreat_map_script.R")
-#retreatMap <- mx_retreat_map()
-#retreatMap
+source("scripts/retreat_map_script.R")
+retreatMap <- mx_retreat_map()
+retreatMap
 ```
 
 Rosemary Georgeson: “I used to spend time up in Xetthecum with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.”
@@ -67,9 +83,9 @@ Retreat Cove, a marine location, has been significant for fishing and was a habi
 ## Grieg Creek
 
 ```{r, echo=FALSE, message=FALSE}
-#source("scripts/greig_map_script.R")
-#greigMap <- mx_greig_map()
-#greigMap
+source("scripts/greig_map_script.R")
+greigMap <- mx_greig_map()
+greigMap
 ```
 
 Grieg Creek, once home to abundant salmon, now sees efforts to restore these vital fish populations. Indigenous and non-Indigenous communities are working together to enhance habitats, fostering the return of these cherished fish.
@@ -79,9 +95,9 @@ Efforts are being made to restore Coho and Chum salmon populations in Grieg Cree
 ## Laughlin Lake
 
 ```{r, echo=FALSE, message=FALSE}
-#source("scripts/laughlin_map_script.R")
-#laughlinMap <- mx_laughlin_map()
-#laughlinMap
+source("scripts/laughlin_map_script.R")
+laughlinMap <- mx_laughlin_map()
+laughlinMap
 ```
 
 Cat tails: you can eat the base of the plant, looks like celery, you can eat it; when you cut the top to use the bullrush, you can use the root as a vegetables
@@ -97,9 +113,9 @@ Laughlin Lake represents a complex wetland ecosystem supporting a diversity of p
 ## Delta
 
 ```{r, echo=FALSE, message=FALSE}
-#source("scripts/delta_map_script.R")
-#deltaMap <- mx_delta_map()
-#deltaMap
+source("scripts/delta_map_script.R")
+deltaMap <- mx_delta_map()
+deltaMap
 ```
 
 The Delta area shows the impact of colonial practices on freshwater ecosystems, leading to alterations in streams, wetlands, and riparian areas due to resource extraction, logging, and agriculture. These activities have disrupted the natural flow and stability of water bodies.

@@ -7,8 +7,8 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
-maxwell.toggleClass = function (container, isVisible, clazz, inverse) {
-    container.classList[isVisible ^ inverse ? "remove" : "add"](clazz);
+maxwell.toggleClass = function (container, value, clazz, inverse) {
+    container.classList[value ^ inverse ? "add" : "remove"](clazz);
 };
 
 fluid.defaults("maxwell.markupTemplateRenderer", {
@@ -250,7 +250,7 @@ fluid.defaults("maxwell.bareRegionsExtra.withLegend", {
         legendVisible: {
             path: "{paneHandler}.model.isVisible",
             func: "maxwell.toggleClass",
-            args: ["{that}.legendContainer", "{change}.value", "mxcw-hidden"]
+            args: ["{that}.legendContainer", "{change}.value", "mxcw-hidden", true]
         }
     },
     members: {
@@ -261,7 +261,7 @@ fluid.defaults("maxwell.bareRegionsExtra.withLegend", {
         "onCreate.legendVisible": {
             path: "{paneHandler}.model.isVisible",
             func: "maxwell.toggleClass",
-            args: ["{that}.legendContainer", "{paneHandler}.model.isVisible", "mxcw-hidden"]
+            args: ["{that}.legendContainer", "{paneHandler}.model.isVisible", "mxcw-hidden", true]
         }
     }
 });

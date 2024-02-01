@@ -90,6 +90,7 @@ maxwell.movePlotlyWidgets = function (template, sections, container) {
     return dataDivs;
 };
 
+// Transfer the content referenced by the supplied selector from container into template, removing it from container
 maxwell.transferNodeContent = function (container, template, selector) {
     const containerNode = container.querySelector(selector);
     const templateNode = template.querySelector(selector);

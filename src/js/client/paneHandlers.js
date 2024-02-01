@@ -60,13 +60,6 @@ fluid.defaults("maxwell.iNatComponentsPaneHandler", {
     },
     listeners: {
         "onCreate.instantiate" : "maxwell.instantiateINat({that}.options.containerId, {that}.options.iNatOptions, {that}.options.taxonName)"
-    },
-    modelListeners: {
-        paneVisible: {
-            path: "{paneHandler}.model.isVisible",
-            func: "maxwell.toggleClass",
-            args: ["{scrollyLeafletMap}.container.0", "{change}.value", "mxcw-hideMap", true]
-        }
     }
 });
 

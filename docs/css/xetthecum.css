@@ -37,3 +37,27 @@
     fill: url(#woodland);
     background-repeat: repeat;
 }
+
+.section.level2 {
+    margin-bottom: 150px;
+}
+
+.mxcw-content {
+    height: calc(100vh - 12rem);
+}
+
+.long-down-arrow {
+    margin: -140px auto 0 auto;
+}
+
+.running-header {
+    width: 100%;
+    font-size: 1.5em;
+    font-weight: 500;
+    border-bottom: 3px solid black;
+    margin-bottom: 10px;
+}
+
+.mxcw-widgetPane {
+    padding: 1rem;
+}

@@ -35,7 +35,7 @@ Wetland <- mx_read("spatial_data/vectors/Agricultural")
 Woodland <- mx_read("spatial_data/vectors/Agricultural")
 YoungForest <- mx_read("spatial_data/vectors/Agricultural")
 
-layerStyling <- read.csv("spatial_data/vectors/layerStyling.csv")
+layerStyling <- timedFread("spatial_data/vectors/layerStyling.csv")
 
 mx_intro_map <- function () {
   title <- "Xetthecum Introduction";

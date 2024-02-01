@@ -8,6 +8,10 @@
                 zoomDuration: 1500
             },
             paneHandlers: {
+                Acknowledgement: {
+                    type: "maxwell.paneHandler",
+                    gradeNames: "maxwell.mapHidingPaneHandler"
+                },
                 Introduction: {
                     type: "maxwell.leafletPaneHandler"
                 },
@@ -29,6 +33,10 @@
                 }
             }
         }
+    }],
+    transforms: [{
+        file: "%maxwell/src/js/reknit-xetthecum.js",
+        func: "addArrows"
     }],
     copyJobs: [{
         source: "%infusion/dist/infusion-framework.js",
