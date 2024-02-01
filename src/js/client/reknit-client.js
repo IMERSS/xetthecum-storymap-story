@@ -876,7 +876,8 @@ fluid.defaults("maxwell.scrollyPage", {
         mapVisible: {
             path: "activePane",
             funcName: "maxwell.updateMapVisible",
-            args: ["{that}", "{change}.value"]
+            args: ["{that}", "{change}.value"],
+            priority: "first" // ensure map becomes visible before we attempt to set its initial bounds
         },
         updateActiveWidgetPane: {
             path: "activePane",
