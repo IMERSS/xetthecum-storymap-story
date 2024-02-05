@@ -12,7 +12,6 @@ library(stringr)
 source("scripts/utils.R")
 
 # import datasets
-
 layerStyling <- timedFread("tabular_data/layerStyling.csv")
 
 mx_intro_map <- function () {
