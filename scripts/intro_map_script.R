@@ -12,30 +12,8 @@ library(stringr)
 source("scripts/utils.R")
 
 # import datasets
-Agricultural <- mx_read("spatial_data/vectors/Agricultural")
-Cultural <- mx_read("spatial_data/vectors/Agricultural")
-Clearcut <- mx_read("spatial_data/vectors/Agricultural")
-CoastalBluff <- mx_read("spatial_data/vectors/Agricultural")
-DavidsonCreek <- mx_read("spatial_data/vectors/Agricultural")
-Developed <- mx_read("spatial_data/vectors/Agricultural")
-Dock <- mx_read("spatial_data/vectors/Agricultural")
-EelgrassSimplified <- mx_read("spatial_data/vectors/EelgrassSimplified")
-GreigCreek <- mx_read("spatial_data/vectors/GreigCreek")
-LaughlinLake <- mx_read("spatial_data/vectors/LaughlinLake")
-MatureForest <- mx_read("spatial_data/vectors/Agricultural")
-PoleSapling <- mx_read("spatial_data/vectors/Agricultural")
-Pond <- mx_read("spatial_data/vectors/Agricultural")
-ProjectBoundary <- mx_read("spatial_data/vectors/ProjectBoundary")
-Riparian <- mx_read("spatial_data/vectors/Agricultural")
-Road <- mx_read("spatial_data/vectors/Agricultural")
-Rural <- mx_read("spatial_data/vectors/Agricultural")
-Shoreline <- mx_read("spatial_data/vectors/Agricultural")
-Subtidal <- mx_read("spatial_data/vectors/Agricultural")
-Wetland <- mx_read("spatial_data/vectors/Agricultural")
-Woodland <- mx_read("spatial_data/vectors/Agricultural")
-YoungForest <- mx_read("spatial_data/vectors/Agricultural")
 
-layerStyling <- timedFread("spatial_data/vectors/layerStyling.csv")
+layerStyling <- timedFread("tabular_data/layerStyling.csv")
 
 mx_intro_map <- function () {
   title <- "Xetthecum Introduction";
@@ -50,7 +28,7 @@ mx_intro_map <- function () {
       introMap <- introMap %>% addPolygons(data = mx_read(paste("spatial_data/vectors/",row$Layer, sep="")), 
                                           fillColor = row$fillColor, 
                                           fillOpacity = as.numeric(row$fillOpacity), 
-                                          weight = 0,
+                                          weight = 0.5,
                                           options = list(mx_layerId = row$Layer, className = row$ClassName))
     }
   

@@ -1,0 +1,23 @@
+﻿Layer,fillColor,fillOpacity,ClassName
+Agricultural,"rgb(186,177,140)",1,none
+Canal,"rgb(52, 153, 198)",1,none
+Clearcut,"rgb(188,201,184)",1,fld-imerss-region-clearcut
+CoastalBluff,"rgb(117,117,117)",1,none
+DavidsonCreek,"rgb(52,153,198)",1,none
+Developed,"rgb(114,108,84)",1,none
+Dock,"rgb(127,127,127)",1,none
+EelgrassSimplified,"rgb(77,15,84)",1,none
+GreigCreek,"rgb(52,153,198)",1,none
+LaughlinLake,"rgb(0,133,188)",1,fld-imerss-region-lake-laughlin-lake
+MatureForest,"rgb(23,80,18)",1,fld-imerss-region-mature-forest
+PoleSapling,"rgb(144,166,138)",1,fld-imerss-region-pole-sapling
+Pond,"rgb(0,133,188)",1,none
+ProjectBoundary,black,0,none
+Riparian,"rgb(100,195,221)",1,none
+Road,"rgb(127,127,127)",1,none
+Rural,"rgb(84,76,54)",1,none
+Shoreline,"rgb(100,175,164)",1,none
+Subtidal,"rgb(34,122,113)",1,fld-imerss-region-subtidal
+Wetland,"rgb(52, 153, 198)",1,fld-imerss-region-wetland
+Woodland,"rgb(191,103,58)",1,fld-imerss-region-woodland
+YoungForest,"rgb(91,122,82)",1,fld-imerss-region-young-forest
