@@ -16,6 +16,10 @@
     color: var(--text-brown);
 
 }
+
+h1 {
+    display:none;
+}
   
 
 
@@ -33,6 +37,12 @@
 .mxcw-container {
     display: flex;
     gap: 1rem;
+    padding: 1rem;
+}
+
+.running-header {
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .mxcw-leftPane {
