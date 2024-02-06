@@ -52,10 +52,10 @@
 
 .running-header {
     width: 100%;
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: 500;
-    border-bottom: 3px solid black;
-    margin-bottom: 10px;
+    border-bottom: 3px solid var(--content-active-panel-border);
+    margin-bottom: 1rem;
 }
 
 .mxcw-widgetPane {

@@ -20,8 +20,22 @@
 h1 {
     display:none;
 }
-  
 
+h2 {
+    margin: 0px;
+    padding: 0px;
+    font-size: 1.5rem;
+
+}
+
+footer {
+    padding-top: 1rem;
+}
+  
+#quarto-content {
+    padding: 1rem;
+    padding-top: 0px;
+}
 
 #header {
     display: none;
@@ -34,15 +48,21 @@ h1 {
     gap: 1rem;
 }
 
+.main-container h2 {
+    margin: 0px;
+    margin-bottom: 1rem;
+    padding: 0px;
+    font-size: 1.2rem;
+}
+
+.main-container p {
+    padding: 0px;
+    margin: 0px;
+}
+
 .mxcw-container {
     display: flex;
     gap: 1rem;
-    padding: 1rem;
-}
-
-.running-header {
-    padding-left: 1rem;
-    padding-right: 1rem;
 }
 
 .mxcw-leftPane {
@@ -52,7 +72,7 @@ h1 {
     /* For God's sake I really mean it! */
     min-width: 65%;
     background-color: var(--panel-background);
-
+    overflow: scroll;
 }
 
 .mxcw-map {
@@ -189,3 +209,4 @@ body .mx-header ::-webkit-scrollbar-thumb {
     visibility: hidden;
     display: none;
 }
+
