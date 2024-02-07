@@ -61,3 +61,8 @@
 .mxcw-widgetPane {
     padding: 1rem;
 }
+
+#map-svg {
+    height: 0px;
+    position: absolute;
+}

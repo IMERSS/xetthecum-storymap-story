@@ -29,7 +29,7 @@ h2 {
 }
 
 footer {
-    padding-top: 1rem;
+    padding-top: 0px;
 }
   
 #quarto-content {
@@ -73,10 +73,7 @@ footer {
     min-width: 65%;
     background-color: var(--panel-background);
     overflow: scroll;
-}
-
-.mxcw-map {
-    height: 65%;
+    padding-bottom: 1rem;
 }
 
 .mxcw-data {
@@ -137,7 +134,7 @@ footer {
     background-color: var(--content-active-panel-background);
     outline: 4px solid var(--content-active-panel-border);
     color: var(--text-brown);
-    transition-property: background-color, outline;
+    transition-property: background-color;
     transition-duration: 400ms;
 }
 

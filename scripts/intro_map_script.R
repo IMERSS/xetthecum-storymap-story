@@ -19,9 +19,9 @@ mx_intro_map <- function () {
   
   # Plot map
   introMap <- leaflet(options=list(mx_mapId="Introduction")) %>%
-    fitBounds(-123.513, 48.954, -123.491, 48.936) %>%
+    fitBounds(-123.48628, 48.92133,-123.52607, 48.97525) %>%
     addProviderTiles(providers$CartoDB.Positron)
-  
+    
     for (i in 1:nrow(layerStyling)) {
       row <- layerStyling[i,]
       introMap <- introMap %>% addPolygons(data = mx_read(paste("spatial_data/vectors/",row$Layer, sep="")), 

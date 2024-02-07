@@ -92,10 +92,14 @@
 }
 
 .mxcw-map {
-    height: 50%;
+    height: 450px;
     /** Otherwise we get jank on selecting smaller/greater checklists somehow */
-    min-height: 50%;
+    min-height: 450px;
+    width: 500px;
+    min-width: 500px;
     transition-property: height;
+    margin: 0px auto;
+
     /** Somehow this works when hiding but not when showing
      transition-duration: 400ms;
      */
@@ -197,8 +201,10 @@
     }
 
     .mxcw-map {
-        height: 45%;
-        min-height: 45%
+        height: 400px;
+        min-height: 400px;
+        width: 450px;
+        min-width: 450px;
     }
 
     /* Need to repeat this since otherwise map doesn't get hidden on narrow */
