@@ -15,21 +15,50 @@
                 Introduction: {
                     type: "maxwell.leafletPaneHandler"
                 },
-                Caves: {
+                Historic: {
                     type: "maxwell.paneHandler",
                     gradeNames: "maxwell.mapHidingPaneHandler"
                 },
-                Retreat: {
+                Values: {
+                    type: "maxwell.paneHandler",
+                    gradeNames: "maxwell.mapHidingPaneHandler"                
+                    
+                },
+                Laughlin: {
                     type: "maxwell.leafletPaneHandler"
                 },
                 Greig: {
                     type: "maxwell.leafletPaneHandler"
                 },
-                Laughlin: {
-                    type: "maxwell.leafletPaneHandler"
-                },
                 Delta: {
                     type: "maxwell.leafletPaneHandler"
+                },
+                Caves: {
+                    type: "maxwell.paneHandler",
+                    gradeNames: "maxwell.mapHidingPaneHandler"                
+                },
+                Retreat: {
+                    type: "maxwell.leafletPaneHandler"
+                },
+                Eelgrass: {
+                    type: "maxwell.paneHandler",
+                    gradeNames: "maxwell.mapHidingPaneHandler"            
+                },
+                Ecosystem: {
+                    type: "maxwell.paneHandler",
+                    gradeNames: "maxwell.mapHidingPaneHandler"                
+                },
+                Biodiversity: {
+                    type: "maxwell.paneHandler",
+                    gradeNames: "maxwell.mapHidingPaneHandler"                
+                },
+                Community: {
+                    type: "maxwell.paneHandler",
+                    gradeNames: "maxwell.mapHidingPaneHandler"                
+                },
+                Preservation: {
+                    type: "maxwell.paneHandler",
+                    gradeNames: "maxwell.mapHidingPaneHandler"                
                 }
             }
         }
