@@ -19,7 +19,7 @@ mx_intro_map <- function () {
   
   # Plot map
   introMap <- leaflet(options=list(mx_mapId="Introduction")) %>%
-    fitBounds(-123.48628, 48.92133,-123.52607, 48.97525) %>%
+    fitBounds(-123.51834, 48.93672,-123.49091, 48.95141) %>%
     addProviderTiles(providers$CartoDB.Positron)
     
     for (i in 1:nrow(layerStyling)) {

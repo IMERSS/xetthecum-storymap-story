@@ -24,7 +24,10 @@ In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat C
 
 ## Introduction
 
-Welcome to Xetthecum (in Hul’q’umi’num’ followed by English), an area on Galiano Island BC that is of ecological and cultural significance. Complex in its ecology, cultural history, and contemporary land-use, the boundary of Xetthecum is roughly delimited by the extent of the [Greig Creek](#region:GreigCreek) watershed, including the watercourse descending from [Laughlin Lake](#region:LaughlinLake) to [Retreat Cove](#region:RetreatCove), spanning residential and agricultural lands, protected and covenanted areas, and a public shore access.
+Welcome to Xetthecum, an area on Galiano Island BC of ecological and cultural significance. Complex in its ecology, cultural history, and contemporary land-use, the boundary of Xetthecum is roughly delimited by the extent of the Greig Creek watershed, including the watercourse descending from Laughlin Lake to Retreat Cove, spanning residential and agricultural lands, protected and covenanted areas, and a public shore access.
+
+Sitting at the narrowest point on the island, Xetthecum is located at one end of a shore-to-shore route used by the Penelakut peoples…
+
 
 ```{r, echo=FALSE, message=FALSE}
 source("scripts/intro_map_script.R")

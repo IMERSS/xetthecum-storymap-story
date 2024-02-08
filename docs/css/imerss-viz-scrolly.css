@@ -92,11 +92,11 @@
 }
 
 .mxcw-map {
-    height: 450px;
+    height: 60vh;
     /** Otherwise we get jank on selecting smaller/greater checklists somehow */
-    min-height: 450px;
-    width: 500px;
-    min-width: 500px;
+    min-height: 60vh;
+    width: 70vh;
+    min-width: 70vh;
     transition-property: height;
     margin: 0px auto;
 
@@ -201,10 +201,10 @@
     }
 
     .mxcw-map {
-        height: 400px;
-        min-height: 400px;
-        width: 450px;
-        min-width: 450px;
+        height: 55vh;
+        min-height: 55vh;
+        width: 65vh;
+        min-width: 65vh;
     }
 
     /* Need to repeat this since otherwise map doesn't get hidden on narrow */
