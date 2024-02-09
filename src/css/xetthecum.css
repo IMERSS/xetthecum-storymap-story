@@ -1,3 +1,83 @@
+
+@font-face {
+    font-family: "Noto Sans";
+    src: url("fonts/Noto_Sans/NotoSansVariable.ttf");
+  }
+
+:root {
+    --text-brown: #362F24;
+    --page-background: #F2FCD6;
+    --panel-background: #E7DDCD;
+    --content-inactive-panel-background: #FCFDF7;
+    --content-active-panel-background: #FFFDFD;
+    --content-active-panel-border: #695F50;
+    --content-inactive-text-color: #878585;
+
+    font-family: "Noto Sans", Helvetica, sans-serif;
+    color: var(--text-brown);
+}
+
+#header {
+    display: none;
+}
+
+h1 {
+    display:none;
+}
+
+h2 {
+    margin: 0px;
+    padding: 0px;
+    font-size: 1.5rem;
+}
+
+footer {
+    padding-top: 0px;
+}
+
+.main-container h2 {
+    margin: 0px;
+    margin-bottom: 1rem;
+    padding: 0px;
+    font-size: 1.2rem;
+}
+
+.main-container p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.mxcw-content .section {
+    padding: 2rem;
+}
+  
+#quarto-content {
+    padding: 1rem;
+    padding-top: 0px;
+}
+
+.mxcw-leftPane {
+    background-color: var(--panel-background);
+}
+
+.mxcw-content {
+    background-color: var(--panel-background);
+    padding: 1rem;
+}
+
+
+.mxcw-content .section {
+    background-color: var(--content-inactive-panel-background);
+    color: var(--content-inactive-text-color);
+}
+
+.mxcw-content .mxcw-activeSection {
+    background-color: var(--content-active-panel-background);
+    outline: 4px solid var(--content-active-panel-border);
+    color: var(--text-brown);
+
+}
+
 .fld-imerss-region-subtidal {
     fill: url(#marine);
     background-repeat: repeat;
@@ -44,10 +124,20 @@
 
 .mxcw-content {
     height: calc(100vh - 12rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
 .long-down-arrow {
-    margin: -140px auto 0 auto;
+    margin: -130px auto 1rem auto;
+    display: flex;
+}
+
+.long-down-arrow svg{
+    margin: 0px auto;
+    color: var(--content-active-panel-border);
 }
 
 .running-header {
@@ -56,6 +146,10 @@
     font-weight: 500;
     border-bottom: 3px solid var(--content-active-panel-border);
     margin-bottom: 1rem;
+}
+
+.mxcw-container {
+    gap: 1rem;
 }
 
 .mxcw-widgetPane {
