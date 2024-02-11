@@ -131,6 +131,10 @@ footer {
     gap: 1rem;
 }
 
+.mxcw-data {
+    overflow: scroll;
+}
+
 .long-down-arrow {
     margin: -130px auto 1rem auto;
     display: flex;
