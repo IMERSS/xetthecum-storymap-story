@@ -58,6 +58,7 @@ footer {
 
 .mxcw-leftPane {
     background-color: var(--panel-background);
+    outline: 4px solid var(--content-active-panel-border);
 }
 
 .mxcw-content {
@@ -159,8 +160,4 @@ footer {
 #map-svg {
     height: 0px;
     position: absolute;
-}
-
-.mxcw-widgetPane.mxcw-activeWidgetPane {
-    outline: 4px solid var(--content-active-panel-border);
 }
