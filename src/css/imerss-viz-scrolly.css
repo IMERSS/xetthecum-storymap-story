@@ -91,28 +91,6 @@
     max-height: inherit;
 }
 
-.mxcw-map {
-    height: 60vh;
-    /** Otherwise we get jank on selecting smaller/greater checklists somehow */
-    min-height: 60vh;
-    width: 70vh;
-    min-width: 70vh;
-    transition-property: height;
-    margin: 0px auto;
-
-    /** Somehow this works when hiding but not when showing
-     transition-duration: 400ms;
-     */
-}
-
-.mxcw-hideMap {
-    height: 0;
-    min-height: 0;
-}
-
-.mxcw-data {
-    height: 50%;
-}
 /* Taken from R Leaflet's ".info" */
 .mxcw-legend {
     padding: 6px 8px;

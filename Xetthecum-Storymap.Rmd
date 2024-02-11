@@ -87,6 +87,8 @@ Fireweed (xats'et), was used for stuffing sleep mats/beds (today it can be found
 Mushrooms, (kwmusuliqw or mumsilit) 
 </div>
 
+<span class="mxcw-nonLeafletPane mxcw-paneName-Historic html-widget leaflet"></span>
+
 ## Cultural Values
 
 The species found in the Xetthecum area each have specific and varied cultural values for the Hul’q’umi’num’ speaking peoples. These cultural values may include one or more of Food, Indicator, Medicine, Material, Trade and Spiritual.
@@ -125,6 +127,8 @@ These species are used in spiritual ceremony or hold spiritual meaning and signi
 Example: yuxwule’ – bald eagle
 
 </div>
+
+<span class="mxcw-nonLeafletPane mxcw-paneName-Values html-widget leaflet"></span>
 
 ## From the Lake to the Delta: Laughlin Lake
 
@@ -215,8 +219,11 @@ Saltwater (kw’atl’kwa)
 
 Kelp (q’am)
 
+<span class="mxcw-nonLeafletPane mxcw-paneName-Eelgrass html-widget leaflet"></span>
+
 ## Ecosystem and Environmental Significance
 
+<span class="mxcw-nonLeafletPane mxcw-paneName-Ecosystem html-widget leaflet"></span>
 
 ## Biodiversity
 
@@ -228,6 +235,8 @@ Galiano's diverse ecosystems host a multitude of species. From ancient forests t
 
 Galiano Island's ecosystems exhibit high biodiversity, supporting a variety of species, including salmon, black-tailed deer, eagles, and numerous plant species, both culturally significant and ecologically important.
 
+<span class="mxcw-nonLeafletPane mxcw-paneName-Biodiversity html-widget leaflet"></span>
+
 ## Community Connection
 
 Lorne Silvey's mentions of places like the Reservation, Xetthecum, and Kiyo's highlight these areas' significance for social and cultural gatherings, emphasising their role in fostering community connections and traditions.
@@ -235,6 +244,8 @@ Lorne Silvey's mentions of places like the Reservation, Xetthecum, and Kiyo's hi
 Florence discusses her family connections, hereditary ownership of specific lands, and relationships with other families and communities, showcasing the community's interconnectedness.
 
 The people of Galiano are intertwined with nature. Traditional practices, gatherings, and shared knowledge underscore the deep relationship between the community and the island's ecosystems.
+
+<span class="mxcw-nonLeafletPane mxcw-paneName-Community html-widget leaflet"></span>
 
 ## Preservation Efforts and Future Vision
 
@@ -262,3 +273,4 @@ Efforts to preserve Galiano's natural heritage are ongoing. Restoration initiati
 
 Efforts are ongoing to protect and restore the island's ecosystems. However, colonial practices, invasive species, and industrial impacts threaten these efforts. Both Indigenous and non-Indigenous communities are actively involved in preserving and reconnecting with the land through various educational initiatives and conservation projects, aiming for a sustainable future vision for Galiano Island.
 
+<span class="mxcw-nonLeafletPane mxcw-paneName-Preservation html-widget leaflet"></span>

@@ -807,6 +807,7 @@ maxwell.resolvePaneHandlers = function () {
 fluid.defaults("maxwell.scrollyPage", {
     gradeNames: ["fluid.viewComponent", "fluid.resourceLoader"],
     container: "body",
+    scrollAtPixels: 150,
     // zoomDuration: 100,
     paneMap: {
         // Map of paneName to objects holding an emitter on which "click" is firable - currently only used in
@@ -973,7 +974,7 @@ maxwell.registerSectionListeners = function (that) {
         const scrollTop = content.scrollTop;
         const offsets = sectionHolders.map(widget => widget.section.offsetTop);
         // See diagram - we scroll when the next heading's top gets close enough to the viewport top
-        let index = offsets.findIndex(offset => (scrollTop + 150) < offset) - 1;
+        let index = offsets.findIndex(offset => (scrollTop + that.options.scrollAtPixels) < offset) - 1;
         if (index === -2) {
             index = sectionHolders.length - 1;
         } else if (index === -1) {

@@ -182,20 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- Fake header currently required by reknit code -->
 <h1></h1>
 
     <div class="running-header">
@@ -213,7 +200,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
     <script>
 		maxwell.scrollyPage("body", {
-            gradeNames: "maxwell.runningHeaderUpdater"
+            gradeNames: "maxwell.runningHeaderUpdater",
+            scrollAtPixels: 400,
         });
     </script>
 </div> <!-- /content -->

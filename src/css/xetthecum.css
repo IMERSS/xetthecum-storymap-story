@@ -2,7 +2,7 @@
 @font-face {
     font-family: "Noto Sans";
     src: url("fonts/Noto_Sans/NotoSansVariable.ttf");
-  }
+}
 
 :root {
     --text-brown: #362F24;
@@ -10,7 +10,7 @@
     --panel-background: #E7DDCD;
     --content-inactive-panel-background: #FCFDF7;
     --content-active-panel-background: #FFFDFD;
-    --content-active-panel-border: #695F50;
+    --content-active-panel-border: #362F24;
     --content-inactive-text-color: #878585;
 
     font-family: "Noto Sans", Helvetica, sans-serif;
@@ -159,4 +159,8 @@ footer {
 #map-svg {
     height: 0px;
     position: absolute;
+}
+
+.mxcw-widgetPane.mxcw-activeWidgetPane {
+    outline: 4px solid var(--content-active-panel-border);
 }
