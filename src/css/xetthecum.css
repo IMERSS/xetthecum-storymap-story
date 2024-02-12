@@ -54,13 +54,20 @@ footer {
 #quarto-content {
     padding: 1rem;
     padding-top: 0px;
+    max-height: calc(100vh - 300px);
+    min-height: 200px;
+}
+
+.nav-footer * {
+    margin: 0px;
 }
 
 .mxcw-leftPane {
     background-color: var(--panel-background);
-    outline: 4px solid var(--content-active-panel-border);
+    border: 4px solid var(--content-active-panel-border);
     overflow: scroll;
 }
+
 
 .mxcw-leftPane img {
     max-height: 45vh;
