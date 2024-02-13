@@ -89,6 +89,13 @@ Mushrooms, (kwmusuliqw or mumsilit)
 
 <span class="mxcw-nonLeafletPane mxcw-paneName-Historic html-widget leaflet"></span>
 
+## Ecological Communities
+
+The Xetthecum region is made up of several ecological communities includinng Forest, Woodland and Rock Outcrops, Freshwater and Marine. Each of these ecological communities are home to a diversity of species, many of which are of particular cultural significance to the Hul’q’umi’num’ speaking peoples. 
+
+<span class="mxcw-nonLeafletPane mxcw-paneName-Ecological html-widget leaflet"></span>
+
+
 ## Cultural Values
 
 The species found in the Xetthecum area each have specific and varied cultural values for the Hul’q’umi’num’ speaking peoples. These cultural values may include one or more of Food, Indicator, Medicine, Material, Trade and Spiritual.
