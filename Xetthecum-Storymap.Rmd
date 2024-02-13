@@ -18,6 +18,7 @@ In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat C
 <img style="width:100%" src="img/headline-20220218_172216.jpg"/>
 
 <p>Xetthecum (Retreat Cove), Galiano Island, BC, Canada</p>
+
 </div>
 
 <span class="mxcw-nonLeafletPane mxcw-paneName-Acknowledgement html-widget leaflet"></span>

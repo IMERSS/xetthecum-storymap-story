@@ -24,6 +24,11 @@
                     gradeNames: "maxwell.mapHidingPaneHandler"                
                     
                 },
+                Ecological: {
+                    type: "maxwell.paneHandler",
+                    gradeNames: "maxwell.mapHidingPaneHandler"                
+                    
+                },
                 Laughlin: {
                     type: "maxwell.leafletPaneHandler"
                 },

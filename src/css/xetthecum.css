@@ -200,3 +200,7 @@ body #quarto-content {
     height: 0px;
     position: absolute;
 }
+
+.culturalValueRows {
+    background-color: red;
+}
