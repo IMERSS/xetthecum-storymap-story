@@ -1,0 +1,20 @@
+﻿Layer,fillColor,fillOpacity,outlineColor,outlineOpacity,outlineWidth,ClassName
+Agricultural,"rgb(186,177,140)",1,"rgb(186,177,140)",1,1,none
+Clearcut,"rgb(188,201,184)",1,"rgb(188,201,184)",1,1,fld-imerss-region-clearcut
+CoastalBluff,"rgb(117,117,117)",1,"rgb(117,117,117)",1,1,none
+Developed,"rgb(114,108,84)",1,"rgb(114,108,84)",1,1,none
+Dock,"rgb(127,127,127)",1,"rgb(127,127,127)",1,1,none
+EelgrassSimplified,"rgb(77,15,84)",1,"rgb(77,15,84)",1,1,none
+LaughlinLake,"rgb(0,133,188)",1,"rgb(0,133,188)",1,1,fld-imerss-region-lake-laughlin-lake
+MatureForest,"rgb(23,80,18)",1,"rgb(23,80,18)",1,1,fld-imerss-region-mature-forest
+PoleSapling,"rgb(144,166,138)",1,"rgb(144,166,138)",1,1,fld-imerss-region-pole-sapling
+Pond,"rgb(0,133,188)",1,"rgb(0,133,188)",1,1,none
+ProjectBoundary,black,0,black,1,1,none
+Riparian,"rgb(100,195,221)",1,"rgb(100,195,221)",1,1,none
+Road,"rgb(127,127,127)",1,"rgb(127,127,127)",1,1,none
+Rural,"rgb(84,76,54)",1,"rgb(84,76,54)",1,1,none
+Shoreline,"rgb(100,175,164)",1,"rgb(100,175,164)",1,1,none
+Subtidal,"rgb(34,122,113)",1,"rgb(34,122,113)",1,1,fld-imerss-region-subtidal
+Wetland,"rgb(52, 153, 198)",1,"rgb(52, 153, 198)",1,1,fld-imerss-region-wetland
+Woodland,"rgb(191,103,58)",1,"rgb(191,103,58)",1,1,fld-imerss-region-woodland
+YoungForest,"rgb(91,122,82)",1,"rgb(91,122,82)",1,1,fld-imerss-region-young-forest
