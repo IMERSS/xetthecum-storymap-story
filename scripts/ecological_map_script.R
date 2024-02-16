@@ -14,10 +14,17 @@ source("scripts/utils.R")
 polygonStyling <- timedFread("tabular_data/polygonStyling.csv")
 lineStyling <- timedFread("tabular_data/lineStyling.csv")
 # set highlighting on one or more layers:
-highlightedLayers <- c();
+highlightedLayers <- c(
+  #                   "Shoreline","Subtidal","Riparian","Wetland","Pond","LaughlinLake",
+  #                   "GreigCreek","DavidsonCreek","Clearcut","PoleSapling","YoungForest",
+  #                   "MatureForest","CoastalBluff","Woodland"
+                       );
 
-mx_historic_map <- function () {
-  title <- "Xetthecum Historic";
+# TODO: merge all layers in each community into one, erasing the hairline gaps between subcommunities.
+# Then create a new communityStyling .csv with those layers and read that onto the map
+
+mx_ecological_map <- function () {
+  title <- "Xetthecum Ecological Communities";
   
   boundingBox <- mx_read("spatial_data/vectors/ProjectBoundary") %>% 
     st_bbox() %>% 
@@ -25,8 +32,8 @@ mx_historic_map <- function () {
   
   
   # Plot map
-  sectionMap <- leaflet(options=list(mx_mapId="Historic")) %>%
-    setView(-123.503, 48.9403,  zoom = 16) %>%
+  sectionMap <- leaflet(options=list(mx_mapId="Ecological")) %>%
+    setView(-123.5045, 48.9440,  zoom = 15) %>%
     addProviderTiles(providers$CartoDB.Positron)
   
   # loop through all the polygon layers and add them to the map
@@ -87,4 +94,4 @@ mx_historic_map <- function () {
   
 }
 
-mx_historic_map()
+mx_ecological_map()

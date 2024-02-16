@@ -8,10 +8,11 @@
     --text-brown: #362F24;
     --page-background: #F2FCD6;
     --panel-background: #E7DDCD;
-    --content-inactive-panel-background: #FCFDF7;
+    --content-inactive-panel-background: #fcfdf700;
     --content-active-panel-background: #FFFDFD;
     --content-active-panel-border: #362F24;
-    --content-inactive-text-color: #878585;
+    --content-inactive-panel-border: #c6b69a;
+    --content-inactive-text-color: #c6b69a;
 
     font-family: "Noto Sans", Helvetica, sans-serif;
     color: var(--text-brown);
@@ -86,7 +87,7 @@ body #quarto-content {
 }
 
 .mxcw-leftPane img {
-    max-height: 45vh;
+    max-height: 60vh;
     width: auto;
 }
 
@@ -102,6 +103,8 @@ body #quarto-content {
 .mxcw-content .section {
     background-color: var(--content-inactive-panel-background);
     color: var(--content-inactive-text-color);
+    border: 4px solid var(--content-inactive-panel-border);
+
 }
 
 .mxcw-content .mxcw-activeSection {

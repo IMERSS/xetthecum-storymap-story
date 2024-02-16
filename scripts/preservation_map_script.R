@@ -16,9 +16,7 @@ lineStyling <- timedFread("tabular_data/lineStyling.csv")
 # set highlighting on one or more layers:
 highlightedLayers <- c();
 
-# TODO: Create delta outline shapefile to highlight (Optional)
-
-mx_delta_map <- function () {
+mx_preservation_map <- function () {
   title <- "Xetthecum Introduction";
   
   boundingBox <- mx_read("spatial_data/vectors/ProjectBoundary") %>% 
@@ -27,8 +25,8 @@ mx_delta_map <- function () {
   
   
   # Plot map
-  sectionMap <- leaflet(options=list(mx_mapId="Delta")) %>%
-    setView(-123.5022, 48.9411,  zoom = 17) %>%
+  sectionMap <- leaflet(options=list(mx_mapId="Preservation")) %>%
+    setView(-123.5045, 48.9440,  zoom = 15) %>%
     addProviderTiles(providers$CartoDB.Positron)
     
     # loop through all the polygon layers and add them to the map
@@ -89,4 +87,4 @@ mx_delta_map <- function () {
 
 }
 
-mx_delta_map()
+mx_preservation_map()

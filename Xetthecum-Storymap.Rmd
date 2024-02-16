@@ -15,7 +15,7 @@ In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat C
 
 <p>May our work on this digital ecocultural mapping project and presence on this island contribute to a future that recognizes the importance of reconciliation, collaboration, and the rightful place of Indigenous knowledge in shaping the well-being of the Salish Sea and its inhabitants.</p>
 
-<img style="width:100%" src="img/headline-20220218_172216.jpg"/>
+<img src="img/headline-20220218_172216.jpg"/>
 
 <p>Xetthecum (Retreat Cove), Galiano Island, BC, Canada</p>
 
@@ -31,7 +31,7 @@ Sitting at the narrowest point on the island, Xetthecum is located at one end of
 
 <div class="data-pane">
 
-<img style="width:100%" src="img/Xetthecum.jpg"/>
+<img src="img/Xetthecum.jpg"/>
 <p>Xetthecum (Retreat Cove), Galiano Island</p>
 </div>
 
@@ -88,55 +88,23 @@ Fireweed (xats'et), was used for stuffing sleep mats/beds (today it can be found
 Mushrooms, (kwmusuliqw or mumsilit) 
 </div>
 
-<span class="mxcw-nonLeafletPane mxcw-paneName-Historic html-widget leaflet"></span>
+
+```{r, echo=FALSE, message=FALSE}
+source("scripts/historic_map_script.R")
+historicMap <- mx_historic_map()
+historicMap
+```
 
 ## Ecological Communities
 
 The Xetthecum region is made up of several ecological communities includinng Forest, Woodland and Rock Outcrops, Freshwater and Marine. Each of these ecological communities are home to a diversity of species, many of which are of particular cultural significance to the Hul’q’umi’num’ speaking peoples. 
 
-<span class="mxcw-nonLeafletPane mxcw-paneName-Ecological html-widget leaflet"></span>
 
-
-## Cultural Values
-
-The species found in the Xetthecum area each have specific and varied cultural values for the Hul’q’umi’num’ speaking peoples. These cultural values may include one or more of Food, Indicator, Medicine, Material, Trade and Spiritual.
-
-The Penelakut elders hold powerful and important sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people. This knowledge has not been included here in this tool or on this website; it will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately.*
-
-*adapted from Luciim’s Plants
-
-<div class="data-pane">
-Cultural Values of Individual Species
-
-The cultural values of each species observed and documented in this mapping tool are indicated using the icons described below. In this way, minimal cultural information is provided, respecting the sensitive nature of such information, while permitting the user to be aware of the cultural significance of the species.
-
-Cultural Value: Food
-These species are an important food source
-Example: the’wun – coho salmon was and still is an important food source
-
-Cultural Value: Material
-These species are used in the manufacture of items, the capture or harvesting of other species, or used as something other than as food or medicine.
-Example: xpey’ – western red cedar was used to build canoes. An 800 year old cedar could be used to make four canoes
-
-Cultural Value: Indicator
-The presence of these species indicates something, whether it be the presence of other species, a forecast (e.g., weather) or an event of spiritual significance.
-Example: the ripening of lila’ – salmonberries indicated the return of the ? bird
-
-Cultural Value: Trade
-These species were often traded for other items
-Example: skw’lhey – little neck clams (and other types of clam) were often traded for other items
-
-Cultural Value: Medicine
-These species or portions of them are used as medicine
-Example: q’ey’xulhp – cascara is used to treat...
-
-Cultural Value: Spiritual
-These species are used in spiritual ceremony or hold spiritual meaning and significance
-Example: yuxwule’ – bald eagle
-
-</div>
-
-<span class="mxcw-nonLeafletPane mxcw-paneName-Values html-widget leaflet"></span>
+```{r, echo=FALSE, message=FALSE}
+source("scripts/ecological_map_script.R")
+ecologicalMap <- mx_ecological_map()
+ecologicalMap
+```
 
 ## From the Lake to the Delta: Laughlin Lake
 
@@ -149,7 +117,7 @@ laughlinMap
 Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of plant life, including culturally significant species like cattail (stth’e’qun) and fireweed (xáts’et). The riparian areas surrounding the lake are crucial for wildlife, offering habitat for species like black-tailed deer (ha’put) and great blue heron (smuqw’a’).
 
 <div class="data-pane">
-<img style="width:100%" src="img/Laughlin_Lake.jpg"/>
+<img src="img/Laughlin_Lake.jpg"/>
 <p>Laughlin Lake, Galiano Island</p>
 </div>
 
@@ -165,7 +133,7 @@ greigMap
 Greig Creek was once home to abundant salmon. Indigenous and non-Indigenous communities on the island are now working together to restore Coho and Chum salmon populations in the creek, primarily through stream bank restoration and salmon fry release by local schools. This activity is an educational and cultural experience for both Indigenous and non-Indigenous children.
 
 <div class="data-pane">
-<img style="width:100%" src="img/Greig_Creek.jpg"/>
+<img src="img/Greig_Creek.jpg"/>
 <p>Greig Creek, Galiano Island</p>
 </div>
 
@@ -198,12 +166,6 @@ The caves at Xetthecum have significant spiritual and cultural significance for 
 
 ## Life at the Cove: Retreat Cove
 
-```{r, echo=FALSE, message=FALSE}
-source("scripts/retreat_map_script.R")
-retreatMap <- mx_retreat_map()
-retreatMap
-```
-
 “I used to spend time up in Xetthecum with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.” Rosemary Georgeson
 
 Xetthecum was  important for social and cultural gatherings, as well as for traditional activities such as fishing and clam digging. (Lorne Silvey - find exact quote)
@@ -211,7 +173,11 @@ Xetthecum was  important for social and cultural gatherings, as well as for trad
 
 As a marine location, Retreat Cove is a habitat for rockfish and has been significant for fishing, but it is now a marine protected area to conserve these species due to overfishing and habitat destruction.
 
-
+```{r, echo=FALSE, message=FALSE}
+source("scripts/retreat_map_script.R")
+retreatMap <- mx_retreat_map()
+retreatMap
+```
 
 ## Life at the Cove: Eelgrass Beds
 
@@ -227,11 +193,19 @@ Saltwater (kw’atl’kwa)
 
 Kelp (q’am)
 
-<span class="mxcw-nonLeafletPane mxcw-paneName-Eelgrass html-widget leaflet"></span>
+```{r, echo=FALSE, message=FALSE}
+source("scripts/eelgrass_map_script.R")
+eelgrassMap <- mx_eelgrass_map()
+eelgrassMap
+```
 
 ## Ecosystem and Environmental Significance
 
-<span class="mxcw-nonLeafletPane mxcw-paneName-Ecosystem html-widget leaflet"></span>
+```{r, echo=FALSE, message=FALSE}
+source("scripts/ecosystem_map_script.R")
+ecosystemMap <- mx_ecosystem_map()
+ecosystemMap
+```
 
 ## Biodiversity
 
@@ -243,7 +217,11 @@ Galiano's diverse ecosystems host a multitude of species. From ancient forests t
 
 Galiano Island's ecosystems exhibit high biodiversity, supporting a variety of species, including salmon, black-tailed deer, eagles, and numerous plant species, both culturally significant and ecologically important.
 
-<span class="mxcw-nonLeafletPane mxcw-paneName-Biodiversity html-widget leaflet"></span>
+```{r, echo=FALSE, message=FALSE}
+source("scripts/biodiversity_map_script.R")
+biodiversityMap <- mx_biodiversity_map()
+biodiversityMap
+```
 
 ## Community Connection
 
@@ -253,7 +231,12 @@ Florence discusses her family connections, hereditary ownership of specific land
 
 The people of Galiano are intertwined with nature. Traditional practices, gatherings, and shared knowledge underscore the deep relationship between the community and the island's ecosystems.
 
-<span class="mxcw-nonLeafletPane mxcw-paneName-Community html-widget leaflet"></span>
+
+```{r, echo=FALSE, message=FALSE}
+source("scripts/community_map_script.R")
+communityMap <- mx_community_map()
+communityMap
+```
 
 ## Preservation Efforts and Future Vision
 
@@ -281,4 +264,8 @@ Efforts to preserve Galiano's natural heritage are ongoing. Restoration initiati
 
 Efforts are ongoing to protect and restore the island's ecosystems. However, colonial practices, invasive species, and industrial impacts threaten these efforts. Both Indigenous and non-Indigenous communities are actively involved in preserving and reconnecting with the land through various educational initiatives and conservation projects, aiming for a sustainable future vision for Galiano Island.
 
-<span class="mxcw-nonLeafletPane mxcw-paneName-Preservation html-widget leaflet"></span>
+```{r, echo=FALSE, message=FALSE}
+source("scripts/preservation_map_script.R")
+preservationMap <- mx_preservation_map()
+preservationMap
+```
