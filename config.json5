@@ -59,6 +59,9 @@
     transforms: [{
         file: "%maxwell/src/js/reknit-xetthecum.js",
         func: "addArrows"
+    },{
+        file: "%maxwell/src/js/reknit-xetthecum.js",
+        func: "rewriteTaxonLinks"
     }],
     copyJobs: [{
         source: "%infusion/dist/infusion-framework.js",

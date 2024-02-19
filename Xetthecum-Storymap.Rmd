@@ -61,9 +61,9 @@ The resources found at Xetthecum sustained the Penelakut people and formed a cor
 
 Fish and Shellfish Harvesting
 
-Littleneck clams ([skw'lhey](#taxon:Protothaca staminea)) were harvested during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek. 
+Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek. 
 
-The shellfish were laid overtop of kelp (bull kelp, [q'am'](#taxon:Nereocystis)) and then stepped on to get the water out; ironwood (oceanspray, [qethulhp](#taxon:Holodiscus discolor)) was singed in the fire, used to poke the clams and then stuck in the mud by the fire to cook them. Cedar bark ([xpey'](#taxon:Thuja plicata)) was made into string/rope which was used to string up clams by the fire. After they were cooked they would smoke the shellfish. 
+The shellfish were laid overtop of kelp (bull kelp, [q'am'](#taxon:Nereocystis luetkeana)) and then stepped on to get the water out; ironwood (oceanspray, [qethulhp](#taxon:Holodiscus discolor)) was singed in the fire, used to poke the clams and then stuck in the mud by the fire to cook them. Cedar bark ([xpey'](#taxon:Thuja plicata)) was made into string/rope which was used to string up clams by the fire. After they were cooked they would smoke the shellfish. 
 
 Octopus ([xelex uwe](#taxon:Enteroctopus dofleini)) was speared, usually at night.
 
@@ -114,7 +114,7 @@ laughlinMap <- mx_laughlin_map()
 laughlinMap
 ```
 
-Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of plant life, including culturally significant species like cattail ([stth’e’qun](#taxon:Typha latifolia)) and fireweed ([xáts’et](#taxon:Chamaenerion angustifolium)). The riparian areas surrounding the lake are crucial for wildlife, offering habitat for species like black-tailed deer ([ha’put](#taxon:Odocoileus hemionus columbianus)) and great blue heron ([smuqw’a’](#taxon:Ardea herodias)).
+Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of plant life, including culturally significant species like cattail ([stth’e’qun](#taxon:Typha angustifolia)) and fireweed ([xáts’et](#taxon:Chamaenerion angustifolium)). The riparian areas surrounding the lake are crucial for wildlife, offering habitat for species like black-tailed deer ([ha’put](#taxon:Odocoileus hemionus columbianus)) and great blue heron ([smuqw’a’](#taxon:Ardea herodias fannini)).
 
 <div class="data-pane">
 <img src="img/Laughlin_Lake.jpg"/>
@@ -191,7 +191,7 @@ Other functions of seagrass meadows include filtering excess nutrients from the 
 
 Saltwater (kw’atl’kwa)
 
-Kelp ([q'am'](#taxon:Nereocystis))
+Kelp ([q'am'](#taxon:Nereocystis luetkeana))
 
 ```{r, echo=FALSE, message=FALSE}
 source("scripts/eelgrass_map_script.R")

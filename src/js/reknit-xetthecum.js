@@ -2,7 +2,13 @@
 
 "use strict";
 
-const linkedom = require("linkedom");
+const linkedom = require("linkedom"),
+    axios = require("axios"),
+    fluid = require("infusion");
+
+require("./utils.js");
+
+const maxwell = fluid.registerNamespace("maxwell");
 
 const arrow = `
 <div class="long-down-arrow">
@@ -21,4 +27,55 @@ const addArrows = function (document, container) {
     });
 };
 
-module.exports = {addArrows};
+const rewriteOneTaxonLink = function (taxon) {
+    const low = taxon.toLowerCase().replaceAll("%20", "_");
+    return `https://imerss.github.io/xetthecum-storymap/taxa/${low}/`;
+};
+
+const checkLink = function (url) {
+    return new Promise((resolve) => {
+        axios.head(url)
+            .then(response => {
+                // If the status code is 2xx, consider the URL as resolved
+                if (response.status >= 200 && response.status < 300) {
+                    resolve({
+                        resolved: true,
+                        status: response.status
+                    });
+                } else {
+                    resolve({
+                        resolved: false,
+                        status: response.status
+                    });
+                }
+            })
+            .catch(error => {
+                resolve({
+                    resolved: false,
+                    status: error.response.status
+                });
+            });
+    });
+};
+
+const rewriteTaxonLinkElement = async function (element) {
+    const links = [...element.querySelectorAll("a")];
+    return maxwell.asyncForEach(links, async link => {
+        const href = link.getAttribute("href");
+        if (href.startsWith("#taxon:")) {
+            const target = rewriteOneTaxonLink(href.substring("#taxon:".length));
+            const result = await checkLink(target);
+            if (!result.resolved) {
+                console.log("*** Error: link ", href, " was rewritten to ", target, " which returned status ", result.status);
+            }
+            link.setAttribute("href", target);
+        }
+    });
+};
+
+const rewriteTaxonLinks = async function (document, container, template) {
+    await rewriteTaxonLinkElement(container);
+    await rewriteTaxonLinkElement(template);
+};
+
+module.exports = {addArrows, rewriteTaxonLinks};

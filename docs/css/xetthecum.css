@@ -88,7 +88,7 @@ body #quarto-content {
 
 .mxcw-leftPane img {
     max-height: 60vh;
-    width: auto;
+    width: 100%;
 }
 
 .mxcw-content {
@@ -197,6 +197,14 @@ body #quarto-content {
                     / 1fr 2fr;
     overflow: scroll;
     height: calc(100vh - 14rem);
+}
+
+.mxcw-map {
+    /* TODO: check that the 60vh/70vh definitions in imerss-scrolly.css are really shared */
+    width: 100%;
+    min-width: auto;
+    min-height: 40vh;
+    height: auto;
 }
 
 #map-svg {
