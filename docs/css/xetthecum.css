@@ -51,7 +51,7 @@ footer {
 .mxcw-content .section {
     padding: 2rem;
 }
-  
+
 body #quarto-content {
     margin: 0rem 1rem;
     padding: 1rem;
@@ -184,7 +184,7 @@ body #quarto-content {
     font-size: 1.5em;
     font-weight: 600;
     border-bottom: 3px solid var(--content-active-panel-border);
-    background-color: (--panel-background);
+    background-color: var(--panel-background);
     margin-bottom: 1rem;
     margin-right: 1rem;
 
