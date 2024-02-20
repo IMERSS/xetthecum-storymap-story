@@ -77,7 +77,8 @@ body #quarto-content {
 
 .mxcw-leftPane-container {
     background-color: var(--panel-background);
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     padding: 0px;
     grid-area: b;
     width: 100%;
@@ -195,7 +196,7 @@ body #quarto-content {
     grid-template:  "a b" auto
                     "a b" auto
                     / 1fr 2fr;
-    overflow: scroll;
+    overflow: hidden;
     height: calc(100vh - 14rem);
 }
 
@@ -220,4 +221,8 @@ body #quarto-content {
 
 .culturalValueRows {
     background-color: red;
+}
+
+.main-container {
+    padding-bottom: 70vh;
 }
