@@ -823,7 +823,8 @@ fluid.defaults("maxwell.scrollyPage", {
         leafletWidgets: ".html-widget.leaflet",
         dataPanes: ".mxcw-widgetPane",
         leafletMap: ".mxcw-map",
-        content: ".mxcw-content"
+        content: ".mxcw-content",
+        mainPane: ".mxcw-leftPane-container"
     },
     components: {
         map: {
@@ -867,6 +868,11 @@ fluid.defaults("maxwell.scrollyPage", {
         updateSectionClasses: {
             path: "activeSection",
             funcName: "maxwell.updateSectionClasses",
+            args: ["{that}", "{change}.value"]
+        },
+        scrollMainPaneToTop: {
+            path: "activeSection",
+            funcName: "maxwell.scrollMainPaneToTop",
             args: ["{that}", "{change}.value"]
         },
         updateActiveMapPane: {
@@ -925,6 +931,10 @@ maxwell.HTMLWidgetsPostRender = function () {
 
 maxwell.updateSectionClasses = function (that, activeSection) {
     maxwell.toggleActiveClass(that.sectionHolders.map(sectionHolder => sectionHolder.section), activeSection, "mxcw-activeSection");
+};
+
+maxwell.scrollMainPaneToTop = function (that) {
+    that.locate("mainPane")[0].scrollTop = 0;
 };
 
 /**

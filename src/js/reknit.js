@@ -94,10 +94,13 @@ maxwell.movePlotlyWidgets = function (template, sections, container) {
 maxwell.transferNodeContent = function (container, template, selector) {
     const containerNode = container.querySelector(selector);
     const templateNode = template.querySelector(selector);
-    templateNode.innerHTML = containerNode.innerHTML;
-    containerNode.remove();
+    if (templateNode) {
+        templateNode.innerHTML = containerNode.innerHTML;
+        containerNode.remove();
+    }
 };
 
+// Read any plotData file and merge information in it into the grade information for the associated paneHandler
 maxwell.integratePaneHandler = function (paneHandler, key) {
     const plotDataFile = "%maxwell/viz_data/" + key + "-plotData.json";
     let plotData;
