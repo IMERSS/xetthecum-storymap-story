@@ -118,6 +118,8 @@ Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of p
 
 <div class="data-pane">
 <img src="img/Laughlin_Lake.jpg"/>
+<audio controls src="audio/laughlinRecording.mp3" loop="true"></audio>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v_1NrdnZkY0?si=01FAAbocSIeMBCYi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <p>Laughlin Lake, Galiano Island</p>
 </div>
 
@@ -134,6 +136,8 @@ Greig Creek was once home to abundant salmon. Indigenous and non-Indigenous comm
 
 <div class="data-pane">
 <img src="img/Greig_Creek.jpg"/>
+<audio controls src="audio/greigRecording.mp3" loop="true"></audio>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AAdwf8mGWyE?si=w6oC687E_8us0x10" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <p>Greig Creek, Galiano Island</p>
 </div>
 
@@ -157,6 +161,8 @@ The caves at Xetthecum have significant spiritual and cultural significance for 
 ](img/CaveIllustration.png){.data-pane}
 
 <div class="data-pane">
+<audio controls src="audio/cavesRecording.mp3" loop="true"></audio>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XWTrRw38PuQ?si=bZnG3F_flXePUCab" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <p><b>Shqula’tsus</b> — "a refuge, was protected by Ken (it is not on a map), a hidden cave"</p>
 <p><b><i>Shhwuli’wun</i></b> - Spiritual cave, praying for the spirit of the deer
 </div>
