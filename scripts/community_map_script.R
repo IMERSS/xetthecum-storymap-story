@@ -26,7 +26,7 @@ mx_community_map <- function () {
   
   # Plot map
   sectionMap <- leaflet(options=list(mx_mapId="Community")) %>%
-    setView(-123.5045, 48.9440,  zoom = 11) %>%
+    fitBounds(boundingBox[1],boundingBox[2],boundingBox[3],boundingBox[4], options = list(padding = c(-350,-350))) %>%
     addProviderTiles(providers$CartoDB.Positron)
     
     # loop through all the polygon layers and add them to the map

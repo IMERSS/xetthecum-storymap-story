@@ -21,14 +21,14 @@ highlightedLayers <- c();
 mx_delta_map <- function () {
   title <- "Xetthecum Introduction";
   
-  boundingBox <- mx_read("spatial_data/vectors/ProjectBoundary") %>% 
+  boundingBox <- mx_read("spatial_data/vectors/Delta") %>% 
     st_bbox() %>% 
     as.character();
   
   
   # Plot map
   sectionMap <- leaflet(options=list(mx_mapId="Delta")) %>%
-    setView(-123.5022, 48.9411,  zoom = 17) %>%
+    fitBounds(boundingBox[1],boundingBox[2],boundingBox[3],boundingBox[4], options = list(padding = c(-10,-10))) %>%
     addProviderTiles(providers$CartoDB.Positron)
     
     # loop through all the polygon layers and add them to the map

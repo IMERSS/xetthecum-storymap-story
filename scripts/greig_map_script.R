@@ -19,14 +19,14 @@ highlightedLayers <- c("GreigCreek");
 mx_greig_map <- function () {
   title <- "Xetthecum Introduction";
   
-  boundingBox <- mx_read("spatial_data/vectors/ProjectBoundary") %>% 
+  boundingBox <- mx_read("spatial_data/vectors/GreigCreek") %>% 
     st_bbox() %>% 
     as.character();
   
   
   # Plot map
   sectionMap <- leaflet(options=list(mx_mapId="Greig")) %>%
-    setView(-123.501, 48.9440,  zoom = 15) %>%
+    fitBounds(boundingBox[1],boundingBox[2],boundingBox[3],boundingBox[4], options = list(padding = c(-50,-50))) %>%
     addProviderTiles(providers$CartoDB.Positron)
     
     # loop through all the polygon layers and add them to the map

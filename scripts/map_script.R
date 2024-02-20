@@ -13,20 +13,14 @@ source("scripts/utils.R")
 # import datasets
 polygonStyling <- timedFread("tabular_data/polygonStyling.csv")
 lineStyling <- timedFread("tabular_data/lineStyling.csv")
-# set highlighting on one or more layers:
-highlightedLayers <- c();
 
-mx_ecosystem_map <- function () {
-  title <- "Xetthecum Introduction";
-  
-  boundingBox <- mx_read("spatial_data/vectors/ProjectBoundary") %>% 
-    st_bbox() %>% 
-    as.character();
-  
+
+mx_map <- function (mapTitle, mapID, mapBounds=list("-123.5183", "48.9367", "-123.49092", "48.95141"), highlightedLayers=c()) {
+  paste(mapID);
   
   # Plot map
-  sectionMap <- leaflet(options=list(mx_mapId="Ecosystem")) %>%
-    fitBounds(boundingBox[1],boundingBox[2],boundingBox[3],boundingBox[4], options = list(padding = c(-350,-350))) %>%
+  sectionMap <- leaflet(options=list(mx_mapId=mapID)) %>%
+    fitBounds(boundingBox[1],boundingBox[2],boundingBox[3],boundingBox[4], options = list(padding = c(-50,-50))) %>%
     addProviderTiles(providers$CartoDB.Positron)
     
     # loop through all the polygon layers and add them to the map
@@ -81,10 +75,11 @@ mx_ecosystem_map <- function () {
       
     };
   
+  return(sectionMap);
   #Note that this statement is only effective in standalone R
-  print(sectionMap) 
+  #print(sectionMap) 
   
 
 }
 
-mx_ecosystem_map()
+#mx_map("Xetthecum Introduction", "Introduction")

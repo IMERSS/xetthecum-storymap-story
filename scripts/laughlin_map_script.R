@@ -19,14 +19,14 @@ highlightedLayers <- c("LaughlinLake");
 mx_laughlin_map <- function () {
   title <- "Xetthecum Introduction";
   
-  boundingBox <- mx_read("spatial_data/vectors/ProjectBoundary") %>% 
+  boundingBox <- mx_read("spatial_data/vectors/LaughlinLake") %>% 
     st_bbox() %>% 
     as.character();
   
   
   # Plot map
   sectionMap <- leaflet(options=list(mx_mapId="Laughlin")) %>%
-    setView(-123.5060, 48.9496,  zoom = 16) %>%
+    fitBounds(boundingBox[1],boundingBox[2],boundingBox[3],boundingBox[4], options = list(padding = c(-10,-10))) %>%
     addProviderTiles(providers$CartoDB.Positron)
     
     # loop through all the polygon layers and add them to the map

@@ -26,7 +26,7 @@ mx_historic_map <- function () {
   
   # Plot map
   sectionMap <- leaflet(options=list(mx_mapId="Historic")) %>%
-    setView(-123.503, 48.9403,  zoom = 16) %>%
+    fitBounds(boundingBox[1],boundingBox[2],boundingBox[3],boundingBox[4], options = list(padding = c(-350,-350))) %>%
     addProviderTiles(providers$CartoDB.Positron)
   
   # loop through all the polygon layers and add them to the map
