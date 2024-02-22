@@ -55,7 +55,7 @@ Sitting at the narrowest point on the island, Xetthecum is located at one end of
 Xetthecum was a primary resource-gathering area. Penelakut elder Thiyaas (Florence James) and her family gathered an array of resources from this place, including berries, fruit, and shellfish as well as medicinal resources.
 
 <div class="data-pane">
-<strong>Stories of the Elders</strong>
+<b>Stories of the Elders</b>
 
 <figure class="historic-figure">
 <blockquote><p>The Penelakut elders hold powerful and important sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people, much of which has not been included on this website. This knowledge will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately (adapted from Luciim’s Plants).</p>
@@ -66,7 +66,7 @@ Xetthecum was a primary resource-gathering area. Penelakut elder Thiyaas (Floren
 <div class="historic-section">
 <div class="historic-section-header">
 <img src="img/icon_shellfish.png>
-<strong>Fish and Shellfish Harvesting<strong>
+<b>Fish and Shellfish Harvesting</b>
 </div>
 
 <p>Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
@@ -86,7 +86,7 @@ The fish had been restocked in Greig Creek just before the blasting happened nea
 <div class="historic-section">
 <div class="historic-section-header">
 <img src="img/icon_berry.png>
-<strong>Gathering Medicine</strong>
+<b>Gathering Medicine</b>
 </div>
 
 <p>Thiyaas and her family would sometimes travel to Retreat Cove in the racing canoe. They would pull in near Retreat Island and Thiyaas’ grandfather would walk to Laughlin Lake for medicine.
@@ -98,7 +98,7 @@ At other times the whole family would gather traditional medicines at Laughlin L
 <div class="historic-section">
 <div class="historic-section-header">
 <img src="img/icon_plant.png>
-<strong>Plant Harvesting</strong>
+<b>Plant Harvesting</b>
 </div>
 
 <p>Thiyaas mentions gathering licorice fern ([tlu'siip](#taxon:Polypodium glycyrrhiza)) root from maple trees (bigleaf maple, [q'um'-unulhp](#taxon:Acer macrophyllum)) near Retreat Cove. 
@@ -244,7 +244,7 @@ Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of p
 <img src="img/laughlin_lake_2.jpg"/>
 <img src="img/laughlin_lake_3.jpg"/>
 <img src="img/laughlin_lake_4.jpg"/>
-<strong>Ecological Community: Freshwater</strong>
+<b>Ecological Community: Freshwater</b>
 #### Species commonly found at Laughlin Lake
 <div class="species-card">
 <img src="img/cattail.png">
@@ -283,7 +283,7 @@ Grieg Creek was once home to abundant salmon which were an important source of f
 <iframe width="560" height="315" src="https://www.youtube.com/embed/AAdwf8mGWyE?si=w6oC687E_8us0x10" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <p>Greig Creek, Galiano Island</p>
 <img src="img/Greig_Creek.jpg"/>
-<strong>Ecological Community: Freshwater</strong>
+<b>Ecological Community: Freshwater</b>
 #### Species commonly found at Greig Creek
 <div class="species-card">
 <img src="img/kwaluhw.png">
@@ -331,7 +331,7 @@ The Greig Creek delta was once home to significant clam gardens, which were an i
     <p>Invasive oyster bed at the delta (looking out along the shore)</p>
   </div>
   
-<strong>Ecological Community: Marine - Shoreline</strong>
+<b>Ecological Community: Marine - Shoreline</b>
 #### Species commonly found at the Delta
 <div class="species-card">
 <img src="img/tluxwtluxw.png">
@@ -360,8 +360,15 @@ The caves at Xetthecum have significant spiritual and cultural significance for 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XWTrRw38PuQ?si=bZnG3F_flXePUCab" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <p><b>Shqula’tsus</b> — "a refuge, was protected by Ken (it is not on a map), a hidden cave"</p>
 <p><b><i>Shhwuli’wun</i></b> - Spiritual cave, praying for the spirit of the deer</p>
-<img src="img/CaveIllustration.png">
-<p>Looking out from the caves - illustrated by...</p>
+<div class="data-pane-group">
+  <img src="img/CaveIllustration.png">
+  <p>Looking out from the caves - illustrated by Josha and Cody</p>
+</div>
+<div class="data-pane-group">
+#### Cultural Safety
+<p>The Penelakut elders hold powerful and important sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people. Detailed knowledge about the spiritual and cultural importance of the caves has not been included here; it will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately. Adapted from Luciim’s Plants</p>
+</div>
+
 </div>
 
 <span class="mxcw-nonLeafletPane mxcw-paneName-Caves html-widget leaflet"></span>
@@ -399,11 +406,11 @@ Lying near the mouths of Greig Creek (Hwta’loonèts ) and Davidson Creek,the e
 Eelgrass meadows, kelp beds ([q'am'](#taxon:Nereocystis luetkeana)) and coastal marshes are massive carbon sinks, absorbing CO2 at a rate of up to 90 times that of forests on land. Protection and conservation of these areas is thus important not only for biodiversity and marine species health, but also for worldwide climate change mitigation.
 
 <div class="data-pane">
-<strong>Ecological Community: Freshwater</strong>
+<b>Ecological Community: Freshwater</b>
 <p>The eelgrass beds at Xetthecum form a critical saltwater (kw’atl’kwa) nursery for many species’ young including juvenile salmon () and flatfish (), and serve as a spawning ground for herring. They also provide rich foraging habitat for numerous invertebrates and many larger creatures, including heron ([smuq’wa](#taxon:Ardea herodias fannini)) and geese ([ey'x](#taxon:Metacarcinus magister)), and are home to the Hooded nudibranch or sea slug ([q’uyatl’un](#taxon:Leonina melibe)).
 </p>
 <p>iNaturalist observation of eelgrass</p>
-<strong>‘Imush Q’uyatl’un</strong>
+<b>‘Imush Q’uyatl’un</b>
 <p>[i’mush q’uyatl’un](#taxon:Leonina melibe) follows the movements of a sea slug, Leonina melibe (Lion or Hooded nudibranch), as it dances through the water during a receding tide. It dances to a Puneluxutth’ song titled, “imush ‘q’uyatl’un” (“be with me snail”), and is accompanied by text written by the singer/story teller, Florence James, Thiyaas (a Puneluxutth’ elder). It is a simple story, which explains the importance of moving slowly, paying attention, and observing every little aspect of the environment. It is a video that draws attention to an animal who is rarely observed – an animal whose intertidal landscape is severely threatened.</p>
 
 <iframe src="https://player.vimeo.com/video/32713022?h=659ac9c205" width="640" height="427" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
