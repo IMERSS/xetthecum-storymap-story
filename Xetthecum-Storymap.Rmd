@@ -65,7 +65,7 @@ Xetthecum was a primary resource-gathering area. Penelakut elder Thiyaas (Floren
 
 <div class="historic-section">
 <div class="historic-section-header">
-<img src="img/icon_shellfish.png
+<img src="img/icon_shellfish.png>
 <strong>Fish and Shellfish Harvesting<strong>
 </div>
 
@@ -85,7 +85,7 @@ The fish had been restocked in Greig Creek just before the blasting happened nea
 
 <div class="historic-section">
 <div class="historic-section-header">
-<img src="img/icon_berry.png
+<img src="img/icon_berry.png>
 <strong>Gathering Medicine</strong>
 </div>
 
@@ -97,7 +97,7 @@ At other times the whole family would gather traditional medicines at Laughlin L
 
 <div class="historic-section">
 <div class="historic-section-header">
-<img src="img/icon_plant.png
+<img src="img/icon_plant.png>
 <strong>Plant Harvesting</strong>
 </div>
 
@@ -151,7 +151,7 @@ The Xetthecum region is made up of several ecological communities including Fore
   <div class="tab-pane fade show active" id="forests" role="tabpanel" aria-labelledby="forests-tab">
 #### Thuthiqut - Forest
 Including Mature, Young, and Pole Sapling
-<img src="Forests_banner.jpg">
+<img src="img/Forests_banner.jpg">
 Shaped by interactions between water, soil, terrain, climate and the multitudes of beings that live within them, forests are a sanctuary for hundreds of thousands of species of plants, fungi, mammals, birds, insects and microorganisms. Forests provide shelter, clean water, and food, the foundations for a complex web of life in which we are intricately connected. Humans have been stewarding forests on Galiano since time out of mind, in order to ensure key species that we depend on can flourish and help us thrive. 
 
 Dry ridges or steep southwest facing slopes with nutrient poor, shallow soils tend to be dominated by a mix of gnarled [ts’sey](#taxon:Pseudotsuga menziesii menziesii) (Douglas-fir) and [qaanlhp](#taxon:Arbutus menziesii) (arbutus), and shrubby species such as [lulutth'sulhp](#taxon:Berberis aquifolium) (dull oregon grape) or [xwiinlhp](#taxon:Rosa gymnocarpa) (baldhip rose), all of which provide medicine. These drier ecological communities are mapped as woodlands in this map.
@@ -165,7 +165,7 @@ In mature and old growth forests, trees are present in all stages of their life 
 </div>
 <div class="tab-pane fade" id="freshwater" role="tabpanel" aria-labelledby="freshwater-tab">
 #### Tl'elhumqa' - Freshwater
-<img src="Freshwater_banner.jpg">
+<img src="img/Freshwater_banner.jpg">
 Healthy wetlands, lakes and streams are havens for humans and wildlife alike, providing critical habitat and a source of freshwater. A diversity of plant life, bacteria and insects thrive in these ecosystems, forming complex food webs that support many culturally important species, such as stseelhtun (salmon). Thuqi' (sockeye salmon) and haan (pink salmon) are two types of salmon favoured by Indigenous community members on Galiano. In addition, the enhanced growth and forest structure found in riparian areas provides necessary cover for wildlife, which is also important for culturally significant activities such as hunting and birdwatching. [Ha'put](#taxon:Odocoileus hemionus columbianus) (black tailed deer) and [smuqw'a'](#taxon:Ardea herodias fannini) (great blue heron) depend on freshwater areas for food and water. 
 
 Wetlands on Galiano include lakes, shallow water, swamps, marshes, wet meadows, fens, and bog communities, many of which are represented in the watershed that flows into Xetthecum. Swamps and riparian areas include flood-tolerant trees such as [xpey’](#taxon:Thuja plicata) (western red cedar) which “like to have their feet wet”, [kwulala'ulhp](#taxon:Alnus rubra) (red alder), whose inner bark offers a source of emergency food in the spring, and [swele’ulhp](#taxon:Salix lucida) (willow), which is useful for making fish traps. Other helpful plants that grow here include [stth'e'qun](#taxon:Typha angustifolia) (cattail) which provides a useful source of materials for both binding and insulation, [sxum'xum'](#taxon:Equisetum arvense) (horsetail), which makes a yellow brown dye and [ts'a'kw'a'](#taxon:Lysichiton americanus) (skunk cabbage) which can be used to wrap food to keep it fresh. These areas are prized for berry-picking and gathering other edible and medicinal plants such as [lila’](#taxon:Rubus spectabilis) (salmonberry), [t'uqwum'](#taxon:Rubus parviflorus) (thimbleberry), [t'eqe'](#taxon:Gaultheria shallon) (salal), [suniiulhp](#taxon:Berberis aquifolium) (oregon grape), [sqw'uqwtsus](#taxon:Vaccinium parvifolium) (red huckleberry) and me’uwhulhp (Labrador tea).
@@ -191,7 +191,7 @@ In the past, no one would ever reveal the locations of where to harvest seafood,
 </div>
 <div class="tab-pane fade" id="woodlands" role="tabpanel" aria-labelledby="woodlands-tab">
 #### Shthuliim - Woodlands
-<img src="Woodland_banner.jpg">
+<img src="img/Woodland_banner.jpg">
 Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest or    most visually obvious species, P'hwulhp (Garry oak - named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, speenhw (blue camas). Fields of speenhw have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible. Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
 
 Penelakut elder Thiyaas (Florence James) calls this type of ecosystem shthuliim: “a beautiful meadow with cushions for your feet made of moss, tender growth, grass…” She adds that p'hwulhp (Garry Oak) was made crooked by the creator so that its branches are useless to people and it will be left alone, and mentions that the presence of p'hwulhp is evidence that the land is being taken care of. Thiyaas told us that pheasant, quail, and grouse were a lot more abundant in these woodland meadow environments, and that they used to be a regular part of Indigenous people’s diets in this area. Like speenhw, the bulbs of stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible when cooked. Thiyaas used to collect fawn lilies and ti'tuqw-el'tun' (lady slippers) for her mother, as her mother would eat the bulbs. “That was just our joy”... but there is not enough to collect anymore.” Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
