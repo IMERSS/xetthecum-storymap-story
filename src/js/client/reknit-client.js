@@ -682,27 +682,6 @@ maxwell.updateActiveWidgetSubPanes = function (that, effectiveActiveSubpanes) {
     });
 };
 
-/** Apply the map bounds found either in a fitBounds or setView call attached to the supplied widget data
- * @param {LeafletMap} map - The map to which the view is to be applied
- * @param {Object} xData - The "data.x" member of the HTMLWidgets Leaflet instantiator
- */
-maxwell.applyView = function (map, xData) {
-    const bounds = xData.fitBounds;
-    const setView = xData.setView;
-    const limits = xData.limits;
-    if (bounds) {
-        map.fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]]);
-    } else if (setView) {
-        map.setView(setView[0], setView[1]);
-    } else if (limits) {
-        // Ignore the maps with limits for now - slows down Maxwell too much and they are too wide anyway
-        // "limits" are what gets spat out if there are no explicit bounds set
-        // map.fitBounds([[limits.lat[0], limits.lng[0]], [limits.lat[1], limits.lng[1]]]);
-    } else {
-        console.error("Unable to find map view information in widget data ", xData);
-    }
-};
-
 // From https://stackoverflow.com/a/16436975
 maxwell.arraysEqual = function (a, b, length) {
     if (a === b) {
@@ -728,10 +707,55 @@ maxwell.equalBounds = function (bounds1, bounds2) {
     return maxwell.arraysEqual(bounds1, bounds2, 4);
 };
 
+maxwell.normaliseBounds = function (bounds) {
+    return [+bounds[0], +bounds[1], +bounds[2], +bounds[3]];
+};
+
+maxwell.expandBounds = function (bounds, factor) {
+    const [lat1, long1, lat2, long2] = maxwell.normaliseBounds(bounds);
+
+    // Calculating the central point of the bounding box
+    const centerLat = (lat1 + lat2) / 2;
+    const centerLong = (long1 + long2) / 2;
+
+    // Calculating the new dimensions of the bounding box
+    const newLat1 = centerLat - (centerLat - lat1) * factor;
+    const newLong1 = centerLong - (centerLong - long1) * factor;
+    const newLat2 = centerLat + (lat2 - centerLat) * factor;
+    const newLong2 = centerLong + (long2 - centerLong) * factor;
+
+    // Creating and returning the expanded bounds array
+    return [newLat1, newLong1, newLat2, newLong2];
+};
+
+/** Apply the map bounds found either in a fitBounds or setView call attached to the supplied widget data
+ * @param {LeafletMap} map - The map to which the view is to be applied
+ * @param {Object} xData - The "data.x" member of the HTMLWidgets Leaflet instantiator
+ */
+maxwell.applyView = function (map, xData) {
+    const fitBounds = xData.fitBounds;
+    const setView = xData.setView;
+    const limits = xData.limits;
+    if (fitBounds) {
+        // Leaflet seems to apply some "natural shrinkage" to the bounds which we need to compensate for otherwise we zoom out too far
+        const bounds = maxwell.expandBounds(fitBounds, 0.95);
+        map.fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]]);
+    } else if (setView) {
+        map.setView(setView[0], setView[1]);
+    } else if (limits) {
+        // Ignore the maps with limits for now - slows down Maxwell too much and they are too wide anyway
+        // "limits" are what gets spat out if there are no explicit bounds set
+        // map.fitBounds([[limits.lat[0], limits.lng[0]], [limits.lat[1], limits.lng[1]]]);
+    } else {
+        console.error("Unable to find map view information in widget data ", xData);
+    }
+};
+
 maxwell.flyToBounds = function (map, xData, durationInMs) {
     return new Promise(function (resolve) {
-        const bounds = xData.fitBounds;
-        if (bounds && map._loaded) {
+        const rawBounds = xData.fitBounds;
+        if (rawBounds && map._loaded) {
+            const bounds = maxwell.expandBounds(rawBounds, 0.95);
             if (maxwell.equalBounds(bounds, map.lastBounds)) {
                 resolve();
             } else {
@@ -998,10 +1022,14 @@ maxwell.updateActiveWidgetPane = function (that, activePane) {
     maxwell.toggleActiveClass(that.dataPanes, activePane, "mxcw-activeWidgetPane");
 };
 
+// Note that this does not derive from "hortis.leafletMap" in imerss-viz leafletMap.js
 fluid.defaults("maxwell.scrollyLeafletMap", {
     gradeNames: "fluid.viewComponent",
     members: {
-        map: "@expand:maxwell.makeLeafletMap({that}.container)"
+        map: "@expand:maxwell.makeLeafletMap({that}.container, {that}.options.mapOptions)"
+    },
+    mapOptions: {
+        zoomSnap: 0.1
     },
     zoomDuration: 100,
     listeners: {
