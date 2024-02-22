@@ -11,8 +11,7 @@ library(stringr)
 source("scripts/utils.R")
 
 # import datasets
-polygonStyling <- timedFread("tabular_data/polygonStyling.csv")
-lineStyling <- timedFread("tabular_data/lineStyling.csv")
+communityStyling <- timedFread("tabular_data/communityStyling.csv")
 # set highlighting on one or more layers:
 highlightedLayers <- c();
 
@@ -30,8 +29,8 @@ mx_community_map <- function () {
     addProviderTiles(providers$CartoDB.Positron)
     
     # loop through all the polygon layers and add them to the map
-    for (i in 1:nrow(polygonStyling)) {
-      row <- polygonStyling[i,]
+    for (i in 1:nrow(communityStyling)) {
+      row <- communityStyling[i,]
       
       # if the row isn't highlighted, add it to the map first
       if (!(row$Layer %in% highlightedLayers)) {
@@ -56,29 +55,6 @@ mx_community_map <- function () {
                                           weight = (row$outlineWidth+2),
                                           options = list(mx_layerId = row$Layer, className = row$ClassName))
       }
-    };
-  
-    for (i in 1:nrow(lineStyling)) {
-      row <- lineStyling[i,]
-      
-      if (!(row$Layer %in% highlightedLayers)) {
-        sectionMap <- sectionMap %>% addPolylines(data = mx_read(paste("spatial_data/vectors/",row$Layer, sep="")), 
-                                           stroke = TRUE,
-                                           color = row$outlineColor,
-                                           opacity = as.numeric(row$outlineOpacity),
-                                           weight = as.numeric(row$outlineWidth-1),
-                                           options = list(mx_layerId = row$Layer, className = row$ClassName))
-      };
-      
-      if (row$Layer %in% highlightedLayers) {
-        sectionMap <- sectionMap %>% addPolylines(data = mx_read(paste("spatial_data/vectors/",row$Layer, sep="")), 
-                                           stroke=TRUE,
-                                           color="yellow",
-                                           opacity = 1,
-                                           weight = as.numeric(row$outlineWidth+2),
-                                           options = list(mx_layerId = row$Layer, className = row$ClassName))
-      };
-      
     };
   
   #Note that this statement is only effective in standalone R

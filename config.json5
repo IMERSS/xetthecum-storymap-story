@@ -44,9 +44,6 @@
                 Ecosystem: {
                     type: "maxwell.leafletPaneHandler"                
                 },
-                Biodiversity: {
-                    type: "maxwell.leafletPaneHandler"                
-                },
                 Community: {
                     type: "maxwell.leafletPaneHandler"                
                 },
