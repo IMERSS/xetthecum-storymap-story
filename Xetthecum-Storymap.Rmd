@@ -145,11 +145,13 @@ The Xetthecum region is made up of several ecological communities including Fore
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="introduction" role="tabpanel" aria-labelledby="home-tab">
-  Select the ecological community regions on the map or from the tabs here to learn more about thecultural values and species that live here.
+  <div class="tab-pane fade show active" id="introduction" role="tabpanel" aria-labelledby="introduction-tab">
+  Select the ecological community regions on the map or from the tabs here to learn more about the cultural values and species that live here.
   </div>
-  <div class="tab-pane fade show active" id="forests" role="tabpanel" aria-labelledby="home-tab">
-
+  <div class="tab-pane fade show active" id="forests" role="tabpanel" aria-labelledby="forests-tab">
+#### Thuthiqut - Forest
+Including Mature, Young, and Pole Sapling
+<img src="Forests_banner.jpg">
 Shaped by interactions between water, soil, terrain, climate and the multitudes of beings that live within them, forests are a sanctuary for hundreds of thousands of species of plants, fungi, mammals, birds, insects and microorganisms. Forests provide shelter, clean water, and food, the foundations for a complex web of life in which we are intricately connected. Humans have been stewarding forests on Galiano since time out of mind, in order to ensure key species that we depend on can flourish and help us thrive. 
 
 Dry ridges or steep southwest facing slopes with nutrient poor, shallow soils tend to be dominated by a mix of gnarled [ts’sey](#taxon:Pseudotsuga menziesii menziesii) (Douglas-fir) and [qaanlhp](#taxon:Arbutus menziesii) (arbutus), and shrubby species such as [lulutth'sulhp](#taxon:Berberis aquifolium) (dull oregon grape) or [xwiinlhp](#taxon:Rosa gymnocarpa) (baldhip rose), all of which provide medicine. These drier ecological communities are mapped as woodlands in this map.
@@ -161,8 +163,9 @@ These older forests are models of complexity, exhibiting a vast diversity of com
 In mature and old growth forests, trees are present in all stages of their life cycles including standing dead snags and fallen debris, large or small—providing critical habitat for culturally significant species such as [yuxwule'](#taxon:Haliaeetus leucocephalus) (bald eagle) and [ha'put](#taxon:Odocoileus hemionus columbianus) (black tailed deer). Forests are valued for hunting ha'put (deer) from September to October, although Florence James cautions that we should not hunt females or hunt after the rut, but wait until after the [ironwood](#taxon:Holodiscus discolor) (qethulhp) blooms turned brown. The first deer hunted was always shared as a ritual; each species had rules and rituals. It is tradition to bring an elder a piece of meat from hunting, just as one shared the first fish caught during seafood harvests.
 
 </div>
-<div class="tab-pane fade" id="freshwater" role="tabpanel" aria-labelledby="profile-tab">
-
+<div class="tab-pane fade" id="freshwater" role="tabpanel" aria-labelledby="freshwater-tab">
+#### Tl'elhumqa' - Freshwater
+<img src="Freshwater_banner.jpg">
 Healthy wetlands, lakes and streams are havens for humans and wildlife alike, providing critical habitat and a source of freshwater. A diversity of plant life, bacteria and insects thrive in these ecosystems, forming complex food webs that support many culturally important species, such as stseelhtun (salmon). Thuqi' (sockeye salmon) and haan (pink salmon) are two types of salmon favoured by Indigenous community members on Galiano. In addition, the enhanced growth and forest structure found in riparian areas provides necessary cover for wildlife, which is also important for culturally significant activities such as hunting and birdwatching. [Ha'put](#taxon:Odocoileus hemionus columbianus) (black tailed deer) and [smuqw'a'](#taxon:Ardea herodias fannini) (great blue heron) depend on freshwater areas for food and water. 
 
 Wetlands on Galiano include lakes, shallow water, swamps, marshes, wet meadows, fens, and bog communities, many of which are represented in the watershed that flows into Xetthecum. Swamps and riparian areas include flood-tolerant trees such as [xpey’](#taxon:Thuja plicata) (western red cedar) which “like to have their feet wet”, [kwulala'ulhp](#taxon:Alnus rubra) (red alder), whose inner bark offers a source of emergency food in the spring, and [swele’ulhp](#taxon:Salix lucida) (willow), which is useful for making fish traps. Other helpful plants that grow here include [stth'e'qun](#taxon:Typha angustifolia) (cattail) which provides a useful source of materials for both binding and insulation, [sxum'xum'](#taxon:Equisetum arvense) (horsetail), which makes a yellow brown dye and [ts'a'kw'a'](#taxon:Lysichiton americanus) (skunk cabbage) which can be used to wrap food to keep it fresh. These areas are prized for berry-picking and gathering other edible and medicinal plants such as [lila’](#taxon:Rubus spectabilis) (salmonberry), [t'uqwum'](#taxon:Rubus parviflorus) (thimbleberry), [t'eqe'](#taxon:Gaultheria shallon) (salal), [suniiulhp](#taxon:Berberis aquifolium) (oregon grape), [sqw'uqwtsus](#taxon:Vaccinium parvifolium) (red huckleberry) and me’uwhulhp (Labrador tea).
@@ -172,8 +175,9 @@ Colonial settlers began to alter Galiano’s landscape in the late 1800’s in w
 Hwtalonēts (Greig Creek) does not currently support large populations of salmon. In fact, there are no sea-run salmon or trout populations currently spawning in the island’s streams. There are, however, resident cutthroat trout and stickleback populations that have persisted in a number of our creeks. These fish are no longer able to make it to the ocean because of barriers such as waterfalls, ditched agricultural fields and dams. Efforts to re-establish Coho and Chum populations in Greig Creek have been taking place, mainly through stream bank restoration and stocking, in part through the local school caring for and releasing salmon fry on an annual basis. This is a significant experience for Indigenous and non-Indigenous children alike on Galiano. Habitat for a resident cutthroat trout population in Murchison creek has been improved through the creation of off-channel ponds and the placement of large woody debris within the channel. 
 
 </div>
-<div class="tab-pane fade" id="marine" role="tabpanel" aria-labelledby="contact-tab">
-  
+<div class="tab-pane fade" id="marine" role="tabpanel" aria-labelledby="marine-tab">
+#### Hwuiumqa'- Marine
+<img src="img/Marine_banner.jpg">
 Surrounded by water, the residents, visitors and non-resident property owners of Galiano Island see the ocean as intrinsic to living and loving life on this island. Sightings of [q'ul-lhanamutsum](#taxon:Orcinus orca) (orca whales) and other marine mammals are treasured, and ocean-going transportation is key, but for many community members, the ocean is first and foremost a source of food and livelihood. Both Indigenous and non-Indigenous people on Galiano enjoy fish such as thuqi' (sockeye salmon), haan (pink salmon), tuqwtuqw (red snapper) and t’q’as (rockfish in general). Also prized are [tl'uxwtl'uxw](#taxon:Magallana gigas) (oysters), [s-axwa'](#taxon:Saxidomus gigantea) (clams), kwuneem'mun', (scallops), [ey'x](#taxon:Metacarcinus magister) (dungeness crabs), [thikwt](#taxon:Apostichopus californicus) (sea cucumber) and seaweeds & algaes such as lhuq'us (red laver). Florence James shared that e s-hw (seal) has also been prized as a dark meat. 
 
 Xetthecum (Retreat Cove/Island) is one of the few marine locations on the shoreline of Galiano itself that has been an important place for fishing and harvesting shellfish. Its desirability as a habitat for rockfish in particular has since become so notable that it has been designated a marine protected area—in which fishing is banned—in order to conserve these long-lived species that are slow to reproduce.  As the tide is not too fast, Xetthecum was once also a good area for other creatures, such as clams, [pun'eq'](#taxon:Panopea generosa) (geoduck) and dog fish. It is important that community members are able to harvest and consume these foods without getting sick, therefore environmental health of the ocean is vital.
@@ -185,8 +189,9 @@ Many (if not all) of the Indigenous families associated with Galiano have been f
 In the past, no one would ever reveal the locations of where to harvest seafood, but now this is merely a list of where these creatures once were. Locations of significance include Porlier Pass for rockfish, Pinnacle Rock on the south side of Porlier Pass for lingcod, and Walker Hook off of Saltspring for rockfish. As for salmon, Cable Bay was once a good location for chum salmon, as was Enterprise Reef off of Mayne Island, and off Valdes Island, but other fishing areas that have been key for Indigenous Galiano community members in the past hundred years are much farther away, necessitating long periods of time that families are separated. The closest of these locations include the west coast of Vancouver Island such as Jordan River, Race Rocks, San Juan Harbour near Port Renfrew, and areas near River’s Inlet to the Skeena. 
 
 </div>
-<div class="tab-pane fade" id="woodlands" role="tabpanel" aria-labelledby="contact-tab">
-
+<div class="tab-pane fade" id="woodlands" role="tabpanel" aria-labelledby="woodlands-tab">
+#### Shthuliim - Woodlands
+<img src="Woodland_banner.jpg">
 Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest or    most visually obvious species, P'hwulhp (Garry oak - named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, speenhw (blue camas). Fields of speenhw have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible. Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
 
 Penelakut elder Thiyaas (Florence James) calls this type of ecosystem shthuliim: “a beautiful meadow with cushions for your feet made of moss, tender growth, grass…” She adds that p'hwulhp (Garry Oak) was made crooked by the creator so that its branches are useless to people and it will be left alone, and mentions that the presence of p'hwulhp is evidence that the land is being taken care of. Thiyaas told us that pheasant, quail, and grouse were a lot more abundant in these woodland meadow environments, and that they used to be a regular part of Indigenous people’s diets in this area. Like speenhw, the bulbs of stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible when cooked. Thiyaas used to collect fawn lilies and ti'tuqw-el'tun' (lady slippers) for her mother, as her mother would eat the bulbs. “That was just our joy”... but there is not enough to collect anymore.” Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
@@ -233,10 +238,34 @@ laughlinMap
 Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of plant life, including culturally significant species like cattail ([stth’e’qun](#taxon:Typha angustifolia)) and fireweed ([xáts’et](#taxon:Chamaenerion angustifolium)). The riparian areas surrounding the lake are crucial for wildlife, offering habitat for species like black-tailed deer ([ha’put](#taxon:Odocoileus hemionus columbianus)) and great blue heron ([smuqw’a’](#taxon:Ardea herodias fannini)).
 
 <div class="data-pane">
-<img src="img/Laughlin_Lake.jpg"/>
 <audio controls src="audio/laughlinRecording.mp3" loop="true"></audio>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v_1NrdnZkY0?si=01FAAbocSIeMBCYi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<p>Laughlin Lake, Galiano Island</p>
+<img src="img/laughlin_lake_1.jpg"/>
+<img src="img/laughlin_lake_2.jpg"/>
+<img src="img/laughlin_lake_3.jpg"/>
+<img src="img/laughlin_lake_4.jpg"/>
+<strong>Ecological Community: Freshwater</strong>
+#### Species commonly found at Laughlin Lake
+<div class="species-card">
+<img src="img/cattail.png">
+<p>stth’e’qun</p>
+<p>cattail</p>
+</div>
+<div class="species-card">
+<img src="img/xátset.png">
+<p>xáts’et</p>
+<p>fireweed</p>
+</div>
+<div class="species-card">
+<img src="img/deer.png">
+<p>ha'put</p>
+<p>black-tailed deer</p>
+</div>
+<div class="species-card">
+<img src="img/smuqwa.png">
+<p>smuqw’a’</p>
+<p>great blue heron</p>
+</div>
 </div>
 
 
@@ -250,10 +279,23 @@ greigMap
 Grieg Creek was once home to abundant salmon which were an important source of food for the Penelakut peoples. Indigenous and non-Indigenous communities on the island are now working together to restore Coho and Chum salmon populations in the creek, primarily through stream bank restoration and salmon fry release by local schools. This activity is an educational and cultural experience for both Indigenous and non-Indigenous children.
 
 <div class="data-pane">
-<img src="img/Greig_Creek.jpg"/>
 <audio controls src="audio/greigRecording.mp3" loop="true"></audio>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/AAdwf8mGWyE?si=w6oC687E_8us0x10" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <p>Greig Creek, Galiano Island</p>
+<img src="img/Greig_Creek.jpg"/>
+<strong>Ecological Community: Freshwater</strong>
+#### Species commonly found at Greig Creek
+<div class="species-card">
+<img src="img/kwaluhw.png">
+<p>kw'a'luhw</p>
+<p>chum salmon</p>
+</div>
+<div class="species-card">
+<img src="img/thewun.png">
+<p>the’wun</p>
+<p>coho salmon</p>
+</div>
+
 </div>
 
 ## From the Lake to the Delta: Delta
@@ -267,7 +309,46 @@ deltaMap
 The Greig Creek delta was once home to significant clam gardens, which were an important food source for the Penelakut people, and clam digging was an important cultural activity. Due to ecological disruption caused by resource extraction, development, logging, and agriculture, the clam gardens have been replaced by a large and invasive oyster bed which is visible at low tide. 
 
 <div class="data-pane">
-Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
+  <div class="delta-image-container">
+    <img src="img/delta1.png">
+    <p>View of the delta from above, looking toward Retreat Island</p>
+  </div>
+  <div class="delta-image-container">
+    <img src="img/delta2.png">
+    <p>View of the delta looking toward the mouth of Greig Creek</p>
+  </div>
+  <div class="delta-image-container">
+    <img src="img/delta3.png">
+    <p>View of Greig Creek delta at low tide</p>
+  </div>
+  Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
+  <div class="delta-image-container">
+    <img src="img/tluxwtluxw.png">
+    <p>tl'uxwtl'uxw (pacific oyster)</p>
+  </div>
+  <div class="delta-image-container">
+    <img src="img/oyster2.png">
+    <p>Invasive oyster bed at the delta (looking out along the shore)</p>
+  </div>
+  
+<strong>Ecological Community: Marine - Shoreline</strong>
+#### Species commonly found at the Delta
+<div class="species-card">
+<img src="img/tluxwtluxw.png">
+<p>tl'uxwtl'uxw</p>
+<p>pacific oyster</p>
+</div>
+<div class="species-card">
+<img src="img/thewun.png">
+<p>the’wun</p>
+<p>coho salmon</p>
+</div>  
+<div class="species-card">
+<img src="img/kwaluhw.png">
+<p>kw'a'luhw</p>
+<p>chum salmon</p>
+</div>
+  
 </div>
 
 ## Life at the Cove: Caves
@@ -300,6 +381,8 @@ As a marine location, Retreat Cove is a habitat for rockfish and has been signif
 </blockquote>
 <figcaption>Rosemary Georgeson</figcaption>
 </figure>
+<img src="img/retreat1.png">
+<img src="img/retreat2.png">
 
 </div>
 

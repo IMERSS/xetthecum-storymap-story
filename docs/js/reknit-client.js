@@ -737,6 +737,7 @@ maxwell.applyView = function (map, xData) {
     const setView = xData.setView;
     const limits = xData.limits;
     if (fitBounds) {
+        // Leaflet seems to apply some "natural shrinkage" to the bounds which we need to compensate for otherwise we zoom out too far
         const bounds = maxwell.expandBounds(fitBounds, 0.95);
         map.fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]]);
     } else if (setView) {

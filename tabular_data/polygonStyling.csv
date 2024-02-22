@@ -17,5 +17,6 @@ Riparian,"rgb(100,195,221)",1,"rgb(100,195,221)",1,1,none,1
 EelgrassSimplified,"rgb(77,15,84)",1,"rgb(77,15,84)",1,1,none,1
 Wetland,"rgb(52, 153, 198)",1,"rgb(52, 153, 198)",1,1,fld-imerss-region-wetland,1
 GreigCreek,"rgb(52,153,198)",1,"rgb(52,153,198)",1,1,none,1
+Delta,"rgb(52,153,198)",0,"rgb(52,153,198)",0,1,none,2
 Road,"rgb(127,127,127)",1,"rgb(127,127,127)",1,1,none,2
 ProjectBoundary,black,0,black,1,1,none,3

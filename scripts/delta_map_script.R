@@ -14,7 +14,7 @@ source("scripts/utils.R")
 polygonStyling <- timedFread("tabular_data/polygonStyling.csv")
 lineStyling <- timedFread("tabular_data/lineStyling.csv")
 # set highlighting on one or more layers:
-highlightedLayers <- c();
+highlightedLayers <- c("Delta");
 
 # TODO: Create delta outline shapefile to highlight (Optional)
 
