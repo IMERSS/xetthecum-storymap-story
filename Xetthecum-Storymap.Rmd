@@ -13,7 +13,7 @@ knit: (function(inputFile, encoding) {
 In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat Cove), Galiano Island resides within the trans-boundary bioregion of the Salish Sea, a richly biodiverse expanse that has been tended to and cherished by the Coast Salish people since time immemorial. The island rests within the shared, asserted, and unceded traditional territories of the Penelakut, Lamalcha, and Hwlitsum First Nations, as well as the shared, asserted, and ceded traditional territories of Tsawwassen First Nation. Additionally, we acknowledge the territories of all other Hul’q’umi’num’-speaking peoples who hold rights and responsibilities in this region.
 
 <div class="data-pane">
-<img src="img/XetthecumLand.png">
+<img src="img/landAcknowledgement.jpg">
 <p>As residents on Galiano Island and learners in this work, we are grateful to be a part of the intricate tapestry of cultural and ecological diversity that weaves us together in this place. We commit to acknowledging the history and ongoing presence of Indigenous Peoples in this area and strive to foster relationships that honor and respect the rights, traditions, and contributions of the Coast Salish and Hul’q’umi’num’-speaking peoples.</p>
 
 <p>This project is a work in progress and we are learning and fumbling together as we go. Please get in touch with us with any thoughts, questions or ideas about what you see here.</p>
@@ -28,7 +28,7 @@ In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat C
 
 ## Introduction
 
-Tth’i’hwum ‘i’ nuw’ilum tseep. Welcome to Xetthecum, an area on Galiano Island BC of ecological and cultural significance. Complex in its ecology, cultural history, and contemporary land-use, the boundary of Xetthecum is roughly delimited by the extent of the Greig Creek watershed, including the watercourse descending from Laughlin Lake to Retreat Cove, spanning residential and agricultural lands, protected and covenanted areas, and a public shore access.
+Tth'ihwum m'i 'ewu i' Xetthecum sii'em. Welcome to Xetthecum, an area on Galiano Island BC of ecological and cultural significance. Complex in its ecology, cultural history, and contemporary land-use, the boundary of Xetthecum is roughly delimited by the extent of the Greig Creek watershed, including the watercourse descending from Laughlin Lake to Retreat Cove, spanning residential and agricultural lands, protected and covenanted areas, and a public shore access.
 
 <div class="data-pane">
 <img src="img/Xetthecum.jpg"/>
@@ -104,10 +104,18 @@ The base of the cattail/bulrush ([stth’e’qun](#taxon:Typha angustifolia)) pl
 Mushrooms, (kwmusuliqw or mumsilit)
 </div> <!-- /historic-content -->
 <div class="historic-images">
+  <div class="responsive-image-container">
   <img src="img/shellfish.png">
+  </div>
+  <div class="responsive-image-container">
   <img src="img/fish_harvesting.png">
+  </div>
+  <div class="responsive-image-container">
   <img src="img/medicinePlant.png">
+  </div>
+  <div class="responsive-image-container">
   <img src="img/plantHarvesting.png">
+  </div>
 </div> <!-- /historic-images -->
 </div> <!-- /historic-content-container -->
 </div> <!-- /data-pane -->
@@ -121,7 +129,7 @@ historicMap
 
 ## Ecological Communities
 
-The Xetthecum region is made up of several ecological communities including Forest, Woodland and Rock Outcrops, Freshwater and Marine. Each of these ecological communities are home to a diversity of species, many of which are of particular cultural significance to the Hul’q’umi’num’ speaking peoples. 
+The Xetthecum region is made up of several ecological communities includinng Forest, Woodland and Rock Outcrops, Freshwater and Marine. Each of these ecological communities are home to a diversity of species, many of which are of cultural significance to the Penelakut peoples. 
 
 <div class="data-pane">
 <ul class="nav nav-tabs" id="ecological-tabs" role="tablist">
@@ -153,6 +161,8 @@ These older forests are models of complexity, exhibiting a vast diversity of com
 
 In mature and old growth forests, trees are present in all stages of their life cycles including standing dead snags and fallen debris, large or small—providing critical habitat for culturally significant species such as [yuxwule'](#taxon:Haliaeetus leucocephalus) (bald eagle) and [ha'put](#taxon:Odocoileus hemionus columbianus) (black tailed deer). Forests are valued for hunting ha'put (deer) from September to October, although Florence James cautions that we should not hunt females or hunt after the rut, but wait until after the [ironwood](#taxon:Holodiscus discolor) (qethulhp) blooms turned brown. The first deer hunted was always shared as a ritual; each species had rules and rituals. It is tradition to bring an elder a piece of meat from hunting, just as one shared the first fish caught during seafood harvests.
 
+<a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#thuthiqut---forest">Learn more about the cultural and ecological values of the forest community</a>
+
 </div>
 <div class="tab-pane fade" id="Freshwater" role="tabpanel" aria-labelledby="Freshwater-tab">
 
@@ -166,6 +176,7 @@ Colonial settlers began to alter Galiano’s landscape in the late 1800’s in w
 
 Hwtalonēts (Greig Creek) does not currently support large populations of salmon. In fact, there are no sea-run salmon or trout populations currently spawning in the island’s streams. There are, however, resident cutthroat trout and stickleback populations that have persisted in a number of our creeks. These fish are no longer able to make it to the ocean because of barriers such as waterfalls, ditched agricultural fields and dams. Efforts to re-establish Coho and Chum populations in Greig Creek have been taking place, mainly through stream bank restoration and stocking, in part through the local school caring for and releasing salmon fry on an annual basis. This is a significant experience for Indigenous and non-Indigenous children alike on Galiano. Habitat for a resident cutthroat trout population in Murchison creek has been improved through the creation of off-channel ponds and the placement of large woody debris within the channel. 
 
+<a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#tlelhumqa---freshwater">Learn more about the cultural and ecological values of the freshwater community</a>
 </div>
 <div class="tab-pane fade" id="Marine" role="tabpanel" aria-labelledby="Marine-tab">
   
@@ -182,10 +193,10 @@ Many (if not all) of the Indigenous families associated with Galiano have been f
 
 In the past, no one would ever reveal the locations of where to harvest seafood, but now this is merely a list of where these creatures once were. Locations of significance include Porlier Pass for rockfish, Pinnacle Rock on the south side of Porlier Pass for lingcod, and Walker Hook off of Saltspring for rockfish. As for salmon, Cable Bay was once a good location for chum salmon, as was Enterprise Reef off of Mayne Island, and off Valdes Island, but other fishing areas that have been key for Indigenous Galiano community members in the past hundred years are much farther away, necessitating long periods of time that families are separated. The closest of these locations include the west coast of Vancouver Island such as Jordan River, Race Rocks, San Juan Harbour near Port Renfrew, and areas near River’s Inlet to the Skeena. 
 
+<a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#hwuiumqa---marine">Learn more about the cultural and ecological values of the marine community</a>
+
 </div>
 <div class="tab-pane fade" id="Woodlands" role="tabpanel" aria-labelledby="Woodlands-tab">
-
-Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest or most visually obvious species, P'hwulhp (Garry oak - named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, speenhw (blue camas). Fields of speenhw have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible. Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
 
 #### Shthuliim - Woodlands
 <img src="img/Woodland_banner.jpg">
@@ -214,6 +225,9 @@ Down to Earth: Cheryl Bryce (https://www.youtube.com/watch?v=PKTxP_zy_mA)
 Restoring Camas and Culture to Lekwungen and Victoria by B Penn · 2006 · An interview with Lekwungen Cheryl Bryce. (http://www.firstnations.de/media/06-1-1-camas.pdf)
 Camas Country By Janis Ringuette
 https://ohgarryoaksociety.org/what-is-a-garry-oak/ 
+
+<a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#shthuliim---woodlands-and-rock-outcrops">Learn more about the cultural and ecological values of the woodlands community</a>
+
 </div>
 </div>
 
@@ -238,31 +252,43 @@ Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of p
 <div class="data-pane">
 <audio controls src="audio/laughlinRecording.mp3" loop="true"></audio>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v_1NrdnZkY0?si=01FAAbocSIeMBCYi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<div id="column-group-container-laughlin">
 <img src="img/laughlin_lake_1.jpg">
 <img src="img/laughlin_lake_2.png">
 <img src="img/laughlin_lake_3.png">
 <img src="img/laughlin_lake_4.png">
-<b>Ecological Community: Freshwater</b>
-#### Species commonly found at Laughlin Lake
+</div>
+<p><a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#tlelhumqa---freshwater">Ecological Community: Freshwater</a></p>
+<p><b>Species commonly found at Laughlin Lake</b></p>
+<div class="common-species-container">
 <div class="species-card">
+<div class="responsive-image-container">
 <img src="img/cattail.png">
+</div>
 <p>stth’e’qun</p>
 <p>cattail</p>
 </div>
 <div class="species-card">
+<div class="responsive-image-container">
 <img src="img/xatset.png">
+</div>
 <p>xáts’et</p>
 <p>fireweed</p>
 </div>
 <div class="species-card">
+<div class="responsive-image-container">
 <img src="img/deer.png">
+</div>
 <p>ha'put</p>
 <p>black-tailed deer</p>
 </div>
 <div class="species-card">
+<div class="responsive-image-container">
 <img src="img/smuqwa.png">
+</div>
 <p>smuqw’a’</p>
 <p>great blue heron</p>
+</div>
 </div>
 </div>
 
@@ -281,17 +307,23 @@ Grieg Creek was once home to abundant salmon which were an important source of f
 <iframe width="560" height="315" src="https://www.youtube.com/embed/AAdwf8mGWyE?si=w6oC687E_8us0x10" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <p>Greig Creek, Galiano Island</p>
 <img src="img/Greig_Creek.jpg"/>
-<b>Ecological Community: Freshwater</b>
-#### Species commonly found at Greig Creek
+<p><a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#tlelhumqa---freshwater">Ecological Community: Freshwater</a></p>
+<p><b>Species commonly found at Greig Creek</b></p>
+<div class="common-species-container">
 <div class="species-card">
+<div class="responsive-image-container">
 <img src="img/kwaluhw.png">
+</div>
 <p>kw'a'luhw</p>
 <p>chum salmon</p>
 </div>
 <div class="species-card">
+<div class="responsive-image-container">
 <img src="img/thewun.png">
+</div>
 <p>the’wun</p>
 <p>coho salmon</p>
+</div>
 </div>
 
 </div>
@@ -307,6 +339,7 @@ deltaMap
 The Greig Creek delta was once home to significant clam gardens, which were an important food source for the Penelakut people, and clam digging was an important cultural activity. Due to ecological disruption caused by resource extraction, development, logging, and agriculture, the clam gardens have been replaced by a large and invasive oyster bed which is visible at low tide. 
 
 <div class="data-pane">
+<div class="column-group-container">
  <div class="delta-image-container">
   <img src="img/delta1.png">
   <p>View of the delta from above, looking toward Retreat Island</p>
@@ -319,8 +352,12 @@ The Greig Creek delta was once home to significant clam gardens, which were an i
   <img src="img/delta3.png">
   <p>View of Greig Creek delta at low tide</p>
 </div>
+<div class="delta-image-container">
+  <img src="img/shellfish.png">
+  <p>Littleneck clams ([skw'lhey](#taxon:Leukoma staminea))</p>
+</div>
 
-Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
+<p>Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.</p>
 
 <div class="delta-image-container">
  <img src="img/tluxwtluxw.png">
@@ -330,25 +367,32 @@ Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the d
  <img src="img/oyster2.png">
  <p>Invasive oyster bed at the delta (looking out along the shore)</p>
 </div>
+</div>
   
-<b>Ecological Community: Marine - Shoreline</b>
-
-#### Species commonly found at the Delta
-
+<p><a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#hwuiumqa---marine">Ecological Community: Marine - Shoreline</a></p>
+<p><b>Species commonly found at the Delta</b></p>
+<div class="common-species-container">
 <div class="species-card">
+<div class="responsive-image-container">
 <img src="img/tluxwtluxw.png">
+</div>
 <p>tl'uxwtl'uxw</p>
 <p>pacific oyster</p>
 </div>
 <div class="species-card">
+<div class="responsive-image-container">
 <img src="img/thewun.png">
+</div>
 <p>the’wun</p>
 <p>coho salmon</p>
 </div>  
 <div class="species-card">
+<div class="responsive-image-container">
 <img src="img/kwaluhw.png">
+</div>
 <p>kw'a'luhw</p>
 <p>chum salmon</p>
+</div>
 </div>
   
 </div>
@@ -391,9 +435,11 @@ As a marine location, Retreat Cove is a habitat for rockfish and has been signif
 </blockquote>
 <figcaption>Rosemary Georgeson</figcaption>
 </figure>
+<div class="column-group-container">
+
 <img src="img/retreat1.png">
 <img src="img/retreat2.png">
-
+</div>
 </div>
 
 ```{r, echo=FALSE, message=FALSE}
@@ -409,7 +455,7 @@ Lying near the mouths of Greig Creek (Hwta’loonèts ) and Davidson Creek,the e
 Eelgrass meadows, kelp beds ([q'am'](#taxon:Nereocystis luetkeana)) and coastal marshes are massive carbon sinks, absorbing CO2 at a rate of up to 90 times that of forests on land. Protection and conservation of these areas is thus important not only for biodiversity and marine species health, but also for worldwide climate change mitigation.
 
 <div class="data-pane">
-<b>Ecological Community: Freshwater</b>
+<p><b>Ecological Community: Freshwater</b></p>
 <!-- Removing link to Leonina melibe since sadly we do not yet have an observation of it -->
 <p>The eelgrass beds at Xetthecum form a critical saltwater (kw’atl’kwa) nursery for many species’ young including juvenile salmon () and flatfish (), and serve as a spawning ground for herring. They also provide rich foraging habitat for numerous invertebrates and many larger creatures, including heron ([smuq’wa](#taxon:Ardea herodias fannini)) and geese ([ey'x](#taxon:Metacarcinus magister)), and are home to the Hooded nudibranch or sea slug (q’uyatl’un).
 </p>
