@@ -112,11 +112,11 @@ body #quarto-content {
 }
 
 .mxcw-content .section p {
-    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
-.mxcw-content .section p:last-child {
-    margin-bottom: 0px;
+.mxcw-content .section p:first-child {
+    margin-top: 0px;
 }
 
 
