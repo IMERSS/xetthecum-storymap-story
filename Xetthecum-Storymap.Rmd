@@ -65,7 +65,7 @@ Xetthecum was a primary resource-gathering area. Penelakut elder Thiyaas (Floren
 
 <div class="historic-section">
 <div class="historic-section-header">
-<img src="img/icon_shellfish.png>
+<img src="img/icon_shellfish.png">
 <b>Fish and Shellfish Harvesting</b>
 </div>
 
@@ -85,7 +85,7 @@ The fish had been restocked in Greig Creek just before the blasting happened nea
 
 <div class="historic-section">
 <div class="historic-section-header">
-<img src="img/icon_berry.png>
+<img src="img/icon_berry.png">
 <b>Gathering Medicine</b>
 </div>
 
@@ -97,7 +97,7 @@ At other times the whole family would gather traditional medicines at Laughlin L
 
 <div class="historic-section">
 <div class="historic-section-header">
-<img src="img/icon_plant.png>
+<img src="img/icon_plant.png">
 <b>Plant Harvesting</b>
 </div>
 
