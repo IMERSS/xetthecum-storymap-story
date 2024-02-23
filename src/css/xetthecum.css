@@ -32,6 +32,11 @@ footer {
     padding-top: 0px;
 }
 
+blockquote {
+    background-color: var(--panel-background);
+    border-left: none;
+}
+
 .main-container h2 {
     margin: 0px;
     margin-bottom: 1rem;
@@ -88,6 +93,10 @@ body #quarto-content {
     max-width: 100%;
 }
 
+.mxcw-leftPane p {
+    padding: 0px;
+}
+
 .mxcw-content {
     background-color: var(--panel-background);
     padding: 0px;
@@ -117,6 +126,13 @@ body #quarto-content {
 
 .mxcw-content .section p:first-child {
     margin-top: 0px;
+}
+
+.historic-content-container {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
 }
 
 

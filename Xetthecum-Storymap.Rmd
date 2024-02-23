@@ -62,14 +62,13 @@ Xetthecum was a primary resource-gathering area. Penelakut elder Thiyaas (Floren
 <p><em>“We must protect the food sources. There are a lot of foods and medicines that are no longer there anymore.”</em></p>
 <figcaption>Penelakut elder Thiyaas / Florence James </figcaption>
 </figure>
-
-<div class="historic-section">
-<div class="historic-section-header">
-<img src="img/icon_shellfish.png">
-<b>Fish and Shellfish Harvesting</b>
-</div>
-
-<p>Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
+<div class="historic-content-container">
+<div class="historic-content">
+  <div class="historic-section-header">
+    <img src="img/icon_shellfish.png">
+    <b>Fish and Shellfish Harvesting</b>
+  </div>
+Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
 
 The shellfish were laid overtop of kelp (bull kelp, [q'am'](#taxon:Nereocystis luetkeana)) and then stepped on to get the water out; ironwood (oceanspray, [qethulhp](#taxon:Holodiscus discolor)) was singed in the fire, used to poke the clams and then stuck in the mud by the fire to cook them. Western red cedar ([xpey'](#taxon:Thuja plicata)) bark was made into string/rope which was used to string up clams by the fire. After they were cooked we would smoke the shellfish. 
 
@@ -78,30 +77,19 @@ Octopus ([xelex uwe](#taxon:Enteroctopus dofleini)) was speared, usually at nigh
 Smelts (surf smelt, [stsa'kwum](#taxon:Hypomesus pretiosus)) would go by and move in circles, the seagulls would try to get them. 
 
 The fish had been restocked in Greig Creek just before the blasting happened near the mouth of Greig Creek (year?)
-</p>
-<img src="img/shellfish.png">
-<img src="img/fish_harvesting.png">
-</div>
 
-<div class="historic-section">
-<div class="historic-section-header">
-<img src="img/icon_berry.png">
-<b>Gathering Medicine</b>
-</div>
-
-<p>Thiyaas and her family would sometimes travel to Retreat Cove in the racing canoe. They would pull in near Retreat Island and Thiyaas’ grandfather would walk to Laughlin Lake for medicine.
+  <div class="historic-section-header">
+    <img src="img/icon_berry.png">
+    <b>Gathering Medicine</b>
+  </div>
+Thiyaas and her family would sometimes travel to Retreat Cove in the racing canoe. They would pull in near Retreat Island and Thiyaas’ grandfather would walk to Laughlin Lake for medicine.
 At other times the whole family would gather traditional medicines at Laughlin Lake, such as a plant that has features similar to corn, like husk and silk (not cattail).
-</p>
-<img src="img/medicinePlant.png">
-</div>
 
-<div class="historic-section">
-<div class="historic-section-header">
-<img src="img/icon_plant.png">
-<b>Plant Harvesting</b>
-</div>
-
-<p>Thiyaas mentions gathering licorice fern ([tlu'siip](#taxon:Polypodium glycyrrhiza)) root from maple trees (bigleaf maple, [q'um'-unulhp](#taxon:Acer macrophyllum)) near Retreat Cove. 
+  <div class="historic-section-header">
+    <img src="img/icon_plant.png">
+    <b>Plant Harvesting</b>
+  </div>
+Thiyaas mentions gathering licorice fern ([tlu'siip](#taxon:Polypodium glycyrrhiza)) root from maple trees (bigleaf maple, [q'um'-unulhp](#taxon:Acer macrophyllum)) near Retreat Cove. 
 
 Blackberries (trailing blackberry, [sqw''iil'muhw](#taxon:Rubus ursinus) or Himalayan blackberry, or cutleaf blackberry?) were picked all the way from the Lighthouse down to Retreat Cove. The family would wake at 5am with granny and walk to collect the berries. 
 
@@ -110,10 +98,15 @@ Fireweed ([xats'et](#taxon:Chamaenerion angustifolium)), was used for stuffing s
 The base of the cattail/bulrush ([stth’e’qun](#taxon:Typha angustifolia)) plant can be eaten, it looks like celery. When you cut the top to use the bulrush, you can use the root as a vegetable. It was also used for creating mats.
 
 Mushrooms, (kwmusuliqw or mumsilit)
-</p>
-<img src="img/plantHarvesting.png">
-</div>
-</div>
+</div> <!-- /historic-content -->
+<div class="historic-images">
+  <img src="img/shellfish.png">
+  <img src="img/fish_harvesting.png">
+  <img src="img/medicinePlant.png">
+  <img src="img/plantHarvesting.png">
+</div> <!-- /historic-images -->
+</div> <!-- /historic-content-container -->
+</div> <!-- /data-pane -->
 
 
 ```{r, echo=FALSE, message=FALSE}
@@ -414,8 +407,8 @@ Eelgrass meadows, kelp beds ([q'am'](#taxon:Nereocystis luetkeana)) and coastal 
 <b>‘Imush Q’uyatl’un</b>
 <p>[i’mush q’uyatl’un](#taxon:Leonina melibe) follows the movements of a sea slug, Leonina melibe (Lion or Hooded nudibranch), as it dances through the water during a receding tide. It dances to a Puneluxutth’ song titled, “imush ‘q’uyatl’un” (“be with me snail”), and is accompanied by text written by the singer/story teller, Florence James, Thiyaas (a Puneluxutth’ elder). It is a simple story, which explains the importance of moving slowly, paying attention, and observing every little aspect of the environment. It is a video that draws attention to an animal who is rarely observed – an animal whose intertidal landscape is severely threatened.</p>
 
-<!-- <iframe src="https://player.vimeo.com/video/32713022?h=659ac9c205" width="640" height="427" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-<p><a href="https://vimeo.com/32713022">&#039;Imush Q&#039;uyatl&#039;un</a> from <a href="https://vimeo.com/user5078648">Karolle Wall</a> on <a href="https://vimeo.com">Vimeo</a>.</p> -->
+<iframe src="https://player.vimeo.com/video/32713022?h=659ac9c205" width="640" height="427" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<p><a href="https://vimeo.com/32713022">&#039;Imush Q&#039;uyatl&#039;un</a> from <a href="https://vimeo.com/user5078648">Karolle Wall</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 </div>
 
 ```{r, echo=FALSE, message=FALSE}
