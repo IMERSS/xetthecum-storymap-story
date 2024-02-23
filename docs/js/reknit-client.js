@@ -594,12 +594,12 @@ maxwell.leafletWidgetToPane = function (scrollyPage, map, widget, index) {
     widget.paneHandlerName = widget.data ? widget.data.x?.options?.mx_mapId : maxwell.decodeNonLeafletHandler(widget);
     let paneHandler = widget.paneHandlerName && maxwell.paneHandlerForName(scrollyPage, widget.paneHandlerName);
     if (!paneHandler) {
-        // Automatically construct a default scrollyPaneHandler to deal with simple non-interactive vignettes
+        // Automatically construct a default leafletPaneHandler to deal with simple non-interactive vignettes
         // Note this is bugged due to https://fluidproject.atlassian.net/browse/FLUID-6777 and only works in the absence of plotly (e.g. Maxwell)
         const new_id = "auto-paneHandler-" + index;
         widget.paneHandlerName = new_id;
         const options = {
-            type: "maxwell.scrollyPaneHandler",
+            type: "maxwell.leafletPaneHandler",
             paneKey: new_id
         };
         paneHandler = fluid.construct([...fluid.pathForComponent(scrollyPage), new_id], options);
@@ -737,7 +737,8 @@ maxwell.applyView = function (map, xData) {
     const setView = xData.setView;
     const limits = xData.limits;
     if (fitBounds) {
-        const bounds = maxwell.expandBounds(fitBounds, 0.95);
+        // Leaflet seems to apply some "natural shrinkage" to the bounds which we need to compensate for otherwise we zoom out too far
+        const bounds = maxwell.expandBounds(fitBounds, 0.9);
         map.fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]]);
     } else if (setView) {
         map.setView(setView[0], setView[1]);
@@ -754,7 +755,7 @@ maxwell.flyToBounds = function (map, xData, durationInMs) {
     return new Promise(function (resolve) {
         const rawBounds = xData.fitBounds;
         if (rawBounds && map._loaded) {
-            const bounds = maxwell.expandBounds(rawBounds, 0.95);
+            const bounds = maxwell.expandBounds(rawBounds, 0.9);
             if (maxwell.equalBounds(bounds, map.lastBounds)) {
                 resolve();
             } else {

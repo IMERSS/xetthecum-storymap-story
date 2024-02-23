@@ -102,22 +102,22 @@ historicMap
 The Xetthecum region is made up of several ecological communities including Forest, Woodland and Rock Outcrops, Freshwater and Marine. Each of these ecological communities are home to a diversity of species, many of which are of particular cultural significance to the Hul’q’umi’num’ speaking peoples. 
 
 <div class="data-pane">
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs" id="ecological-tabs" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="forests-tab" data-bs-toggle="tab" data-bs-target="#forests" type="button" role="tab" aria-controls="forests" aria-selected="true">Thuthiqut Forests</button>
+    <button class="nav-link active" id="Forests-tab" data-bs-toggle="tab" data-bs-target="#Forests" type="button" role="tab" aria-controls="Forests" aria-selected="true">Thuthiqut Forests</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="freshwater-tab" data-bs-toggle="tab" data-bs-target="#freshwater" type="button" role="tab" aria-controls="freshwater" aria-selected="false">Tl'elhumqa' Freshwater</button>
+    <button class="nav-link" id="Freshwater-tab" data-bs-toggle="tab" data-bs-target="#Freshwater" type="button" role="tab" aria-controls="Freshwater" aria-selected="false">Tl'elhumqa' Freshwater</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="marine-tab" data-bs-toggle="tab" data-bs-target="#marine" type="button" role="tab" aria-controls="marine" aria-selected="false">Hwuiumqa' Marine</button>
+    <button class="nav-link" id="Marine-tab" data-bs-toggle="tab" data-bs-target="#Marine" type="button" role="tab" aria-controls="Marine" aria-selected="false">Hwuiumqa' Marine</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="woodlands-tab" data-bs-toggle="tab" data-bs-target="#woodlands" type="button" role="tab" aria-controls="woodlands" aria-selected="false">Shthuliim Woodlands</button>
+    <button class="nav-link" id="Woodlands-tab" data-bs-toggle="tab" data-bs-target="#Woodlands" type="button" role="tab" aria-controls="Woodlands" aria-selected="false">Shthuliim Woodlands</button>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="forests" role="tabpanel" aria-labelledby="home-tab">
+  <div class="tab-pane fade show active" id="Forests" role="tabpanel" aria-labelledby="Forests-tab">
 
 Shaped by interactions between water, soil, terrain, climate and the multitudes of beings that live within them, forests are a sanctuary for hundreds of thousands of species of plants, fungi, mammals, birds, insects and microorganisms. Forests provide shelter, clean water, and food, the foundations for a complex web of life in which we are intricately connected. Humans have been stewarding forests on Galiano since time out of mind, in order to ensure key species that we depend on can flourish and help us thrive. 
 
@@ -130,7 +130,7 @@ These older forests are models of complexity, exhibiting a vast diversity of com
 In mature and old growth forests, trees are present in all stages of their life cycles including standing dead snags and fallen debris, large or small—providing critical habitat for culturally significant species such as [yuxwule'](#taxon:Haliaeetus leucocephalus) (bald eagle) and [ha'put](#taxon:Odocoileus hemionus columbianus) (black tailed deer). Forests are valued for hunting ha'put (deer) from September to October, although Florence James cautions that we should not hunt females or hunt after the rut, but wait until after the [ironwood](#taxon:Holodiscus discolor) (qethulhp) blooms turned brown. The first deer hunted was always shared as a ritual; each species had rules and rituals. It is tradition to bring an elder a piece of meat from hunting, just as one shared the first fish caught during seafood harvests.
 
 </div>
-<div class="tab-pane fade" id="freshwater" role="tabpanel" aria-labelledby="profile-tab">
+<div class="tab-pane fade" id="Freshwater" role="tabpanel" aria-labelledby="Freshwater-tab">
 
 Healthy wetlands, lakes and streams are havens for humans and wildlife alike, providing critical habitat and a source of freshwater. A diversity of plant life, bacteria and insects thrive in these ecosystems, forming complex food webs that support many culturally important species, such as stseelhtun (salmon). Thuqi' (sockeye salmon) and haan (pink salmon) are two types of salmon favoured by Indigenous community members on Galiano. In addition, the enhanced growth and forest structure found in riparian areas provides necessary cover for wildlife, which is also important for culturally significant activities such as hunting and birdwatching. [Ha'put](#taxon:Odocoileus hemionus columbianus) (black tailed deer) and [smuqw'a'](#taxon:Ardea herodias fannini) (great blue heron) depend on freshwater areas for food and water. 
 
@@ -141,7 +141,7 @@ Colonial settlers began to alter Galiano’s landscape in the late 1800’s in w
 Hwtalonēts (Greig Creek) does not currently support large populations of salmon. In fact, there are no sea-run salmon or trout populations currently spawning in the island’s streams. There are, however, resident cutthroat trout and stickleback populations that have persisted in a number of our creeks. These fish are no longer able to make it to the ocean because of barriers such as waterfalls, ditched agricultural fields and dams. Efforts to re-establish Coho and Chum populations in Greig Creek have been taking place, mainly through stream bank restoration and stocking, in part through the local school caring for and releasing salmon fry on an annual basis. This is a significant experience for Indigenous and non-Indigenous children alike on Galiano. Habitat for a resident cutthroat trout population in Murchison creek has been improved through the creation of off-channel ponds and the placement of large woody debris within the channel. 
 
 </div>
-<div class="tab-pane fade" id="marine" role="tabpanel" aria-labelledby="contact-tab">
+<div class="tab-pane fade" id="Marine" role="tabpanel" aria-labelledby="Marine-tab">
   
 Surrounded by water, the residents, visitors and non-resident property owners of Galiano Island see the ocean as intrinsic to living and loving life on this island. Sightings of [q'ul-lhanamutsum](#taxon:Orcinus orca) (orca whales) and other marine mammals are treasured, and ocean-going transportation is key, but for many community members, the ocean is first and foremost a source of food and livelihood. Both Indigenous and non-Indigenous people on Galiano enjoy fish such as thuqi' (sockeye salmon), haan (pink salmon), tuqwtuqw (red snapper) and t’q’as (rockfish in general). Also prized are [tl'uxwtl'uxw](#taxon:Magallana gigas) (oysters), [s-axwa'](#taxon:Saxidomus gigantea) (clams), kwuneem'mun', (scallops), [ey'x](#taxon:Metacarcinus magister) (dungeness crabs), [thikwt](#taxon:Apostichopus californicus) (sea cucumber) and seaweeds & algaes such as lhuq'us (red laver). Florence James shared that e s-hw (seal) has also been prized as a dark meat. 
 
@@ -154,9 +154,9 @@ Many (if not all) of the Indigenous families associated with Galiano have been f
 In the past, no one would ever reveal the locations of where to harvest seafood, but now this is merely a list of where these creatures once were. Locations of significance include Porlier Pass for rockfish, Pinnacle Rock on the south side of Porlier Pass for lingcod, and Walker Hook off of Saltspring for rockfish. As for salmon, Cable Bay was once a good location for chum salmon, as was Enterprise Reef off of Mayne Island, and off Valdes Island, but other fishing areas that have been key for Indigenous Galiano community members in the past hundred years are much farther away, necessitating long periods of time that families are separated. The closest of these locations include the west coast of Vancouver Island such as Jordan River, Race Rocks, San Juan Harbour near Port Renfrew, and areas near River’s Inlet to the Skeena. 
 
 </div>
-<div class="tab-pane fade" id="woodlands" role="tabpanel" aria-labelledby="contact-tab">
+<div class="tab-pane fade" id="Woodlands" role="tabpanel" aria-labelledby="Woodlands-tab">
 
-Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest or    most visually obvious species, P'hwulhp (Garry oak - named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, speenhw (blue camas). Fields of speenhw have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible. Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
+Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest or most visually obvious species, P'hwulhp (Garry oak - named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, speenhw (blue camas). Fields of speenhw have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible. Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
 
 Penelakut elder Thiyaas (Florence James) calls this type of ecosystem shthuliim: “a beautiful meadow with cushions for your feet made of moss, tender growth, grass…” She adds that p'hwulhp (Garry Oak) was made crooked by the creator so that its branches are useless to people and it will be left alone, and mentions that the presence of p'hwulhp is evidence that the land is being taken care of. Thiyaas told us that pheasant, quail, and grouse were a lot more abundant in these woodland meadow environments, and that they used to be a regular part of Indigenous people’s diets in this area. Like speenhw, the bulbs of stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible when cooked. Thiyaas used to collect fawn lilies and ti'tuqw-el'tun' (lady slippers) for her mother, as her mother would eat the bulbs. “That was just our joy”... but there is not enough to collect anymore.” Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
 

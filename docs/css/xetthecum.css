@@ -196,6 +196,10 @@ body #quarto-content {
     height: calc(100vh - 14rem);
 }
 
+.fl-imerss-container.mxcw-noStretch {
+    max-height: 50vh
+}
+
 .mxcw-map {
     /* TODO: check that the 60vh/70vh definitions in imerss-scrolly.css are really shared */
     width: 100%;

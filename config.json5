@@ -18,9 +18,9 @@
                 Historic: {
                     type: "maxwell.leafletPaneHandler"
                 },
-
                 Ecological: {
-                    type: "maxwell.leafletPaneHandler"
+                    type: "maxwell.xetthecumEcologicalPane",
+                    vizFile: "%resourceBase/data/Life-PhaseIII.json.lz4"
                 },
                 Laughlin: {
                     type: "maxwell.leafletPaneHandler"
@@ -103,7 +103,13 @@
     }, {
         source: "%maxwell/src/html/pane-info.html",
         target: "%maxwell/docs/html/pane-info.html"
-    }, ]
+    }, {
+        source: "%imerss-bioinfo/src/client/json/emptyPhyloMap.json",
+        target: "%maxwell/docs/json/phyloMap.json"
+    }, {
+        source: "%maxwell/viz_data/*.lz4",
+        target: "%maxwell/docs/data"
+    }]
 }
 
 
