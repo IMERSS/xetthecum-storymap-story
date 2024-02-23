@@ -10,12 +10,13 @@ knit: (function(inputFile, encoding) {
 ---
 ## Land Acknowledgement
 
-In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat Cove), Galiano Island resides within the trans-boundary bioregion of the Salish Sea, a pristine expanse that has been tended to and cherished by the Coast Salish people since time immemorial. The island rests within the shared, asserted, and unceded traditional territories of the Penelakut, Lamalcha, and Hwlitsum First Nations, as well as the shared, asserted, and ceded traditional territories of Tsawwassen First Nation. Additionally, we acknowledge the territories of all other Hul’q’umi’num’-speaking peoples who hold rights and responsibilities in this region.
+In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat Cove), Galiano Island resides within the trans-boundary bioregion of the Salish Sea, a richly biodiverse expanse that has been tended to and cherished by the Coast Salish people since time immemorial. The island rests within the shared, asserted, and unceded traditional territories of the Penelakut, Lamalcha, and Hwlitsum First Nations, as well as the shared, asserted, and ceded traditional territories of Tsawwassen First Nation. Additionally, we acknowledge the territories of all other Hul’q’umi’num’-speaking peoples who hold rights and responsibilities in this region.
 
 <div class="data-pane">
-<p>As residents on Galiano Island and learners in this work, we are grateful for the opportunity to be a part of the intricate tapestry of cultural and ecological diversity that weaves us together in this place. We commit to acknowledging the history and ongoing presence of Indigenous Peoples in this area and strive to foster relationships that honor and respect the rights, traditions, and contributions of the Coast Salish and Hul’q’umi’num’-speaking peoples.</p>
+<img src="img/XetthecumLand.png">
+<p>As residents on Galiano Island and learners in this work, we are grateful to be a part of the intricate tapestry of cultural and ecological diversity that weaves us together in this place. We commit to acknowledging the history and ongoing presence of Indigenous Peoples in this area and strive to foster relationships that honor and respect the rights, traditions, and contributions of the Coast Salish and Hul’q’umi’num’-speaking peoples.</p>
 
-<p>May our work on this digital ecocultural mapping project and presence on this island contribute to a future that recognizes the importance of reconciliation, collaboration, and the rightful place of Indigenous knowledge in shaping the well-being of the Salish Sea and its inhabitants.</p>
+<p>This project is a work in progress and we are learning and fumbling together as we go. Please get in touch with us with any thoughts, questions or ideas about what you see here.</p>
 
 <img src="img/headline-20220218_172216.jpg"/>
 
@@ -27,14 +28,11 @@ In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat C
 
 ## Introduction
 
-Welcome to Xetthecum, an area on Galiano Island BC of ecological and cultural significance. Complex in its ecology, cultural history, and contemporary land-use, the boundary of Xetthecum is roughly delimited by the extent of the Greig Creek watershed, including the watercourse descending from Laughlin Lake to Retreat Cove, spanning residential and agricultural lands, protected and covenanted areas, and a public shore access.
-
-Sitting at the narrowest point on the island, Xetthecum is located at one end of a shore-to-shore route used by the Penelakut peoples…
+Tth’i’hwum ‘i’ nuw’ilum tseep. Welcome to Xetthecum, an area on Galiano Island BC of ecological and cultural significance. Complex in its ecology, cultural history, and contemporary land-use, the boundary of Xetthecum is roughly delimited by the extent of the Greig Creek watershed, including the watercourse descending from Laughlin Lake to Retreat Cove, spanning residential and agricultural lands, protected and covenanted areas, and a public shore access.
 
 <div class="data-pane">
-
 <img src="img/Xetthecum.jpg"/>
-<p>Xetthecum (Retreat Cove), Galiano Island</p>
+<p>Bird's eye view of Xetthecum</p>
 </div>
 
 ```{r, echo=FALSE, message=FALSE}
@@ -50,44 +48,71 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Historic and Cultural Significance
 
-Xetthecum holds profound historical and cultural significance for the Penelakut peoples, serving as a site for resource gathering as well as practices essential to the cultural fabric and spiritual growth of the community.
+Xetthecum is of important historical and cultural significance for the Penelakut peoples, once serving as a site for seasonal resource gathering as well as cultural and spiritual rituals and practices.
 
-This land is of significant spiritual value, most notably at the site of the caves which were an important place for prayer and ceremony, and the merging of deer and human spirits. Regular and seasonal gatherings held in this area were part of the Penelakut's cultural fabric, with activities like blackberry picking and clam harvesting forming an integral part of daily life. 
+Sitting at the narrowest point on the island, Xetthecum is located at one end of a shore-to-shore route that allowed for important over-land travel across the island.
 
-Xetthecum was a primary resource-gathering area. Thiyaas (Florence James) and her family gathered an array of resources from this place, including berries, fruit, and shellfish. The bay provided not only essential foods but also medicinal resources, supporting both sustenance and ceremony for the community.
+Xetthecum was a primary resource-gathering area. Penelakut elder Thiyaas (Florence James) and her family gathered an array of resources from this place, including berries, fruit, and shellfish as well as medicinal resources.
 
 <div class="data-pane">
-STORIES:
+<b>Stories of the Elders</b>
 
-The resources found at Xetthecum sustained the Penelakut people and formed a core part of their diet and traditional practices. “We must protect the food sources. There are a lot of foods and medicines that are no longer there anymore.” Florence
+<figure class="historic-figure">
+<blockquote><p>The Penelakut elders hold powerful and important sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people, much of which has not been included on this website. This knowledge will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately (adapted from Luciim’s Plants).</p>
+<p><em>“We must protect the food sources. There are a lot of foods and medicines that are no longer there anymore.”</em></p>
+<figcaption>Penelakut elder Thiyaas / Florence James </figcaption>
+</figure>
 
-Fish and Shellfish Harvesting
+<div class="historic-section">
+<div class="historic-section-header">
+<img src="img/icon_shellfish.png">
+<b>Fish and Shellfish Harvesting</b>
+</div>
 
-Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek. 
+<p>Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
 
-The shellfish were laid overtop of kelp (bull kelp, [q'am'](#taxon:Nereocystis luetkeana)) and then stepped on to get the water out; ironwood (oceanspray, [qethulhp](#taxon:Holodiscus discolor)) was singed in the fire, used to poke the clams and then stuck in the mud by the fire to cook them. Cedar bark ([xpey'](#taxon:Thuja plicata)) was made into string/rope which was used to string up clams by the fire. After they were cooked they would smoke the shellfish. 
+The shellfish were laid overtop of kelp (bull kelp, [q'am'](#taxon:Nereocystis luetkeana)) and then stepped on to get the water out; ironwood (oceanspray, [qethulhp](#taxon:Holodiscus discolor)) was singed in the fire, used to poke the clams and then stuck in the mud by the fire to cook them. Western red cedar ([xpey'](#taxon:Thuja plicata)) bark was made into string/rope which was used to string up clams by the fire. After they were cooked we would smoke the shellfish. 
 
 Octopus ([xelex uwe](#taxon:Enteroctopus dofleini)) was speared, usually at night.
 
 Smelts (surf smelt, [stsa'kwum](#taxon:Hypomesus pretiosus)) would go by and move in circles, the seagulls would try to get them. 
 
 The fish had been restocked in Greig Creek just before the blasting happened near the mouth of Greig Creek (year?)
+</p>
+<img src="img/shellfish.png">
+<img src="img/fish_harvesting.png">
+</div>
 
-Medicinal Plants
+<div class="historic-section">
+<div class="historic-section-header">
+<img src="img/icon_berry.png">
+<b>Gathering Medicine</b>
+</div>
 
-Florence’s family would sometimes travel to Retreat Cove in the racing canoe. They would pull in near Retreat Island and Florence’s grandfather would walk to Laughlin Lake for medicine. 
+<p>Thiyaas and her family would sometimes travel to Retreat Cove in the racing canoe. They would pull in near Retreat Island and Thiyaas’ grandfather would walk to Laughlin Lake for medicine.
+At other times the whole family would gather traditional medicines at Laughlin Lake, such as a plant that has features similar to corn, like husk and silk (not cattail).
+</p>
+<img src="img/medicinePlant.png">
+</div>
 
-The family would go to gather traditional medicines at Laughlin Lake, such as a plant that has features similar to corn, like husk and silk (not cattail).
+<div class="historic-section">
+<div class="historic-section-header">
+<img src="img/icon_plant.png">
+<b>Plant Harvesting</b>
+</div>
 
-Other Plants
+<p>Thiyaas mentions gathering licorice fern ([tlu'siip](#taxon:Polypodium glycyrrhiza)) root from maple trees (bigleaf maple, [q'um'-unulhp](#taxon:Acer macrophyllum)) near Retreat Cove. 
 
-Florence mentions gathering licorice fern ([tlu'siip](#taxon:Polypodium glycyrrhiza)) root from maple trees ([q'um'-unulhp](#taxon:Acer macrophyllum)) near Retreat Cove. 
+Blackberries (trailing blackberry, [sqw''iil'muhw](#taxon:Rubus ursinus) or Himalayan blackberry, or cutleaf blackberry?) were picked all the way from the Lighthouse down to Retreat Cove. The family would wake at 5am with granny and walk to collect the berries. 
 
-Blackberries (trailing blackberry/[sqw''iil'muhw](#taxon:Rubus ursinus)) were picked all the way from the Lighthouse down to Retreat Cove. The family would wake at 5am with her granny and walk and collect the berries. 
+Fireweed ([xats'et](#taxon:Chamaenerion angustifolium)), was used for stuffing sleep mats (today it can be found along Retreat Cove Road and at Laughlin Lake). 
 
-Fireweed ([xats'et](#taxon:Chamaenerion angustifolium)), was used for stuffing sleep mats/beds (today it can be found along Retreat Cove Road and at Laughlin Lake). 
+The base of the cattail/bulrush ([stth’e’qun](#taxon:Typha angustifolia)) plant can be eaten, it looks like celery. When you cut the top to use the bulrush, you can use the root as a vegetable. It was also used for creating mats.
 
-[Mushrooms](#taxon:Cantharellus formosus), (kwmusuliqw or mumsilit) 
+Mushrooms, (kwmusuliqw or mumsilit)
+</p>
+<img src="img/plantHarvesting.png">
+</div>
 </div>
 
 
@@ -118,7 +143,9 @@ The Xetthecum region is made up of several ecological communities including Fore
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="Forests" role="tabpanel" aria-labelledby="Forests-tab">
-
+#### Thuthiqut - Forest
+Including Mature, Young, and Pole Sapling
+<img src="img/Forests_banner.jpg">
 Shaped by interactions between water, soil, terrain, climate and the multitudes of beings that live within them, forests are a sanctuary for hundreds of thousands of species of plants, fungi, mammals, birds, insects and microorganisms. Forests provide shelter, clean water, and food, the foundations for a complex web of life in which we are intricately connected. Humans have been stewarding forests on Galiano since time out of mind, in order to ensure key species that we depend on can flourish and help us thrive. 
 
 Dry ridges or steep southwest facing slopes with nutrient poor, shallow soils tend to be dominated by a mix of gnarled [ts’sey](#taxon:Pseudotsuga menziesii menziesii) (Douglas-fir) and [qaanlhp](#taxon:Arbutus menziesii) (arbutus), and shrubby species such as [lulutth'sulhp](#taxon:Berberis aquifolium) (dull oregon grape) or [xwiinlhp](#taxon:Rosa gymnocarpa) (baldhip rose), all of which provide medicine. These drier ecological communities are mapped as woodlands in this map.
@@ -132,6 +159,8 @@ In mature and old growth forests, trees are present in all stages of their life 
 </div>
 <div class="tab-pane fade" id="Freshwater" role="tabpanel" aria-labelledby="Freshwater-tab">
 
+#### Tl'elhumqa' - Freshwater
+<img src="img/Freshwater_banner.jpg">
 Healthy wetlands, lakes and streams are havens for humans and wildlife alike, providing critical habitat and a source of freshwater. A diversity of plant life, bacteria and insects thrive in these ecosystems, forming complex food webs that support many culturally important species, such as stseelhtun (salmon). Thuqi' (sockeye salmon) and haan (pink salmon) are two types of salmon favoured by Indigenous community members on Galiano. In addition, the enhanced growth and forest structure found in riparian areas provides necessary cover for wildlife, which is also important for culturally significant activities such as hunting and birdwatching. [Ha'put](#taxon:Odocoileus hemionus columbianus) (black tailed deer) and [smuqw'a'](#taxon:Ardea herodias fannini) (great blue heron) depend on freshwater areas for food and water. 
 
 Wetlands on Galiano include lakes, shallow water, swamps, marshes, wet meadows, fens, and bog communities, many of which are represented in the watershed that flows into Xetthecum. Swamps and riparian areas include flood-tolerant trees such as [xpey’](#taxon:Thuja plicata) (western red cedar) which “like to have their feet wet”, [kwulala'ulhp](#taxon:Alnus rubra) (red alder), whose inner bark offers a source of emergency food in the spring, and [swele’ulhp](#taxon:Salix lucida) (willow), which is useful for making fish traps. Other helpful plants that grow here include [stth'e'qun](#taxon:Typha angustifolia) (cattail) which provides a useful source of materials for both binding and insulation, [sxum'xum'](#taxon:Equisetum arvense) (horsetail), which makes a yellow brown dye and [ts'a'kw'a'](#taxon:Lysichiton americanus) (skunk cabbage) which can be used to wrap food to keep it fresh. These areas are prized for berry-picking and gathering other edible and medicinal plants such as [lila’](#taxon:Rubus spectabilis) (salmonberry), [t'uqwum'](#taxon:Rubus parviflorus) (thimbleberry), [t'eqe'](#taxon:Gaultheria shallon) (salal), [suniiulhp](#taxon:Berberis aquifolium) (oregon grape), [sqw'uqwtsus](#taxon:Vaccinium parvifolium) (red huckleberry) and me’uwhulhp (Labrador tea).
@@ -143,6 +172,9 @@ Hwtalonēts (Greig Creek) does not currently support large populations of salmon
 </div>
 <div class="tab-pane fade" id="Marine" role="tabpanel" aria-labelledby="Marine-tab">
   
+#### Hwuiumqa'- Marine
+<img src="img/Marine_banner.jpg">
+
 Surrounded by water, the residents, visitors and non-resident property owners of Galiano Island see the ocean as intrinsic to living and loving life on this island. Sightings of [q'ul-lhanamutsum](#taxon:Orcinus orca) (orca whales) and other marine mammals are treasured, and ocean-going transportation is key, but for many community members, the ocean is first and foremost a source of food and livelihood. Both Indigenous and non-Indigenous people on Galiano enjoy fish such as thuqi' (sockeye salmon), haan (pink salmon), tuqwtuqw (red snapper) and t’q’as (rockfish in general). Also prized are [tl'uxwtl'uxw](#taxon:Magallana gigas) (oysters), [s-axwa'](#taxon:Saxidomus gigantea) (clams), kwuneem'mun', (scallops), [ey'x](#taxon:Metacarcinus magister) (dungeness crabs), [thikwt](#taxon:Apostichopus californicus) (sea cucumber) and seaweeds & algaes such as lhuq'us (red laver). Florence James shared that e s-hw (seal) has also been prized as a dark meat. 
 
 Xetthecum (Retreat Cove/Island) is one of the few marine locations on the shoreline of Galiano itself that has been an important place for fishing and harvesting shellfish. Its desirability as a habitat for rockfish in particular has since become so notable that it has been designated a marine protected area—in which fishing is banned—in order to conserve these long-lived species that are slow to reproduce.  As the tide is not too fast, Xetthecum was once also a good area for other creatures, such as clams, [pun'eq'](#taxon:Panopea generosa) (geoduck) and dog fish. It is important that community members are able to harvest and consume these foods without getting sick, therefore environmental health of the ocean is vital.
@@ -157,6 +189,11 @@ In the past, no one would ever reveal the locations of where to harvest seafood,
 <div class="tab-pane fade" id="Woodlands" role="tabpanel" aria-labelledby="Woodlands-tab">
 
 Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest or most visually obvious species, P'hwulhp (Garry oak - named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, speenhw (blue camas). Fields of speenhw have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible. Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
+
+#### Shthuliim - Woodlands
+<img src="img/Woodland_banner.jpg">
+Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest or    most visually obvious species, P'hwulhp (Garry oak - named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, speenhw (blue camas). Fields of speenhw have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible. Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
+
 
 Penelakut elder Thiyaas (Florence James) calls this type of ecosystem shthuliim: “a beautiful meadow with cushions for your feet made of moss, tender growth, grass…” She adds that p'hwulhp (Garry Oak) was made crooked by the creator so that its branches are useless to people and it will be left alone, and mentions that the presence of p'hwulhp is evidence that the land is being taken care of. Thiyaas told us that pheasant, quail, and grouse were a lot more abundant in these woodland meadow environments, and that they used to be a regular part of Indigenous people’s diets in this area. Like speenhw, the bulbs of stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible when cooked. Thiyaas used to collect fawn lilies and ti'tuqw-el'tun' (lady slippers) for her mother, as her mother would eat the bulbs. “That was just our joy”... but there is not enough to collect anymore.” Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
 
@@ -192,8 +229,7 @@ ecologicalMap <- mx_ecological_map()
 ecologicalMap
 ```
 
-## From the Lake to the Delta: Laughlin Lake
-
+## From the Lake to the Delta: Xatsa’ / Laughlin Lake
 ```{r, echo=FALSE, message=FALSE}
 source("scripts/laughlin_map_script.R")
 laughlinMap <- mx_laughlin_map()
@@ -203,28 +239,64 @@ laughlinMap
 Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of plant life, including culturally significant species like cattail ([stth’e’qun](#taxon:Typha angustifolia)) and fireweed ([xáts’et](#taxon:Chamaenerion angustifolium)). The riparian areas surrounding the lake are crucial for wildlife, offering habitat for species like black-tailed deer ([ha’put](#taxon:Odocoileus hemionus columbianus)) and great blue heron ([smuqw’a’](#taxon:Ardea herodias fannini)).
 
 <div class="data-pane">
-<img src="img/Laughlin_Lake.jpg"/>
 <audio controls src="audio/laughlinRecording.mp3" loop="true"></audio>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v_1NrdnZkY0?si=01FAAbocSIeMBCYi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<p>Laughlin Lake, Galiano Island</p>
+<img src="img/laughlin_lake_1.jpg"/>
+<img src="img/laughlin_lake_2.jpg"/>
+<img src="img/laughlin_lake_3.jpg"/>
+<img src="img/laughlin_lake_4.jpg"/>
+<b>Ecological Community: Freshwater</b>
+#### Species commonly found at Laughlin Lake
+<div class="species-card">
+<img src="img/cattail.png">
+<p>stth’e’qun</p>
+<p>cattail</p>
+</div>
+<div class="species-card">
+<img src="img/xátset.png">
+<p>xáts’et</p>
+<p>fireweed</p>
+</div>
+<div class="species-card">
+<img src="img/deer.png">
+<p>ha'put</p>
+<p>black-tailed deer</p>
+</div>
+<div class="species-card">
+<img src="img/smuqwa.png">
+<p>smuqw’a’</p>
+<p>great blue heron</p>
+</div>
 </div>
 
 
-## From the Lake to the Delta: Greig Creek
-
+## From the Lake to the Delta: Hwta’loonèts / Greig Creek
 ```{r, echo=FALSE, message=FALSE}
 source("scripts/greig_map_script.R")
 greigMap <- mx_greig_map()
 greigMap
 ```
 
-Greig Creek was once home to abundant salmon. Indigenous and non-Indigenous communities on the island are now working together to restore Coho and Chum salmon populations in the creek, primarily through stream bank restoration and salmon fry release by local schools. This activity is an educational and cultural experience for both Indigenous and non-Indigenous children.
+Grieg Creek was once home to abundant salmon which were an important source of food for the Penelakut peoples. Indigenous and non-Indigenous communities on the island are now working together to restore Coho and Chum salmon populations in the creek, primarily through stream bank restoration and salmon fry release by local schools. This activity is an educational and cultural experience for both Indigenous and non-Indigenous children.
 
 <div class="data-pane">
-<img src="img/Greig_Creek.jpg"/>
 <audio controls src="audio/greigRecording.mp3" loop="true"></audio>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/AAdwf8mGWyE?si=w6oC687E_8us0x10" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <p>Greig Creek, Galiano Island</p>
+<img src="img/Greig_Creek.jpg"/>
+<b>Ecological Community: Freshwater</b>
+#### Species commonly found at Greig Creek
+<div class="species-card">
+<img src="img/kwaluhw.png">
+<p>kw'a'luhw</p>
+<p>chum salmon</p>
+</div>
+<div class="species-card">
+<img src="img/thewun.png">
+<p>the’wun</p>
+<p>coho salmon</p>
+</div>
+
 </div>
 
 ## From the Lake to the Delta: Delta
@@ -237,20 +309,67 @@ deltaMap
 
 The Greig Creek delta was once home to significant clam gardens, which were an important food source for the Penelakut people, and clam digging was an important cultural activity. Due to ecological disruption caused by resource extraction, development, logging, and agriculture, the clam gardens have been replaced by a large and invasive oyster bed which is visible at low tide. 
 
-![Greig Creek intertidal delta](img/Intertidal.jpg)
+<div class="data-pane">
+  <div class="delta-image-container">
+    <img src="img/delta1.png">
+    <p>View of the delta from above, looking toward Retreat Island</p>
+  </div>
+  <div class="delta-image-container">
+    <img src="img/delta2.png">
+    <p>View of the delta looking toward the mouth of Greig Creek</p>
+  </div>
+  <div class="delta-image-container">
+    <img src="img/delta3.png">
+    <p>View of Greig Creek delta at low tide</p>
+  </div>
+  Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
+  <div class="delta-image-container">
+    <img src="img/tluxwtluxw.png">
+    <p>tl'uxwtl'uxw (pacific oyster)</p>
+  </div>
+  <div class="delta-image-container">
+    <img src="img/oyster2.png">
+    <p>Invasive oyster bed at the delta (looking out along the shore)</p>
+  </div>
+  
+<b>Ecological Community: Marine - Shoreline</b>
+#### Species commonly found at the Delta
+<div class="species-card">
+<img src="img/tluxwtluxw.png">
+<p>tl'uxwtl'uxw</p>
+<p>pacific oyster</p>
+</div>
+<div class="species-card">
+<img src="img/thewun.png">
+<p>the’wun</p>
+<p>coho salmon</p>
+</div>  
+<div class="species-card">
+<img src="img/kwaluhw.png">
+<p>kw'a'luhw</p>
+<p>chum salmon</p>
+</div>
+  
+</div>
 
 ## Life at the Cove: Caves
 
 The caves at Xetthecum have significant spiritual and cultural significance for the Hul’q’umi’num’ speaking peoples of this region. Retreat Cove, including its caves, served as a location for private ceremonies for the people of Penelakut. Penelakut elders have emphasized the need to protect and respect these important cultural spaces; until now, the caves have not been protected and are at risk of being damaged by vandalism and overuse as a result of tourism.
 
-![Spiritual cave Shhwuli’wun - praying for the spirit of the deer
-](img/CaveIllustration.png){.data-pane}
-
 <div class="data-pane">
 <audio controls src="audio/cavesRecording.mp3" loop="true"></audio>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XWTrRw38PuQ?si=bZnG3F_flXePUCab" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <p><b>Shqula’tsus</b> — "a refuge, was protected by Ken (it is not on a map), a hidden cave"</p>
-<p><b><i>Shhwuli’wun</i></b> - Spiritual cave, praying for the spirit of the deer
+<p><b><i>Shhwuli’wun</i></b> - Spiritual cave, praying for the spirit of the deer</p>
+<div class="data-pane-group">
+  <img src="img/CaveIllustration.png">
+  <p>Looking out from the caves - illustrated by Josha and Cody</p>
+</div>
+<div class="data-pane-group">
+#### Cultural Safety
+<p>The Penelakut elders hold powerful and important sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people. Detailed knowledge about the spiritual and cultural importance of the caves has not been included here; it will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately. Adapted from Luciim’s Plants</p>
+</div>
+
 </div>
 
 <span class="mxcw-nonLeafletPane mxcw-paneName-Caves html-widget leaflet"></span>
@@ -258,12 +377,22 @@ The caves at Xetthecum have significant spiritual and cultural significance for 
 
 ## Life at the Cove: Retreat Cove
 
-“I used to spend time up in Xetthecum with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.” Rosemary Georgeson
+When travelling by boat, the cove was a place where one could take refuge in a storm. 
 
-Xetthecum was  important for social and cultural gatherings, as well as for traditional activities such as fishing and clam digging. (Lorne Silvey - find exact quote)
-
+Xetthecum was important for social and cultural gatherings, as well as for traditional activities such as fishing and clam digging. Lorne Silvey 
 
 As a marine location, Retreat Cove is a habitat for rockfish and has been significant for fishing, but it is now a marine protected area to conserve these species due to overfishing and habitat destruction.
+
+<div class="data-pane">
+<figure>
+<blockquote> “I used to spend time up in Xetthecum with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.”
+</blockquote>
+<figcaption>Rosemary Georgeson</figcaption>
+</figure>
+<img src="img/retreat1.png">
+<img src="img/retreat2.png">
+
+</div>
 
 ```{r, echo=FALSE, message=FALSE}
 source("scripts/retreat_map_script.R")
@@ -273,19 +402,18 @@ retreatMap
 
 ## Life at the Cove: Eelgrass Beds
 
-Lying near the mouths of Greig Creek (Hwta’loonèts ) and Davidson Creek (hulq?) ,the eelgrass beds at Xetthecum are an important marine ecological community. [Eelgrass](#taxon:Zostera marina) is a foundational species that creates a complex habitat, thereby providing shelter for a large number of diverse species. 
+Lying near the mouths of Greig Creek (Hwta’loonèts ) and Davidson Creek,the eelgrass beds at Xetthecum are an important marine ecological community. [Eelgrass](#taxon:Zostera marina) is a foundational species that creates a complex habitat, thereby providing shelter for a large number of diverse species, from microscopic bacteria and algae to larger animals like crabs, fishes and birds.
 
-Seagrass ecosystems are an important link between the ocean and the land. Lying at the wide mouths of estuaries and in the grey silts and sands of the intertidal and foreshore, these tidal meadows are beautiful and nourishing places where sunlight, freshwater, saltwater , and sediments combine. This unique intermingling gives rise to food webs that allow life of all kinds to flourish, from microscopic bacteria and algae to larger animals like crabs, fishes and birds (13). 
-
-The eelgrass beds at Xetthecum form a critical nursery for many species’ young including juvenile salmon and flatfish, and serve as a spawning ground for herring (2,3). They also provide rich foraging habitat for numerous invertebrates and many larger creatures, including heron (smuq’wa) and geese (ey’x (4,5), and are home to the Hooded nudibranch or sea slug (q’uyatl’un).
-
-Other functions of seagrass meadows include filtering excess nutrients from the nearshore environment, preventing shoreline erosion, and storing carbon (3). Eelgrass meadows, kelp beds and coastal marshes are massive carbon sinks, absorbing CO2 at a rate of up to 90 times that of forests on land (from the video). Protection and conservation of these areas is thus important not only for biodiversity and marine species health, but also for worldwide climate change mitigation. 
-
-Saltwater (kw’atl’kwa)
-
-Kelp ([q'am'](#taxon:Nereocystis luetkeana))
+Eelgrass meadows, kelp beds ([q'am'](#taxon:Nereocystis luetkeana)) and coastal marshes are massive carbon sinks, absorbing CO2 at a rate of up to 90 times that of forests on land. Protection and conservation of these areas is thus important not only for biodiversity and marine species health, but also for worldwide climate change mitigation.
 
 <div class="data-pane">
+<b>Ecological Community: Freshwater</b>
+<p>The eelgrass beds at Xetthecum form a critical saltwater (kw’atl’kwa) nursery for many species’ young including juvenile salmon () and flatfish (), and serve as a spawning ground for herring. They also provide rich foraging habitat for numerous invertebrates and many larger creatures, including heron ([smuq’wa](#taxon:Ardea herodias fannini)) and geese ([ey'x](#taxon:Metacarcinus magister)), and are home to the Hooded nudibranch or sea slug ([q’uyatl’un](#taxon:Leonina melibe)).
+</p>
+<p>iNaturalist observation of eelgrass</p>
+<b>‘Imush Q’uyatl’un</b>
+<p>[i’mush q’uyatl’un](#taxon:Leonina melibe) follows the movements of a sea slug, Leonina melibe (Lion or Hooded nudibranch), as it dances through the water during a receding tide. It dances to a Puneluxutth’ song titled, “imush ‘q’uyatl’un” (“be with me snail”), and is accompanied by text written by the singer/story teller, Florence James, Thiyaas (a Puneluxutth’ elder). It is a simple story, which explains the importance of moving slowly, paying attention, and observing every little aspect of the environment. It is a video that draws attention to an animal who is rarely observed – an animal whose intertidal landscape is severely threatened.</p>
+
 <iframe src="https://player.vimeo.com/video/32713022?h=659ac9c205" width="640" height="427" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
 <p><a href="https://vimeo.com/32713022">&#039;Imush Q&#039;uyatl&#039;un</a> from <a href="https://vimeo.com/user5078648">Karolle Wall</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 </div>
@@ -307,11 +435,7 @@ ecosystemMap
 
 ## Community Connection
 
-Lorne Silvey's mentions of places like the Reservation, Xetthecum, and Kiyo's highlight these areas' significance for social and cultural gatherings, emphasising their role in fostering community connections and traditions.
-
-Florence discusses her family connections, hereditary ownership of specific lands, and relationships with other families and communities, showcasing the community's interconnectedness.
-
-The people of Galiano are intertwined with nature. Traditional practices, gatherings, and shared knowledge underscore the deep relationship between the community and the island's ecosystems.
+The stories of the elders highlight the intimate connection between the community and Xetthecum. This connection is brought to life through the cultural practices and traditions associated with the area.
 
 
 ```{r, echo=FALSE, message=FALSE}
@@ -322,29 +446,12 @@ communityMap
 
 ## Preservation Efforts and Future Vision
 
-CLAM BEDS RESTORATION
-Rich spinoffs (Deb):
-Stewardship
-Moment of actual hunger(?)
-Indigenous sovereignty into access, harvesting
-Test case around interesting collaboration
+Xetthecum is a vital marine sanctuary and a protected area crucial for preserving rockfish and shellfish populations. Restoration initiatives coupled with approaches that follow Indigenous wisdom and practices will help to safeguard the area’s resources for future generations.
 
-The concerns raised about challenges in fishing due to coho fishery closure and the impact of logging industry hint at the need for preservation efforts and the articulation of a future vision to sustain these resources. [Jeannine’s interview]
+Both Indigenous and non-Indigenous communities are actively involved in preserving and reconnecting with the land through educational initiatives and conservation projects, aiming for a sustainable future vision for Galiano Island.
 
-Florence emphasises the need to protect and conserve resources, suggesting a future vision that involves sustainable practices and preserving traditional knowledge for future generations.
+May our work on this project and presence on this island contribute to a future that recognizes the importance of reconciliation, collaboration, and the rightful place of Indigenous knowledge in shaping the well-being of the Salish Sea and its inhabitants.
 
-Xetthecum is a vital marine sanctuary on Galiano Island. It's a protected area crucial for preserving rockfish and shellfish populations, ensuring their continued existence for future generations.
-
-Galiano's ecosystems, including Xetthecum, from lush forests to thriving marine environments, are interconnected and crucial for sustaining life. They provide resources, shelter, and inspiration, forming the foundation of the island's health and eco-cultural identity.
-
-Efforts to preserve Galiano's natural heritage are ongoing. Restoration initiatives, coupled with the desire to uphold Indigenous wisdom and practices, aim to safeguard the island's resources for future generations.
-
-Efforts are ongoing to protect and restore the island's ecosystems. However, colonial practices, invasive species, and industrial impacts threaten these efforts. Both Indigenous and non-Indigenous communities are actively involved in preserving and reconnecting with the land through various educational initiatives and conservation projects, aiming for a sustainable future vision for Galiano Island.
-
-
-Efforts to preserve Galiano's natural heritage are ongoing. Restoration initiatives, coupled with the desire to uphold Indigenous wisdom and practices, aim to safeguard the island's resources for future generations.
-
-Efforts are ongoing to protect and restore the island's ecosystems. However, colonial practices, invasive species, and industrial impacts threaten these efforts. Both Indigenous and non-Indigenous communities are actively involved in preserving and reconnecting with the land through various educational initiatives and conservation projects, aiming for a sustainable future vision for Galiano Island.
 
 ```{r, echo=FALSE, message=FALSE}
 source("scripts/preservation_map_script.R")

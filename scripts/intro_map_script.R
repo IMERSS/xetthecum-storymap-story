@@ -26,7 +26,7 @@ mx_intro_map <- function () {
   
   # Plot map
   sectionMap <- leaflet(options=list(mx_mapId="Introduction")) %>%
-    fitBounds(boundingBox[1],boundingBox[2],boundingBox[3],boundingBox[4], options = list(padding = c(-350,-350))) %>%
+    fitBounds(boundingBox[1],boundingBox[2],boundingBox[3],boundingBox[4], options = list(padding = c(150,150))) %>%
     addProviderTiles(providers$CartoDB.Positron)
     
     # loop through all the polygon layers and add them to the map
