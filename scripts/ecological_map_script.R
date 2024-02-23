@@ -11,21 +11,12 @@ library(stringr)
 source("scripts/utils.R")
 
 # import datasets
-polygonStyling <- timedFread("tabular_data/polygonStyling.csv")
-lineStyling <- timedFread("tabular_data/lineStyling.csv")
-# set highlighting on one or more layers:
-highlightedLayers <- c(
-  #                   "Shoreline","Subtidal","Riparian","Wetland","Pond","LaughlinLake",
-  #                   "GreigCreek","DavidsonCreek","Clearcut","PoleSapling","YoungForest",
-  #                   "MatureForest","CoastalBluff","Woodland"
-                       );
-
-# TODO: merge all layers in each community into one, erasing the hairline gaps between subcommunities.
-# Then create a new communityStyling .csv with those layers and read that onto the map
+communityStyling <- timedFread("tabular_data/communityStyling.csv")
+communityStyling <- communityStyling[order(Z_Order)]
 
 mx_ecological_map <- function () {
   title <- "Xetthecum Ecological Communities";
-  
+
   boundingBox <- mx_read("spatial_data/vectors/ProjectBoundary") %>% 
     st_bbox() %>% 
     as.character();
@@ -37,60 +28,21 @@ mx_ecological_map <- function () {
     addProviderTiles(providers$CartoDB.Positron)
   
   # loop through all the polygon layers and add them to the map
-  for (i in 1:nrow(polygonStyling)) {
-    row <- polygonStyling[i,]
+  for (i in 1:nrow(communityStyling)) {
+    row <- communityStyling[i,]
     
-    # if the row isn't highlighted, add it to the map first
-    if (!(row$Layer %in% highlightedLayers)) {
-      sectionMap <- sectionMap %>% addPolygons(data = mx_read(paste("spatial_data/vectors/",row$Layer, sep="")), 
-                                               fillColor = row$fillColor, 
-                                               fillOpacity = as.numeric(row$fillOpacity), 
-                                               stroke = TRUE,
-                                               color = row$outlineColor,
-                                               opacity = row$outlineOpacity,
-                                               weight = row$outlineWidth,
-                                               options = list(mx_layerId = row$Layer, className = row$ClassName))
-    };
-    
-    # then if it should be highlighted, add it to the map. This is to ensure it's on top of the other layers.
-    if (row$Layer %in% highlightedLayers) {
-      sectionMap <- sectionMap %>% addPolygons(data = mx_read(paste("spatial_data/vectors/",row$Layer, sep="")), 
-                                               fillColor = row$fillColor, 
-                                               fillOpacity = as.numeric(row$fillOpacity), 
-                                               stroke = TRUE,
-                                               color = "yellow",
-                                               opacity = 1,
-                                               weight = (row$outlineWidth+2),
-                                               options = list(mx_layerId = row$Layer, className = row$ClassName))
-    }
-  };
-  
-  for (i in 1:nrow(lineStyling)) {
-    row <- lineStyling[i,]
-    
-    if (!(row$Layer %in% highlightedLayers)) {
-      sectionMap <- sectionMap %>% addPolylines(data = mx_read(paste("spatial_data/vectors/",row$Layer, sep="")), 
-                                                stroke = TRUE,
-                                                color = row$outlineColor,
-                                                opacity = as.numeric(row$outlineOpacity),
-                                                weight = as.numeric(row$outlineWidth),
-                                                options = list(mx_layerId = row$Layer, className = row$ClassName))
-    };
-    
-    if (row$Layer %in% highlightedLayers) {
-      sectionMap <- sectionMap %>% addPolylines(data = mx_read(paste("spatial_data/vectors/",row$Layer, sep="")), 
-                                                stroke=TRUE,
-                                                color="yellow",
-                                                opacity = 1,
-                                                weight = as.numeric(row$outlineWidth+2),
-                                                options = list(mx_layerId = row$Layer, className = row$ClassName))
-    };
-    
+    sectionMap <- sectionMap %>% addPolygons(data = mx_read(paste("spatial_data/vectors/",row$Layer, sep="")), 
+                                             fillColor = row$fillColor, 
+                                             fillOpacity = as.numeric(row$fillOpacity), 
+                                             stroke = TRUE,
+                                             color = row$outlineColor,
+                                             opacity = row$outlineOpacity,
+                                             weight = row$outlineWidth,
+                                             options = list(mx_regionId = ifelse(row$ClassName == "", "", row$Layer), className = row$ClassName))
   };
   
   #Note that this statement is only effective in standalone R
   print(sectionMap) 
-  
   
 }
 

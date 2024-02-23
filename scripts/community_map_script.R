@@ -16,7 +16,7 @@ communityStyling <- timedFread("tabular_data/communityStyling.csv")
 highlightedLayers <- c();
 
 mx_community_map <- function () {
-  title <- "Xetthecum Introduction";
+  title <- "Community Connection";
   
   boundingBox <- mx_read("spatial_data/vectors/ProjectBoundary") %>% 
     st_bbox() %>% 

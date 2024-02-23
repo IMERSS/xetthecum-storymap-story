@@ -27,8 +27,8 @@ fluid.defaults("maxwell.markupTemplateRenderer", {
 // It is both a paneHandler as well as a sunburstLoader, which is defined in core viz leafletMap.js hortis.scrollyMapLoader
 fluid.defaults("maxwell.scrollyVizBinder", {
     // Put these last to continue to override "container" member due to FLUID-5800
-    gradeNames: ["hortis.scrollyMapLoader", "maxwell.scrollyPaneHandler",
-        "maxwell.templateScrollyPaneHandler", "maxwell.markupTemplateRenderer"],
+    gradeNames: ["hortis.scrollyMapLoader", "maxwell.leafletPaneHandler",
+        "maxwell.templatePaneHandler", "maxwell.markupTemplateRenderer"],
     resourceBase: ".",
     // Override this since we need proper ordering of overrides, review why the comment in leafletMap.js refers to FLUID-5836
     mapFlavourGrade: [],
@@ -118,7 +118,7 @@ maxwell.legendKey.renderMarkup = function (markup, clazz, className) {
 };
 
 // cf. Xetthecum's hortis.legendKey.drawLegend in leafletMapWithRegions.js - it has a block template and also makes
-// a fire to selectRegion with two arguments. Also ours ia a Leaflet control
+// a fire to selectRegion with two arguments. Also ours is a Leaflet control
 maxwell.legendKey.drawLegend = function (map, paneHandler) {
     const regionRows = fluid.transform(map.regions, function (troo, regionName) {
         return maxwell.legendKey.renderMarkup(maxwell.legendKey.rowTemplate, map.regions[regionName], regionName);
@@ -140,6 +140,58 @@ maxwell.legendKey.drawLegend = function (map, paneHandler) {
         });
     });
     return container;
+};
+
+fluid.defaults("maxwell.bootstrapTabs", {
+    gradeNames: "fluid.viewComponent",
+    model: {
+        // selectedTab: null
+    },
+    invokers: {
+        // such a shame selectRegion isn't properly modellised
+        selectTab: "{that}.applier.change(selectedTab, {arguments}.0)"
+    },
+    listeners: {
+        "onCreate.bind": "maxwell.bootstrapTabs.bind"
+    },
+    modelListeners: {
+        "modelToClick": {
+            path: "selectedTab",
+            funcName: "maxwell.bootstrapTabs.modelToClick",
+            args: ["{that}", "{change}.value"]
+        }
+    }
+});
+
+maxwell.bootstrapTabs.bind = function (that) {
+    const container = that.container[0];
+    const tabs = [...container.querySelectorAll(".nav-link")];
+
+    const selectTab = function (tab) {
+        that.selectTab(tab.getAttribute("aria-controls"));
+    };
+
+    const idToTab = {};
+    tabs.forEach(tab => {
+        const id = tab.getAttribute("aria-controls");
+        idToTab[id] = tab;
+        tab.addEventListener("click", () => selectTab(tab));
+    });
+    that.idToTab = idToTab;
+
+    const selectedTab = container.querySelector("[aria-selected=\"true\"]");
+    if (selectedTab) {
+        selectTab(selectedTab);
+    }
+};
+
+maxwell.bootstrapTabs.modelToClick = function (that, selectedTab) {
+    if (selectedTab) {
+        // Bootstrap docs at https://getbootstrap.com/docs/5.0/components/navs-tabs/#via-javascript claim that we should
+        // be able to use the instance via bootstrap.Tab.getInstance but this does not work either preexisting or via
+        // getOrCreateInstance
+        that.idToTab[selectedTab].click();
+    }
 };
 
 // AS has requested the region selection bar to appear in a special area above the taxonomy
@@ -355,13 +407,16 @@ maxwell.regionForPath = function (path) {
     return region;
 };
 
+// Ensure that any highlighted region is rendered on top of others by sorting to the end of the list of its parent's children
 maxwell.scrollyViz.sortRegions = function (paneHandler, scrollyPage) {
     const paneIndex = paneHandler.options.paneIndex;
     const pane = scrollyPage.leafletWidgets[paneIndex].paneInfo.pane;
     const paths = [...pane.querySelectorAll("path")];
+    const selectedRegion = paneHandler.map.model.mapBlockTooltipId;
+    const expectedRegion = selectedRegion && hortis.normaliseToClass(selectedRegion);
     paths.forEach(function (path) {
         const region = maxwell.regionForPath(path);
-        if (region && region === paneHandler.map.model.mapBlockTooltipId) {
+        if (region && region === expectedRegion) {
             path.parentNode.appendChild(path);
         }
     });
