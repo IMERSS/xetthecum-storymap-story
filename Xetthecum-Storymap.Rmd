@@ -64,31 +64,35 @@ Xetthecum was a primary resource-gathering area. Penelakut elder Thiyaas (Floren
 </figure>
 <div class="historic-content-container">
 <div class="historic-content">
-  <div class="historic-section-header">
-    <img src="img/icon_shellfish.png">
-    <b>Fish and Shellfish Harvesting</b>
-  </div>
+ <div class="historic-section-header">
+  <img src="img/icon_shellfish.png">
+  <b>Fish and Shellfish Harvesting</b>
+ </div>
+
 Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
 
 The shellfish were laid overtop of kelp (bull kelp, [q'am'](#taxon:Nereocystis luetkeana)) and then stepped on to get the water out; ironwood (oceanspray, [qethulhp](#taxon:Holodiscus discolor)) was singed in the fire, used to poke the clams and then stuck in the mud by the fire to cook them. Western red cedar ([xpey'](#taxon:Thuja plicata)) bark was made into string/rope which was used to string up clams by the fire. After they were cooked we would smoke the shellfish. 
 
 Octopus ([xelex uwe](#taxon:Enteroctopus dofleini)) was speared, usually at night.
 
-Smelts (surf smelt, [stsa'kwum](#taxon:Hypomesus pretiosus)) would go by and move in circles, the seagulls would try to get them. 
+<!-- Removed taxon link to Hypomesus pretiosus since it has not yet been observed -->
+Smelts (surf smelt, stsa'kwum) would go by and move in circles, the seagulls would try to get them. 
 
 The fish had been restocked in Greig Creek just before the blasting happened near the mouth of Greig Creek (year?)
 
-  <div class="historic-section-header">
-    <img src="img/icon_berry.png">
-    <b>Gathering Medicine</b>
-  </div>
+<div class="historic-section-header">
+ <img src="img/icon_berry.png">
+ <b>Gathering Medicine</b>
+</div>
+
 Thiyaas and her family would sometimes travel to Retreat Cove in the racing canoe. They would pull in near Retreat Island and Thiyaas’ grandfather would walk to Laughlin Lake for medicine.
 At other times the whole family would gather traditional medicines at Laughlin Lake, such as a plant that has features similar to corn, like husk and silk (not cattail).
 
-  <div class="historic-section-header">
-    <img src="img/icon_plant.png">
-    <b>Plant Harvesting</b>
-  </div>
+<div class="historic-section-header">
+ <img src="img/icon_plant.png">
+ <b>Plant Harvesting</b>
+</div>
+
 Thiyaas mentions gathering licorice fern ([tlu'siip](#taxon:Polypodium glycyrrhiza)) root from maple trees (bigleaf maple, [q'um'-unulhp](#taxon:Acer macrophyllum)) near Retreat Cove. 
 
 Blackberries (trailing blackberry, [sqw''iil'muhw](#taxon:Rubus ursinus) or Himalayan blackberry, or cutleaf blackberry?) were picked all the way from the Lighthouse down to Retreat Cove. The family would wake at 5am with granny and walk to collect the berries. 
@@ -234,10 +238,10 @@ Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of p
 <div class="data-pane">
 <audio controls src="audio/laughlinRecording.mp3" loop="true"></audio>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v_1NrdnZkY0?si=01FAAbocSIeMBCYi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<img src="img/laughlin_lake_1.jpg"/>
-<img src="img/laughlin_lake_2.jpg"/>
-<img src="img/laughlin_lake_3.jpg"/>
-<img src="img/laughlin_lake_4.jpg"/>
+<img src="img/laughlin_lake_1.jpg">
+<img src="img/laughlin_lake_2.png">
+<img src="img/laughlin_lake_3.png">
+<img src="img/laughlin_lake_4.png">
 <b>Ecological Community: Freshwater</b>
 #### Species commonly found at Laughlin Lake
 <div class="species-card">
@@ -246,7 +250,7 @@ Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of p
 <p>cattail</p>
 </div>
 <div class="species-card">
-<img src="img/xátset.png">
+<img src="img/xatset.png">
 <p>xáts’et</p>
 <p>fireweed</p>
 </div>
@@ -303,30 +307,34 @@ deltaMap
 The Greig Creek delta was once home to significant clam gardens, which were an important food source for the Penelakut people, and clam digging was an important cultural activity. Due to ecological disruption caused by resource extraction, development, logging, and agriculture, the clam gardens have been replaced by a large and invasive oyster bed which is visible at low tide. 
 
 <div class="data-pane">
-  <div class="delta-image-container">
-    <img src="img/delta1.png">
-    <p>View of the delta from above, looking toward Retreat Island</p>
-  </div>
-  <div class="delta-image-container">
-    <img src="img/delta2.png">
-    <p>View of the delta looking toward the mouth of Greig Creek</p>
-  </div>
-  <div class="delta-image-container">
-    <img src="img/delta3.png">
-    <p>View of Greig Creek delta at low tide</p>
-  </div>
-  Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
-  <div class="delta-image-container">
-    <img src="img/tluxwtluxw.png">
-    <p>tl'uxwtl'uxw (pacific oyster)</p>
-  </div>
-  <div class="delta-image-container">
-    <img src="img/oyster2.png">
-    <p>Invasive oyster bed at the delta (looking out along the shore)</p>
-  </div>
+ <div class="delta-image-container">
+  <img src="img/delta1.png">
+  <p>View of the delta from above, looking toward Retreat Island</p>
+ </div>
+ <div class="delta-image-container">
+  <img src="img/delta2.png">
+  <p>View of the delta looking toward the mouth of Greig Creek</p>
+ </div>
+ <div class="delta-image-container">
+  <img src="img/delta3.png">
+  <p>View of Greig Creek delta at low tide</p>
+</div>
+
+Littleneck clams ([skw'lhey](#taxon:Leukoma staminea)) were harvested from the delta during the spring and summer night tides. Other essential marine life, such as butter clams ([s-axwa'](#taxon:Saxidomus gigantea)), basket cockles ([stl'ula'um](#taxon:Clinocardium nuttallii)), and fish like dog (coho) salmon ([the'wun](#taxon:Oncorhynchus kisutch)), were gathered at Retreat Cove and Greig Creek.
+
+<div class="delta-image-container">
+ <img src="img/tluxwtluxw.png">
+ <p>tl'uxwtl'uxw (pacific oyster)</p>
+</div>
+<div class="delta-image-container">
+ <img src="img/oyster2.png">
+ <p>Invasive oyster bed at the delta (looking out along the shore)</p>
+</div>
   
 <b>Ecological Community: Marine - Shoreline</b>
+
 #### Species commonly found at the Delta
+
 <div class="species-card">
 <img src="img/tluxwtluxw.png">
 <p>tl'uxwtl'uxw</p>
@@ -359,8 +367,9 @@ The caves at Xetthecum have significant spiritual and cultural significance for 
   <p>Looking out from the caves - illustrated by Josha and Cody</p>
 </div>
 <div class="data-pane-group">
+
 #### Cultural Safety
-<p>The Penelakut elders hold powerful and important sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people. Detailed knowledge about the spiritual and cultural importance of the caves has not been included here; it will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately. Adapted from Luciim’s Plants</p>
+<p>The Penelakut elders hold powerful and important sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people. Detailed knowledge about the spiritual and cultural importance of the caves has not been included here; it will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately. Adapted from Luciim’s Plants.</p>
 </div>
 
 </div>
@@ -401,11 +410,12 @@ Eelgrass meadows, kelp beds ([q'am'](#taxon:Nereocystis luetkeana)) and coastal 
 
 <div class="data-pane">
 <b>Ecological Community: Freshwater</b>
-<p>The eelgrass beds at Xetthecum form a critical saltwater (kw’atl’kwa) nursery for many species’ young including juvenile salmon () and flatfish (), and serve as a spawning ground for herring. They also provide rich foraging habitat for numerous invertebrates and many larger creatures, including heron ([smuq’wa](#taxon:Ardea herodias fannini)) and geese ([ey'x](#taxon:Metacarcinus magister)), and are home to the Hooded nudibranch or sea slug ([q’uyatl’un](#taxon:Leonina melibe)).
+<!-- Removing link to Leonina melibe since sadly we do not yet have an observation of it -->
+<p>The eelgrass beds at Xetthecum form a critical saltwater (kw’atl’kwa) nursery for many species’ young including juvenile salmon () and flatfish (), and serve as a spawning ground for herring. They also provide rich foraging habitat for numerous invertebrates and many larger creatures, including heron ([smuq’wa](#taxon:Ardea herodias fannini)) and geese ([ey'x](#taxon:Metacarcinus magister)), and are home to the Hooded nudibranch or sea slug (q’uyatl’un).
 </p>
 <p>iNaturalist observation of eelgrass</p>
 <b>‘Imush Q’uyatl’un</b>
-<p>[i’mush q’uyatl’un](#taxon:Leonina melibe) follows the movements of a sea slug, Leonina melibe (Lion or Hooded nudibranch), as it dances through the water during a receding tide. It dances to a Puneluxutth’ song titled, “imush ‘q’uyatl’un” (“be with me snail”), and is accompanied by text written by the singer/story teller, Florence James, Thiyaas (a Puneluxutth’ elder). It is a simple story, which explains the importance of moving slowly, paying attention, and observing every little aspect of the environment. It is a video that draws attention to an animal who is rarely observed – an animal whose intertidal landscape is severely threatened.</p>
+<p>i’mush q’uyatl’un follows the movements of a sea slug, Leonina melibe (Lion or Hooded nudibranch), as it dances through the water during a receding tide. It dances to a Puneluxutth’ song titled, “imush ‘q’uyatl’un” (“be with me snail”), and is accompanied by text written by the singer/story teller, Florence James, Thiyaas (a Puneluxutth’ elder). It is a simple story, which explains the importance of moving slowly, paying attention, and observing every little aspect of the environment. It is a video that draws attention to an animal who is rarely observed – an animal whose intertidal landscape is severely threatened.</p>
 
 <iframe src="https://player.vimeo.com/video/32713022?h=659ac9c205" width="640" height="427" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
 <p><a href="https://vimeo.com/32713022">&#039;Imush Q&#039;uyatl&#039;un</a> from <a href="https://vimeo.com/user5078648">Karolle Wall</a> on <a href="https://vimeo.com">Vimeo</a>.</p>

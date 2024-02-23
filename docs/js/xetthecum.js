@@ -30,11 +30,29 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
     selectors: {
         tabs: ".nav-tabs"
     },
+    events: {
+        mapLoaded: null
+    },
+    mergePolicy: {
+        checklistRanks: "replace"
+    },
+    checklistRanks: ["phylum"],
+    nativeDataOnly: true,
     components: {
+        map: {
+            options: {
+                listeners: {
+                    mapLoaded: {
+                        namespace: "toPaneHandler",
+                        func: "{xetthecumEcologicalPane}.events.mapLoaded.fire"
+                    }
+                }
+            }
+        },
         tabs: {
             type: "maxwell.bootstrapTabs",
-            // So regrettable integration model
-            createOnEvent: "sunburstLoaded",
+            // Map needs to be drawn so we can sort its paths for any initial selection found in the tabs markup
+            createOnEvent: "mapLoaded",
             container: "{that}.dom.tabs",
             options: {
                 model: {
@@ -47,7 +65,7 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
         }
     },
     regionStyles: {
-        unselectedOpacity: 0
+        unselectedOpacity: 0.5
     }
 });
 

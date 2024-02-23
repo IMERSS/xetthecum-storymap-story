@@ -274,6 +274,9 @@ fluid.defaults("maxwell.bareRegionsExtra", {
         // Check that this works in Howe - it at least worked in Xetthecum where "community" was "unit of selection"
         regions: "{sunburst}.viz.communities"
     },
+    events: {
+        mapLoaded: null
+    },
     listeners: {
         "buildMap.fixVizResources": "maxwell.fixVizResources({sunburst})",
         "buildMap.drawRegions": "maxwell.drawBareRegions({that}, {scrollyPage})",
@@ -351,6 +354,12 @@ maxwell.drawBareRegions = function (map, scrollyPage) {
             map.events.clearMapSelection.fire();
         }
     });
+
+    map.map.on("load", () => {
+        map.events.mapLoaded.fire();
+    });
+
+    // Note that the map is not currently drawn at this point - this invocation is timed off model initialisation -> buildMap event fire
 
     const regions = container.querySelectorAll("path.fld-imerss-region");
     [...regions].forEach(region => region.setAttribute("stroke-width", 3));
