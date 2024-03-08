@@ -236,7 +236,7 @@ fluid.defaults("maxwell.withNativeLegend", {
         legendVisible: {
             path: "{paneHandler}.model.isVisible",
             func: "maxwell.toggleClass",
-            args: ["{that}.legendContainer", "{change}.value", "mxcw-hidden", true]
+            args: ["{that}.legendContainer", "mxcw-hidden", "{change}.value", true]
         }
     }
 });
@@ -665,20 +665,20 @@ maxwell.findCall = function (calls, method) {
     return calls.find(call => call.method === method);
 };
 
-maxwell.toggleActiveClass = function (nodes, selectedIndex, clazz) {
+maxwell.toggleClass = function (container, clazz, value, inverse) {
+    container.classList[value ^ inverse ? "add" : "remove"](clazz);
+};
+
+maxwell.toggleActiveClass = function (nodes, clazz, selectedIndex) {
     nodes.forEach(function (node, i) {
-        if (i === selectedIndex) {
-            node.classList.add(clazz);
-        } else {
-            node.classList.remove(clazz);
-        }
+        maxwell.toggleClass(node, clazz, i === selectedIndex);
     });
 };
 
 maxwell.updateActiveWidgetSubPanes = function (that, effectiveActiveSubpanes) {
     effectiveActiveSubpanes.forEach((subPaneIndex, index) => {
         const subPanes = that.leafletWidgets[index].subPanes.map(paneInfo => paneInfo.pane);
-        maxwell.toggleActiveClass(subPanes, subPaneIndex, "mxcw-activeMapPane");
+        maxwell.toggleActiveClass(subPanes, "mxcw-activeMapPane", subPaneIndex);
     });
 };
 
@@ -848,7 +848,9 @@ fluid.defaults("maxwell.scrollyPage", {
         dataPanes: ".mxcw-widgetPane",
         leafletMap: ".mxcw-map",
         content: ".mxcw-content",
-        mainPane: ".mxcw-leftPane-container"
+        mainPane: ".mxcw-leftPane-container",
+        sectionUp: ".section-up",
+        sectionDown: ".section-down"
     },
     components: {
         map: {
@@ -894,6 +896,11 @@ fluid.defaults("maxwell.scrollyPage", {
             funcName: "maxwell.updateSectionClasses",
             args: ["{that}", "{change}.value"]
         },
+        updateSectionButtons: {
+            path: "activeSection",
+            funcName: "maxwell.updateSectionButtons",
+            args: ["{that}", "{change}.value"]
+        },
         scrollMainPaneToTop: {
             path: "activeSection",
             funcName: "maxwell.scrollMainPaneToTop",
@@ -934,9 +941,16 @@ fluid.defaults("maxwell.scrollyPage", {
         }
     },
     listeners: {
-        "onCreate.registerSectionListeners": "maxwell.registerSectionListeners({that})",
+        "onCreate.listenSectionButtons": "maxwell.listenSectionButtons({that})",
         // This will initialise subPaneIndices quite late
         "onCreate.findPlotlyWidgets": "maxwell.findPlotlyWidgets({that}, {that}.dataPanes)"
+    }
+});
+
+// Should we ever want scrollytelling back again
+fluid.defaults("maxwell.scrollyPage.withScrolly", {
+    listeners: {
+        "onCreate.registerScrollyListeners": "maxwell.registerScrollyListeners({that})"
     }
 });
 
@@ -954,7 +968,7 @@ maxwell.HTMLWidgetsPostRender = function () {
 };
 
 maxwell.updateSectionClasses = function (that, activeSection) {
-    maxwell.toggleActiveClass(that.sectionHolders.map(sectionHolder => sectionHolder.section), activeSection, "mxcw-activeSection");
+    maxwell.toggleActiveClass(that.sectionHolders.map(sectionHolder => sectionHolder.section), "mxcw-activeSection", activeSection);
 };
 
 maxwell.scrollMainPaneToTop = function (that) {
@@ -974,12 +988,12 @@ maxwell.subPanesToEffective = function (activePane, activeSubPanes) {
 maxwell.updateActiveMapPane = function (that, activePane) {
     const widgets = that.leafletWidgets;
     const widgetPanes = widgets.map(widget => widget.paneInfo.pane);
-    maxwell.toggleActiveClass(widgetPanes, -1, "mxcw-activeMapPane");
+    maxwell.toggleActiveClass(widgetPanes, "mxcw-activeMapPane", -1);
     widgetPanes[activePane].style.display = "block";
     const data = widgets[activePane].data;
     const zoom = data ? maxwell.flyToBounds(that.map.map, data.x, that.map.options.zoomDuration) : fluid.promise().resolve();
     zoom.then(function () {
-        maxwell.toggleActiveClass(widgetPanes, activePane, "mxcw-activeMapPane");
+        maxwell.toggleActiveClass(widgetPanes, "mxcw-activeMapPane", activePane);
         // This is a hack to cause SVG plotly widgets to resize themselves e.g. the Species Reported bar -
         // find a better solution
         window.dispatchEvent(new Event("resize"));
@@ -995,10 +1009,34 @@ maxwell.updateActiveMapPane = function (that, activePane) {
 maxwell.updateMapVisible = function (that, activePane) {
     const paneHandler = maxwell.paneHandlerForIndex(that, activePane);
     const isVisible = !fluid.componentHasGrade(paneHandler, "maxwell.mapHidingPaneHandler");
-    maxwell.toggleClass(that.map.container[0], isVisible, "mxcw-hideMap", true);
+    maxwell.toggleClass(that.map.container[0], "mxcw-hideMap", isVisible, true);
 };
 
-maxwell.registerSectionListeners = function (that) {
+maxwell.listenSectionButtons = function (that) {
+    const sectionUp = that.locate("sectionUp")[0];
+    sectionUp.addEventListener("click", () => {
+        const activeSection = that.model.activeSection;
+        if (activeSection > 0) {
+            that.applier.change("activeSection", activeSection - 1);
+        }
+    });
+    const sectionDown = that.locate("sectionDown")[0];
+    sectionDown.addEventListener("click", () => {
+        const activeSection = that.model.activeSection;
+        if (activeSection < that.sectionHolders.length - 1) {
+            that.applier.change("activeSection", activeSection + 1);
+        }
+    });
+};
+
+maxwell.updateSectionButtons = function (that, activeSection) {
+    const sectionUp = that.locate("sectionUp")[0];
+    maxwell.toggleClass(sectionUp, "disabled", activeSection === 0);
+    const sectionDown = that.locate("sectionDown")[0];
+    maxwell.toggleClass(sectionDown, "disabled", activeSection === that.sectionHolders.length - 1);
+};
+
+maxwell.registerScrollyListeners = function (that) {
     const sectionHolders = that.sectionHolders;
     sectionHolders.forEach(function (sectionHolder, i) {
         sectionHolder.heading.addEventListener("click", () => that.applier.change("activeSection", i));
@@ -1019,7 +1057,7 @@ maxwell.registerSectionListeners = function (that) {
 };
 
 maxwell.updateActiveWidgetPane = function (that, activePane) {
-    maxwell.toggleActiveClass(that.dataPanes, activePane, "mxcw-activeWidgetPane");
+    maxwell.toggleActiveClass(that.dataPanes, "mxcw-activeWidgetPane", activePane);
 };
 
 // Note that this does not derive from "hortis.leafletMap" in imerss-viz leafletMap.js

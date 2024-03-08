@@ -106,7 +106,7 @@ body #quarto-content {
     padding: 0px;
 }
 
-.mxcw-content {
+.mxcw-content-holder {
     background-color: var(--panel-background);
     padding: 0px;
     padding-right: 1rem;
@@ -116,7 +116,6 @@ body #quarto-content {
     max-height: calc(100vh - 15rem);
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 1rem;
 }
 
@@ -252,10 +251,6 @@ body #quarto-content {
 
 .culturalValueRows {
     background-color: red;
-}
-
-.main-container {
-    padding-bottom: 70vh;
 }
 
 .flc-checklist-hulq-name {

@@ -6,10 +6,6 @@ h2 {
     margin-block-start: 0px;
 }
 
-.main-container {
-    padding-bottom: 80vh;
-}
-
 .mxcw-banner {
     font-size: 36px;
 }
@@ -24,6 +20,18 @@ h2 {
     width: 65%;
     /* For God's sake I really mean it! */
     min-width: 65%;
+}
+
+.section-button {
+    stroke: #362F24;
+}
+
+.section-button:hover:not(.disabled) {
+    stroke: rgba(90,82,68,.8);
+}
+
+.section-button.disabled {
+    stroke: #ccc;
 }
 
 .mxcw-map {
@@ -53,12 +61,17 @@ h2 {
     height: 100%;
 }
 
-.mxcw-content {
+.mxcw-content-holder {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 100px);
     width: 35%;
     font-size: 18px;
     padding: 0 1rem 0 1rem;
-    height: calc(100vh - 100px);
-    overflow-y: scroll;
+    align-items: center;
+}
+
+.mxcw-content {
 }
 
 .mxcw-content h2:hover {
@@ -102,8 +115,14 @@ h2 {
 .mxcw-activeSection {
     background-color: #eee;
     outline: 1px solid black;
-    transition-property: background-color, outline;
-    transition-duration: 400ms;
+}
+
+.mxcw-content .section {
+    display: none;
+}
+
+.mxcw-content .mxcw-activeSection {
+    display: block;
 }
 
 .mxcw-mapLabel {

@@ -7,10 +7,6 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
-maxwell.toggleClass = function (container, value, clazz, inverse) {
-    container.classList[value ^ inverse ? "add" : "remove"](clazz);
-};
-
 fluid.defaults("maxwell.markupTemplateRenderer", {
     // Bodge the sunburst loader to being a traditional templateRenderingView so that its markup arrives earlier -
     // In practice didn't manage to break the race condition. Port this into core imerss-viz
@@ -305,7 +301,7 @@ fluid.defaults("maxwell.bareRegionsExtra.withLegend", {
         legendVisible: {
             path: "{paneHandler}.model.isVisible",
             func: "maxwell.toggleClass",
-            args: ["{that}.legendContainer", "{change}.value", "mxcw-hidden", true]
+            args: ["{that}.legendContainer", "mxcw-hidden", "{change}.value", true]
         }
     },
     members: {
@@ -316,7 +312,7 @@ fluid.defaults("maxwell.bareRegionsExtra.withLegend", {
         "onCreate.legendVisible": {
             path: "{paneHandler}.model.isVisible",
             func: "maxwell.toggleClass",
-            args: ["{that}.legendContainer", "{paneHandler}.model.isVisible", "mxcw-hidden", true]
+            args: ["{that}.legendContainer", "mxcw-hidden", "{paneHandler}.model.isVisible", true]
         }
     }
 });

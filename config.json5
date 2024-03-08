@@ -55,9 +55,6 @@
     }],
     transforms: [{
         file: "%maxwell/src/js/reknit-xetthecum.js",
-        func: "addArrows"
-    },{
-        file: "%maxwell/src/js/reknit-xetthecum.js",
         func: "rewriteTaxonLinks"
     }],
     copyJobs: [{
