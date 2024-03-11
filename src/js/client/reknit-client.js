@@ -49,7 +49,7 @@ var maxwell = fluid.registerNamespace("maxwell");
  */
 
 /**
- * Information about a scrollable section element of a scrollytelling interface
+ * Information about a section element of a storymapping interface
  *
  * @typedef {Object} SectionHolder
  * @property {HTMLElement} section - The section node housing the widget
@@ -166,15 +166,15 @@ maxwell.withSliderAnimation.bind = function (element, that, paneHandler, scrolly
     }, that.options.delay);
 };
 
-maxwell.findPlotlyWidgets = function (scrollyPage) {
+maxwell.findPlotlyWidgets = function (scrollyPage, sectionHolders) {
     const widgets = [...document.querySelectorAll(".html-widget.plotly")];
-    const panes = scrollyPage.dataPanes;
+    const sections = fluid.getMembers(sectionHolders, "section");
 
     console.log("Found " + widgets.length + " plotly widgets");
     widgets.forEach(function (widget) {
-        const pane = widget.closest(".mxcw-widgetPane");
+        const pane = widget.closest("section");
         const widgetId = maxwell.findPlotlyWidgetId(widget);
-        const index = panes.indexOf(pane);
+        const index = sections.indexOf(pane);
 
         console.log("Plotly widget's pane index is " + index + " with id " + widgetId);
         const paneHandlerName = scrollyPage.leafletWidgets[index].paneHandlerName;
@@ -191,14 +191,6 @@ maxwell.findPlotlyWidgets = function (scrollyPage) {
             console.log("Warning: no widget id found for plotly widget ", widget);
         }
     });
-};
-
-maxwell.checkDataPanes = function (dataPanes, widgets) {
-    if (dataPanes.length !== widgets.length) {
-        throw "Error during reknitting - emitted " + dataPanes.length + " data panes for " + widgets.length + " widgets";
-    } else {
-        return [...dataPanes];
-    }
 };
 
 maxwell.leafletiseCoords = function (coords) {
@@ -653,7 +645,8 @@ maxwell.mapLeafletWidgets = function (scrollyPage, widgets, map) {
             data: data,
             subPanes: [],
             section: section,
-            heading: heading
+            heading: heading,
+            headingText: heading.innerText
         };
     });
     maxwell.decodeLeafletWidgets(scrollyPage, togo, map);
@@ -784,15 +777,14 @@ maxwell.paneKeyToIndex = function (handler, scrollyPage) {
 };
 
 /**
- * Given a paneHandler component, determine which data pane its contents should be rendered into, by indirecting
- * into the sectionNameToIndex structure.
+ * Given a paneHandler component, find its section holder
  * @param {maxwell.scrollyPaneHandler} handler - The paneHandler to be looked up
  * @param {maxwell.scrollyPage} scrollyPage - The overall scrollyPage component
  * @return {jQuery} A jQuery-wrapped container node suitable for instantiating a component.
  */
-maxwell.dataPaneForPaneHandler = function (handler, scrollyPage) {
+maxwell.sectionForPaneHandler = function (handler, scrollyPage) {
     const index = maxwell.paneKeyToIndex(handler, scrollyPage);
-    return fluid.container(scrollyPage.dataPanes[index]);
+    return fluid.container(scrollyPage.sectionHolders[index].section);
 };
 
 maxwell.leafletWidgetForPaneHandler = function (handler, scrollyPage) {
@@ -831,7 +823,6 @@ maxwell.resolvePaneHandlers = function () {
 fluid.defaults("maxwell.scrollyPage", {
     gradeNames: ["fluid.viewComponent", "fluid.resourceLoader"],
     container: "body",
-    scrollAtPixels: 150,
     // zoomDuration: 100,
     paneMap: {
         // Map of paneName to objects holding an emitter on which "click" is firable - currently only used in
@@ -845,17 +836,20 @@ fluid.defaults("maxwell.scrollyPage", {
     },
     selectors: {
         leafletWidgets: ".html-widget.leaflet",
-        dataPanes: ".mxcw-widgetPane",
-        leafletMap: ".mxcw-map",
+        map: ".mxcw-map",
+        mapHolder: ".mxcw-map-holder",
         content: ".mxcw-content",
-        mainPane: ".mxcw-leftPane-container",
-        sectionUp: ".section-up",
-        sectionDown: ".section-down"
+        sectionLeft: ".section-left",
+        sectionLeftDesc: ".section-left-desc",
+        sectionLeftText: ".section-left-text",
+        sectionRight: ".section-right",
+        sectionRightDesc: ".section-right-desc",
+        sectionRightText: ".section-right-text"
     },
     components: {
         map: {
             type: "maxwell.scrollyLeafletMap",
-            container: "{scrollyPage}.dom.leafletMap",
+            container: "{scrollyPage}.dom.map",
             options: {
                 zoomDuration: "{scrollyPage}.options.zoomDuration"
             }
@@ -872,7 +866,6 @@ fluid.defaults("maxwell.scrollyPage", {
     members: {
         leafletWidgets: "@expand:maxwell.mapLeafletWidgets({that}, {that}.dom.leafletWidgets, {that}.map.map)",
         sectionHolders: "@expand:{that}.resolveSectionHolders()",
-        dataPanes: "@expand:maxwell.checkDataPanes({that}.dom.dataPanes, {that}.leafletWidgets)",
         // Populated by mapLeafletWidgets as it gets mapId out of its options - note that this depends on sectionIndexToWidgetIndex remaining the identity
         sectionNameToIndex: "@expand:maxwell.leafletWidgetsToIndex({that}.leafletWidgets)"
     },
@@ -896,14 +889,9 @@ fluid.defaults("maxwell.scrollyPage", {
             funcName: "maxwell.updateSectionClasses",
             args: ["{that}", "{change}.value"]
         },
-        updateSectionButtons: {
+        updateSectionNav: {
             path: "activeSection",
-            funcName: "maxwell.updateSectionButtons",
-            args: ["{that}", "{change}.value"]
-        },
-        scrollMainPaneToTop: {
-            path: "activeSection",
-            funcName: "maxwell.scrollMainPaneToTop",
+            funcName: "maxwell.updateSectionNav",
             args: ["{that}", "{change}.value"]
         },
         updateActiveMapPane: {
@@ -916,11 +904,6 @@ fluid.defaults("maxwell.scrollyPage", {
             funcName: "maxwell.updateMapVisible",
             args: ["{that}", "{change}.value"],
             priority: "first" // ensure map becomes visible before we attempt to set its initial bounds
-        },
-        updateActiveWidgetPane: {
-            path: "activePane",
-            funcName: "maxwell.updateActiveWidgetPane",
-            args: ["{that}", "{change}.value"]
         },
         updateActiveWidgetSubPanes: {
             path: "effectiveActiveSubpanes",
@@ -943,12 +926,13 @@ fluid.defaults("maxwell.scrollyPage", {
     listeners: {
         "onCreate.listenSectionButtons": "maxwell.listenSectionButtons({that})",
         // This will initialise subPaneIndices quite late
-        "onCreate.findPlotlyWidgets": "maxwell.findPlotlyWidgets({that}, {that}.dataPanes)"
+        "onCreate.findPlotlyWidgets": "maxwell.findPlotlyWidgets({that}, {that}.sectionHolders)"
     }
 });
 
 // Should we ever want scrollytelling back again
 fluid.defaults("maxwell.scrollyPage.withScrolly", {
+    scrollAtPixels: 150,
     listeners: {
         "onCreate.registerScrollyListeners": "maxwell.registerScrollyListeners({that})"
     }
@@ -969,10 +953,6 @@ maxwell.HTMLWidgetsPostRender = function () {
 
 maxwell.updateSectionClasses = function (that, activeSection) {
     maxwell.toggleActiveClass(that.sectionHolders.map(sectionHolder => sectionHolder.section), "mxcw-activeSection", activeSection);
-};
-
-maxwell.scrollMainPaneToTop = function (that) {
-    that.locate("mainPane")[0].scrollTop = 0;
 };
 
 /**
@@ -1009,19 +989,19 @@ maxwell.updateActiveMapPane = function (that, activePane) {
 maxwell.updateMapVisible = function (that, activePane) {
     const paneHandler = maxwell.paneHandlerForIndex(that, activePane);
     const isVisible = !fluid.componentHasGrade(paneHandler, "maxwell.mapHidingPaneHandler");
-    maxwell.toggleClass(that.map.container[0], "mxcw-hideMap", isVisible, true);
+    maxwell.toggleClass(that.dom.locate("mapHolder")[0], "mxcw-hideMap", isVisible, true);
 };
 
 maxwell.listenSectionButtons = function (that) {
-    const sectionUp = that.locate("sectionUp")[0];
-    sectionUp.addEventListener("click", () => {
+    const sectionLeft = that.locate("sectionLeft")[0];
+    sectionLeft.addEventListener("click", () => {
         const activeSection = that.model.activeSection;
         if (activeSection > 0) {
             that.applier.change("activeSection", activeSection - 1);
         }
     });
-    const sectionDown = that.locate("sectionDown")[0];
-    sectionDown.addEventListener("click", () => {
+    const sectionRight = that.locate("sectionRight")[0];
+    sectionRight.addEventListener("click", () => {
         const activeSection = that.model.activeSection;
         if (activeSection < that.sectionHolders.length - 1) {
             that.applier.change("activeSection", activeSection + 1);
@@ -1029,11 +1009,17 @@ maxwell.listenSectionButtons = function (that) {
     });
 };
 
-maxwell.updateSectionButtons = function (that, activeSection) {
-    const sectionUp = that.locate("sectionUp")[0];
-    maxwell.toggleClass(sectionUp, "disabled", activeSection === 0);
-    const sectionDown = that.locate("sectionDown")[0];
-    maxwell.toggleClass(sectionDown, "disabled", activeSection === that.sectionHolders.length - 1);
+maxwell.updateSectionNav = function (that, activeSection) {
+    const l = (selector) => that.locate(selector)[0];
+    const first = activeSection === 0;
+    const last = activeSection === that.sectionHolders.length - 1;
+    maxwell.toggleClass(l("sectionLeft"), "disabled", first);
+    l("sectionLeftText").innerText = first ? "" : that.sectionHolders[activeSection - 1].headingText;
+    maxwell.toggleClass(l("sectionLeftDesc"), "mxcw-hidden", first);
+
+    maxwell.toggleClass(l("sectionRight"), "disabled", last);
+    l("sectionRightText").innerText = last ? "" : that.sectionHolders[activeSection + 1].headingText;
+    maxwell.toggleClass(l("sectionRightDesc"), "mxcw-hidden", last);
 };
 
 maxwell.registerScrollyListeners = function (that) {
@@ -1054,10 +1040,6 @@ maxwell.registerScrollyListeners = function (that) {
         }
         that.applier.change("activeSection", index);
     });
-};
-
-maxwell.updateActiveWidgetPane = function (that, activePane) {
-    maxwell.toggleActiveClass(that.dataPanes, "mxcw-activeWidgetPane", activePane);
 };
 
 // Note that this does not derive from "hortis.leafletMap" in imerss-viz leafletMap.js
@@ -1094,9 +1076,9 @@ maxwell.applyZerothTiles = function (leafletWidgets, map) {
 };
 
 // TODO: Shouldn't everything connected with viz code go into imerss-viz-reknit.js?
+
+
 // Pane info widgets which appear immediately below map
-
-
 
 fluid.defaults("maxwell.paneInfo", {
     gradeNames:  "fluid.templateRenderingView",
@@ -1319,7 +1301,7 @@ fluid.defaults("maxwell.paneHandler", {
     paneKey: "{sourcePath}",
     paneIndex: "@expand:maxwell.paneKeyToIndex({that}, {maxwell.scrollyPage})",
     members: {
-        container: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
+        container: "@expand:maxwell.sectionForPaneHandler({that}, {maxwell.scrollyPage})"
     },
 
     modelRelay: {
@@ -1369,5 +1351,5 @@ fluid.defaults("maxwell.mapHidingPaneHandler", {
 
 fluid.defaults("maxwell.templatePaneHandler", {
     gradeNames: ["maxwell.paneHandler", "fluid.templateRenderingView"],
-    parentContainer: "@expand:maxwell.dataPaneForPaneHandler({that}, {maxwell.scrollyPage})"
+    parentContainer: "@expand:maxwell.sectionForPaneHandler({that}, {maxwell.scrollyPage})"
 });

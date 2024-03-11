@@ -79,6 +79,9 @@ fluid.defaults("maxwell.scrollyVizBinder", {
     }
 });
 
+// TODO: Need to monkey-patch this or other ... must not tell the map itself to select region but instead navigate pane
+// For lifetime of this viz (very short) no longer call "selectRegion.regionSelection": "hortis.leafletMap.regionSelection
+// from bareRegionsExtra
 maxwell.triggerRegionSelection = function (map, regionSelectionScheme, regionName, source) {
     map.events.selectRegion.fire(regionSelectionScheme.clazz ? regionName : null, regionSelectionScheme.community ? regionName : null, source);
 };
@@ -338,18 +341,21 @@ maxwell.drawBareRegions = function (map, scrollyPage) {
     hortis.addStyle(highlightStyle.join("\n"));
 
     const container = scrollyPage.map.map.getContainer();
-    $(container).on("click", function (event) {
-        if (event.target === container) {
-            map.events.clearMapSelection.fire();
-        }
-    });
-    $(document).on("click", function (event) {
-        const closest = event.target.closest(".fld-imerss-nodismiss-map");
-        // Mysteriously SVG paths are not in the document
-        if (!closest && event.target.closest("body")) {
-            map.events.clearMapSelection.fire();
-        }
-    });
+
+    if (!fluid.getForComponent(map, ["options", "noClearSelection"])) {
+        $(container).on("click", function (event) {
+            if (event.target === container) {
+                map.events.clearMapSelection.fire();
+            }
+        });
+        $(document).on("click", function (event) {
+            const closest = event.target.closest(".fld-imerss-nodismiss-map");
+            // Mysteriously SVG paths are not in the document
+            if (!closest && event.target.closest("body")) {
+                map.events.clearMapSelection.fire();
+            }
+        });
+    }
 
     map.map.on("load", () => {
         map.events.mapLoaded.fire();

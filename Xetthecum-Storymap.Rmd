@@ -128,30 +128,12 @@ historicMap <- mx_historic_map()
 historicMap
 ```
 
-## Ecological Communities
+## Ecological Communities - Thuthiqut / Forests
 
-The Xetthecum region is made up of several ecological communities includinng Forest, Woodland and Rock Outcrops, Freshwater and Marine. Each of these ecological communities are home to a diversity of species, many of which are of cultural significance to the Penelakut peoples. 
-
-<div class="data-pane">
-<ul class="nav nav-tabs" id="ecological-tabs" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="Forests-tab" data-bs-toggle="tab" data-bs-target="#Forests" type="button" role="tab" aria-controls="Forests" aria-selected="true">Thuthiqut Forests</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="Freshwater-tab" data-bs-toggle="tab" data-bs-target="#Freshwater" type="button" role="tab" aria-controls="Freshwater" aria-selected="false">Tl'elhumqa' Freshwater</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="Marine-tab" data-bs-toggle="tab" data-bs-target="#Marine" type="button" role="tab" aria-controls="Marine" aria-selected="false">Hwuiumqa' Marine</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="Woodlands-tab" data-bs-toggle="tab" data-bs-target="#Woodlands" type="button" role="tab" aria-controls="Woodlands" aria-selected="false">Shthuliim Woodlands</button>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="Forests" role="tabpanel" aria-labelledby="Forests-tab">
-#### Thuthiqut - Forest
 Including Mature, Young, and Pole Sapling
+
 <img src="img/Forests_banner.jpg">
+
 Shaped by interactions between water, soil, terrain, climate and the multitudes of beings that live within them, forests are a sanctuary for hundreds of thousands of species of plants, fungi, mammals, birds, insects and microorganisms. Forests provide shelter, clean water, and food, the foundations for a complex web of life in which we are intricately connected. Humans have been stewarding forests on Galiano since time out of mind, in order to ensure key species that we depend on can flourish and help us thrive. 
 
 Dry ridges or steep southwest facing slopes with nutrient poor, shallow soils tend to be dominated by a mix of gnarled [ts’sey](#taxon:Pseudotsuga menziesii menziesii) (Douglas-fir) and [qaanlhp](#taxon:Arbutus menziesii) (arbutus), and shrubby species such as [lulutth'sulhp](#taxon:Berberis aquifolium) (dull oregon grape) or [xwiinlhp](#taxon:Rosa gymnocarpa) (baldhip rose), all of which provide medicine. These drier ecological communities are mapped as woodlands in this map.
@@ -164,10 +146,13 @@ In mature and old growth forests, trees are present in all stages of their life 
 
 <a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#thuthiqut---forest">Learn more about the cultural and ecological values of the forest community</a>
 
-</div>
-<div class="tab-pane fade" id="Freshwater" role="tabpanel" aria-labelledby="Freshwater-tab">
+```{r, echo=FALSE, message=FALSE}
+source("scripts/ecological_map_script.R")
+ecologicalMap <- mx_ecological_map("Forests")
+ecologicalMap
+```
 
-#### Tl'elhumqa' - Freshwater
+## Ecological Communities - Tl'elhumqa' / Freshwater
 <img src="img/Freshwater_banner.jpg">
 Healthy wetlands, lakes and streams are havens for humans and wildlife alike, providing critical habitat and a source of freshwater. A diversity of plant life, bacteria and insects thrive in these ecosystems, forming complex food webs that support many culturally important species, such as stseelhtun (salmon). Thuqi' (sockeye salmon) and haan (pink salmon) are two types of salmon favoured by Indigenous community members on Galiano. In addition, the enhanced growth and forest structure found in riparian areas provides necessary cover for wildlife, which is also important for culturally significant activities such as hunting and birdwatching. [Ha'put](#taxon:Odocoileus hemionus columbianus) (black tailed deer) and [smuqw'a'](#taxon:Ardea herodias fannini) (great blue heron) depend on freshwater areas for food and water. 
 
@@ -178,10 +163,14 @@ Colonial settlers began to alter Galiano’s landscape in the late 1800’s in w
 Hwtalonēts (Greig Creek) does not currently support large populations of salmon. In fact, there are no sea-run salmon or trout populations currently spawning in the island’s streams. There are, however, resident cutthroat trout and stickleback populations that have persisted in a number of our creeks. These fish are no longer able to make it to the ocean because of barriers such as waterfalls, ditched agricultural fields and dams. Efforts to re-establish Coho and Chum populations in Greig Creek have been taking place, mainly through stream bank restoration and stocking, in part through the local school caring for and releasing salmon fry on an annual basis. This is a significant experience for Indigenous and non-Indigenous children alike on Galiano. Habitat for a resident cutthroat trout population in Murchison creek has been improved through the creation of off-channel ponds and the placement of large woody debris within the channel. 
 
 <a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#tlelhumqa---freshwater">Learn more about the cultural and ecological values of the freshwater community</a>
-</div>
-<div class="tab-pane fade" id="Marine" role="tabpanel" aria-labelledby="Marine-tab">
-  
-#### Hwuiumqa'- Marine
+
+```{r, echo=FALSE, message=FALSE}
+source("scripts/ecological_map_script.R")
+ecologicalMap <- mx_ecological_map("Freshwater")
+ecologicalMap
+```
+
+## Ecological Communities - Hwuiumqa'/ Marine
 <img src="img/Marine_banner.jpg">
 
 Surrounded by water, the residents, visitors and non-resident property owners of Galiano Island see the ocean as intrinsic to living and loving life on this island. Sightings of [q'ul-lhanamutsum](#taxon:Orcinus orca) (orca whales) and other marine mammals are treasured, and ocean-going transportation is key, but for many community members, the ocean is first and foremost a source of food and livelihood. Both Indigenous and non-Indigenous people on Galiano enjoy fish such as thuqi' (sockeye salmon), haan (pink salmon), tuqwtuqw (red snapper) and t’q’as (rockfish in general). Also prized are [tl'uxwtl'uxw](#taxon:Magallana gigas) (oysters), [s-axwa'](#taxon:Saxidomus gigantea) (clams), kwuneem'mun', (scallops), [ey'x](#taxon:Metacarcinus magister) (dungeness crabs), [thikwt](#taxon:Apostichopus californicus) (sea cucumber) and seaweeds & algaes such as lhuq'us (red laver). Florence James shared that e s-hw (seal) has also been prized as a dark meat. 
@@ -196,13 +185,17 @@ In the past, no one would ever reveal the locations of where to harvest seafood,
 
 <a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#hwuiumqa---marine">Learn more about the cultural and ecological values of the marine community</a>
 
-</div>
-<div class="tab-pane fade" id="Woodlands" role="tabpanel" aria-labelledby="Woodlands-tab">
+```{r, echo=FALSE, message=FALSE}
+source("scripts/ecological_map_script.R")
+ecologicalMap <- mx_ecological_map("Marine")
+ecologicalMap
+```
 
-#### Shthuliim - Woodlands
+## Ecological Communities - Woodlands
+
 <img src="img/Woodland_banner.jpg">
-Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest or    most visually obvious species, P'hwulhp (Garry oak - named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, speenhw (blue camas). Fields of speenhw have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible. Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
 
+Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest or most visually obvious species, P'hwulhp (Garry oak - named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, speenhw (blue camas). Fields of speenhw have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible. Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
 
 Penelakut elder Thiyaas (Florence James) calls this type of ecosystem shthuliim: “a beautiful meadow with cushions for your feet made of moss, tender growth, grass…” She adds that p'hwulhp (Garry Oak) was made crooked by the creator so that its branches are useless to people and it will be left alone, and mentions that the presence of p'hwulhp is evidence that the land is being taken care of. Thiyaas told us that pheasant, quail, and grouse were a lot more abundant in these woodland meadow environments, and that they used to be a regular part of Indigenous people’s diets in this area. Like speenhw, the bulbs of stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible when cooked. Thiyaas used to collect fawn lilies and ti'tuqw-el'tun' (lady slippers) for her mother, as her mother would eat the bulbs. “That was just our joy”... but there is not enough to collect anymore.” Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
 
@@ -229,15 +222,9 @@ https://ohgarryoaksociety.org/what-is-a-garry-oak/
 
 <a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#shthuliim---woodlands-and-rock-outcrops">Learn more about the cultural and ecological values of the woodlands community</a>
 
-</div>
-</div>
-
-</div>
-
-
 ```{r, echo=FALSE, message=FALSE}
 source("scripts/ecological_map_script.R")
-ecologicalMap <- mx_ecological_map()
+ecologicalMap <- mx_ecological_map("Woodlands")
 ecologicalMap
 ```
 
@@ -326,7 +313,6 @@ Grieg Creek was once home to abundant salmon which were an important source of f
 <p>coho salmon</p>
 </div>
 </div>
-
 </div>
 
 ## From the Lake to the Delta: Delta

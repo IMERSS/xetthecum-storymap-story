@@ -14,7 +14,7 @@ source("scripts/utils.R")
 communityStyling <- timedFread("tabular_data/communityStyling.csv")
 communityStyling <- communityStyling[order(Z_Order)]
 
-mx_ecological_map <- function () {
+mx_ecological_map <- function (mapId) {
   title <- "Xetthecum Ecological Communities";
 
   boundingBox <- mx_read("spatial_data/vectors/ProjectBoundary") %>% 
@@ -23,7 +23,7 @@ mx_ecological_map <- function () {
   
   
   # Plot map
-  sectionMap <- leaflet(options=list(mx_mapId="Ecological")) %>%
+  sectionMap <- leaflet(options=list(mx_mapId=mapId)) %>%
     fitBounds(boundingBox[1],boundingBox[2],boundingBox[3],boundingBox[4], options = list(padding = c(-350,-350))) %>%
     addProviderTiles(providers$CartoDB.Positron)
   
@@ -46,4 +46,3 @@ mx_ecological_map <- function () {
   
 }
 
-mx_ecological_map()

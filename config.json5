@@ -18,9 +18,25 @@
                 Historic: {
                     type: "maxwell.leafletPaneHandler"
                 },
-                Ecological: {
+                Forests: {
                     type: "maxwell.xetthecumEcologicalPane",
-                    vizFile: "%resourceBase/data/Life-PhaseIII.json.lz4"
+                    vizFile: "%resourceBase/data/Life-PhaseIII.json.lz4",
+                    selectRegion: "Forests"
+                },
+                Freshwater: {
+                    type: "maxwell.xetthecumEcologicalPane",
+                    vizFile: "%resourceBase/data/Life-PhaseIII.json.lz4",
+                    selectRegion: "Freshwater"
+                },
+                Marine: {
+                    type: "maxwell.xetthecumEcologicalPane",
+                    vizFile: "%resourceBase/data/Life-PhaseIII.json.lz4",
+                    selectRegion: "Marine"
+                },
+                Woodlands: {
+                    type: "maxwell.xetthecumEcologicalPane",
+                    vizFile: "%resourceBase/data/Life-PhaseIII.json.lz4",
+                    selectRegion: "Woodlands"
                 },
                 Laughlin: {
                     type: "maxwell.leafletPaneHandler"
@@ -80,8 +96,8 @@
         replaceSource: "\"sourceRoot\":\"../..\"",
         replaceTarget: "\"sourceRoot\":\"../../../bagatelle/\""
     }, {
-        source: "%imerss-bioinfo/src/client/img/Arrow-up.svg",
-        target: "%maxwell/docs/img/Arrow-up.svg"
+        source: "%maxwell/img/Xetthecum/*.svg",
+        target: "%maxwell/docs/img/Xetthecum"
     }, {
         source: "%imerss-bioinfo/src/client/img/Arrow-down.svg",
         target: "%maxwell/docs/img/Arrow-down.svg"

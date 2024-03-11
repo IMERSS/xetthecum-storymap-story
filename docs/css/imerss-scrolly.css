@@ -6,20 +6,58 @@ h2 {
     margin-block-start: 0px;
 }
 
+.main-container h2 {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
 .mxcw-banner {
     font-size: 36px;
 }
 
-.mxcw-container {
+.mxcw-section-nav {
     display: flex;
+    width: 100%;
+    align-items: center;
+    padding-bottom: 1rem;
 }
 
-.mxcw-leftPane {
+.mxcw-section-nav .mxcw-hidden {
+    display: none;
+}
+
+.section-left-desc, .section-right-desc {
+    white-space: nowrap;
+    padding: 0 0.8rem 0 0.8rem;
+}
+
+.section-nav-spacer {
+    width: 100%
+}
+
+.mxcw-container {
     display: flex;
     flex-direction: column;
-    width: 65%;
-    /* For God's sake I really mean it! */
-    min-width: 65%;
+}
+
+.mxcw-map-holder {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    height: 35%;
+    transition-property: height;
+    transition-duration: 400ms;
+}
+
+.mxcw-content-holder {
+    display: flex;
+    flex-direction: column;
+    height: 65%;
+    font-size: 18px;
+    padding: 1rem;
+    align-items: center;
+    transition-property: height;
+    transition-duration: 400ms;
 }
 
 .section-button {
@@ -43,35 +81,31 @@ h2 {
     transition-property: height;
     margin: 0px auto;
 
-    /** Somehow this works when hiding but not when showing
+    /** Somehow this works when hiding but not when showing */
      transition-duration: 400ms;
-     */
 }
 
-.mxcw-hideMap {
+.mxcw-hideMap .mxcw-map {
     height: 0;
     min-height: 0;
 }
 
+/* "Data pane" has been abolished, keep around since some widgets might end up in here at some point */
 .mxcw-data {
-    height: 50%;
+    /* height: 50%;*/
+    display: none;
 }
 
-.mxcw-hideMap ~ .mxcw-data {
+.mxcw-hideMap ~ .mxcw-content-holder {
     height: 100%;
 }
 
-.mxcw-content-holder {
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 100px);
-    width: 35%;
-    font-size: 18px;
-    padding: 0 1rem 0 1rem;
-    align-items: center;
+.mxcw-hideMap {
+    height: 0;
 }
 
 .mxcw-content {
+    overflow-y: auto;
 }
 
 .mxcw-content h2:hover {
@@ -84,7 +118,8 @@ h2 {
 }
 
 .mxcw-content img {
-    width: 100%;
+    max-height: 60vh;
+    max-width: 100%;
 }
 
 .mxcw-mapPane {

@@ -53,6 +53,7 @@ maxwell.figuresToMove = function (container) {
     return widened;
 };
 
+// No longer done after abolition of scrollytelling - data pane no longer exists
 /** Move plotly widgets which have siblings which are maps into children of the .mxcw-data pane
  * @param {Document} template - The document for the template structure into which markup is being integrated
  * @param {Element[]} sections - The array of section elements found holding leaflet maps
@@ -135,7 +136,7 @@ maxwell.reknitFile = async function (infile, outfile, options, config) {
     const container = document.querySelector(".main-container");
     const sections = maxwell.hideLeafletWidgets(container);
     const template = maxwell.parseDocument(fluid.module.resolvePath(options.template));
-    maxwell.movePlotlyWidgets(template, sections, container);
+    // maxwell.movePlotlyWidgets(template, sections, container);
 
     maxwell.transferNodeContent(document, template, "h1");
     maxwell.transferNodeContent(document, template, "title");
@@ -168,9 +169,7 @@ maxwell.reknitFile = async function (infile, outfile, options, config) {
 };
 
 const copyGlob = function (sourcePattern, targetDir) {
-    console.log("copyGlob ", sourcePattern);
     const fileNames = glob.sync(sourcePattern);
-    console.log("Got files ", fileNames);
     fileNames.forEach(filePath => {
         const fileName = path.basename(filePath);
         const destinationPath = path.join(targetDir, fileName);
