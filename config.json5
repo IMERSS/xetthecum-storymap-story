@@ -81,6 +81,9 @@
     }, { // TODO: Extend module-relative addressing to 3rd-party modules
         source: "%maxwell/node_modules/@imerss/inat-components/dist/standalone.min.js",
         target: "%maxwell/docs/js/inat-components-standalone.min.js"
+    }, { // TODO: Extend module-relative addressing to 3rd-party modules
+        source: "%maxwell/node_modules/@preact/signals-core/dist/signals-core.min.js",
+        target: "%maxwell/docs/js/signals-core.min.js"
     }, {
         source: "%maxwell/src/css/*.css",
         target: "%maxwell/docs/css"

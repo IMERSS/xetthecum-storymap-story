@@ -31,7 +31,9 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
             options: {
                 noClearSelection: true,
                 listeners: {
-                    "mapLoaded.selectRegion": "{paneHandler}.triggerRegionSelection({paneHandler}.options.selectRegion)"
+                    // So that we initialise the checklist, etc. of every pane which has a selectRegion
+                    "mapLoaded.selectRegion": "{paneHandler}.triggerRegionSelection({paneHandler}.options.selectRegion, init)",
+                    "mapLoaded.regionsFromPane": "maxwell.regionsFromPane({paneHandler}, {scrollyPage}, {paneHandler}.model.isVisible)"
                 }
             }
         }

@@ -59,20 +59,7 @@ mx_read <- function (filename, digits = 5) {
   rounded <- round_sf(trans, digits);
 }
 
-# Attach the region's label as an "mx_regionId" option in the output data
-labelToOption <- function (label) {
-  return (list(mx_regionId = label))
-}
 #---------- from Galiano Marine Atlas utils.js----------#
-
-mx_paste <- function(..., sep='') {
-  paste(..., sep=sep, collapse=sep)
-}
-
-# Attach the region's label as an "mx_regionId" option in the output data
-mx_labelToOption <- function (label) {
-  return (list(mx_regionId = label))
-}
 
 mx_griddedObsToHash <- function (gridded) {
   summarised <- gridded %>% group_by(cell_id) %>% 

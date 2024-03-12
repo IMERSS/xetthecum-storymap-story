@@ -31,6 +31,11 @@ window.HTMLWidgets.dataframeToD3 = function (df) {
     return results;
 };
 
+// Monkey-patch core framework to support wide range of primitives and JSON initial values
+fluid.coerceToPrimitive = function (string) {
+    return /^(true|false|null)$/.test(string) || /^[\[{0-9]/.test(string) && !/^{\w/.test(string) ? JSON.parse(string) : string;
+};
+
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var maxwell = fluid.registerNamespace("maxwell");
 
@@ -792,6 +797,11 @@ maxwell.leafletWidgetForPaneHandler = function (handler, scrollyPage) {
     return scrollyPage.leafletWidgets[index];
 };
 
+maxwell.paneHandlerForRegion = function (scrollyPage, region) {
+    const paneHandlers = fluid.queryIoCSelector(scrollyPage, "maxwell.paneHandler", true);
+    return paneHandlers.find(handler => fluid.getForComponent(handler, "options.selectRegion") === region);
+};
+
 maxwell.paneHandlerForName = function (scrollyPage, paneName) {
     const paneHandlers = fluid.queryIoCSelector(scrollyPage, "maxwell.paneHandler", true);
     return paneHandlers.find(handler => fluid.getForComponent(handler, "options.paneKey") === paneName);
@@ -820,15 +830,15 @@ maxwell.resolvePaneHandlers = function () {
     return maxwell.unflattenOptions(rawPaneHandlers);
 };
 
+fluid.defaults("maxwell.resourceNotifier", {
+    gradeNames: "fluid.component"
+});
+
+
 fluid.defaults("maxwell.scrollyPage", {
-    gradeNames: ["fluid.viewComponent", "fluid.resourceLoader"],
+    gradeNames: ["fluid.viewComponent", "fluid.resourceLoader", "fluid.resourceNotifier"],
     container: "body",
     // zoomDuration: 100,
-    paneMap: {
-        // Map of paneName to objects holding an emitter on which "click" is firable - currently only used in
-        // Maxwell proper with maxwell.siteSelectable in order to make sites selectable. This will be
-        // migrated to paneHandler
-    },
     resources: {
         plotlyReady: {
             promiseFunc: "maxwell.HTMLWidgetsPostRender"
@@ -853,6 +863,9 @@ fluid.defaults("maxwell.scrollyPage", {
             options: {
                 zoomDuration: "{scrollyPage}.options.zoomDuration"
             }
+        },
+        hashManager: {
+            type: "maxwell.hashManager"
         }
     },
     paneHandlers: "@expand:maxwell.resolvePaneHandlers()",
@@ -867,7 +880,8 @@ fluid.defaults("maxwell.scrollyPage", {
         leafletWidgets: "@expand:maxwell.mapLeafletWidgets({that}, {that}.dom.leafletWidgets, {that}.map.map)",
         sectionHolders: "@expand:{that}.resolveSectionHolders()",
         // Populated by mapLeafletWidgets as it gets mapId out of its options - note that this depends on sectionIndexToWidgetIndex remaining the identity
-        sectionNameToIndex: "@expand:maxwell.leafletWidgetsToIndex({that}.leafletWidgets)"
+        sectionNameToIndex: "@expand:maxwell.leafletWidgetsToIndex({that}.leafletWidgets)",
+        outstandingResources: "@expand:signal(0)"
     },
     invokers: {
         sectionIndexToWidgetIndex: "fluid.identity",
@@ -904,6 +918,17 @@ fluid.defaults("maxwell.scrollyPage", {
             funcName: "maxwell.updateMapVisible",
             args: ["{that}", "{change}.value"],
             priority: "first" // ensure map becomes visible before we attempt to set its initial bounds
+        },
+        updatePaneHash: {
+            path: "activePane",
+            funcName: "maxwell.updatePaneHash",
+            args: ["{scrollyPage}", "{hashManager}", "{change}.value"],
+            excludeSource: "init"
+        },
+        listenPaneHash: {
+            path: "{hashManager}.model.pane",
+            funcName: "maxwell.listenPaneHash",
+            args: ["{scrollyPage}", "{change}.value", "{change}"]
         },
         updateActiveWidgetSubPanes: {
             path: "effectiveActiveSubpanes",
@@ -953,6 +978,19 @@ maxwell.HTMLWidgetsPostRender = function () {
 
 maxwell.updateSectionClasses = function (that, activeSection) {
     maxwell.toggleActiveClass(that.sectionHolders.map(sectionHolder => sectionHolder.section), "mxcw-activeSection", activeSection);
+};
+
+maxwell.updatePaneHash = function (scrollyPage, hashManager, paneIndex) {
+    const paneHandler = maxwell.paneHandlerForIndex(scrollyPage, paneIndex);
+    const paneKey = paneHandler.options.paneKey;
+    hashManager.applier.change("pane", paneKey);
+};
+
+maxwell.listenPaneHash = function (scrollyPage, paneName) {
+    const paneHandler = maxwell.paneHandlerForName(scrollyPage, paneName);
+    const paneIndex = paneHandler.options.paneIndex;
+    // TODO: Abolish distinction between pane indices and section indices
+    scrollyPage.applier.change("activeSection", paneIndex);
 };
 
 /**
@@ -1353,3 +1391,63 @@ fluid.defaults("maxwell.templatePaneHandler", {
     gradeNames: ["maxwell.paneHandler", "fluid.templateRenderingView"],
     parentContainer: "@expand:maxwell.sectionForPaneHandler({that}, {maxwell.scrollyPage})"
 });
+
+fluid.defaults("maxwell.hashManager", {
+    gradeNames: "fluid.modelComponent",
+    listeners: {
+        "onCreate.listenHash": "maxwell.hashManager.listenHash"
+    },
+    invokers: {
+        applyHash: "maxwell.hashManager.applyHash({that})"
+    },
+    members: {
+        // We don't get a notification on startup, ingest any hash present in the initial URL, but delay to avoid
+        // confusing initial model resolution and map loading TODO improve with and initial model merging if we can
+        applyHashOnResources: "@expand:fluid.effect(maxwell.hashManager.applyHashOnResources, {that}, {resourceNotifier}.outstandingResources)"
+    },
+    modelListeners: {
+        "pushState": {
+            path: "",
+            funcName: "maxwell.hashManager.listenModel",
+            args: ["{that}", "{change}.value"],
+            excludeSource: "init"
+        }
+    }
+});
+
+maxwell.hashManager.applyHashOnResources = function (that, outstandingResources) {
+    if (outstandingResources === 0) {
+        that.applyHash();
+    }
+};
+
+maxwell.parseHashSegment = function (segment) {
+    const [key, value] = decodeURIComponent(segment).split(":");
+    const parsedValue = value.startsWith("{") || value.startsWith("[") ? JSON.parse(value) : value;
+    return [key, parsedValue];
+};
+
+maxwell.renderHashSegment = function (key, value) {
+    return key + ":" + (fluid.isPrimitive(value) ? "" + value : JSON.stringify(value));
+};
+
+maxwell.hashManager.applyHash = function (that) {
+    const hash = location.hash.substring(1); // Remove initial # if any
+    const sections = hash.split("&");
+    const parsedSections = sections.filter(section => section.includes(":"))
+        .map(section => maxwell.parseHashSegment(section));
+    const model = Object.fromEntries(parsedSections);
+    fluid.replaceModelValue(that.applier, [], model);
+};
+
+maxwell.hashManager.listenHash = function (that) {
+    window.addEventListener("hashchange", () => that.applyHash);
+
+};
+
+maxwell.hashManager.listenModel = function (that, model) {
+    const nonEmpty = Object.entries(model).filter(([, value]) => fluid.isValue(value));
+    const segments = nonEmpty.map(([key, value]) => maxwell.renderHashSegment(key, value));
+    const hash = "#" + segments.join("&");
+    window.history.pushState(null, null, hash);
+};

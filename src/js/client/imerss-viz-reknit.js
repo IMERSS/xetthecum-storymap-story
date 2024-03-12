@@ -19,6 +19,14 @@ fluid.defaults("maxwell.markupTemplateRenderer", {
     }
 });
 
+fluid.incrementSignal = function (signal) {
+    signal.value = (signal.value || 0) + 1;
+};
+
+fluid.decrementSignal = function (signal) {
+    --signal.value;
+};
+
 // mixin grade which mediates event flow from IMERSS viz (reached via hortis.scrollyMapLoader) to Leaflet pane
 // It is both a paneHandler as well as a sunburstLoader, which is defined in core viz leafletMap.js hortis.scrollyMapLoader
 fluid.defaults("maxwell.scrollyVizBinder", {
@@ -32,6 +40,16 @@ fluid.defaults("maxwell.scrollyVizBinder", {
     renderMarkup: true,
     model: {
         // selectedRegion - relayed from mapBlockTooltipId
+    },
+    modelListeners: {
+        sortRegions: {
+            path: "selectedRegion",
+            func: "maxwell.scrollyViz.sortRegions",
+            args: ["{paneHandler}", "{scrollyPage}"]
+        }
+    },
+    members: {
+        notifyResource: "@expand:fluid.incrementSignal({resourceNotifier}.outstandingResources)"
     },
     regionIdFromLabel: false,
     regionStyles: {
@@ -47,10 +65,9 @@ fluid.defaults("maxwell.scrollyVizBinder", {
     listeners: {
         // Override the built-in old fashioned rendering
         "onResourcesLoaded.renderMarkup": "fluid.identity",
-        // TODO: Note we get one of these listeners for each viz
-        "sunburstLoaded.listenHash": {
-            funcName: "maxwell.scrollyViz.listenHash",
-            args: "{that}",
+        "sunburstLoaded.notifyResources": {
+            func: "fluid.decrementSignal",
+            args: ["{resourceNotifier}.outstandingResources"],
             priority: "after:fluid-componentConstruction"
         }
     },
@@ -61,6 +78,7 @@ fluid.defaults("maxwell.scrollyVizBinder", {
     invokers: {
         polyOptions: "maxwell.scrollyViz.polyOptions({that}, {arguments}.0, {arguments}.1)",
         handlePoly: "maxwell.scrollyViz.handlePoly({that}, {arguments}.0, {arguments}.1, {arguments}.2)",
+        //                                                                                                         regionName,     source
         triggerRegionSelection: "maxwell.triggerRegionSelection({that}.map, {that}.options.regionSelectionScheme, {arguments}.0, {arguments}.1)"
     },
     distributeOptions: {
@@ -250,18 +268,6 @@ maxwell.regionSelectionBar.bind = function (element, that, paneHandler) {
 
 // Addon grade for hortis.leafletMap - all this stuff needs to go upstairs into LeafletMapWithBareRegions
 fluid.defaults("maxwell.bareRegionsExtra", {
-    modelListeners: {
-        regionToHash: { // This should eventually be moved upstairs via our new relay of selectedRegion
-            path: "mapBlockTooltipId",
-            func: "maxwell.scrollyViz.updateRegionHash",
-            args: ["{that}", "{change}"]
-        },
-        sortRegions: {
-            path: "mapBlockTooltipId",
-            func: "maxwell.scrollyViz.sortRegions",
-            args: ["{paneHandler}", "{scrollyPage}"]
-        }
-    },
     modelRelay: {
         mapBlockToRegion: {
             source: "mapBlockTooltipId",
@@ -280,7 +286,8 @@ fluid.defaults("maxwell.bareRegionsExtra", {
         "buildMap.fixVizResources": "maxwell.fixVizResources({sunburst})",
         "buildMap.drawRegions": "maxwell.drawBareRegions({that}, {scrollyPage})",
         //                                                                          class,       community       source
-        "selectRegion.regionSelection": "hortis.leafletMap.regionSelection({that}, {arguments}.0, {arguments}.1, {arguments}.2)"
+        "selectRegion.regionSelection": "hortis.leafletMap.regionSelection({that}, {arguments}.0, {arguments}.1, {arguments}.2)",
+        "selectRegion.regionToPaneSelection": "hortis.leafletMap.regionToPaneSelection({that}, {scrollyPage}, {arguments}.0, {arguments}.1, {arguments}.2)"
     }
 });
 
@@ -392,6 +399,13 @@ hortis.clearSelectedRegions = function (map, source) {
     map.applier.change("selectedCommunities", hortis.leafletMap.selectedRegions(null, map.communities), "ADD", source);
 };
 
+hortis.leafletMap.regionToPaneSelection = function (map, scrollyPage, className, community, source) {
+    const paneHandler = maxwell.paneHandlerForRegion(scrollyPage, className);
+    // loadMap fires a region selection in order to initialise resources in region-focused panes
+    if (paneHandler && source !== "init") {
+        scrollyPage.applier.change("activeSection", paneHandler.options.paneIndex);
+    }
+};
 
 // TODO: port this back into leafletMapWithBareRegions now it is responsive to options
 hortis.leafletMap.showSelectedRegions = function (map, selectedRegions) {
@@ -456,11 +470,12 @@ maxwell.scrollyViz.handlePoly = function (paneHandler, Lpolygon, shapeOptions, l
     if (region) {
         Lpolygon.on("click", function () {
             console.log("Map clicked on region ", region, " polygon ", Lpolygon);
-            paneHandler.triggerRegionSelection(region, region);
+            paneHandler.triggerRegionSelection(region, "click");
         });
     }
 };
 
+/*
 // TODO: Lots here - demultiplex by panel, etc.
 maxwell.scrollyViz.listenHash = function (paneHandler) {
     const map = paneHandler.map;
@@ -484,7 +499,9 @@ maxwell.scrollyViz.listenHash = function (paneHandler) {
 };
 
 maxwell.scrollyViz.updateRegionHash = function (paneHandler, change) {
-    if (!change.transaction.fullSources.hash) {
+    const sources = change.transaction.fullSources;
+    if (!sources.hash && !sources.init) {
         window.history.pushState(null, null, change.value ? "#region:" + change.value : "#");
     }
 };
+*/

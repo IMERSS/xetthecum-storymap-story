@@ -12,6 +12,7 @@
         "infusion": "4.6.0",
         "imerss-bioinfo": "1.11.0",
         "@imerss/inat-components": "2.0.1",
+        "@preact/signals": "1.2.2",
         "json5": "2.2.3",
         "linkedom": "0.14.25",
         "fs-extra": "11.1.1",
