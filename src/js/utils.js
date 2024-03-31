@@ -17,6 +17,13 @@ maxwell.asyncForEach = async function (array, callback) {
     }
 };
 
+maxwell.unflattenOptions = function (records) {
+    return fluid.transform(records, record => ({
+        type: record.type,
+        options: fluid.censorKeys(record, ["type"])
+    }));
+};
+
 maxwell.loadJSON5File = function (path) {
     const resolved = fluid.module.resolvePath(path);
     try {
@@ -26,4 +33,11 @@ maxwell.loadJSON5File = function (path) {
         e.message = "Error reading JSON5 file " + resolved + "\n" + e.message;
         throw e;
     }
+};
+
+maxwell.writeJSONSync = function (inFilename, doc) {
+    const filename = fluid.module.resolvePath(inFilename);
+    const formatted = JSON.stringify(doc, null, 4) + "\n";
+    fs.writeFileSync(filename, formatted);
+    fluid.log("Written " + formatted.length + " bytes to " + filename);
 };

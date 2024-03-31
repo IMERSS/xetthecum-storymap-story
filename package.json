@@ -5,14 +5,18 @@
     "author": "IMERSS, Transition Salt Spring",
     "scripts": {
         "lint": "fluid-lint-all",
-        "build": "node src/js/reknit.js"
+        "build": "node src/js/reknit.js",
+        "assignTaxa": "node ../../bagatelle/src/assignBNames.js --reintegrated tabular_data/reintegrated-obs-filtered.csv"
     },
     "dependencies": {},
     "devDependencies": {
         "infusion": "4.6.0",
-        "imerss-bioinfo": "1.11.0",
+        "imerss-bioinfo": "1.12.0",
         "@imerss/inat-components": "2.0.1",
         "@preact/signals": "1.2.2",
+        "maplibre-gl": "4.0.2",
+        "papaparse": "5.4.1",
+        "sharp": "0.33.2",
         "json5": "2.2.3",
         "linkedom": "0.14.25",
         "fs-extra": "11.1.1",

@@ -8,6 +8,12 @@ output:
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs", output_options = list(copy_resources = TRUE)) })
 ---
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source("scripts/load_project_vectors.R")
+source("scripts/mapbox_map_common.R")
+```
+
 ## Land Acknowledgement
 
 In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat Cove), Galiano Island resides within the trans-boundary bioregion of the Salish Sea, a richly biodiverse expanse that has been tended to and cherished by the Coast Salish people since time immemorial. The island rests within the shared, asserted, and unceded traditional territories of the Penelakut, Lamalcha, and Hwlitsum First Nations, as well as the shared, asserted, and ceded traditional territories of Tsawwassen First Nation. Additionally, we acknowledge the territories of all other Hul’q’umi’num’-speaking peoples who hold rights and responsibilities in this region.
@@ -24,7 +30,7 @@ In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat C
 
 </div>
 
-<span class="mxcw-nonLeafletPane mxcw-paneName-Acknowledgement html-widget leaflet"></span>
+<span class="mxcw-mapPane mxcw-paneName-Acknowledgement"></span>
 
 ## Introduction
 
@@ -36,15 +42,10 @@ Tth'ihwum m'i 'ewu i' Xetthecum sii'em. Welcome to Xetthecum, an area on Galiano
 </div>
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/intro_map_script.R")
-introMap <- mx_intro_map()
+highlightedLayers <- c()
+introMap <- plot_mapbox_map("Introduction", project_bbox, allSources, classStyling, highlightedLayers)
 introMap
 ```
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 
 ## Historic and Cultural Significance
 
@@ -123,8 +124,7 @@ Mushrooms, (kwmusuliqw or mumsilit)
 
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/historic_map_script.R")
-historicMap <- mx_historic_map()
+historicMap <- plot_mapbox_map("Historic", project_bbox, allSources, classStyling, highlightedLayers)
 historicMap
 ```
 
@@ -147,9 +147,9 @@ In mature and old growth forests, trees are present in all stages of their life 
 <a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#thuthiqut---forest">Learn more about the cultural and ecological values of the forest community</a>
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/ecological_map_script.R")
-ecologicalMap <- mx_ecological_map("Forests")
-ecologicalMap
+highlightedLayers <- c("Forests")
+forestsMap <- plot_mapbox_map("Forests", project_bbox, allSources, communityStyling, highlightedLayers)
+forestsMap
 ```
 
 ## Ecological Communities - Tl'elhumqa' / Freshwater
@@ -165,10 +165,11 @@ Hwtalonēts (Greig Creek) does not currently support large populations of salmon
 <a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#tlelhumqa---freshwater">Learn more about the cultural and ecological values of the freshwater community</a>
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/ecological_map_script.R")
-ecologicalMap <- mx_ecological_map("Freshwater")
-ecologicalMap
+highlightedLayers <- c("Freshwater")
+freshwaterMap <- plot_mapbox_map("Freshwater", project_bbox, allSources, communityStyling, highlightedLayers)
+freshwaterMap
 ```
+
 
 ## Ecological Communities - Hwuiumqa'/ Marine
 <img src="img/Marine_banner.jpg">
@@ -186,9 +187,9 @@ In the past, no one would ever reveal the locations of where to harvest seafood,
 <a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#hwuiumqa---marine">Learn more about the cultural and ecological values of the marine community</a>
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/ecological_map_script.R")
-ecologicalMap <- mx_ecological_map("Marine")
-ecologicalMap
+highlightedLayers <- c("Marine")
+marineMap <- plot_mapbox_map("Marine", project_bbox, allSources, communityStyling, highlightedLayers)
+marineMap
 ```
 
 ## Ecological Communities - Woodlands
@@ -223,15 +224,17 @@ https://ohgarryoaksociety.org/what-is-a-garry-oak/
 <a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#shthuliim---woodlands-and-rock-outcrops">Learn more about the cultural and ecological values of the woodlands community</a>
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/ecological_map_script.R")
-ecologicalMap <- mx_ecological_map("Woodlands")
-ecologicalMap
+highlightedLayers <- c("Woodlands")
+woodlandsMap <- plot_mapbox_map("Woodlands", project_bbox, allSources, communityStyling, highlightedLayers)
+woodlandsMap
 ```
 
 ## From the Lake to the Delta: Xatsa’ / Laughlin Lake
+
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/laughlin_map_script.R")
-laughlinMap <- mx_laughlin_map()
+highlightedLayers <- c("LaughlinLake");
+laughlin_bbox <- mx_read("spatial_data/vectors/LaughlinLake") %>% st_bbox();
+laughlinMap <- plot_mapbox_map("Laughlin", laughlin_bbox, allSources, classStyling, highlightedLayers)
 laughlinMap
 ```
 
@@ -282,9 +285,11 @@ Laughlin Lake is part of a complex wetland ecosystem supporting a diversity of p
 
 
 ## From the Lake to the Delta: Hwta’loonèts / Greig Creek
+
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/greig_map_script.R")
-greigMap <- mx_greig_map()
+highlightedLayers <- c("GreigCreek");
+greig_bbox <- mx_read("spatial_data/vectors/GreigCreek") %>% st_bbox();
+greigMap <- plot_mapbox_map("Greig", greig_bbox, allSources, classStyling, highlightedLayers)
 greigMap
 ```
 
@@ -318,8 +323,9 @@ Grieg Creek was once home to abundant salmon which were an important source of f
 ## From the Lake to the Delta: Delta
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/delta_map_script.R")
-deltaMap <- mx_delta_map()
+highlightedLayers <- c("Delta");
+delta_bbox <- mx_read("spatial_data/vectors/Delta") %>% st_bbox();
+deltaMap <- plot_mapbox_map("Delta", delta_bbox, allSources, classStyling, highlightedLayers)
 deltaMap
 ```
 
@@ -405,7 +411,7 @@ The caves at Xetthecum have significant spiritual and cultural significance for 
 
 </div>
 
-<span class="mxcw-nonLeafletPane mxcw-paneName-Caves html-widget leaflet"></span>
+<span class="mxcw-mapPane mxcw-paneName-Caves"></span>
 
 
 ## Life at the Cove: Retreat Cove
@@ -429,8 +435,9 @@ As a marine location, Retreat Cove is a habitat for rockfish and has been signif
 </div>
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/retreat_map_script.R")
-retreatMap <- mx_retreat_map()
+highlightedLayers <- c();
+retreat_bbox <- mx_read("spatial_data/vectors/RetreatCove") %>% st_bbox();
+retreatMap <- plot_mapbox_map("Retreat", retreat_bbox, allSources, classStyling, highlightedLayers)
 retreatMap
 ```
 
@@ -454,28 +461,27 @@ Eelgrass meadows, kelp beds ([q'am'](#taxon:Nereocystis luetkeana)) and coastal 
 </div>
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/eelgrass_map_script.R")
-eelgrassMap <- mx_eelgrass_map()
+highlightedLayers <- c("EelgrassSimplified");
+eelgrass_bbox <- mx_read("spatial_data/vectors/EelgrassSimplified") %>% st_bbox();
+eelgrassMap <- plot_mapbox_map("Eelgrass", eelgrass_bbox, allSources, classStyling, highlightedLayers)
 eelgrassMap
 ```
 
 ## Ecosystem and Environmental Significance
 
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/ecosystem_map_script.R")
-ecosystemMap <- mx_ecosystem_map()
+highlightedLayers <- c();
+ecosystemMap <- plot_mapbox_map("Ecosystem", project_bbox, allSources, classStyling, highlightedLayers)
 ecosystemMap
 ```
-
 
 ## Community Connection
 
 The stories of the elders highlight the intimate connection between the community and Xetthecum. This connection is brought to life through the cultural practices and traditions associated with the area.
 
-
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/community_map_script.R")
-communityMap <- mx_community_map()
+highlightedLayers <- c();
+communityMap <- plot_mapbox_map("Community", project_bbox, allSources, communityStyling, highlightedLayers)
 communityMap
 ```
 
@@ -487,9 +493,9 @@ Both Indigenous and non-Indigenous communities are actively involved in preservi
 
 May our work on this project and presence on this island contribute to a future that recognizes the importance of reconciliation, collaboration, and the rightful place of Indigenous knowledge in shaping the well-being of the Salish Sea and its inhabitants.
 
-
 ```{r, echo=FALSE, message=FALSE}
-source("scripts/preservation_map_script.R")
-preservationMap <- mx_preservation_map()
+highlightedLayers <- c();
+preservationMap <- plot_mapbox_map("Preservation", project_bbox, allSources, classStyling, highlightedLayers)
 preservationMap
 ```
+

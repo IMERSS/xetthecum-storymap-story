@@ -4,8 +4,18 @@
         outfile: "%maxwell/docs/Xetthecum-Storymap-Reknitted.html",
         options: {
             template: "%maxwell/src/html/template.html",
-            scrollyPageOptions: {
-                zoomDuration: 1500
+            checkLinks: false,
+            storyPageOptions: {
+                zoomDuration: 1500,
+                selectableRegions: ["Forests", "Freshwater", "Marine", "Woodlands"],
+                fillPatternPath: "img/fillPatterns/"
+            },
+            components: {
+                vizLoader: {
+                    type: "hortis.vizLoader",
+                    obsFile: "data/reintegrated-obs-assigned.csv",
+                    taxaFile: "data/reintegrated-final-taxa.csv"
+                }
             },
             paneHandlers: {
                 Acknowledgement: {
@@ -13,58 +23,54 @@
                     gradeNames: "maxwell.mapHidingPaneHandler"
                 },
                 Introduction: {
-                    type: "maxwell.leafletPaneHandler"
+                    type: "maxwell.librePaneHandler"
                 },
                 Historic: {
-                    type: "maxwell.leafletPaneHandler"
+                    type: "maxwell.librePaneHandler"
                 },
                 Forests: {
                     type: "maxwell.xetthecumEcologicalPane",
-                    vizFile: "%resourceBase/data/Life-PhaseIII.json.lz4",
                     selectRegion: "Forests"
                 },
                 Freshwater: {
                     type: "maxwell.xetthecumEcologicalPane",
-                    vizFile: "%resourceBase/data/Life-PhaseIII.json.lz4",
                     selectRegion: "Freshwater"
                 },
                 Marine: {
                     type: "maxwell.xetthecumEcologicalPane",
-                    vizFile: "%resourceBase/data/Life-PhaseIII.json.lz4",
                     selectRegion: "Marine"
                 },
                 Woodlands: {
                     type: "maxwell.xetthecumEcologicalPane",
-                    vizFile: "%resourceBase/data/Life-PhaseIII.json.lz4",
                     selectRegion: "Woodlands"
                 },
                 Laughlin: {
-                    type: "maxwell.leafletPaneHandler"
+                    type: "maxwell.librePaneHandler"
                 },
                 Greig: {
-                    type: "maxwell.leafletPaneHandler"
+                    type: "maxwell.librePaneHandler"
                 },
                 Delta: {
-                    type: "maxwell.leafletPaneHandler"
+                    type: "maxwell.librePaneHandler"
                 },
                 Caves: {
                     type: "maxwell.paneHandler",
                     gradeNames: "maxwell.mapHidingPaneHandler"                
                 },
                 Retreat: {
-                    type: "maxwell.leafletPaneHandler"
+                    type: "maxwell.librePaneHandler"
                 },
                 Eelgrass: {
-                    type: "maxwell.leafletPaneHandler"                
+                    type: "maxwell.librePaneHandler"                
                 },
                 Ecosystem: {
-                    type: "maxwell.leafletPaneHandler"                
+                    type: "maxwell.librePaneHandler"                
                 },
                 Community: {
-                    type: "maxwell.leafletPaneHandler"                
+                    type: "maxwell.librePaneHandler"                
                 },
                 Preservation: {
-                    type: "maxwell.leafletPaneHandler"
+                    type: "maxwell.librePaneHandler"
                 }
             }
         }
@@ -81,9 +87,15 @@
     }, { // TODO: Extend module-relative addressing to 3rd-party modules
         source: "%maxwell/node_modules/@imerss/inat-components/dist/standalone.min.js",
         target: "%maxwell/docs/js/inat-components-standalone.min.js"
-    }, { // TODO: Extend module-relative addressing to 3rd-party modules
+    }, {
         source: "%maxwell/node_modules/@preact/signals-core/dist/signals-core.min.js",
         target: "%maxwell/docs/js/signals-core.min.js"
+    }, {
+        source: "%maxwell/node_modules/maplibre-gl/dist/maplibre-gl-dev.js",
+        target: "%maxwell/docs/js/maplibre-gl-dev.js"
+    }, {
+        source: "%maxwell/node_modules/papaparse/papaparse.min.js",
+        target: "%maxwell/docs/js/papaparse.min.js"
     }, {
         source: "%maxwell/src/css/*.css",
         target: "%maxwell/docs/css"
@@ -102,6 +114,9 @@
         source: "%maxwell/img/Xetthecum/*.svg",
         target: "%maxwell/docs/img/Xetthecum"
     }, {
+        source: "%maxwell/img/fillPatterns/*.png",
+        target: "%maxwell/docs/img/fillPatterns"
+    }, {
         source: "%imerss-bioinfo/src/client/img/Arrow-down.svg",
         target: "%maxwell/docs/img/Arrow-down.svg"
     }, {
@@ -114,18 +129,25 @@
         source: "%imerss-bioinfo/docs/css/imerss-viz-all.css",
         target: "%maxwell/docs/css/imerss-viz-all.css"
     }, {
-        source: "%maxwell/src/html/imerss-viz-scrolly.html",
-        target: "%maxwell/docs/html/imerss-viz-scrolly.html"
+        source: "%maxwell/src/html/imerss-viz-story.html",
+        target: "%maxwell/docs/html/imerss-viz-story.html"
     }, {
         source: "%maxwell/src/html/pane-info.html",
         target: "%maxwell/docs/html/pane-info.html"
     }, {
-        source: "%imerss-bioinfo/src/client/json/emptyPhyloMap.json",
-        target: "%maxwell/docs/json/phyloMap.json"
+        source: "%maxwell/tabular_data/reintegrated-obs-assigned.csv",
+        target: "%maxwell/docs/data/reintegrated-obs-assigned.csv"
     }, {
-        source: "%maxwell/viz_data/*.lz4",
-        target: "%maxwell/docs/data"
-    }]
+        source: "%maxwell/tabular_data/reintegrated-final-taxa.csv",
+        target: "%maxwell/docs/data/reintegrated-final-taxa.csv"
+    }, { // TODO: Source from internal %imerss-bioinfo once it stops changing
+        source: "%maxwell/../bagatelle/src/client/js/new/imerss-new.js",
+        target: "%maxwell/docs/js/imerss-new.js"
+    }, { // TODO: Source from internal %imerss-bioinfo once it stops changing
+        source: "%maxwell/../bagatelle/src/client/js/new/newChecklist.js",
+        target: "%maxwell/docs/js/newChecklist.js"
+    }
+    ]
 }
 
 

@@ -5,6 +5,7 @@ library(plotly)
 library(glue)
 library(geojsonio)
 library(rjson)
+library(rlist)
 
 source("scripts/utils.R")
 
@@ -30,17 +31,15 @@ feature_to_geojson <- function (feature) {
   feature.geojson <- rjson::fromJSON(feature.geojson.json);
 }
 
-polygonStyling <- timedFread("tabular_data/polygonStyling.csv");
-lineStyling <- timedFread("tabular_data/lineStyling.csv");
-allStyling <- rbind(polygonStyling, lineStyling)
-
-allStyling$data <- read_vectors(allStyling$Layer);
-allStyling$geojson <- lapply(allStyling$data, feature_to_geojson)
-
-bbox <- mx_read("spatial_data/vectors/ProjectBoundary") %>% 
-  st_bbox();
-
-highlightedLayers <- c();
+load_and_convert_geojson <- function (styling) {
+  styling$data <- read_vectors(styling$Layer);
+  
+  start <- Sys.time()
+  styling$geojson <- lapply(styling$data, feature_to_geojson)
+  end <- Sys.time()
+  message("Converted ", nrow(styling), " rows to GeoJSON in ", round(end - start, 3), "s")
+  styling
+}
 
 rowsToSources <- function (rows) {
   sources <- list()
@@ -52,16 +51,17 @@ rowsToSources <- function (rows) {
   sources
 }
 
-rowsToLayers <- function (rows) {
+rowsToLayers <- function (rows, highlightedLayers) {
   # Massive guide to iterating over rows in R all of which are very silly: https://github.com/jennybc/row-oriented-workflows/tree/master
   layers <- list()
+  
   for(i in 1:nrow(rows)) {
     row <- rows[i,]
-    cat("Layer ", row$Layer, "opacity", row$fillOpacity, "\n")
+    message("Layer ", row$Layer, " opacity ", row$fillOpacity)
     # Due to a limitation in WebGL we need to add separate features for outline and fill
     if(row$fillOpacity != 0) {
-      cat("fillLayer ", row$Layer, "\n")
-      fillLayer <- list(type="fill", id=row$Layer, source=row$Layer, "fill-sort-key"=row$Z_Order,
+      message("fillLayer ", row$Layer)
+      fillLayer <- list(type="fill", id=row$Layer, source=row$Layer, "fill-sort-key"=row$Z_Order, "mx-fill-pattern"=row$fillPattern,
                         paint=list("fill-color"=row$fillColor, "fill-opacity"=row$fillOpacity))
       # Nutty syntax explained in https://stackoverflow.com/questions/14054120/adding-elements-to-a-list-in-r-in-nested-lists
       layers <- c(layers, list(fillLayer))
@@ -79,24 +79,27 @@ rowsToLayers <- function (rows) {
   layers
 }
 
-allSources <- c(baseStyle$sources, rowsToSources(allStyling));
-allLayers <- c(baseStyle$layers, rowsToLayers(allStyling));
+plot_mapbox_map = function (id, bbox, sources, styling, highlightedLayers) {
 
-style <- list(id="Introduction", version=8, sources=allSources, layers=allLayers, glyphs=baseStyle$glyphs);
+  allSources <- c(baseStyle$sources, sources);
+  allLayers <- c(baseStyle$layers, rowsToLayers(styling, highlightedLayers));
 
-map <- plot_ly(height = 800)
+  style <- list(id=id, version=8, sources=allSources, layers=allLayers, glyphs=baseStyle$glyphs);
 
-map <- map %>% add_trace(
-  type = "choroplethmapbox"
-)
+  map <- plot_ly(height = 800)
 
-map <- map %>% layout(
-  # TODO: This title doesn't display
-  legend = list(title = "Regions"),
-  mapbox=list(
-    style=style,
-    center = list(lon = ((bbox[1] + bbox[3]) / 2), lat = ((bbox[2] + bbox[4]) / 2)),
-    zoom = calc_zoom(bbox) - 1.2
+  map <- map %>% add_trace(
+    type = "choroplethmapbox"
   )
-)
-map
+  
+  map <- map %>% layout(
+    # TODO: This title doesn't display
+    legend = list(title = "Regions"),
+    mapbox=list(
+      style=style,
+      center = list(lon = ((bbox[1] + bbox[3]) / 2), lat = ((bbox[2] + bbox[4]) / 2)),
+      zoom = calc_zoom(bbox) - 1.2
+    )
+  )
+  map
+}

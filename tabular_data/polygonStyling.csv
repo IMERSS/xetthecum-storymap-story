@@ -1,22 +1,22 @@
-﻿Layer,fillColor,fillOpacity,outlineColor,outlineOpacity,outlineWidth,ClassName,Z_Order
-Clearcut,"rgb(188,201,184)",1,"rgb(188,201,184)",1,1,fld-imerss-region-clearcut,0
-CoastalBluff,"rgb(117,117,117)",1,"rgb(117,117,117)",1,1,none,0
-MatureForest,"rgb(23,80,18)",1,"rgb(23,80,18)",1,1,fld-imerss-region-mature-forest,0
-PoleSapling,"rgb(144,166,138)",1,"rgb(144,166,138)",1,1,fld-imerss-region-pole-sapling,0
-Shoreline,"rgb(100,175,164)",1,"rgb(100,175,164)",1,1,none,0
-Subtidal,"rgb(34,122,113)",1,"rgb(34,122,113)",1,1,fld-imerss-region-subtidal,0
-Woodland,"rgb(191,103,58)",1,"rgb(191,103,58)",1,1,fld-imerss-region-woodland,0
-YoungForest,"rgb(91,122,82)",1,"rgb(91,122,82)",1,1,fld-imerss-region-young-forest,0
-Agricultural,"rgb(186,177,140)",1,"rgb(186,177,140)",1,1,none,1
-Developed,"rgb(114,108,84)",1,"rgb(114,108,84)",1,1,none,1
-Rural,"rgb(84,76,54)",1,"rgb(84,76,54)",1,1,none,1
-Dock,"rgb(127,127,127)",1,"rgb(127,127,127)",1,1,none,1
-LaughlinLake,"rgb(0,133,188)",1,"rgb(0,133,188)",1,1,fld-imerss-region-lake-laughlin-lake,1
-Pond,"rgb(0,133,188)",1,"rgb(0,133,188)",1,1,none,1
-Riparian,"rgb(100,195,221)",1,"rgb(100,195,221)",1,1,none,1
-EelgrassSimplified,"rgb(138, 232, 165)",0.7,"rgb(138, 232, 165)",1,1,none,1
-Wetland,"rgb(52, 153, 198)",1,"rgb(52, 153, 198)",1,1,fld-imerss-region-wetland,1
-GreigCreek,"rgb(52,153,198)",1,"rgb(52,153,198)",1,1,none,1
-Delta,"rgb(52,153,198)",0,"rgb(52,153,198)",0,1,none,2
-Road,"rgb(127,127,127)",1,"rgb(127,127,127)",1,1,none,2
-ProjectBoundary,black,0,black,1,1,none,3
+Layer,fillColor,fillOpacity,fillPattern,outlineColor,outlineOpacity,outlineWidth,ClassName,Z_Order
+Clearcut,"rgb(188,201,184)",1,clearcut,"rgb(188,201,184)",1,1,fld-imerss-region-clearcut,0
+CoastalBluff,"rgb(117,117,117)",1,,"rgb(117,117,117)",1,1,none,0
+MatureForest,"rgb(23,80,18)",1,mature-forest,"rgb(23,80,18)",1,1,fld-imerss-region-mature-forest,0
+PoleSapling,"rgb(144,166,138)",1,pole-sapling,"rgb(144,166,138)",1,1,fld-imerss-region-pole-sapling,0
+Shoreline,"rgb(100,175,164)",1,,"rgb(100,175,164)",1,1,none,0
+Subtidal,"rgb(34,122,113)",1,marine,"rgb(34,122,113)",1,1,fld-imerss-region-subtidal,0
+Woodland,"rgb(191,103,58)",1,woodland,"rgb(191,103,58)",1,1,fld-imerss-region-woodland,0
+YoungForest,"rgb(91,122,82)",1,young-forest,"rgb(91,122,82)",1,1,fld-imerss-region-young-forest,0
+Agricultural,"rgb(186,177,140)",1,,"rgb(186,177,140)",1,1,none,1
+Developed,"rgb(114,108,84)",1,,"rgb(114,108,84)",1,1,none,1
+Rural,"rgb(84,76,54)",1,,"rgb(84,76,54)",1,1,none,1
+Dock,"rgb(127,127,127)",1,,"rgb(127,127,127)",1,1,none,1
+LaughlinLake,"rgb(0,133,188)",1,,"rgb(0,133,188)",1,1,fld-imerss-region-lake-laughlin-lake,1
+Pond,"rgb(0,133,188)",1,,"rgb(0,133,188)",1,1,none,1
+Riparian,"rgb(100,195,221)",1,,"rgb(100,195,221)",1,1,none,1
+EelgrassSimplified,"rgb(138, 232, 165)",0.7,,"rgb(138, 232, 165)",1,1,none,1
+Wetland,"rgb(52, 153, 198)",1,,"rgb(52, 153, 198)",1,1,fld-imerss-region-wetland,1
+GreigCreek,"rgb(52,153,198)",1,,"rgb(52,153,198)",1,1,none,1
+Delta,"rgb(52,153,198)",0,,"rgb(52,153,198)",0,1,none,2
+Road,"rgb(127,127,127)",1,,"rgb(127,127,127)",1,1,none,2
+ProjectBoundary,black,0,,black,1,1,none,3

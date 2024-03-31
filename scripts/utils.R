@@ -59,8 +59,6 @@ mx_read <- function (filename, digits = 5) {
   rounded <- round_sf(trans, digits);
 }
 
-#---------- from Galiano Marine Atlas utils.js----------#
-
 mx_griddedObsToHash <- function (gridded) {
   summarised <- gridded %>% group_by(cell_id) %>% 
     summarize(taxa = paste(sort(unique(scientificName)),collapse=", "))
@@ -75,6 +73,14 @@ timedFread <- function (toread) {
   start <- Sys.time()
   frame <- data.table::fread(toread)
   end <- Sys.time()
-  message("Read ", nrow(frame), " rows from ", toread, " in ", (end - start), "s")
-  frame
+  message("Read ", nrow(frame), " rows from ", toread, " in ", round(end - start, 3), "s")
+  # Otherwise traditional R indexing notation fails
+  as.data.frame(frame)
+}
+
+timedWrite <- function (x, towrite) {
+  start <- Sys.time()
+  write.csv(x, towrite, na = "", row.names = FALSE)
+  end <- Sys.time()
+  cat("Written ", nrow(x), " rows to ", towrite, " in ", (end - start), "s")
 }

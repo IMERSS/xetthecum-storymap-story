@@ -80,6 +80,7 @@ h2 {
     min-width: 70vh;
     transition-property: height;
     margin: 0px auto;
+    overflow: hidden;
 
     /** Somehow this works when hiding but not when showing */
      transition-duration: 400ms;
@@ -144,7 +145,15 @@ h2 {
 }
 
 .mxcw-widgetPane.mxcw-activeWidgetPane {
-    display: block;
+    display: flex;
+}
+
+.fl-imerss-panel {
+    display: none;
+}
+
+.fl-imerss-panel.fl-imerss-activePanel {
+    display: flex;
 }
 
 .mxcw-activeSection {
@@ -157,7 +166,7 @@ h2 {
 }
 
 .mxcw-content .mxcw-activeSection {
-    display: block;
+    display: flex;
 }
 
 .mxcw-mapLabel {

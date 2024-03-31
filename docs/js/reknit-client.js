@@ -1,35 +1,6 @@
 "use strict";
 
-/* global L, HTMLWidgets, Plotly */
-
-window.HTMLWidgets = window.HTMLWidgets || {};
-
-// Taken from https://github.com/ramnathv/htmlwidgets/blob/master/inst/www/htmlwidgets.js
-window.HTMLWidgets.dataframeToD3 = function (df) {
-    const names = [];
-    let length;
-    for (const name in df) {
-        if (df.hasOwnProperty(name)) {
-            names.push(name);
-        }
-        if (typeof(df[name]) !== "object" || typeof(df[name].length) === "undefined") {
-            throw new Error("All fields must be arrays");
-        } else if (typeof(length) !== "undefined" && length !== df[name].length) {
-            throw new Error("All fields must be arrays of the same length");
-        }
-        length = df[name].length;
-    }
-    const results = [];
-    let item;
-    for (let row = 0; row < length; row++) {
-        item = {};
-        for (let col = 0; col < names.length; col++) {
-            item[names[col]] = df[names[col]][row];
-        }
-        results.push(item);
-    }
-    return results;
-};
+/* global HTMLWidgets, maplibregl, Plotly */
 
 // Monkey-patch core framework to support wide range of primitives and JSON initial values
 fluid.coerceToPrimitive = function (string) {
@@ -38,6 +9,15 @@ fluid.coerceToPrimitive = function (string) {
 
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var maxwell = fluid.registerNamespace("maxwell");
+
+// noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
+var hortis = fluid.registerNamespace("hortis");
+
+maxwell.asyncForEach = async function (array, callback) {
+    for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
+    }
+};
 
 /**
  * An integer
@@ -57,27 +37,19 @@ var maxwell = fluid.registerNamespace("maxwell");
  * Information about a section element of a storymapping interface
  *
  * @typedef {Object} SectionHolder
+ * @property {String} paneName - The name of the paneHandler for this section
  * @property {HTMLElement} section - The section node housing the widget
  * @property {HTMLElement} heading - The heading (currently h2 node) housing the widget
+ * @property {String} headingText - The text of the heading node
  */
 
 /**
- * Decoded information about a Leaflet widget
+ * Decoded information about a storymapping map widget
  *
- * @typedef {SectionHolder} LeafletWidgetInfo
+ * @typedef {SectionHolder} MapWidgetInfo
  * @property {HTMLElement} [widget] - The DOM node holding the widget
- * @property {Object} data - The `data` entry associated with the widget
+ * @property {Object} data - The `data` entry associated with the map widget
  * @property {Array} subPanes - Any subpanes to which the widget's calls are allocated
- */
-
-/**
- * A Leaflet Map
- * @typedef {Object} LeafletMap
- */
-
-/**
- * A Leaflet LayerGroup
- * @typedef {Object} LeafletLayerGroup
  */
 
 fluid.defaults("maxwell.widgetHandler", {
@@ -130,13 +102,13 @@ fluid.defaults("maxwell.choroplethSlider", {
     }
 });
 
-maxwell.choroplethSlider.bind = function (element, that, paneHandler, scrollyPage) {
+maxwell.choroplethSlider.bind = function (element, that, paneHandler, storyPage) {
     const slider = element;
     const paneIndex = paneHandler.options.paneIndex;
 
     slider.on("plotly_sliderchange", function (e) {
         console.log("Slider change ", e);
-        scrollyPage.applier.change(["activeSubPanes", paneIndex], e.slider.active);
+        storyPage.applier.change(["activeSubPanes", paneIndex], e.slider.active);
         if (that.timer) {
             window.clearInterval(that.timer);
             delete that.timer;
@@ -144,7 +116,7 @@ maxwell.choroplethSlider.bind = function (element, that, paneHandler, scrollyPag
     });
     // Initialises with the assumption that the 0th subpane should be initially active - makes sense for choropleths
     // but what about others?
-    scrollyPage.applier.change(["activeSubPanes", paneIndex], 0);
+    storyPage.applier.change(["activeSubPanes", paneIndex], 0);
 };
 
 fluid.defaults("maxwell.withSliderAnimation", {
@@ -157,21 +129,21 @@ fluid.defaults("maxwell.withSliderAnimation", {
     }
 });
 
-maxwell.withSliderAnimation.bind = function (element, that, paneHandler, scrollyPage) {
+maxwell.withSliderAnimation.bind = function (element, that, paneHandler, storyPage) {
     const limit = element.data.length;
     const paneIndex = paneHandler.options.paneIndex;
     that.timer = window.setInterval(function () {
-        const current = scrollyPage.model.activeSubPanes[paneIndex];
+        const current = storyPage.model.activeSubPanes[paneIndex];
         const next = (current + 1) % limit;
         // This updates the slider position and label, but not the plot
         Plotly.relayout(element, {"sliders.0.active": next});
         // This updates visibility of the plot - unknown why this doesn't happen from the former
         Plotly.restyle(element, {visible: element.layout.sliders[0].steps[next].args[1]});
-        scrollyPage.applier.change(["activeSubPanes", paneIndex], next);
+        storyPage.applier.change(["activeSubPanes", paneIndex], next);
     }, that.options.delay);
 };
 
-maxwell.findPlotlyWidgets = function (scrollyPage, sectionHolders) {
+maxwell.findPlotlyWidgets = function (storyPage, sectionHolders) {
     const widgets = [...document.querySelectorAll(".html-widget.plotly")];
     const sections = fluid.getMembers(sectionHolders, "section");
 
@@ -182,13 +154,12 @@ maxwell.findPlotlyWidgets = function (scrollyPage, sectionHolders) {
         const index = sections.indexOf(pane);
 
         console.log("Plotly widget's pane index is " + index + " with id " + widgetId);
-        const paneHandlerName = scrollyPage.leafletWidgets[index].paneHandlerName;
-        // cf. leafletWidgetToPane
-        const paneHandler = paneHandlerName && maxwell.paneHandlerForName(scrollyPage, paneHandlerName);
+        const paneName = storyPage.sectionHolders[index].paneName;
+        const paneHandler = paneName && maxwell.paneHandlerForName(storyPage, paneName);
         if (widgetId) {
             const handler = maxwell.widgetHandlerForName(paneHandler, widgetId);
             if (handler) {
-                handler.events.bindWidget.fire(widget, handler, paneHandler, scrollyPage, paneHandler);
+                handler.events.bindWidget.fire(widget, handler, paneHandler, storyPage, paneHandler);
             } else {
                 console.log("No widget handler configured for widget with id ", widgetId);
             }
@@ -196,23 +167,6 @@ maxwell.findPlotlyWidgets = function (scrollyPage, sectionHolders) {
             console.log("Warning: no widget id found for plotly widget ", widget);
         }
     });
-};
-
-maxwell.leafletiseCoords = function (coords) {
-    return coords.map(poly => poly.map(HTMLWidgets.dataframeToD3));
-};
-
-// Undo bizarre "multiplexing" which is achieved by the HTMLWidgets "dataFrame" system
-maxwell.resolveVectorOptions = function (options, index) {
-    const entries = Object.entries(options).map(([key, val]) =>
-        [key, Array.isArray(val) ? val[index] : val]
-    );
-    return Object.fromEntries(entries);
-};
-
-// Another demultiplexing for dataframe args
-maxwell.projectArgs = function (args, index) {
-    return args.map(arg => Array.isArray(arg) ? arg[index] : arg);
 };
 
 // From https://gis.stackexchange.com/questions/31951/showing-popup-on-mouse-over-not-on-click-using-leaflet
@@ -238,425 +192,41 @@ fluid.defaults("maxwell.withNativeLegend", {
     }
 });
 
-// From https://github.com/rstudio/leaflet/blob/main/javascript/src/methods.js#LL713C1-L859C3
-maxwell.addNativeLegend = function (options, map, paneHandler) {
-    const legend = L.control({position: options.position});
-    const div = L.DomUtil.create("div", options.className);
-
-    legend.onAdd = function () {
-        const colors = options.colors,
-            labels = options.labels;
-        let legendHTML = "";
-        if (options.type === "numeric") {
-            // # Formatting constants.
-            const singleBinHeight = 20;  // The distance between tick marks, in px
-            const vMargin = 8; // If 1st tick mark starts at top of gradient, how
-            // many extra px are needed for the top half of the
-            // 1st label? (ditto for last tick mark/label)
-            const tickWidth = 4;     // How wide should tick marks be, in px?
-            const labelPadding = 6;  // How much distance to reserve for tick mark?
-            // (Must be >= tickWidth)
-
-            // # Derived formatting parameters.
-
-            // What's the height of a single bin, in percentage (of gradient height)?
-            // It might not just be 1/(n-1), if the gradient extends past the tick
-            // marks (which can be the case for pretty cut points).
-            const singleBinPct = (options.extra.p_n - options.extra.p_1) / (labels.length - 1);
-            // Each bin is `singleBinHeight` high. How tall is the gradient?
-            const totalHeight = (1 / singleBinPct) * singleBinHeight + 1;
-            // How far should the first tick be shifted down, relative to the top
-            // of the gradient?
-            const tickOffset = (singleBinHeight / singleBinPct) * options.extra.p_1;
-
-            const gradSpan = $("<span/>").css({
-                "background": "linear-gradient(" + colors + ")",
-                "opacity": options.opacity,
-                "height": totalHeight + "px",
-                "width": "18px",
-                "display": "block",
-                "margin-top": vMargin + "px"
-            });
-            const leftDiv = $("<div/>").css("float", "left"),
-                rightDiv = $("<div/>").css("float", "left");
-            leftDiv.append(gradSpan);
-            $(div).append(leftDiv).append(rightDiv)
-                .append($("<br>"));
-
-            // Have to attach the div to the body at this early point, so that the
-            // svg text getComputedTextLength() actually works, below.
-            document.body.appendChild(div);
-
-            const ns = "http://www.w3.org/2000/svg";
-            const svg = document.createElementNS(ns, "svg");
-            rightDiv.append(svg);
-            const g = document.createElementNS(ns, "g");
-            $(g).attr("transform", "translate(0, " + vMargin + ")");
-            svg.appendChild(g);
-
-            // max label width needed to set width of svg, and right-justify text
-            let maxLblWidth = 0;
-
-            // Create tick marks and labels
-            $.each(labels, function (i) {
-                let y = tickOffset + i * singleBinHeight + 0.5;
-
-                let thisLabel = document.createElementNS(ns, "text");
-                $(thisLabel)
-                    .text(labels[i])
-                    .attr("y", y)
-                    .attr("dx", labelPadding)
-                    .attr("dy", "0.5ex");
-                g.appendChild(thisLabel);
-                maxLblWidth = Math.max(maxLblWidth, thisLabel.getComputedTextLength());
-
-                let thisTick = document.createElementNS(ns, "line");
-                $(thisTick)
-                    .attr("x1", 0)
-                    .attr("x2", tickWidth)
-                    .attr("y1", y)
-                    .attr("y2", y)
-                    .attr("stroke-width", 1);
-                g.appendChild(thisTick);
-            });
-
-            // Now that we know the max label width, we can right-justify
-            $(svg).find("text")
-                .attr("dx", labelPadding + maxLblWidth)
-                .attr("text-anchor", "end");
-            // Final size for <svg>
-            $(svg).css({
-                width: (maxLblWidth + labelPadding) + "px",
-                height: totalHeight + vMargin * 2 + "px"
-            });
-
-            if (options.na_color && ($.inArray(options.na_label, labels) < 0) ) {
-                $(div).append("<div><i style=\"" +
-                    "background:" + options.na_color +
-                    ";opacity:" + options.opacity +
-                    ";margin-right:" + labelPadding + "px" +
-                    ";\"></i>" + options.na_label + "</div>");
-            }
-        } else {
-            if (options.na_color && ($.inArray(options.na_label, labels) < 0) ) {
-                colors.push(options.na_color);
-                labels.push(options.na_label);
-            }
-            for (let i = 0; i < colors.length; i++) {
-                legendHTML += "<i style=\"background:" + colors[i] + ";opacity:" +
-                    options.opacity + "\"></i> " + labels[i] + "<br>";
-            }
-            div.innerHTML = legendHTML;
-        }
-        if (options.title) {
-            $(div).prepend("<div style=\"margin-bottom:3px\"><strong>" +
-                options.title + "</strong></div>");
-        }
-        return div;
-    };
-    paneHandler.legendContainer = div;
-
-    legend.addTo(map);
-};
-
-maxwell.divIcon = function (label, className) {
-    return L.divIcon({
-        html: "<div>" + label + "</div>",
-        iconSize: null,
-        // Ensure that markers never auto-dismiss selection
-        className: (className || "") + " fld-imerss-nodismiss-map"
-    });
-};
-
-maxwell.addMarkers = function (lat, lon, iconOrRadius, options, label, labelOptions, paneOptions, group, paneHandler) {
-    // Note that labelOnlyMarkers are spat out in https://github.com/rstudio/leaflet/blob/main/R/layers.R#L826
-    // We detect this through the special case of a width set to 1 and use a div icon which is much
-    // easier to configure than the HTMLwidgets strategy of a permanently open tooltip attached to the marker
-    if (!iconOrRadius) {
-        const markerIcon = new L.Icon.Default();
-        markerIcon.options.shadowSize = [0, 0];
-        const marker = L.marker([lat, lon], {icon: markerIcon, ...paneOptions}).addTo(group);
-        const divIcon = maxwell.divIcon(label, labelOptions.className);
-        const labelMarker = L.marker([lat, lon], {icon: divIcon, ...paneOptions}).addTo(group);
-        paneHandler.handleMarker(marker, divIcon, label, labelOptions, labelMarker);
-
-        const clickHandler = function () {
-            paneHandler.events.markerClick.fire(label);
-        };
-        marker.on("click", clickHandler);
-        labelMarker.on("click", clickHandler);
-    } else if (typeof(iconOrRadius) === "number") {
-        const radius = iconOrRadius;
-        const circleMarker = L.circleMarker([lat, lon], {radius, ...options, ...paneOptions}).addTo(group);
-        if (label) {
-            circleMarker.bindPopup(label, {closeButton: false, ...labelOptions});
-            maxwell.hoverPopup(circleMarker, paneOptions);
-        }
-        paneHandler.handleMarker(circleMarker, null, label, labelOptions);
-    } else {
-        const icon = iconOrRadius;
-        const Licon = icon.iconWidth === 1 ?
-            maxwell.divIcon(label) :
-            L.icon({
-                iconUrl: icon.iconUrl,
-                iconSize: [icon.iconWidth, icon.iconHeight]
-            });
-        const iconMarker = L.marker([lat, lon], {icon: Licon, ...paneOptions}).addTo(group);
-        paneHandler.handleMarker(iconMarker, Licon, label, labelOptions);
-    }
-    // from https://github.com/rstudio/leaflet/blob/main/javascript/src/methods.js#L189
-};
-
-/**
- * Information about an allocated Leaflet pane
- *
- * @typedef {SectionHolder} PaneInfo
- * @property {String} paneName - The name of the pane, in the form "maxwell-pane-n"
- * @property {HTMLElement} pane - The HTML element for the allocated pane
- * @property {LayerGroup} group - The root LayerGroup allocated for the pane
- * @property {Object} paneOptions - Options to be mixed in to any layers in order to allocate them to this pane,
- * being the member {pane: paneName}
- */
-
-/** Allocates a pane to hold controls at the specified index and subIndex values
- * @param {LeafletMap} map - The Leaflet Map in which the pane is to be allocated
- * @param {Integer} index - The index of the pane to be allocated
- * @param {Integer} [subLayerIndex] - Optional subindex of the pane
- * @param {String} [overridePane] - An optional override pane in case the default algorithm choice is to be overriden - in
- * case, e.g. that the material is destined for a base map pane
- * @return {PaneInfo} - The allocated paneInfo structure
- */
-maxwell.allocatePane = function (map, index, subLayerIndex, overridePane) {
-    let paneName = "maxwell-pane-" + (index === undefined ? overridePane : index);
-    if (subLayerIndex !== undefined) {
-        paneName += "-subpane-" + subLayerIndex;
-    }
-    const paneOptions = {
-        pane: paneName
-    };
-    let group;
-    let pane = map.getPane(paneName);
-    if (!pane) {
-        pane = map.createPane(paneName);
-        pane.classList.add("mxcw-mapPane");
-        if (subLayerIndex !== undefined) {
-            pane.classList.add("mxcw-mapSubPane");
-        }
-        group = L.layerGroup(paneOptions).addTo(map);
-        // We used to jam these onto the map so they could be found - now they go into paneInfo in our own records
-        map["mx-group-" + paneName] = group;
-    } else {
-        group = map["mx-group-" + paneName];
-    }
-
-    return {paneName, pane, paneOptions, group};
-};
-
-/** Gets a paneHandler component fully ready for handling polygon options, or returns
- * a placeholder if this is a section with no actual leaflet widget (e.g. an inatComponents pane)
- * @param {paneHandler} [paneHandler] - An optional paneHandler component
- * @return {paneHandler} A paneHandler component with resolved members, or a placeholder
- */
-maxwell.resolvePaneHandler = function (paneHandler) {
-    if (paneHandler) {
-        fluid.getForComponent(paneHandler, "handlePoly");
-        fluid.getForComponent(paneHandler, "polyOptions");
-        fluid.getForComponent(paneHandler, "handleMarker");
-        return paneHandler;
-    } else {
-        return {
-            polyOptions: fluid.identity,
-            handlePoly: fluid.identity,
-            handleMarker: fluid.identity
-        };
-    }
-};
-
-// Allocate a polygonal leaflet call into a pane or subpane
-maxwell.assignPolyToPane = function (rawPaneHandler, callArgs, polyMethod, paneInfo) {
-    const shapes = callArgs[0],
-        options = Object.assign({}, callArgs[3], paneInfo.paneOptions);
-    const paneHandler = maxwell.resolvePaneHandler(rawPaneHandler);
-    shapes.forEach(function (shape, index) {
-        const r = v => maxwell.resolveVectorOptions(v, index);
-        const args = maxwell.projectArgs(callArgs, index);
-        const shapeOptions = r(options);
-        const popup = args[4];
-        const popupOptions = args[5];
-        const label = args[6];
-        const labelOptions = args[7];
-        const finalOptions = paneHandler.polyOptions(shapeOptions, label, labelOptions);
-        const polygon = L[polyMethod](maxwell.leafletiseCoords(shape), finalOptions).addTo(paneInfo.group);
-        if (popup) {
-            polygon.bindPopup(popup, {closeButton: false, ...popupOptions});
-            maxwell.hoverPopup(polygon, paneInfo.paneOptions);
-        } else if (label) {
-            polygon.bindPopup(label, {closeButton: false, ...labelOptions});
-            maxwell.hoverPopup(polygon, paneInfo.paneOptions);
-        }
-        paneHandler.handlePoly(polygon, shapeOptions, label, labelOptions);
-    });
-};
-
-maxwell.leafletPolyMethods = {
-    addPolygons: "polygon",
-    addPolylines: "polyline"
-};
-
-maxwell.methodToLayoutArg = {
-    addPolygons: 1,
-    addRasterImage: 4
-};
-
-/**
- * Looks up any `layoutId` argument in the supplied Leaflet widget's `call` structure
- * @param {HTMLWidgetCall} call - The call to be searched
- * @return {String|undefined} - The `layoutId` argument, if any
- */
-maxwell.decodeLayoutId = function (call) {
-    const argPos = maxwell.methodToLayoutArg[call.method];
-    return argPos && call.args[argPos];
-};
-
-maxwell.decodeNonLeafletHandler = function (widget) {
-    const nameHolder = [...widget.node.classList].find(clazz => clazz.startsWith("mxcw-paneName-"));
+maxwell.decodePaneName = function (node) {
+    const nameHolder = [...node.classList].find(clazz => clazz.startsWith("mxcw-paneName-"));
     return nameHolder.substring("mxcw-paneName-".length);
 };
 
-maxwell.decodeLeafletWidgetCall = function (options, call) {
-    const {map, widget, index, paneInfo, paneHandler} = options;
-    const {paneOptions, group} = paneInfo;
-    // TODO: Current assumption is that any choice of layoutId converts to a direct assignment to the same-named pane -
-    // which is useful for assigning to "baseMap" e.g. in the community directory but not good for e.g. Howe Sound assignment
-    // to clickable "communities".
-    const overridePane = maxwell.decodeLayoutId(call);
-    let overridePaneInfo, overridePaneOptions, overrideGroup;
-    if (overridePane && typeof(overridePane) === "string") { // tmap will allocate a vector layoutId, ignore it
-        overridePaneInfo = maxwell.allocatePane(map, undefined, undefined, overridePane);
-        overridePaneOptions = overridePaneInfo.paneOptions;
-        overrideGroup = overridePaneInfo.group;
-    }
-    // See https://github.com/rstudio/leaflet/blob/main/javascript/src/methods.js#L550
-    const polyMethod = maxwell.leafletPolyMethods[call.method];
-    if (polyMethod) {
-        // TODO: Note that because we can't tunnel arguments other than layerId for addRasterImage, we should move
-        // the subLayerIndex system (used for Howe Sound choropleth) over to layerId as well to support future
-        // uses of raster images in a choropleth
-        // TODO: We should probably demultiplex these arguments up front so that we can support multiplex assignment of
-        // layerId and subLayerIndex on the R side
-        const subLayerIndex = call.args[3].mx_subLayerIndex;
-        if (subLayerIndex !== undefined) {
-            const subPaneInfo = maxwell.allocatePane(map, index, subLayerIndex);
-            maxwell.assignPolyToPane(paneHandler, call.args, polyMethod, subPaneInfo);
-            widget.subPanes[subLayerIndex] = subPaneInfo;
-        } else {
-            maxwell.assignPolyToPane(paneHandler, call.args, polyMethod, overridePaneInfo || paneInfo);
-        }
-    } else if (call.method === "addRasterImage") {
-        // args: url, bounds, opacity
-        const opacity = call.args[2] ?? 1.0;
-        L.imageOverlay(call.args[0], call.args[1], Object.assign({}, {
-            opacity: opacity
-        }, overridePaneOptions || paneOptions)).addTo(overrideGroup || group);
-    } else if (call.method === "addMarkers" || call.method === "addCircleMarkers") {
-        // Very limited support currently - just for labelOnlyMarkers used in fire history
-        // args: lat, lng, icon || radius, layerId, group, options, popup, popupOptions,
-        // clusterOptions, clusterId, label, labelOptions, crosstalkOptions
-        const markerArgs = [call.args[0], call.args[1], call.args[2], call.args[5], call.args[10], call.args[11], paneOptions, group, paneHandler];
-        if (Array.isArray(call.args[0])) {
-            for (let i = 0; i < call.args[0].length; ++i) {
-                maxwell.addMarkers.apply(null, maxwell.projectArgs(markerArgs, i));
-            }
-        } else {
-            maxwell.addMarkers.apply(null, markerArgs);
-        }
-    } else if (call.method === "addLegend") {
-        if (fluid.componentHasGrade(paneHandler, "maxwell.withNativeLegend")) {
-            maxwell.addNativeLegend(call.args[0], map, paneHandler);
-        }
-    } else {
-        console.log("Unknown R leaflet method " + call.method + " discarded");
-    }
-};
-
-/** Decodes all the calls in a leaflet widget and allocates them to an appropriate pane or subpane of the overall
- * @param {maxwell.scrollyPage} scrollyPage - The overall scrollyPage component
- * @param {LeafletMap} map - The map holding the pane to which the widget's calls should be assigned
- * @param {LeafletWidgetInfo} widget - The information structure for the widget as returned from findLeafletWidgets. This will
- * be modified by the call to add a member `pane` indicating the base pane to which the widget is allocated (this may
- * be overriden by a `layerId` entry in a particular `call` entry for the widget), as well as an optional member mapId
- * @param {Integer} index - The index of the widget/section heading in the document structure
- */
-maxwell.leafletWidgetToPane = function (scrollyPage, map, widget, index) {
-    widget.paneHandlerName = widget.data ? widget.data.x?.options?.mx_mapId : maxwell.decodeNonLeafletHandler(widget);
-    let paneHandler = widget.paneHandlerName && maxwell.paneHandlerForName(scrollyPage, widget.paneHandlerName);
-    if (!paneHandler) {
-        // Automatically construct a default leafletPaneHandler to deal with simple non-interactive vignettes
-        // Note this is bugged due to https://fluidproject.atlassian.net/browse/FLUID-6777 and only works in the absence of plotly (e.g. Maxwell)
-        const new_id = "auto-paneHandler-" + index;
-        widget.paneHandlerName = new_id;
-        const options = {
-            type: "maxwell.leafletPaneHandler",
-            paneKey: new_id
-        };
-        paneHandler = fluid.construct([...fluid.pathForComponent(scrollyPage), new_id], options);
-    }
-    const paneInfo = maxwell.allocatePane(map, index);
-    if (widget.data) {
-        widget.data.x.calls.forEach(call => maxwell.decodeLeafletWidgetCall({map, widget, index, paneInfo, paneHandler}, call));
-    }
-    widget.paneInfo = paneInfo;
-};
-
-/**
- * @param {maxwell.scrollyPage} scrollyPage - The overall scrollyPage component
- * @param {LeafletWidgetInfo[]} leafletWidgets - Array of partially completed leaflet widget structures
- * @param {LeafletMap} map - The map holding the pane to which the widget's calls should be assigned
- */
-maxwell.decodeLeafletWidgets = function (scrollyPage, leafletWidgets, map) {
-    leafletWidgets.forEach((widget, i) => maxwell.leafletWidgetToPane(scrollyPage, map, widget, i));
-};
-
-// Index the collection of leafletWidget components by paneHandlerName
-maxwell.leafletWidgetsToIndex = function (leafletWidgets) {
+// Index the collection of sectionHolder structure by paneHandlerName
+maxwell.sectionHoldersToIndex = function (sectionHolders) {
     const togo = {};
-    leafletWidgets.forEach(function (widget, index) {
-        if (widget.paneHandlerName) {
-            togo[widget.paneHandlerName] = index;
-        }
+    sectionHolders.forEach(function (sectionHolder, index) {
+        togo[sectionHolder.paneName] = index;
     });
     return togo;
 };
 
 /**
- * Decodes the document structure surrounding an array of DOM nodes representing Leaflet widgets
- * @param {maxwell.scrollyPage} scrollyPage - The overall scrollyPage component
- * @param {HTMLElement[]} widgets - The array of DOM nodes representing Leaflet widgets
- * @param {LeafletMap} map - The map holding the pane to which the widget's calls should be assigned
- * @return {LeafletWidgetInfo[]} An array of structures representing the Leaflet widgets
+ * Decodes the document structure surrounding an array of DOM nodes representing map widgets
+ * @param {maxwell.storyPage} storyPage - The overall storyPage component
+ * @return {SectionHolder[]} An array of structures representing the section holders
  */
-maxwell.mapLeafletWidgets = function (scrollyPage, widgets, map) {
-    console.log("Found " + widgets.length + " leaflet widgets");
-    const togo = [...widgets].map(function (widget) {
-        const id = widget.id;
-        const dataNode = id ? document.querySelector("[data-for=\"" + id + "\"") : null;
-        console.log("Got data node ", dataNode);
-        const data = dataNode ? JSON.parse(dataNode.innerHTML) : null;
-        console.log("Got data ", data);
-        const section = widget.closest(".section.level2");
+maxwell.mapSectionHolders = function (storyPage) {
+    const sections = storyPage.locate("sections");
+    console.log("Found " + sections.length + " sections");
+    const togo = [...sections].map(function (section) {
         const heading = section.querySelector("h2");
+        const paneNameHolder = section.querySelector(".mxcw-mapPane");
+        const paneName = maxwell.decodePaneName(paneNameHolder);
         return {
-            node: widget,
-            data: data,
+            section, heading, paneName,
             subPanes: [],
-            section: section,
-            heading: heading,
             headingText: heading.innerText
         };
     });
-    maxwell.decodeLeafletWidgets(scrollyPage, togo, map);
     return togo;
 };
+
 
 // Search through an HTMLWidgets "calls" structure for a method with particular name
 maxwell.findCall = function (calls, method) {
@@ -680,31 +250,6 @@ maxwell.updateActiveWidgetSubPanes = function (that, effectiveActiveSubpanes) {
     });
 };
 
-// From https://stackoverflow.com/a/16436975
-maxwell.arraysEqual = function (a, b, length) {
-    if (a === b) {
-        return true;
-    }
-    if (!a || !b) {
-        return false;
-    }
-    if (a.length !== b.length) {
-        return false;
-    }
-
-    for (let i = 0; i < (length || a.length); ++i) {
-        if (a[i] !== b[i]) {
-            return false;
-        }
-    }
-    return true;
-};
-
-maxwell.equalBounds = function (bounds1, bounds2) {
-    // TODO: Somehow all our bounds objects end up with a 5th element which is an empty array
-    return maxwell.arraysEqual(bounds1, bounds2, 4);
-};
-
 maxwell.normaliseBounds = function (bounds) {
     return [+bounds[0], +bounds[1], +bounds[2], +bounds[3]];
 };
@@ -726,55 +271,10 @@ maxwell.expandBounds = function (bounds, factor) {
     return [newLat1, newLong1, newLat2, newLong2];
 };
 
-/** Apply the map bounds found either in a fitBounds or setView call attached to the supplied widget data
- * @param {LeafletMap} map - The map to which the view is to be applied
- * @param {Object} xData - The "data.x" member of the HTMLWidgets Leaflet instantiator
- */
-maxwell.applyView = function (map, xData) {
-    const fitBounds = xData.fitBounds;
-    const setView = xData.setView;
-    const limits = xData.limits;
-    if (fitBounds) {
-        // Leaflet seems to apply some "natural shrinkage" to the bounds which we need to compensate for otherwise we zoom out too far
-        const bounds = maxwell.expandBounds(fitBounds, 0.9);
-        map.fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]]);
-    } else if (setView) {
-        map.setView(setView[0], setView[1]);
-    } else if (limits) {
-        // Ignore the maps with limits for now - slows down Maxwell too much and they are too wide anyway
-        // "limits" are what gets spat out if there are no explicit bounds set
-        // map.fitBounds([[limits.lat[0], limits.lng[0]], [limits.lat[1], limits.lng[1]]]);
-    } else {
-        console.error("Unable to find map view information in widget data ", xData);
-    }
-};
-
-maxwell.flyToBounds = function (map, xData, durationInMs) {
-    return new Promise(function (resolve) {
-        const rawBounds = xData.fitBounds;
-        if (rawBounds && map._loaded) {
-            const bounds = maxwell.expandBounds(rawBounds, 0.9);
-            if (maxwell.equalBounds(bounds, map.lastBounds)) {
-                resolve();
-            } else {
-                map.invalidateSize();
-                map.flyToBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]], {
-                    duration: durationInMs / 1000
-                });
-                map.lastBounds = bounds;
-                map.once("moveend zoomend", resolve);
-            }
-        } else {
-            maxwell.applyView(map, xData);
-            resolve();
-        }
-    });
-};
-
-maxwell.paneKeyToIndex = function (handler, scrollyPage) {
+maxwell.paneKeyToIndex = function (handler, storyPage) {
     const key = fluid.getForComponent(handler, "options.paneKey");
-    const sectionNameToIndex = fluid.getForComponent(scrollyPage, "sectionNameToIndex");
-    const index = sectionNameToIndex[key];
+    const paneKeyToIndex = fluid.getForComponent(storyPage, "paneKeyToIndex");
+    const index = paneKeyToIndex[key];
     if (index === undefined) {
         fluid.fail("Unable to look up section handler with name " + key + " to a data pane index");
     }
@@ -784,31 +284,26 @@ maxwell.paneKeyToIndex = function (handler, scrollyPage) {
 /**
  * Given a paneHandler component, find its section holder
  * @param {maxwell.scrollyPaneHandler} handler - The paneHandler to be looked up
- * @param {maxwell.scrollyPage} scrollyPage - The overall scrollyPage component
+ * @param {maxwell.storyPage} storyPage - The overall storyPage component
  * @return {jQuery} A jQuery-wrapped container node suitable for instantiating a component.
  */
-maxwell.sectionForPaneHandler = function (handler, scrollyPage) {
-    const index = maxwell.paneKeyToIndex(handler, scrollyPage);
-    return fluid.container(scrollyPage.sectionHolders[index].section);
+maxwell.sectionForPaneHandler = function (handler, storyPage) {
+    const index = maxwell.paneKeyToIndex(handler, storyPage);
+    return fluid.container(storyPage.sectionHolders[index].section);
 };
 
-maxwell.leafletWidgetForPaneHandler = function (handler, scrollyPage) {
-    const index = maxwell.paneKeyToIndex(handler, scrollyPage);
-    return scrollyPage.leafletWidgets[index];
-};
-
-maxwell.paneHandlerForRegion = function (scrollyPage, region) {
-    const paneHandlers = fluid.queryIoCSelector(scrollyPage, "maxwell.paneHandler", true);
+maxwell.paneHandlerForRegion = function (storyPage, region) {
+    const paneHandlers = fluid.queryIoCSelector(storyPage, "maxwell.paneHandler", true);
     return paneHandlers.find(handler => fluid.getForComponent(handler, "options.selectRegion") === region);
 };
 
-maxwell.paneHandlerForName = function (scrollyPage, paneName) {
-    const paneHandlers = fluid.queryIoCSelector(scrollyPage, "maxwell.paneHandler", true);
+maxwell.paneHandlerForName = function (storyPage, paneName) {
+    const paneHandlers = fluid.queryIoCSelector(storyPage, "maxwell.paneHandler", true);
     return paneHandlers.find(handler => fluid.getForComponent(handler, "options.paneKey") === paneName);
 };
 
-maxwell.paneHandlerForIndex = function (scrollyPage, paneIndex) {
-    const paneHandlers = fluid.queryIoCSelector(scrollyPage, "maxwell.paneHandler", true);
+maxwell.paneHandlerForIndex = function (storyPage, paneIndex) {
+    const paneHandlers = fluid.queryIoCSelector(storyPage, "maxwell.paneHandler", true);
     return paneHandlers.find(handler => fluid.getForComponent(handler, "options.paneIndex") === paneIndex);
 };
 
@@ -830,22 +325,116 @@ maxwell.resolvePaneHandlers = function () {
     return maxwell.unflattenOptions(rawPaneHandlers);
 };
 
+// Basic style: https://github.com/maplibre/maplibre-gl-js/issues/638
+fluid.defaults("hortis.libreMap", {
+    gradeNames: "fluid.viewComponent",
+    mapOptions: {
+        style: {
+            version: 8,
+            layers: [],
+            sources: {}
+        }
+    },
+    members: {
+        map: "@expand:hortis.libreMap.make({that}.container.0, {that}.options.mapOptions, {that}.mapLoaded, {that}.loadFillPatterns)",
+        mapLoaded: "@expand:signal()",
+        hasBounds: false,
+        selectedRegion: "@expand:signal()"
+    },
+    invokers: {
+        loadFillPatterns: "hortis.libreMap.loadFillPatterns({that}.map, {that}.options.fillPatternPath, {that}.options.fillPatterns)"
+    },
+    listeners: {
+        "onCreate.bindRegionSelect": "hortis.libreMap.bindRegionSelect({that})"
+    }
+});
+
+hortis.libreMap.bindRegionSelect = function (that) {
+    const map = that.map;
+    that.options.selectableRegions.forEach(selectableRegion => {
+        map.on("click", selectableRegion, (e) => {
+            console.log("Region ", selectableRegion, " clicked: ", e);
+            that.selectedRegion.value = selectableRegion;
+        });
+        // https://stackoverflow.com/a/59203845
+        map.on("mouseenter", selectableRegion, () => {
+            map.getCanvas().style.cursor = "pointer";
+        });
+        map.on("mouseleave", selectableRegion, () => {
+            map.getCanvas().style.cursor = "";
+        });
+    });
+};
+
+hortis.libreMap.loadFillPatterns = function (map, fillPatternPath, fillPatterns) {
+    return maxwell.asyncForEach(Object.keys(fillPatterns || {}), async fillPattern => {
+        const url = fillPatternPath + fillPattern + ".png";
+        const image = await map.loadImage(url);
+        console.log("Loaded image ", url);
+        // Explained in https://github.com/mapbox/mapbox-gl-js/pull/9372
+        // Drawn in here: https://github.com/mapbox/mapbox-gl-js/blob/3f1d023894f1fa4d0d2dae0f9ca284a8bab19eaf/js/render/draw_fill.js#L139
+        // Or maybe in here, looks very different in libre: https://github.com/maplibre/maplibre-gl-js/blob/main/src/render/draw_fill.ts#L112
+        map.addImage(fillPattern, image.data, {pixelRatio: 8});
+    });
+};
+
+hortis.libreMap.make = function (container, mapOptions, mapLoaded, loadFillPatterns) {
+    const emptyOptions = fluid.copy(fluid.defaults("hortis.libreMap").mapOptions);
+    const map = new maplibregl.Map({container, ...emptyOptions});
+    // Very long-standing bugs with mapbox load event: https://github.com/mapbox/mapbox-gl-js/issues/6707
+    // and https://github.com/mapbox/mapbox-gl-js/issues/9779
+    map.on("load", async function () {
+        console.log("Map loaded");
+        await loadFillPatterns();
+        // Have to do this after fill patterns are loaded otherwise images are not resolved
+        map.setStyle(mapOptions.style);
+        map.once("styledata", () => {
+            mapLoaded.value = 1;
+        });
+    });
+    return map;
+};
+
+fluid.defaults("hortis.libreMap.inStoryPage", {
+    gradeNames: "hortis.libreMap",
+    container: "{storyPage}.dom.map",
+    zoomDuration: "{storyPage}.options.zoomDuration",
+    selectableRegions: "{storyPage}.options.selectableRegions",
+    fillPatternPath: "{storyPage}.options.fillPatternPath",
+    mapboxData: "@expand:maxwell.resolveMapboxData()",
+    fillPatterns: "{that}.options.mapboxData.fillPatterns",
+    style: {
+        transition: {
+            duration: "{that}.options.zoomDuration"
+        }
+    }
+});
+
+
+
+maxwell.resolveMapboxData = function () {
+    const data = maxwell.mapboxData;
+    return fluid.copyImmutableResource(data);
+};
+
 fluid.defaults("maxwell.resourceNotifier", {
     gradeNames: "fluid.component"
 });
 
-
-fluid.defaults("maxwell.scrollyPage", {
+fluid.defaults("maxwell.storyPage", {
     gradeNames: ["fluid.viewComponent", "fluid.resourceLoader", "fluid.resourceNotifier"],
     container: "body",
     // zoomDuration: 100,
+    // selectableRegions: [],
+    // fillPatternPath
     resources: {
         plotlyReady: {
             promiseFunc: "maxwell.HTMLWidgetsPostRender"
         }
     },
     selectors: {
-        leafletWidgets: ".html-widget.leaflet",
+        sections: ".section.level2",
+        heading: "h2",
         map: ".mxcw-map",
         mapHolder: ".mxcw-map-holder",
         content: ".mxcw-content",
@@ -858,10 +447,12 @@ fluid.defaults("maxwell.scrollyPage", {
     },
     components: {
         map: {
-            type: "maxwell.scrollyLeafletMap",
-            container: "{scrollyPage}.dom.map",
+            type: "hortis.libreMap",
             options: {
-                zoomDuration: "{scrollyPage}.options.zoomDuration"
+                gradeNames: "hortis.libreMap.inStoryPage",
+                mapOptions: {
+                    style: "{that}.options.mapboxData.rootMap.x.layout.mapbox.style"
+                }
             }
         },
         hashManager: {
@@ -877,15 +468,11 @@ fluid.defaults("maxwell.scrollyPage", {
         }
     },
     members: {
-        leafletWidgets: "@expand:maxwell.mapLeafletWidgets({that}, {that}.dom.leafletWidgets, {that}.map.map)",
-        sectionHolders: "@expand:{that}.resolveSectionHolders()",
-        // Populated by mapLeafletWidgets as it gets mapId out of its options - note that this depends on sectionIndexToWidgetIndex remaining the identity
-        sectionNameToIndex: "@expand:maxwell.leafletWidgetsToIndex({that}.leafletWidgets)",
-        outstandingResources: "@expand:signal(0)"
-    },
-    invokers: {
-        sectionIndexToWidgetIndex: "fluid.identity",
-        resolveSectionHolders: "fluid.identity({that}.leafletWidgets)"
+        sectionHolders: "@expand:maxwell.mapSectionHolders({that})",
+        paneKeyToIndex: "@expand:maxwell.sectionHoldersToIndex({that}.sectionHolders)",
+        outstandingResources: "@expand:signal(0)",
+        activePane: "@expand:signal()",
+        updateActiveMapPane: "@expand:fluid.effect(maxwell.updateActiveMapPane, {that}, {that}.map, {that}.activePane, {that}.map.mapLoaded)"
     },
     model: {
         activeSection: 0,
@@ -908,10 +495,11 @@ fluid.defaults("maxwell.scrollyPage", {
             funcName: "maxwell.updateSectionNav",
             args: ["{that}", "{change}.value"]
         },
-        updateActiveMapPane: {
+        // Transmit the activePane model to the corresponding signal
+        updateActivePaneSignal: {
             path: "activePane",
-            funcName: "maxwell.updateActiveMapPane",
-            args: ["{that}", "{change}.value"]
+            args: ["{that}.activePane", "{change}.value"],
+            func: (activePaneSignal, activePane) => {activePaneSignal.value = activePane;}
         },
         mapVisible: {
             path: "activePane",
@@ -922,13 +510,13 @@ fluid.defaults("maxwell.scrollyPage", {
         updatePaneHash: {
             path: "activePane",
             funcName: "maxwell.updatePaneHash",
-            args: ["{scrollyPage}", "{hashManager}", "{change}.value"],
+            args: ["{storyPage}", "{hashManager}", "{change}.value"],
             excludeSource: "init"
         },
         listenPaneHash: {
             path: "{hashManager}.model.pane",
             funcName: "maxwell.listenPaneHash",
-            args: ["{scrollyPage}", "{change}.value", "{change}"]
+            args: ["{storyPage}", "{change}.value", "{change}"]
         },
         updateActiveWidgetSubPanes: {
             path: "effectiveActiveSubpanes",
@@ -937,10 +525,11 @@ fluid.defaults("maxwell.scrollyPage", {
         }
     },
     modelRelay: {
+        // TODO: Abolish activePane since we can't trigger updates from it
         sectionToPane: {
             source: "activeSection",
             target: "activePane",
-            func: "{that}.sectionIndexToWidgetIndex"
+            funcName: "fluid.identity"
         },
         subPanesToEffective: {
             target: "effectiveActiveSubpanes",
@@ -952,14 +541,6 @@ fluid.defaults("maxwell.scrollyPage", {
         "onCreate.listenSectionButtons": "maxwell.listenSectionButtons({that})",
         // This will initialise subPaneIndices quite late
         "onCreate.findPlotlyWidgets": "maxwell.findPlotlyWidgets({that}, {that}.sectionHolders)"
-    }
-});
-
-// Should we ever want scrollytelling back again
-fluid.defaults("maxwell.scrollyPage.withScrolly", {
-    scrollAtPixels: 150,
-    listeners: {
-        "onCreate.registerScrollyListeners": "maxwell.registerScrollyListeners({that})"
     }
 });
 
@@ -980,17 +561,17 @@ maxwell.updateSectionClasses = function (that, activeSection) {
     maxwell.toggleActiveClass(that.sectionHolders.map(sectionHolder => sectionHolder.section), "mxcw-activeSection", activeSection);
 };
 
-maxwell.updatePaneHash = function (scrollyPage, hashManager, paneIndex) {
-    const paneHandler = maxwell.paneHandlerForIndex(scrollyPage, paneIndex);
+maxwell.updatePaneHash = function (storyPage, hashManager, paneIndex) {
+    const paneHandler = maxwell.paneHandlerForIndex(storyPage, paneIndex);
     const paneKey = paneHandler.options.paneKey;
     hashManager.applier.change("pane", paneKey);
 };
 
-maxwell.listenPaneHash = function (scrollyPage, paneName) {
-    const paneHandler = maxwell.paneHandlerForName(scrollyPage, paneName);
+maxwell.listenPaneHash = function (storyPage, paneName) {
+    const paneHandler = maxwell.paneHandlerForName(storyPage, paneName);
     const paneIndex = paneHandler.options.paneIndex;
     // TODO: Abolish distinction between pane indices and section indices
-    scrollyPage.applier.change("activeSection", paneIndex);
+    storyPage.applier.change("activeSection", paneIndex);
 };
 
 /**
@@ -1003,24 +584,63 @@ maxwell.subPanesToEffective = function (activePane, activeSubPanes) {
     return activeSubPanes.map((activeSubPane, index) => index === activePane ? activeSubPane : -1);
 };
 
-maxwell.updateActiveMapPane = function (that, activePane) {
-    const widgets = that.leafletWidgets;
-    const widgetPanes = widgets.map(widget => widget.paneInfo.pane);
-    maxwell.toggleActiveClass(widgetPanes, "mxcw-activeMapPane", -1);
-    widgetPanes[activePane].style.display = "block";
-    const data = widgets[activePane].data;
-    const zoom = data ? maxwell.flyToBounds(that.map.map, data.x, that.map.options.zoomDuration) : fluid.promise().resolve();
+maxwell.layerOpacityProperty = function (layer) {
+    return layer.type === "line" ? "line-opacity" :
+        layer.type === "fill" ? "fill-opacity" : null;
+};
+
+maxwell.updateActiveMapPane = function (that, map, activePane) {
+    const activePaneName = that.sectionHolders[activePane]?.paneName;
+
+    const mapboxData = map.options.mapboxData;
+
+    const layers = map.options.mapOptions.style.layers;
+    const layerVisibility = mapboxData.layersByPaneId[activePaneName] || {};
+    layers.forEach((layer) => {
+        const opacityProp = maxwell.layerOpacityProperty(layer);
+        if (opacityProp) {
+            // TODO: possible optimisation here from maplibre-gl-dev.js
+            //         this.style.setPaintProperty(layerId, name, value, options);
+            //         return this._update(true);
+            map.map.setPaintProperty(layer.id, opacityProp, layerVisibility[layer.id] ? 1 : 0);
+        }
+    });
+
+    // TODO: Perhaps assign these into paneHandlers if frequently used?
+    const widgetData = mapboxData.mapWidgets[activePaneName]?.x.layout.mapbox;
+
+    // Pretty terrible, there is no longer an ability to specify a callback: https://github.com/mapbox/mapbox-gl-js/issues/1794
+    // API docs claim "maxDuration" but there is not
+    const zoom = fluid.promise();
+    if (widgetData) {
+        if (map.hasBounds) {
+            map.map.flyTo({
+                center: widgetData.center,
+                zoom: widgetData.zoom,
+                duration: map.options.zoomDuration,
+                // Awkward to override the prefersReducedMotion setting but taking OS setting by default seems too severe
+                essential: true
+            });
+            map.map.once("moveend", () => {
+                zoom.resolve();
+            });
+        } else {
+            map.map.jumpTo({
+                center: widgetData.center,
+                zoom: widgetData.zoom
+            });
+            map.hasBounds = true;
+            zoom.resolve();
+        }
+    } else {
+        zoom.resolve();
+    }
+
     zoom.then(function () {
-        maxwell.toggleActiveClass(widgetPanes, "mxcw-activeMapPane", activePane);
+        // TODO: We probably just want this to happen immediately
         // This is a hack to cause SVG plotly widgets to resize themselves e.g. the Species Reported bar -
         // find a better solution
         window.dispatchEvent(new Event("resize"));
-        window.setTimeout(function () {
-            widgetPanes.forEach(function (pane, index) {
-                const visibility = (index === activePane ? "block" : "none");
-                pane.style.display = visibility;
-            });
-        }, 1);
     });
 };
 
@@ -1058,59 +678,6 @@ maxwell.updateSectionNav = function (that, activeSection) {
     maxwell.toggleClass(l("sectionRight"), "disabled", last);
     l("sectionRightText").innerText = last ? "" : that.sectionHolders[activeSection + 1].headingText;
     maxwell.toggleClass(l("sectionRightDesc"), "mxcw-hidden", last);
-};
-
-maxwell.registerScrollyListeners = function (that) {
-    const sectionHolders = that.sectionHolders;
-    sectionHolders.forEach(function (sectionHolder, i) {
-        sectionHolder.heading.addEventListener("click", () => that.applier.change("activeSection", i));
-    });
-    const content = that.dom.locate("content")[0];
-    content.addEventListener("scroll", function () {
-        const scrollTop = content.scrollTop;
-        const offsets = sectionHolders.map(widget => widget.section.offsetTop);
-        // See diagram - we scroll when the next heading's top gets close enough to the viewport top
-        let index = offsets.findIndex(offset => (scrollTop + that.options.scrollAtPixels) < offset) - 1;
-        if (index === -2) {
-            index = sectionHolders.length - 1;
-        } else if (index === -1) {
-            index = 0;
-        }
-        that.applier.change("activeSection", index);
-    });
-};
-
-// Note that this does not derive from "hortis.leafletMap" in imerss-viz leafletMap.js
-fluid.defaults("maxwell.scrollyLeafletMap", {
-    gradeNames: "fluid.viewComponent",
-    members: {
-        map: "@expand:maxwell.makeLeafletMap({that}.container, {that}.options.mapOptions)"
-    },
-    mapOptions: {
-        zoomSnap: 0.1
-    },
-    zoomDuration: 100,
-    listeners: {
-        "onCreate.getTiles": "maxwell.applyZerothTiles({scrollyPage}.leafletWidgets, {that}.map)"
-    }
-});
-
-maxwell.makeLeafletMap = function (node) {
-    return L.map(fluid.unwrap(node));
-};
-
-maxwell.applyZerothTiles = function (leafletWidgets, map) {
-    // TODO: Hadn't we implemented this in some other instance of the framework?
-    const firstMap = leafletWidgets.findIndex(widget => !!widget.data);
-
-    const data0 = leafletWidgets[firstMap].data.x;
-    const tiles = maxwell.findCall(data0.calls, "addTiles");
-    if (tiles) {
-        L.tileLayer(tiles.args[0], tiles.args[3]).addTo(map);
-    } else {
-        const pTiles = maxwell.findCall(data0.calls, "addProviderTiles");
-        L.tileLayer.provider(pTiles.args[0], pTiles.args[3]).addTo(map);
-    }
 };
 
 // TODO: Shouldn't everything connected with viz code go into imerss-viz-reknit.js?
@@ -1336,15 +903,16 @@ maxwell.renderDownloadLink = function (paneInfo, downloadTemplate, regionName) {
 
 fluid.defaults("maxwell.paneHandler", {
     gradeNames: "fluid.viewComponent",
+    // TODO: normalise paneKey -> paneName
     paneKey: "{sourcePath}",
-    paneIndex: "@expand:maxwell.paneKeyToIndex({that}, {maxwell.scrollyPage})",
+    paneIndex: "@expand:maxwell.paneKeyToIndex({that}, {maxwell.storyPage})",
     members: {
-        container: "@expand:maxwell.sectionForPaneHandler({that}, {maxwell.scrollyPage})"
+        container: "@expand:maxwell.sectionForPaneHandler({that}, {maxwell.storyPage})"
     },
 
     modelRelay: {
         isVisible: {
-            args: ["{maxwell.scrollyPage}.model.activePane", "{that}.options.paneIndex"],
+            args: ["{maxwell.storyPage}.model.activePane", "{that}.options.paneIndex"],
             func: (activePane, paneIndex) => activePane === paneIndex,
             target: "isVisible"
         }
@@ -1369,15 +937,9 @@ maxwell.paneHandler.addPaneClass = function (that, parentContainer) {
     parentContainer[0].classList.add("mxcw-widgetPane-" + that.options.paneKey);
 };
 
-fluid.defaults("maxwell.leafletPaneHandler", {
+fluid.defaults("maxwell.librePaneHandler", {
     gradeNames: "maxwell.paneHandler",
 
-    leafletWidget: "@expand:maxwell.leafletWidgetForPaneHandler({that}, {maxwell.scrollyPage})",
-    invokers: {
-        polyOptions: "fluid.identity",
-        handlePoly: "fluid.identity",
-        handleMarker: "fluid.identity"
-    },
     events: {
         markerClick: null
     }
@@ -1389,7 +951,7 @@ fluid.defaults("maxwell.mapHidingPaneHandler", {
 
 fluid.defaults("maxwell.templatePaneHandler", {
     gradeNames: ["maxwell.paneHandler", "fluid.templateRenderingView"],
-    parentContainer: "@expand:maxwell.sectionForPaneHandler({that}, {maxwell.scrollyPage})"
+    parentContainer: "@expand:maxwell.sectionForPaneHandler({that}, {maxwell.storyPage})"
 });
 
 fluid.defaults("maxwell.hashManager", {
@@ -1402,7 +964,7 @@ fluid.defaults("maxwell.hashManager", {
     },
     members: {
         // We don't get a notification on startup, ingest any hash present in the initial URL, but delay to avoid
-        // confusing initial model resolution and map loading TODO improve with and initial model merging if we can
+        // confusing initial model resolution and map loading TODO improve with initial model merging if we can
         applyHashOnResources: "@expand:fluid.effect(maxwell.hashManager.applyHashOnResources, {that}, {resourceNotifier}.outstandingResources)"
     },
     modelListeners: {

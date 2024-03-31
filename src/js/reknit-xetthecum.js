@@ -58,24 +58,27 @@ const checkLink = function (url) {
     });
 };
 
-const rewriteTaxonLinkElement = async function (element) {
+const rewriteTaxonLinkElement = async function (element, checkLinks) {
     const links = [...element.querySelectorAll("a")];
     return maxwell.asyncForEach(links, async link => {
         const href = link.getAttribute("href");
         if (href.startsWith("#taxon:")) {
             const target = rewriteOneTaxonLink(href.substring("#taxon:".length));
-            const result = await checkLink(target);
-            if (!result.resolved) {
-                console.log("*** Error: link ", href, " was rewritten to ", target, " which returned status ", result.status);
+            if (checkLinks) {
+                const result = await checkLink(target);
+                if (!result.resolved) {
+                    console.log("*** Error: link ", href, " was rewritten to ", target, " which returned status ", result.status);
+                }
             }
             link.setAttribute("href", target);
         }
     });
 };
 
-const rewriteTaxonLinks = async function (document, container, template) {
-    await rewriteTaxonLinkElement(container);
-    await rewriteTaxonLinkElement(template);
+const rewriteTaxonLinks = async function (document, container, template, rec) {
+    const checkLinks = rec.options.checkLinks;
+    await rewriteTaxonLinkElement(container, checkLinks);
+    await rewriteTaxonLinkElement(template, checkLinks);
 };
 
 module.exports = {addArrows, rewriteTaxonLinks};

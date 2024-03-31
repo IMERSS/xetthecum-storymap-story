@@ -42,3 +42,14 @@ fluid.effect = function (func, ...args) {
         }
     });
 };
+
+// Wait for a signal to take on a non-falsy value
+fluid.signalPromise = function (sig) {
+    const togo = fluid.promise();
+    effect( () => {
+        if (sig.value) {
+            togo.resolve(sig.value);
+        }
+    });
+    return togo;
+};

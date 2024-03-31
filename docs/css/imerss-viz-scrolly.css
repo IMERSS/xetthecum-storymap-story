@@ -21,6 +21,27 @@
     flex-direction: column;
 }
 
+.mxcw-viz-pane {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.mxcw-viz-pane .mxcw-sectionInner {
+    width: 50%;
+    margin-right: 2rem;
+}
+
+.mxcw-viz-pane .fl-imerss-container {
+    width: 50%;
+}
+
+.fld-imerss-panel-label {
+    font-weight: 700;
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+}
+
 .fld-imerss-download {
     display: flex;
     flex-direction: row;
@@ -55,7 +76,6 @@
     outline: 1px #333 solid;
     outline-offset: 2px;
 }
-
 
 
 .mxcw-widgetPane {
