@@ -1,13 +1,13 @@
 # Xetthecum Storymapping Project
 
-This project hosts a structure for building out and publishing a map-based scrollytelling
+This project hosts a structure for building out and publishing a storymapping
 interface for the [Xetthecum Ecocultural Mapping Project](https://imerss.org/2019/01/01/ecocultural-mapping-pilot/)
 based on [R Markdown](https://rmarkdown.rstudio.com/).
 
 You can browse the published output of this project in these documents:
 
 * [Raw Storymapping Output](https://imerss.github.io/xetthecum-storymap-scrolly/Xetthecum-Storymap.html)
-* [Storymapping Reknitted into Scrollytelling Interface](https://imerss.github.io/xetthecum-storymap-scrolly/Xetthecum-Storymap-Reknitted.html)
+* [Storymapping Reknitted into Panel-Based Interface](https://imerss.github.io/xetthecum-storymap-story/Xetthecum-Storymap-Reknitted.html)
 
 This was built using R and R Markdown, using free tools such as git, R and R studio, and publish and host it for free using
 [GitHub Pages](https://pages.github.com/).
