@@ -6,6 +6,7 @@
             template: "%maxwell/src/html/template.html",
             checkLinks: false,
             storyPageOptions: {
+                gradeNames: "maxwell.storyPage.withPaneTaxon",
                 zoomDuration: 1500,
                 selectableRegions: ["Forests", "Freshwater", "Marine", "Woodlands"],
                 fillPatternPath: "img/fillPatterns/"
@@ -120,13 +121,13 @@
         source: "%imerss-bioinfo/src/client/img/Arrow-down.svg",
         target: "%maxwell/docs/img/Arrow-down.svg"
     }, {
-        source: "%imerss-bioinfo/src/client/img/up-arrow.svg",
-        target: "%maxwell/docs/img/up-arrow.svg"
+        source: "%imerss-bioinfo/src/client/img/Arrow-up.svg",
+        target: "%maxwell/docs/img/Arrow-up.svg"
     }, {
         source: "%imerss-bioinfo/src/client/img/external-link.svg",
         target: "%maxwell/docs/img/external-link.svg"
     }, {
-        source: "%imerss-bioinfo/docs/css/imerss-viz-all.css",
+        source: "%maxwell/../bagatelle/docs/css/imerss-viz-all.css",
         target: "%maxwell/docs/css/imerss-viz-all.css"
     }, {
         source: "%maxwell/src/html/imerss-viz-story.html",
@@ -143,9 +144,12 @@
     }, { // TODO: Source from internal %imerss-bioinfo once it stops changing
         source: "%maxwell/../bagatelle/src/client/js/new/imerss-new.js",
         target: "%maxwell/docs/js/imerss-new.js"
-    }, { // TODO: Source from internal %imerss-bioinfo once it stops changing
+    }, {
         source: "%maxwell/../bagatelle/src/client/js/new/newChecklist.js",
         target: "%maxwell/docs/js/newChecklist.js"
+    }, {
+        source: "%maxwell/../bagatelle/src/client/js/new/taxonDisplay.js",
+        target: "%maxwell/docs/js/taxonDisplay.js"
     }
     ]
 }

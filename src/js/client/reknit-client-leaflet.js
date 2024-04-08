@@ -321,7 +321,7 @@ maxwell.divIcon = function (label, className) {
         html: "<div>" + label + "</div>",
         iconSize: null,
         // Ensure that markers never auto-dismiss selection
-        className: (className || "") + " fld-imerss-nodismiss-map"
+        className: (className || "") + " imerss-nodismiss-map"
     });
 };
 

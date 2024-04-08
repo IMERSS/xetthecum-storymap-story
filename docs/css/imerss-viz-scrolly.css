@@ -5,18 +5,20 @@
 .mxcw-container {
     height: calc(100vh - 12rem)
 }
-.fl-imerss-container {
+
+.imerss-container {
     flex-direction: column;
     margin-top: 0;
 }
-.fld-imerss-pane-info {
+
+.imerss-pane-info {
     padding: 1em 0.8em 0.7em 0.8em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.fld-imerss-region-pane {
+.imerss-region-pane {
     display: flex;
     flex-direction: column;
 }
@@ -26,23 +28,22 @@
     flex-direction: row;
 }
 
-
 .mxcw-viz-pane .mxcw-sectionInner {
     width: 50%;
     margin-right: 2rem;
 }
 
-.mxcw-viz-pane .fl-imerss-container {
+.mxcw-viz-pane .imerss-container {
     width: 50%;
 }
 
-.fld-imerss-panel-label {
+.imerss-panel-label {
     font-weight: 700;
     font-size: 1.5rem;
-    padding-bottom: 1rem;
+    padding: 1rem 1rem 0.2rem 1.4rem;
 }
 
-.fld-imerss-download {
+.imerss-download {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -50,20 +51,20 @@
     visibility: hidden;
 }
 
-.fld-imerss-download.fl-active {
+.imerss-download.active {
     visibility: visible;
 }
 
-.fl-imerss-region-key {
+.imerss-region-key {
     font-weight: bold;
 }
 
-.fld-imerss-map-title {
+.imerss-map-title {
     text-align: right;
 }
 
 
-.fld-imerss-download-link {
+.imerss-download-link {
     display: inline-block;
     width: 1.5rem;
     height: 1.5rem;
@@ -72,7 +73,7 @@
     margin-left: 5px;
 }
 
-.fld-imerss-download-link:hover {
+.imerss-download-link:hover {
     outline: 1px #333 solid;
     outline-offset: 2px;
 }
@@ -85,16 +86,43 @@
     height: 100%;
     max-height: 100%;
 }
-/** Prevent this jank on selecting different checklists **/
-.fld-imerss-checklist-holder {
-    /* width: 600px; */
-}
 
-.fld-imerss-taxonDisplay {
+.imerss-taxonDisplay {
     height: auto;
     margin-left: 1rem;
     /** This core definition needs to go **/
     min-width: auto;
+}
+
+.imerss-taxonDisplay-close {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-self: end;
+    align-items: center;
+    margin: 0.5rem 1rem 0.5rem;
+    position: absolute;
+    top: -50px;
+    stroke: black;
+}
+
+.imerss-taxonDisplay-close:hover {
+    color: #475a73;
+    stroke: #475a73;
+}
+
+.imerss-taxonDisplay-x {
+    display: flex;
+    margin-left: 5px;
+}
+
+.imerss-panel {
+    display: none;
+    flex-direction: column;
+}
+
+.imerss-panel.imerss-activePanel {
+    display: flex;
 }
 
 :root {
@@ -102,11 +130,11 @@
     --imerss-eco-colour: #DEE0B0;
 }
 
-.fl-imerss-checklist-holder {
+.imerss-checklist-holder {
     background: var(--imerss-eco-colour);
 }
 
-.fl-imerss-map-and-taxa {
+.imerss-map-and-taxa {
     flex-direction: row;
     max-height: inherit;
 }
@@ -131,7 +159,7 @@
 }
 
 /* As in xetthecum.css */
-.fld-imerss-legend-preview {
+.imerss-legend-preview {
     display: inline-block;
     width: 1.2rem;
     height: 1.2rem;
@@ -141,14 +169,14 @@
     top: 3px;
 }
 
-.fld-imerss-map-legend > span {
+.imerss-map-legend > span {
     display: inline-block;
     font-size: 1.3rem;
     margin-left: 2rem;
     margin-bottom: 0.4rem;
 }
 
-.fld-imerss-legend-label {
+.imerss-legend-label {
     display: inline-block;
     font-size: 0.9rem;
     width: 8rem;
@@ -157,52 +185,52 @@
     top: -2px;
 }
 
-.fld-imerss-selected .fld-imerss-legend-preview {
+.imerss-selected .imerss-legend-preview {
     outline: 2px solid #FCFF63;
 }
 
-/** Magic sauce allows resizing of widget smaller than "natural width" of .fl-imerss-checklist-outer */
-.fl-imerss-checklist-widgets {
+/** Magic sauce allows resizing of widget smaller than "natural width" of .imerss-checklist-outer */
+.imerss-checklist-widgets {
     width: 0;
 }
 
-.fl-imerss-checklist-outer {
+.imerss-checklist-outer {
     display: flex;
     flex-direction: column;
     width: 600px;
 }
 
-.fl-imerss-map-and-taxa > * {
+.imerss-map-and-taxa > * {
     flex-grow: 1;
 }
 
-.fl-imerss-taxa {
+.imerss-taxa {
     display: none;
 }
 
-.fl-imerss-photo {
-    min-width: 0px;
+.imerss-photo {
     height: 300px;
 }
 
-.fl-taxonDisplay-row {
+.taxonDisplay-row {
     min-width: 0px;
 }
 
-.fl-imerss-map-and-taxa {
+.imerss-map-and-taxa {
     margin-right: 0px;
 }
 
 @media screen and ( max-height: 1024px ){
-    .fl-imerss-photo {
-        height: 200px;
-    }
-
     .mxcw-map {
         height: 55vh;
         min-height: 55vh;
         width: 65vh;
         min-width: 65vh;
+    }
+
+    .imerss-photo {
+        height: 200px;
+        max-width: 300px;
     }
 
     /* Need to repeat this since otherwise map doesn't get hidden on narrow */
@@ -211,9 +239,6 @@
         min-height: 0;
     }
 
-    .mxcw-data {
-        height: 55%;
-    }
 }
 
 

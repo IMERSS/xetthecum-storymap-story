@@ -417,12 +417,8 @@ maxwell.resolveMapboxData = function () {
     return fluid.copyImmutableResource(data);
 };
 
-fluid.defaults("maxwell.resourceNotifier", {
-    gradeNames: "fluid.component"
-});
-
 fluid.defaults("maxwell.storyPage", {
-    gradeNames: ["fluid.viewComponent", "fluid.resourceLoader", "fluid.resourceNotifier"],
+    gradeNames: ["fluid.viewComponent", "fluid.resourceLoader"],
     container: "body",
     // zoomDuration: 100,
     // selectableRegions: [],
@@ -472,9 +468,11 @@ fluid.defaults("maxwell.storyPage", {
         paneKeyToIndex: "@expand:maxwell.sectionHoldersToIndex({that}.sectionHolders)",
         outstandingResources: "@expand:signal(0)",
         activePane: "@expand:signal()",
+        // "model listeners"
         updateActiveMapPane: "@expand:fluid.effect(maxwell.updateActiveMapPane, {that}, {that}.map, {that}.activePane, {that}.map.mapLoaded)"
     },
     model: {
+        // Currently this is at the head of updates - > activePane in model and then activePane signal
         activeSection: 0,
         activePane: 0,
         // Map of pane indices to active subpanes
@@ -516,7 +514,7 @@ fluid.defaults("maxwell.storyPage", {
         listenPaneHash: {
             path: "{hashManager}.model.pane",
             funcName: "maxwell.listenPaneHash",
-            args: ["{storyPage}", "{change}.value", "{change}"]
+            args: ["{storyPage}", "{change}.value"]
         },
         updateActiveWidgetSubPanes: {
             path: "effectiveActiveSubpanes",
@@ -564,7 +562,8 @@ maxwell.updateSectionClasses = function (that, activeSection) {
 maxwell.updatePaneHash = function (storyPage, hashManager, paneIndex) {
     const paneHandler = maxwell.paneHandlerForIndex(storyPage, paneIndex);
     const paneKey = paneHandler.options.paneKey;
-    hashManager.applier.change("pane", paneKey);
+    // Blast the taxon in the hash since taxon selected for one panel will not be good for another
+    fluid.replaceModelValue(hashManager.applier, [], {pane: paneKey, taxon: null});
 };
 
 maxwell.listenPaneHash = function (storyPage, paneName) {
@@ -573,6 +572,8 @@ maxwell.listenPaneHash = function (storyPage, paneName) {
     // TODO: Abolish distinction between pane indices and section indices
     storyPage.applier.change("activeSection", paneIndex);
 };
+
+
 
 /**
  * Convert the pane and subpane selection index state to an array of effectively active panes
@@ -716,7 +717,7 @@ fluid.defaults("maxwell.paneInfoBinder", {
         infoText: "Selected biogeoclimatic region: %region"
     },
     selectors: {
-        infoText: ".fld-imerss-region"
+        infoText: ".imerss-region"
     },
     invokers: {
         renderPaneInfoText: "maxwell.renderRegionName({that}.dom.infoText, {that}.options.markup.infoText, {arguments}.0)"
@@ -772,7 +773,7 @@ fluid.defaults("maxwell.withRegionPaneInfo", {
 // Mix in to a paneInfoBinder which is already a regionBinder for more refined region name including label
 fluid.defaults("maxwell.withLabelledRegionName", {
     markup: {
-        infoText: "Selected biogeoclimatic region: <span class=\"fl-imerss-region-key\">%region</span> %regionLabel"
+        infoText: "Selected biogeoclimatic region: <span class=\"imerss-region-key\">%region</span> %regionLabel"
     },
     invokers: {
         renderPaneInfoText: "maxwell.renderLabelledRegionName({that}.dom.infoText, {that}.options.markup.infoText, {paneHandler}.options.regionLabels, {arguments}.0)"
@@ -799,7 +800,7 @@ fluid.defaults("maxwell.regionPaneInfo", {
                     infoText: "Selected biogeoclimatic region: %region"
                 },
                 selectors: {
-                    infoText: ".fld-imerss-region"
+                    infoText: ".imerss-region"
                 },
                 model: {
                     infoSource: "{paneHandler}.model.selectedRegion"
@@ -831,7 +832,7 @@ fluid.defaults("maxwell.statusCellPaneInfo", {
                     infoText: "Selected status: %region"
                 },
                 selectors: { // Call it "region" so we don't need a whole new template - port back to bioblitz and rename
-                    infoDisplay: ".fld-imerss-region"
+                    infoDisplay: ".imerss-region"
                 },
                 model: { // Note that Howe code calls this "selectedRegion" whereas bioblitz calls it "selectedStatus"
                     infoSource: "{paneHandler}.model.selectedRegion"
@@ -846,7 +847,7 @@ fluid.defaults("maxwell.statusCellPaneInfo", {
                     region: "Selected cell: %region"
                 },
                 selectors: {
-                    regionDisplay: ".fld-imerss-cell"
+                    regionDisplay: ".imerss-cell"
                 },
                 model: {
                     region: "{paneHandler}.model.selectedCell"
@@ -858,7 +859,7 @@ fluid.defaults("maxwell.statusCellPaneInfo", {
 
 fluid.defaults("maxwell.withMapTitle", {
     selectors: {
-        mapTitle: ".fld-imerss-map-title"
+        mapTitle: ".imerss-map-title"
     },
     listeners: {
         "onCreate.renderMapTitle": "maxwell.renderMapTitle({that}.dom.mapTitle, {paneHandler}.options.mapTitle)"
@@ -871,8 +872,8 @@ maxwell.renderMapTitle = function (element, text) {
 
 fluid.defaults("maxwell.withDownloadLink", {
     selectors: {
-        downloadControl: ".fld-imerss-download",
-        downloadLink: ".fld-imerss-download-link"
+        downloadControl: ".imerss-download",
+        downloadLink: ".imerss-download-link"
     },
     invokers: {
         "renderDownloadLink": "maxwell.renderDownloadLink({that}, {paneHandler}.options.downloadTemplate, {arguments}.0)"
@@ -893,9 +894,9 @@ maxwell.renderDownloadLink = function (paneInfo, downloadTemplate, regionName) {
     if (regionName && downloadTemplate) {
         const target = fluid.stringTemplate(downloadTemplate, {regionName});
         paneInfo.locate("downloadLink").attr("href", target);
-        downloadControl.addClass("fl-active");
+        downloadControl.addClass("active");
     } else {
-        downloadControl.removeClass("fl-active");
+        downloadControl.removeClass("active");
     }
 };
 
@@ -907,7 +908,15 @@ fluid.defaults("maxwell.paneHandler", {
     paneKey: "{sourcePath}",
     paneIndex: "@expand:maxwell.paneKeyToIndex({that}, {maxwell.storyPage})",
     members: {
-        container: "@expand:maxwell.sectionForPaneHandler({that}, {maxwell.storyPage})"
+        container: "@expand:maxwell.sectionForPaneHandler({that}, {maxwell.storyPage})",
+        isVisible: "@expand:signal()"
+    },
+    modelListeners: {
+        isVisibleToSignal: {
+            path: "isVisible",
+            args: ["{that}.isVisible", "{change}.value"],
+            func: (isVisibleSignal, isVisible) => isVisibleSignal.value = isVisible
+        }
     },
 
     modelRelay: {
@@ -965,7 +974,7 @@ fluid.defaults("maxwell.hashManager", {
     members: {
         // We don't get a notification on startup, ingest any hash present in the initial URL, but delay to avoid
         // confusing initial model resolution and map loading TODO improve with initial model merging if we can
-        applyHashOnResources: "@expand:fluid.effect(maxwell.hashManager.applyHashOnResources, {that}, {resourceNotifier}.outstandingResources)"
+        applyHashOnResources: "@expand:fluid.effect({that}.applyHash, {vizLoader}.resourcesLoaded)"
     },
     modelListeners: {
         "pushState": {
@@ -976,12 +985,6 @@ fluid.defaults("maxwell.hashManager", {
         }
     }
 });
-
-maxwell.hashManager.applyHashOnResources = function (that, outstandingResources) {
-    if (outstandingResources === 0) {
-        that.applyHash();
-    }
-};
 
 maxwell.parseHashSegment = function (segment) {
     const [key, value] = decodeURIComponent(segment).split(":");
@@ -1004,7 +1007,7 @@ maxwell.hashManager.applyHash = function (that) {
 
 maxwell.hashManager.listenHash = function (that) {
     window.addEventListener("hashchange", () => that.applyHash);
-
+    window.addEventListener("popstate", () => that.applyHash);
 };
 
 maxwell.hashManager.listenModel = function (that, model) {

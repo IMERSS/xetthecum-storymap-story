@@ -7,34 +7,11 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
-fluid.defaults("maxwell.markupTemplateRenderer", {
-    // Bodge the sunburst loader to being a traditional templateRenderingView so that its markup arrives earlier -
-    // In practice didn't manage to break the race condition. Port this into core imerss-viz
-    rendererTemplateResources: {
-        template: false,
-        markup: true
-    },
-    invokers: {
-        renderMarkup: "fluid.identity({that}.resources.markup.parsed)"
-    }
-});
-
-fluid.incrementSignal = function (signal) {
-    signal.value = (signal.value || 0) + 1;
-};
-
-fluid.decrementSignal = function (signal) {
-    --signal.value;
-};
-
 // mixin grade which mediates event flow from IMERSS viz (reached via hortis.scrollyMapLoader) to Leaflet pane
 // It is both a paneHandler as well as a sunburstLoader, which is defined in core viz leafletMap.js hortis.scrollyMapLoader
-fluid.defaults("maxwell.storyVizBinder", {
-    // Put these last to continue to override "container" member due to FLUID-5800
-    gradeNames: ["maxwell.templatePaneHandler", "maxwell.markupTemplateRenderer"],
+fluid.defaults("maxwell.storyVizPane", {
+    gradeNames: ["maxwell.templatePaneHandler"],
     resourceBase: ".",
-    // Override this since we need proper ordering of overrides, review why the comment in leafletMap.js refers to FLUID-5836
-    mapFlavourGrade: [],
     markupTemplate: "%resourceBase/html/imerss-viz-story.html",
     resourceOptions: {
         terms: {
@@ -45,16 +22,12 @@ fluid.defaults("maxwell.storyVizBinder", {
         paneClass: "mxcw-viz-pane"
     },
     resources: {
-        markup: {
+        template: {
             url: "{that}.options.markupTemplate",
             dataType: "text"
         }
     },
-    renderMarkup: true,
     model: {
-    },
-    members: {
-        notifyResource: "@expand:fluid.incrementSignal({resourceNotifier}.outstandingResources)"
     },
     listeners: {
         "onCreate.paneClass": {
@@ -62,16 +35,51 @@ fluid.defaults("maxwell.storyVizBinder", {
             args: ["{that}.options.parentContainer", "{that}.options.styles.paneClass"]
         }
     }
-
 });
 
+fluid.defaults("maxwell.storyPage.withPaneTaxon", {
+    members: {
+        taxaByName: "@expand:fluid.computed(hortis.taxaByName, {vizLoader}.taxaRows)"
+    },
+    modelListeners: {
+        listenTaxonHash: {
+            priority: "first",
+            path: "{hashManager}.model",
+            funcName: "maxwell.listenTaxonHash",
+            args: ["{storyPage}", "{change}.value", "{storyPage}.taxaByName.value"]
+        }
+    }
+});
+
+hortis.taxaByName = function (taxaRows) {
+    const taxaByName = {};
+    taxaRows.forEach(row => taxaByName[row.iNaturalistTaxonName] = row);
+    return taxaByName;
+};
+
+// Listen to this first so that taxon pane is ready before we make it visible
+maxwell.listenTaxonHash = function (storyPage, hashModel, taxaByName) {
+    const paneHandler = maxwell.paneHandlerForName(storyPage, hashModel.pane);
+    if (paneHandler?.selectedTaxonId) {
+        const row = taxaByName[hashModel?.taxon];
+        const taxonId = row?.id;
+        paneHandler.selectedTaxonId.value = taxonId;
+    }
+};
+
+maxwell.updateTaxonHash = function (hashManager, taxaById, selectedTaxonId, isVisible) {
+    if (isVisible) {
+        const taxonName = taxaById[selectedTaxonId]?.iNaturalistTaxonName;
+        hashManager.applier.change("taxon", taxonName);
+    }
+};
 
 fluid.registerNamespace("maxwell.legendKey");
 
-maxwell.legendKey.rowTemplate = "<div class=\"fld-imerss-legend-row %rowClass\">" +
-    "<span class=\"fld-imerss-legend-icon\"></span>" +
-    "<span class=\"fld-imerss-legend-preview %previewClass\" style=\"%previewStyle\"></span>" +
-    "<span class=\"fld-imerss-legend-label\">%keyLabel</span>" +
+maxwell.legendKey.rowTemplate = "<div class=\"imerss-legend-row %rowClass\">" +
+    "<span class=\"imerss-legend-icon\"></span>" +
+    "<span class=\"imerss-legend-preview %previewClass\" style=\"%previewStyle\"></span>" +
+    "<span class=\"imerss-legend-label\">%keyLabel</span>" +
     "</div>";
 
 
@@ -79,8 +87,8 @@ maxwell.legendKey.renderMarkup = function (markup, clazz, className) {
     const style = hortis.fillColorToStyle(clazz.fillColor || clazz.color);
     const normal = hortis.normaliseToClass(className);
     return fluid.stringTemplate(markup, {
-        rowClass: "fld-imerss-legend-row-" + normal,
-        previewClass: "fld-imerss-class-" + normal,
+        rowClass: "imerss-legend-row-" + normal,
+        previewClass: "imerss-class-" + normal,
         previewStyle: "background-color: " + style.fillColor,
         keyLabel: className
     });
@@ -102,7 +110,7 @@ maxwell.legendKey.drawLegend = function (map, paneHandler) {
     };
     legend.addTo(map.map);
     map.clazzToLegendNodes = fluid.transform(map.regions, function (troo, regionName) {
-        const rowSel = ".fld-imerss-legend-row-" + hortis.normaliseToClass(regionName);
+        const rowSel = ".imerss-legend-row-" + hortis.normaliseToClass(regionName);
         const row = container.querySelector(rowSel);
         row.addEventListener("click", function () {
             paneHandler.triggerRegionSelection(regionName);
@@ -121,11 +129,11 @@ fluid.defaults("maxwell.regionSelectionBar.withHoist", {
             priority: "before:impl"
         }
     },
-    resizableParent: ".fl-imerss-checklist-outer"
+    resizableParent: ".imerss-checklist-outer"
 });
 
 maxwell.regionSelectionBar.hoist = function (element, that, paneHandler) {
-    const target = paneHandler.container[0].querySelector(".fl-imerss-checklist-widgets");
+    const target = paneHandler.container[0].querySelector(".imerss-checklist-widgets");
     target.appendChild(element);
 };
 
@@ -148,7 +156,7 @@ maxwell.regionSelectionBar.bind = function (element, that, paneHandler) {
             const changed = fluid.peek(segs);
             const index = names.indexOf(changed);
             Plotly.restyle(element, {
-                // Should agree with .fld-imerss-selected but seems that plotly cannot be reached via CSS
+                // Should agree with .imerss-selected but seems that plotly cannot be reached via CSS
                 "marker.line": selected ? {
                     color: "#FCFF63",
                     width: 2
@@ -164,13 +172,6 @@ maxwell.regionSelectionBar.bind = function (element, that, paneHandler) {
         const regionName = e.points[0].data.name;
         paneHandler.triggerRegionSelection(regionName);
     });
-};
-
-
-// Fix for horrific members merging bug occurring through lines like regions: "{sunburst}.viz.communities" above
-maxwell.fixVizResources = function (sunburst) {
-    sunburst.viz.classes = fluid.copyImmutableResource(sunburst.viz.classes);
-    sunburst.viz.communities = fluid.copyImmutableResource(sunburst.viz.communities);
 };
 
 fluid.defaults("maxwell.bareRegionsExtra.withLegend", {

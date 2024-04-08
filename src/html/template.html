@@ -108,6 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <script src="js/fluidSignals.js"></script>
     <script src="js/imerss-new.js"></script>
     <script src="js/newChecklist.js"></script>
+    <script src="js/taxonDisplay.js"></script>
     <script src="js/reknit-client.js"></script>
     <script src="js/imerss-viz-reknit.js"></script>
     <script src="js/paneHandlers.js"></script>
@@ -177,10 +178,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <!-- sidebar -->
 
     <div class="mxcw-container">
-        <div class="mxcw-map-holder">
-            <div class="mxcw-map fld-imerss-nodismiss-map">
+        <!-- Add or remove hideMap here depending on status of first pane -->
+        <div class="mxcw-map-holder mxcw-hideMap">
+            <div class="mxcw-map imerss-nodismiss-map">
             </div>
-            <div class="mxcw-data fld-imerss-nodismiss-map">
+            <div class="mxcw-data imerss-nodismiss-map">
             </div>
         </div>
         <div class="mxcw-content-holder">
@@ -204,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                 </div>
             </div>
 
-            <div class="mxcw-content fld-imerss-nodismiss-map">
+            <div class="mxcw-content imerss-nodismiss-map">
                 <!-- main-container gets reknitted into here -->
             </div>
 
@@ -219,9 +221,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <footer class="footer">
   <svg id="map-svg">
       <defs>
-          <symbol id="close-x" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.89844 1.90039L19.3522 19.3542" stroke="#0E0C0D" stroke-width="3" stroke-linecap="round"/>
-              <path d="M19.3516 2.02148L1.89777 19.4753" stroke="#0E0C0D" stroke-width="3" stroke-linecap="round"/>
+          <symbol id="close-x" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 4L21 21" stroke-width="3" stroke-linecap="round"/>
+              <path d="M21 4L4 21" stroke-width="3" stroke-linecap="round"/>
           </symbol>
 
           <symbol id="section-left" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">

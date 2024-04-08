@@ -44,24 +44,25 @@ h2 {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
-    height: 35%;
+    height: 40%;
     transition-property: height;
-    transition-duration: 400ms;
+    transition-duration: 800ms;
 }
 
 .mxcw-content-holder {
     display: flex;
     flex-direction: column;
-    height: 65%;
+    height: 60%;
     font-size: 18px;
     padding: 1rem;
     align-items: center;
     transition-property: height;
-    transition-duration: 400ms;
+    transition-duration: 800ms;
 }
 
 .section-button {
     stroke: #362F24;
+    cursor: pointer;
 }
 
 .section-button:hover:not(.disabled) {
@@ -83,7 +84,7 @@ h2 {
     overflow: hidden;
 
     /** Somehow this works when hiding but not when showing */
-     transition-duration: 400ms;
+    transition-duration: 800ms;
 }
 
 .mxcw-hideMap .mxcw-map {
@@ -127,7 +128,7 @@ h2 {
     opacity: 0;
     visibility: hidden;
     transition-property: opacity, visibility;
-    transition-duration: 400ms;
+    transition-duration: 800ms;
 }
 
 .mxcw-mapPane.mxcw-activeMapPane {
@@ -145,14 +146,6 @@ h2 {
 }
 
 .mxcw-widgetPane.mxcw-activeWidgetPane {
-    display: flex;
-}
-
-.fl-imerss-panel {
-    display: none;
-}
-
-.fl-imerss-panel.fl-imerss-activePanel {
     display: flex;
 }
 
@@ -202,7 +195,7 @@ body .mx-header ::-webkit-scrollbar-thumb {
 }
 
 /* Override Xetthecum definition */
-.fl-imerss-container {
+.imerss-container {
     margin: 0px;
 }
 
