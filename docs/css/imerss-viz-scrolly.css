@@ -102,7 +102,8 @@
     align-items: center;
     margin: 0.5rem 1rem 0.5rem;
     position: absolute;
-    top: -50px;
+    top: 0px;
+    right: 0px;
     stroke: black;
 }
 
@@ -119,6 +120,8 @@
 .imerss-panel {
     display: none;
     flex-direction: column;
+    /** Temporarily undo definition in imerss-viz.css - remove once we build again **/
+    position: unset;
 }
 
 .imerss-panel.imerss-activePanel {

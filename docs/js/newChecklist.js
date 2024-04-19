@@ -201,7 +201,7 @@ fluid.defaults("hortis.checklist", {
 hortis.checklist.bindCheckboxClick = function (checklist) {
     checklist.container.on("click", ".pretty input", function () {
         const id = this.dataset.rowId;
-        console.log("Checkbox clicked with row " + id);
+        fluid.log("Checkbox clicked with row " + id);
         checklist.check(id, this.checked);
         // checklist.applier.change(["idToState", id], this.checked);
     });
@@ -279,7 +279,7 @@ hortis.checklist.generate = function (that, element, layoutHolder, filterTaxonom
     const {rootId, selectedId, rowFocus, rowById} = model;
     const selectable = that.options.selectable;
 
-    console.log("Generating checklist for id " + rootId);
+    fluid.log("Generating checklist for id " + rootId);
     const rootChildren = fluid.makeArray(rowById[rootId]);
     const filteredEntries = filterTaxonomy(rootChildren, 0);
     that.rootEntry = {row: {id: hortis.checklist.ROOT_ID}, children: filteredEntries};
@@ -336,7 +336,7 @@ hortis.checklist.computeInitialModel = function (rootEntry, rowFocus) {
     const indexEntry = function (entry, parent) {
         const id = entry.row.id;
         if (!id) {
-            console.log("Warning, discarding row ", entry.row, " without id set");
+            fluid.log("Warning, discarding row ", entry.row, " without id set");
         } else if (rowFocus[id]) {
             idToState[id] = hortis.UNSELECTED;
             idToEntry[id] = entry;

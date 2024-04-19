@@ -51,7 +51,7 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
             container: "{that}.dom.checklist",
             options: {
                 gradeNames: "hortis.checklist.inLoader",
-                rootId: 1,
+                rootId: 48460,
                 filterRanks: "{paneHandler}.options.checklistRanks",
                 members: {
                     rowById: "{vizLoader}.taxa.rowById",
