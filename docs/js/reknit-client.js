@@ -392,6 +392,11 @@ hortis.libreMap.make = function (container, mapOptions, mapLoaded, loadFillPatte
             mapLoaded.value = 1;
         });
     });
+    map.addControl(new maplibregl.NavigationControl({showCompass: false}));
+    // disable map rotation using right click + drag
+    map.dragRotate.disable();
+    // disable map rotation using touch rotation gesture
+    map.touchZoomRotate.disableRotation();
     return map;
 };
 
@@ -1006,8 +1011,14 @@ maxwell.hashManager.applyHash = function (that) {
 };
 
 maxwell.hashManager.listenHash = function (that) {
-    window.addEventListener("hashchange", () => that.applyHash);
-    window.addEventListener("popstate", () => that.applyHash);
+    window.addEventListener("hashchange", () => {
+        console.log("hashchange");
+        that.applyHash();
+    });
+    window.addEventListener("popstate", () => {
+        console.log("popstate");
+        that.applyHash();
+    });
 };
 
 maxwell.hashManager.listenModel = function (that, model) {

@@ -132,8 +132,6 @@ historicMap
 
 Including Mature, Young, and Pole Sapling
 
-<img src="img/Forests_banner.jpg">
-
 Shaped by interactions between water, soil, terrain, climate and the multitudes of beings that live within them, forests are a sanctuary for hundreds of thousands of species of plants, fungi, mammals, birds, insects and microorganisms. Forests provide shelter, clean water, and food, the foundations for a complex web of life in which we are intricately connected. Humans have been stewarding forests on Galiano since time out of mind, in order to ensure key species that we depend on can flourish and help us thrive. 
 
 Dry ridges or steep southwest facing slopes with nutrient poor, shallow soils tend to be dominated by a mix of gnarled [ts’sey](#taxon:Pseudotsuga menziesii menziesii) (Douglas-fir) and [qaanlhp](#taxon:Arbutus menziesii) (arbutus), and shrubby species such as [lulutth'sulhp](#taxon:Berberis aquifolium) (dull oregon grape) or [xwiinlhp](#taxon:Rosa gymnocarpa) (baldhip rose), all of which provide medicine. These drier ecological communities are mapped as woodlands in this map.
@@ -144,8 +142,6 @@ These older forests are models of complexity, exhibiting a vast diversity of com
 
 In mature and old growth forests, trees are present in all stages of their life cycles including standing dead snags and fallen debris, large or small—providing critical habitat for culturally significant species such as [yuxwule'](#taxon:Haliaeetus leucocephalus) (bald eagle) and [ha'put](#taxon:Odocoileus hemionus columbianus) (black tailed deer). Forests are valued for hunting ha'put (deer) from September to October, although Florence James cautions that we should not hunt females or hunt after the rut, but wait until after the [ironwood](#taxon:Holodiscus discolor) (qethulhp) blooms turned brown. The first deer hunted was always shared as a ritual; each species had rules and rituals. It is tradition to bring an elder a piece of meat from hunting, just as one shared the first fish caught during seafood harvests.
 
-<a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#thuthiqut---forest">Learn more about the cultural and ecological values of the forest community</a>
-
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c("Forests")
 forestsMap <- plot_mapbox_map("Forests", project_bbox, allSources, communityStyling, highlightedLayers)
@@ -153,7 +149,7 @@ forestsMap
 ```
 
 ## Ecological Communities - Tl'elhumqa' / Freshwater
-<img src="img/Freshwater_banner.jpg">
+
 Healthy wetlands, lakes and streams are havens for humans and wildlife alike, providing critical habitat and a source of freshwater. A diversity of plant life, bacteria and insects thrive in these ecosystems, forming complex food webs that support many culturally important species, such as stseelhtun (salmon). Thuqi' (sockeye salmon) and haan (pink salmon) are two types of salmon favoured by Indigenous community members on Galiano. In addition, the enhanced growth and forest structure found in riparian areas provides necessary cover for wildlife, which is also important for culturally significant activities such as hunting and birdwatching. [Ha'put](#taxon:Odocoileus hemionus columbianus) (black tailed deer) and [smuqw'a'](#taxon:Ardea herodias fannini) (great blue heron) depend on freshwater areas for food and water. 
 
 Wetlands on Galiano include lakes, shallow water, swamps, marshes, wet meadows, fens, and bog communities, many of which are represented in the watershed that flows into Xetthecum. Swamps and riparian areas include flood-tolerant trees such as [xpey’](#taxon:Thuja plicata) (western red cedar) which “like to have their feet wet”, [kwulala'ulhp](#taxon:Alnus rubra) (red alder), whose inner bark offers a source of emergency food in the spring, and [swele’ulhp](#taxon:Salix lucida) (willow), which is useful for making fish traps. Other helpful plants that grow here include [stth'e'qun](#taxon:Typha angustifolia) (cattail) which provides a useful source of materials for both binding and insulation, [sxum'xum'](#taxon:Equisetum arvense) (horsetail), which makes a yellow brown dye and [ts'a'kw'a'](#taxon:Lysichiton americanus) (skunk cabbage) which can be used to wrap food to keep it fresh. These areas are prized for berry-picking and gathering other edible and medicinal plants such as [lila’](#taxon:Rubus spectabilis) (salmonberry), [t'uqwum'](#taxon:Rubus parviflorus) (thimbleberry), [t'eqe'](#taxon:Gaultheria shallon) (salal), [suniiulhp](#taxon:Berberis aquifolium) (oregon grape), [sqw'uqwtsus](#taxon:Vaccinium parvifolium) (red huckleberry) and me’uwhulhp (Labrador tea).
@@ -161,8 +157,6 @@ Wetlands on Galiano include lakes, shallow water, swamps, marshes, wet meadows, 
 Colonial settlers began to alter Galiano’s landscape in the late 1800’s in ways that were very different from the strategies used by pre-contact First Nations communities. Instead of respecting the integrity of streams, wetlands and riparian areas and honouring the role that [sqwul'ew'](#taxon:Castor canadensis) (beaver) play in revitalizing freshwater ecosystems, these areas have been focal points for resource extraction, agriculture, logging, construction, transportation and waste disposal. 
 
 Hwtalonēts (Greig Creek) does not currently support large populations of salmon. In fact, there are no sea-run salmon or trout populations currently spawning in the island’s streams. There are, however, resident cutthroat trout and stickleback populations that have persisted in a number of our creeks. These fish are no longer able to make it to the ocean because of barriers such as waterfalls, ditched agricultural fields and dams. Efforts to re-establish Coho and Chum populations in Greig Creek have been taking place, mainly through stream bank restoration and stocking, in part through the local school caring for and releasing salmon fry on an annual basis. This is a significant experience for Indigenous and non-Indigenous children alike on Galiano. Habitat for a resident cutthroat trout population in Murchison creek has been improved through the creation of off-channel ponds and the placement of large woody debris within the channel. 
-
-<a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#tlelhumqa---freshwater">Learn more about the cultural and ecological values of the freshwater community</a>
 
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c("Freshwater")
@@ -172,7 +166,6 @@ freshwaterMap
 
 
 ## Ecological Communities - Hwuiumqa'/ Marine
-<img src="img/Marine_banner.jpg">
 
 Surrounded by water, the residents, visitors and non-resident property owners of Galiano Island see the ocean as intrinsic to living and loving life on this island. Sightings of [q'ul-lhanamutsum](#taxon:Orcinus orca) (orca whales) and other marine mammals are treasured, and ocean-going transportation is key, but for many community members, the ocean is first and foremost a source of food and livelihood. Both Indigenous and non-Indigenous people on Galiano enjoy fish such as thuqi' (sockeye salmon), haan (pink salmon), tuqwtuqw (red snapper) and t’q’as (rockfish in general). Also prized are [tl'uxwtl'uxw](#taxon:Magallana gigas) (oysters), [s-axwa'](#taxon:Saxidomus gigantea) (clams), kwuneem'mun', (scallops), [ey'x](#taxon:Metacarcinus magister) (dungeness crabs), [thikwt](#taxon:Apostichopus californicus) (sea cucumber) and seaweeds & algaes such as lhuq'us (red laver). Florence James shared that e s-hw (seal) has also been prized as a dark meat. 
 
@@ -184,8 +177,6 @@ Many (if not all) of the Indigenous families associated with Galiano have been f
 
 In the past, no one would ever reveal the locations of where to harvest seafood, but now this is merely a list of where these creatures once were. Locations of significance include Porlier Pass for rockfish, Pinnacle Rock on the south side of Porlier Pass for lingcod, and Walker Hook off of Saltspring for rockfish. As for salmon, Cable Bay was once a good location for chum salmon, as was Enterprise Reef off of Mayne Island, and off Valdes Island, but other fishing areas that have been key for Indigenous Galiano community members in the past hundred years are much farther away, necessitating long periods of time that families are separated. The closest of these locations include the west coast of Vancouver Island such as Jordan River, Race Rocks, San Juan Harbour near Port Renfrew, and areas near River’s Inlet to the Skeena. 
 
-<a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#hwuiumqa---marine">Learn more about the cultural and ecological values of the marine community</a>
-
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c("Marine")
 marineMap <- plot_mapbox_map("Marine", project_bbox, allSources, communityStyling, highlightedLayers)
@@ -193,8 +184,6 @@ marineMap
 ```
 
 ## Ecological Communities - Woodlands
-
-<img src="img/Woodland_banner.jpg">
 
 Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest or most visually obvious species, P'hwulhp (Garry oak - named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, speenhw (blue camas). Fields of speenhw have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, stl’ults’uluqw’us (chocolate lily / tiger lily) are very beautiful and edible. Other culturally significant species include t’uliqw’ulhp (yarrow) and q'uxmin (barestem desert parsley / wild celery), which are prized for their medicinal qualities.
 
@@ -220,8 +209,6 @@ Down to Earth: Cheryl Bryce (https://www.youtube.com/watch?v=PKTxP_zy_mA)
 Restoring Camas and Culture to Lekwungen and Victoria by B Penn · 2006 · An interview with Lekwungen Cheryl Bryce. (http://www.firstnations.de/media/06-1-1-camas.pdf)
 Camas Country By Janis Ringuette
 https://ohgarryoaksociety.org/what-is-a-garry-oak/ 
-
-<a href="https://imerss.github.io/xetthecum-storymap/ecological-values.html#shthuliim---woodlands-and-rock-outcrops">Learn more about the cultural and ecological values of the woodlands community</a>
 
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c("Woodlands")

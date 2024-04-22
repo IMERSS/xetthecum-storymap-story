@@ -162,15 +162,19 @@ maxwell.parseMapboxWidgets = function (container) {
     return {rootMap, layersByPaneId, mapWidgets, fillPatterns};
 };
 
-// Hide the divs which host the original leaflet maps and return their respective section headers
+// Move all children rather than the heading itself into nested "sectionInner" node to enable 2-column layout
 maxwell.encloseSections = function (container) {
     const sections = [...container.querySelectorAll(".section.level2")];
     sections.forEach(function (section) {
-        const children = [...section.childNodes];
+        const children = [...section.childNodes].filter(node => node.tagName !== "H2");
         const inner = section.ownerDocument.createElement("div");
         inner.setAttribute("class", "mxcw-sectionInner");
         section.appendChild(inner);
-        children.forEach(child => inner.appendChild(child));
+        // Move to inner column - perhaps optional behaviour
+        const innerColumn = section.ownerDocument.createElement("div");
+        innerColumn.setAttribute("class", "mxcw-sectionColumn");
+        inner.appendChild(innerColumn);
+        children.forEach(child => innerColumn.appendChild(child));
     });
 };
 

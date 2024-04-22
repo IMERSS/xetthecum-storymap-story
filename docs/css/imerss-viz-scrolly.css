@@ -28,11 +28,6 @@
     flex-direction: row;
 }
 
-.mxcw-viz-pane .mxcw-sectionInner {
-    width: 50%;
-    margin-right: 2rem;
-}
-
 .mxcw-viz-pane .imerss-container {
     width: 50%;
 }

@@ -63,7 +63,8 @@ maxwell.listenTaxonHash = function (storyPage, hashModel, taxaByName) {
     if (paneHandler?.selectedTaxonId) {
         const row = taxaByName[hashModel?.taxon];
         const taxonId = row?.id;
-        paneHandler.selectedTaxonId.value = taxonId;
+        // Put in null explicitly to avoid censoring by fluid.effect
+        paneHandler.selectedTaxonId.value = taxonId || null;
     }
 };
 

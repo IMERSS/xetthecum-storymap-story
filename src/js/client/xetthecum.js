@@ -20,6 +20,7 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
         unselectedOpacity: 0.5
     },
     selectors: {
+        sectionInner: ".mxcw-sectionInner",
         checklist: ".imerss-simple-checklist-holder",
         checklistLabel: ".imerss-checklist-label",
         taxonDisplay: ".imerss-taxonDisplay",
@@ -28,11 +29,18 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
     markup: {
         checklistLabel: "%paneKey Community Species List"
     },
+    invokers: {
+        addToParent: "maxwell.addToSectionInner({that}.options.parentContainer, {arguments}.0)"
+    },
     listeners: {
         // Implementing this simple label was every bit as irritating as we imagined it would be
         "onCreate.renderChecklistLabel": {
             args: ["{that}.dom.checklistLabel.0", "{that}.options.markup.checklistLabel", "{that}.options.paneKey"],
             func: (node, template, paneKey) => node.innerHTML = fluid.stringTemplate(template, {paneKey})
+        },
+        "onCreate.rewriteTaxonLinks": {
+            args: ["{that}.options.parentContainer", "{that}.options.paneKey"],
+            funcName: "maxwell.rewriteTaxonLinks"
         }
     },
     members: {
@@ -42,6 +50,7 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
         selectedTaxonId: "@expand:signal()",
         panelHash: "@expand:maxwell.panelsToHash({that}.dom.panels)",
         paneSelect: "@expand:fluid.effect(maxwell.taxonToPanel, {that}.checklist, {that}.panelHash, {that}.selectedTaxonId)",
+        scrollVizToTop: "@expand:fluid.effect(maxwell.scrollVizToTop, {that}.container, {that}.selectedTaxonId)",
         updateTaxonHash: "@expand:fluid.effect(maxwell.updateTaxonHash, {hashManager}, {vizLoader}.taxa.rowById, {that}.selectedTaxonId, {that}.isVisible)"
     },
 
@@ -83,6 +92,23 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
         }
     }
 });
+
+maxwell.addToSectionInner = function (parentContainer, jNode) {
+    const target = parentContainer.find(".mxcw-sectionInner");
+    target.append(jNode);
+};
+
+maxwell.rewriteTaxonLinks = function (parentContainer, paneKey) {
+    const target = parentContainer.find(".mxcw-sectionInner")[0];
+    const links = [...target.querySelectorAll("a")];
+    links.forEach(link => {
+        const hash = link.hash;
+        if (hash.startsWith("#taxon")) {
+            const newHash = `#pane:${paneKey}&` + hash.substring(1);
+            link.hash = newHash;
+        }
+    });
+};
 
 fluid.defaults("hortis.taxonDisplay.withClose", {
     selectors: {
@@ -160,6 +186,9 @@ maxwell.taxonToPanel = function (checklist, panelHash, selectedTaxonId) {
     hortis.clearAllTooltips(checklist);
 };
 
+maxwell.scrollVizToTop = function (container) {
+    container[0].scrollTop = 0;
+};
 
 // Attested at https://getbootstrap.com/docs/5.0/getting-started/javascript/#no-conflict-only-if-you-use-jquery
 // Need to prevent bootstrap's tooltip plugin (which is force-loaded by quarto) from conflicting with jQuery's which

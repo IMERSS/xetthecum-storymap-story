@@ -110,11 +110,6 @@ h2 {
     overflow-y: auto;
 }
 
-.mxcw-content h2:hover {
-    outline: 1px solid grey;
-    cursor: pointer;
-}
-
 .mxcw-content .section {
     padding: 8px;
 }
@@ -147,11 +142,6 @@ h2 {
 
 .mxcw-widgetPane.mxcw-activeWidgetPane {
     display: flex;
-}
-
-.mxcw-activeSection {
-    background-color: #eee;
-    outline: 1px solid black;
 }
 
 .mxcw-content .section {

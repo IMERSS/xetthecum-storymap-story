@@ -76,10 +76,13 @@
             }
         }
     }],
-    transforms: [{
-        file: "%maxwell/src/js/reknit-xetthecum.js",
-        func: "rewriteTaxonLinks"
-    }],
+    transforms: [
+        //{
+        // We no longer rewrite taxon links back to the storymap site
+        // file: "%maxwell/src/js/reknit-xetthecum.js",
+        // func: "rewriteTaxonLinks"
+        //}
+    ],
     copyJobs: [{
         source: "%infusion/dist/infusion-framework.js",
         target: "%maxwell/docs/js/infusion-framework.js",
@@ -94,6 +97,9 @@
     }, {
         source: "%maxwell/node_modules/maplibre-gl/dist/maplibre-gl-dev.js",
         target: "%maxwell/docs/js/maplibre-gl-dev.js"
+    }, {
+        source: "%maxwell/node_modules/maplibre-gl/dist/maplibre-gl.css",
+        target: "%maxwell/docs/css/maplibre-gl.css"
     }, {
         source: "%maxwell/node_modules/papaparse/papaparse.min.js",
         target: "%maxwell/docs/js/papaparse.min.js"
