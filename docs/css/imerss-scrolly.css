@@ -62,15 +62,31 @@ h2 {
 
 .section-button {
     stroke: #362F24;
-    cursor: pointer;
+    position: relative;
 }
 
 .section-button:hover:not(.disabled) {
     stroke: rgba(90,82,68,.8);
+    cursor: pointer;
 }
 
 .section-button.disabled {
     stroke: #ccc;
+}
+
+.section-button-desc {
+    display: none;
+    position: absolute;
+    border: solid 1px black;
+    background-color: white;
+}
+
+.section-right-desc {
+    right: 0;
+}
+
+.section-button:hover:not(.disabled) .section-button-desc {
+    display: block;
 }
 
 .mxcw-map {
