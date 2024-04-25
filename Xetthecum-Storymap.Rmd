@@ -61,7 +61,9 @@ introMap
 
 <div class="data-pane">
 <audio controls src="audio/cavesRecording.mp3" loop="true"></audio>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/XWTrRw38PuQ?si=bZnG3F_flXePUCab" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<div class="iframe-container">
+<iframe src="https://www.youtube.com/embed/XWTrRw38PuQ?si=bZnG3F_flXePUCab" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 </div>
 
 ## Land Acknowledgement
@@ -129,7 +131,7 @@ CoveMap
 <blockquote> Landing at Retreat Cove with her family, *Thiyas* recalled that *stsa'kwum* (surf smelts) would go by and move in circles, while the seagulls swooped and dived trying get them.</blockquote>
 <blockquote>“I used to spend time up in *Xetthecum* with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.” Rosemary Georgeson</blockquote>
 <blockquote> "*Xetthecum* was important for social and cultural gatherings, as well as for traditional activities such as fishing and clam digging." Lorne Silvey</blockquote>
-/div>
+</div>
 
 ## Life at the Cove: Delta (past)
 
@@ -189,7 +191,9 @@ eelgrassMap
 <b>‘Imush Q’uyatl’un</b>
 <p>Eelgrass meadows are home to the hooded nudibranch ([*q’uyatl’un*](#taxon:Melibe leonina)). The short film *I’mush q’uyatl’un* follows the movements of this sea slug as it dances through the water during a receding tide. In the film, *q’uyatl’un* dances to a *Puneluxutth’* song titled, *Imush ‘Q’uyatl’un* (“Be with me Seaslug”), and is accompanied by text written by Karolle Wall. It is a simple story, which explains the importance of moving slowly, paying attention, and observing every little aspect of the environment.</p>
 
-<iframe src="https://player.vimeo.com/video/32713022?h=659ac9c205" width="640" height="427" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<div class="iframe-container">
+<iframe src="https://player.vimeo.com/video/32713022?h=659ac9c205" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+</div>
 <p><a href="https://vimeo.com/32713022">&#039;Imush Q&#039;uyatl&#039;un</a> from <a href="https://vimeo.com/user5078648">Karolle Wall</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 </div>
 
@@ -210,7 +214,9 @@ Known as Greig Creek in English, this watercourse runs from Laughlin Lake to Ret
 
 <div class="data-pane">
 <audio controls src="audio/greigRecording.mp3" loop="true"></audio>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/AAdwf8mGWyE?si=w6oC687E_8us0x10" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<div class="iframe-container">
+<iframe src="https://www.youtube.com/embed/AAdwf8mGWyE?si=w6oC687E_8us0x10" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 </div>
 
 ## Walking to *Xatsa’*, Laughlin Lake
@@ -233,7 +239,9 @@ laughlinMap
 
 <div class="data-pane">
 <audio controls src="audio/laughlinRecording.mp3" loop="true"></audio>
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v_1NrdnZkY0?si=01FAAbocSIeMBCYi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<div class="iframe-container">
+<iframe src="https://www.youtube-nocookie.com/embed/v_1NrdnZkY0?si=01FAAbocSIeMBCYi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 <p>Although heavily modified, Laughlin Lake and its associated riparian areas provide critical habitat for species like black-tailed deer ([*ha’put*](#taxon:Odocoileus hemionus columbianus)) and red-legged frog.</p>
 </div>
 

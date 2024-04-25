@@ -52,7 +52,7 @@ round_sf <- function (fc, digits) {
   simple
 }
 
-mx_read <- function (filename, digits = 5) {
+mx_read <- function (filename, digits = 6) {
   st_data <- st_read(filename, quiet=TRUE);
   dropped <- st_zm(st_data, drop = T, what = "ZM")
   trans <- lat_lon(dropped);

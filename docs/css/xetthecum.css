@@ -59,6 +59,12 @@ body #quarto-content {
     margin: 0;
 }
 
+/* Save a bit of space in the header */
+.navbar {
+    padding-tp: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
 /** Special definitions for new "separate scrolling panels" - perhaps go into core **/
 
 .mxcw-content {
@@ -202,48 +208,6 @@ body #quarto-content {
 .species-card .responsive-image-container {
     width: 100%;
     height: 20vh;
-}
-
-
-
-.imerss-region-subtidal {
-    fill: url(#marine);
-    background-repeat: repeat;
-}
-
-.imerss-region-lake-laughlin-lake {
-    fill: url(#lacustrine);
-    background-repeat: repeat;
-}
-
-.imerss-region-wetland {
-    fill: url(#wetland);
-    background-repeat: repeat;
-}
-
-.imerss-region-clearcut {
-    fill: url(#recently-harvested);
-    background-repeat: repeat;
-}
-
-.imerss-region-pole-sapling {
-    fill: url(#pole-sapling);
-    background-repeat: repeat;
-}
-
-.imerss-region-young-forest {
-    fill: url(#young-forest);
-    background-repeat: repeat;
-}
-
-.imerss-region-mature-forest {
-    fill: url(#mature-forest);
-    background-repeat: repeat;
-}
-
-.imerss-region-woodland {
-    fill: url(#woodland);
-    background-repeat: repeat;
 }
 
 

@@ -41,7 +41,8 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
         "onCreate.rewriteTaxonLinks": {
             args: ["{that}.options.parentContainer", "{that}.options.paneKey"],
             funcName: "maxwell.rewriteTaxonLinks"
-        }
+        },
+        "onCreate.slingDataPane": "fluid.identity"
     },
     members: {
         regionToPane: "@expand:fluid.effect(maxwell.regionToPane, {storyPage}.map.selectedRegion, {paneHandler}, {storyPage})",
