@@ -30,6 +30,8 @@
 
 .mxcw-viz-pane .imerss-container {
     width: 50%;
+    /* Can't make the taxon info smaller than 480px plus a bit of margin*/
+    min-width: 502px;
 }
 
 .imerss-panel-label {
@@ -84,7 +86,6 @@
 
 .imerss-taxonDisplay {
     height: auto;
-    margin-left: 1rem;
     /** This core definition needs to go **/
     min-width: auto;
 }

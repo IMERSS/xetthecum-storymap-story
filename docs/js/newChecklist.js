@@ -54,6 +54,10 @@ hortis.encodeHTML = function (str) {
     });
 };
 
+hortis.rowToScientific = function (row) {
+    return row.taxonName || row.iNaturalistTaxonName;
+};
+
 hortis.checklistItem = function (entry, selectedId, simple, selectable) {
     const record = entry.row;
     const styleprop = "";
@@ -130,10 +134,6 @@ hortis.acceptChecklistRowOBA = function (row, filterRanks/*, idToState*/) {
     const acceptBasic = !filterRanks || filterRanks.includes(row.rank);
     const alwaysReject = hortis.alwaysRejectRanks.includes(row.rank);
     return acceptBasic && !alwaysReject;
-};
-
-hortis.rowToScientific = function (row) {
-    return row.taxonName || row.iNaturalistTaxonName;
 };
 
 hortis.scientificComparator = function (entrya, entryb) {
