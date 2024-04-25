@@ -220,24 +220,10 @@
 }
 
 @media screen and ( max-height: 1024px ){
-    .mxcw-map {
-        height: 55vh;
-        min-height: 55vh;
-        width: 65vh;
-        min-width: 65vh;
-    }
-
     .imerss-photo {
         height: 200px;
         max-width: 300px;
     }
-
-    /* Need to repeat this since otherwise map doesn't get hidden on narrow */
-    .mxcw-hideMap {
-        height: 0;
-        min-height: 0;
-    }
-
 }
 
 
