@@ -374,7 +374,7 @@ hortis.libreMap.loadFillPatterns = function (map, fillPatternPath, fillPatterns)
         // Explained in https://github.com/mapbox/mapbox-gl-js/pull/9372
         // Drawn in here: https://github.com/mapbox/mapbox-gl-js/blob/3f1d023894f1fa4d0d2dae0f9ca284a8bab19eaf/js/render/draw_fill.js#L139
         // Or maybe in here, looks very different in libre: https://github.com/maplibre/maplibre-gl-js/blob/main/src/render/draw_fill.ts#L112
-        map.addImage(fillPattern, image.data, {pixelRatio: 4});
+        map.addImage(fillPattern, image.data, {pixelRatio: 6});
     });
 };
 
