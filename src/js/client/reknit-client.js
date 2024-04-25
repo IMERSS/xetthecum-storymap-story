@@ -615,15 +615,16 @@ maxwell.updateActiveMapPane = function (that, map, activePane) {
 
     // TODO: Perhaps assign these into paneHandlers if frequently used?
     const widgetData = mapboxData.mapWidgets[activePaneName]?.x.layout.mapbox;
-
-    const paneHandler = maxwell.paneHandlerForName(that, activePaneName);
-    const zoomDuration = paneHandler?.options.zoomAwayDuration || map.options.zoomDuration;
+    const currentZoom = map.map.getZoom();
 
     // Pretty terrible, there is no longer an ability to specify a callback: https://github.com/mapbox/mapbox-gl-js/issues/1794
     // API docs claim "maxDuration" but there is not
     const zoom = fluid.promise();
     if (widgetData) {
         if (map.hasBounds) {
+            const zoomRatio = Math.abs(Math.log(currentZoom / widgetData.zoom));
+            // For zooms greater than a certain magnitude, do a much slower zoom
+            const zoomDuration = zoomRatio > 0.3 ? that.options.slowZoomDuration : that.options.zoomDuration;
             map.map.flyTo({
                 center: widgetData.center,
                 zoom: widgetData.zoom,
@@ -968,7 +969,6 @@ maxwell.paneHandler.slingDataPane = function (that) {
 
 fluid.defaults("maxwell.librePaneHandler", {
     gradeNames: "maxwell.paneHandler",
-    // zoomAwayDuration
     events: {
         markerClick: null
     }

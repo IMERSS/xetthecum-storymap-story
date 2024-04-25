@@ -8,6 +8,8 @@
             storyPageOptions: {
                 gradeNames: "maxwell.storyPage.withPaneTaxon",
                 zoomDuration: 1500,
+                // Slow zooms for bigger transitions
+                slowZoomDuration: 5000,
                 selectableRegions: ["Forests", "Freshwater", "Marine", "Woodlands"],
                 fillPatternPath: "img/fillPatterns/"
             },
@@ -20,8 +22,7 @@
             },
             paneHandlers: {
                 Welcome: {
-                    type: "maxwell.librePaneHandler",
-                    zoomAwayDuration: 5000
+                    type: "maxwell.librePaneHandler"
                 },
                 Caves: {
                     type: "maxwell.librePaneHandler"
