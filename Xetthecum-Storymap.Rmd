@@ -98,31 +98,31 @@ To some, the area known as *Xetthecum* refers strictly to Retreat Cove. Yet in t
 From here, you are welcome to explore *Xetthecum*'s ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this narrative by clicking the right arrow.
 
 <div class="data-pane">
-    <blockquote>
-        <p>“We must protect the food sources. There are a lot of foods and medicines that are no longer there anymore.”</p>
-    </blockquote>
-    <figcaption>*Puneluxutth’* elder *Thiyaas* (Florence James) </figcaption>
+<blockquote>
+<p>“We must protect the food sources. There are a lot of foods and medicines that are no longer there anymore.”</p>
+</blockquote>
+<figcaption>*Puneluxutth’* elder *Thiyaas* (Florence James) </figcaption>
 
-    <p>*Puneluxutth’* elder *Thiyaas* (Florence James) and her family gathered an array of resources from this place, including berries, fruit, and shellfish as well as medicinal resources. These cultural practices are shared throughout this story map, including:</p>
-    <figure class="historic-figure">
-        <div class="historic-content-container">
-            <div class="historic-content">
-                <div class="historic-section-header">
-                    <img src="img/icon_shellfish.png">
-                    <b>Fish and Shellfish Harvesting</b>
-                </div>
-                <div class="historic-section-header">
-                    <img src="img/icon_berry.png">
-                    <b>Plant Harvesting</b>
-                </div>
-                <div class="historic-section-header">
-                    <img src="img/icon_plant.png">
-                    <b>Gathering Medicine</b>
-                </div>
-                <p>*Puneluxutth’* elders hold sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people, much of which has not been included on this website. This knowledge will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately.</p>
-            </div>
-        </div>
-    </figure>
+<p>*Puneluxutth’* elder *Thiyaas* (Florence James) and her family gathered an array of resources from this place, including berries, fruit, and shellfish as well as medicinal resources. These cultural practices are shared throughout this story map, including:</p>
+<figure class="historic-figure">
+<div class="historic-content-container">
+<div class="historic-content">
+<div class="historic-section-header">
+<img src="img/icon_shellfish.png">
+<b>Fish and Shellfish Harvesting</b>
+</div>
+<div class="historic-section-header">
+<img src="img/icon_berry.png">
+<b>Plant Harvesting</b>
+</div>
+<div class="historic-section-header">
+<img src="img/icon_plant.png">
+<b>Gathering Medicine</b>
+</div>
+<p>*Puneluxutth’* elders hold sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people, much of which has not been included on this website. This knowledge will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately.</p>
+</div>
+</div>
+</figure>
 </div>
 
 ## Life at the Cove: Retreat Cove
@@ -139,21 +139,20 @@ CoveMap
 <p>Beyond a place of refuge and fish, Retreat Cove opened up on an important source of freshwater, as well as opportunities for resource gathering and travel. Lying at the narrowest point on the island, a shore-to-shore footpath connected Retreat Cove with Cable Bay, allowing over-land travel across the island. This story map follows this trail, beginning with the rich abundance of marine life found at the cove, before following in the footsteps of *Thiyas* (Florence James) and her family up Greig Creek to Laughlin Lake.</p>
 
 <div class="data-pane">
-    <figure>
-        <blockquote> Landing at Retreat Cove with her family, *Thiyas* recalled that *stsa'kwum* (surf smelts) would go by and move in circles, while the seagulls swooped and dived trying get them.
-        </blockquote>
-    </figure>
-    <figure>
-        <blockquote>“I used to spend time up in *Xetthecum* with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.”
-        </blockquote>
-        <figcaption>**Rosemary Georgeson**</figcaption>
-    </figure>
-    <blockquote> *Xetthecum* was important for social and cultural gatherings, as well as for traditional activities such as fishing and clam digging.
-    </blockquote>
-    <figcaption>**Lorne Silvey**</figcaption>
-    </figure>
-    <div class="column-group-container">
-    </div>
+<figure>
+<blockquote> Landing at Retreat Cove with her family, *Thiyas* recalled that *stsa'kwum* (surf smelts) would go by and move in circles, while the seagulls swooped and dived trying get them.
+</blockquote>
+</figure>
+<blockquote>“I used to spend time up in *Xetthecum* with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.”
+</blockquote>
+<figcaption>**Rosemary Georgeson**</figcaption>
+</figure>
+<blockquote> *Xetthecum* was important for social and cultural gatherings, as well as for traditional activities such as fishing and clam digging.
+</blockquote>
+<figcaption>**Lorne Silvey**</figcaption>
+</figure>
+<div class="column-group-container">
+</div>
 </div>
 
 ## Life at the Cove: Delta (past)

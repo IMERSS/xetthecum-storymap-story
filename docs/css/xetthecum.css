@@ -83,7 +83,7 @@ body #quarto-content {
 
 .mxcw-sectionColumn {
     width: 50%;
-    overflow-y: scroll;
+    overflow-y: auto;
     margin-right: 8px;
     padding-right: 8px;
 }
