@@ -16,14 +16,17 @@ var hortis = fluid.registerNamespace("hortis");
 
 // TODO: Hoist this into some kind of core library
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
-var {signal, effect, computed, batch} = preactSignalsCore;
+var {effect, computed, batch} = preactSignalsCore;
 
-fluid.defaults("hortis.csvReader", {
+fluid.defaults("hortis.bareResourceLoader", {
     gradeNames: "fluid.component",
     members: {
         completionPromise: "@expand:fluid.promise()"
-    // beginParse: "@expand:hortis.csvReader.parse({that}, {that}.options.csvOptions, {that}.options.url)"
-    },
+    }
+});
+
+fluid.defaults("hortis.csvReader", {
+    gradeNames: "hortis.bareResourceLoader",
     // url: null,
     csvOptions: {
         header: true,
@@ -35,6 +38,19 @@ fluid.defaults("hortis.csvReader", {
         "onCreate.parse": "hortis.csvReader.parse({that}, {that}.options.csvOptions, {that}.options.url)"
     }
 });
+
+// Override fluid.log to preserve line numbers
+// Splendid answer from https://stackoverflow.com/a/66415531/1381443
+Object.defineProperty(fluid, "log", {
+    get: function () {
+        return fluid.isLogging() ? console.log.bind(window.console, fluid.renderTimestamp(new Date()) + ":  ")
+            : function () {};
+    }
+});
+
+hortis.toggleClass = function (container, clazz, value, inverse) {
+    container.classList[value ^ inverse ? "add" : "remove"](clazz);
+};
 
 hortis.csvReader.parse = function (that, csvOptions, url) {
     const options = {
@@ -59,42 +75,6 @@ fluid.defaults("hortis.urlCsvReader", {
         download: true
     }
 });
-
-
-// Monkey-patch core framework to support wide range of primitives and JSON initial values
-fluid.coerceToPrimitive = function (string) {
-    return /^(true|false|null)$/.test(string) || /^[\[{0-9]/.test(string) && !/^{\w/.test(string) ? JSON.parse(string) : string;
-};
-
-fluid.computed = function (func, ...args) {
-    return computed( () => {
-        const designalArgs = args.map(arg => arg instanceof preactSignalsCore.Signal ? arg.value : arg);
-        return typeof(func) === "string" ? fluid.invokeGlobalFunction(func, designalArgs) : func.apply(null, designalArgs);
-    });
-};
-
-// TODO: Return needs to be wrapped in a special marker so that component destruction can dispose it
-fluid.effect = function (func, ...args) {
-    return effect( () => {
-        let undefinedSignals = false;
-        const designalArgs = [];
-        for (const arg of args) {
-            if (arg instanceof preactSignalsCore.Signal) {
-                const value = arg.value;
-                designalArgs.push(arg.value);
-                if (value === undefined) {
-                    undefinedSignals = true;
-                }
-            } else {
-                designalArgs.push(arg);
-            }
-        }
-        // const designalArgs = args.map(arg => arg instanceof preactSignalsCore.Signal ? arg.value : arg);
-        if (!undefinedSignals) {
-            return typeof(func) === "string" ? fluid.invokeGlobalFunction(func, designalArgs) : func.apply(null, designalArgs);
-        }
-    });
-};
 
 fluid.defaults("hortis.vizLoader", {
     gradeNames: ["fluid.component"],
@@ -178,7 +158,8 @@ hortis.wireObsFilters = function (that) {
 
 // Do this by hand since we will have compressed viz one day
 hortis.vizLoader.bindResources = async function (that) {
-    const promises = [that.taxaLoader.completionPromise, that.obsLoader.completionPromise];
+    const resourceLoaders = fluid.queryIoCSelector(that, "hortis.bareResourceLoader", true);
+    const promises = resourceLoaders.map(resourceLoader => resourceLoader.completionPromise);
     const [taxa, obs] = await Promise.all(promises);
     batch( () => {
         that.taxaRows.value = taxa;
@@ -275,85 +256,6 @@ hortis.subscribeHover = function (that) {
 
 
 
-fluid.defaults("fluid.stringTemplateRenderingView", {
-    gradeNames: "fluid.containerRenderingView",
-    invokers: {
-        renderMarkup: "fluid.renderStringTemplate({that}.options.markup.container, {that}.signalsToModel)",
-        renderContainer: "fluid.renderContainerSplice({that}.options.parentContainer, {that}.options.elideParent, {that}.options.hasRoot, {that}.renderMarkup)",
-        // Blast this unnecessary invoker definition
-        addToParent: null,
-        // Need an empty default so that initial rendering effect is triggered
-        signalsToModel: "fluid.emptySignalsToModel()"
-    },
-    elideParent: true,
-    hasRoot: true,
-    members: {
-        // The smallest possible interval between evaluateContainers and subscribing to updates - but a fully integrated
-        // solution would set up the subscription as part of the action of fluid.containerRenderingView's "renderContainer"
-        // renderSubscribe: "@expand:fluid.renderSubscribe({that}, {that}.signalsToModel)"
-    },
-    signals: { // override with your signals in here
-    }
-});
-
-fluid.emptySignalsToModel = function () {
-    const emptySignal = signal();
-    return emptySignal.value;
-};
-
-// The guts of fluid.container without the endless wrapping, unwrapping and overwriting of arguments
-// We assume that all containers came out of the DOM binder
-fluid.validateContainer = function (container) {
-    if (!container || !container.jquery || container.length !== 1) {
-        const selector = container?.selector;
-        const count = container.length !== undefined ? container.length : 0;
-        const extraMessages = container.selectorName ? [" with selector name " + container.selectorName +
-            " in context ", container.context] : [];
-        fluid.fail((count > 1 ? "More than one (" + count + ") container elements were" :
-            "No container element was") + " found for selector " + selector, ...extraMessages);
-    }
-    return container[0];
-};
-
-/** Parse the supplied markup into a DOM element. If the markup has a single root node, this is signalled by
- * setting `hasRoot` to `true`, and that node will be returned. Otherwise, setting `hasRoot` to false will
- * instead return a DocumentFragment that has the parsed markup as children.
- * @param {String} template - The markup to be parsed
- * @param {Boolean} hasRoot - If `true`, the returned node will be the (assumed) single root node of the supplied markup,
- * otherwise the return will be a DocumentFragment hosting the entire markup's nodes
- * @return {Element} The parsed markup as a tree of nodes
- */
-fluid.parseMarkup = function (template, hasRoot) {
-    const fragment = document.createRange().createContextualFragment(template);
-    return hasRoot ? fragment.firstElementChild : fragment;
-};
-
-// TODO: Could move to HTM's parser using virtual DOM for tree building
-fluid.renderContainerSplice = function (parentContainer, elideParent, hasRoot, renderMarkup) {
-    const resolvedContainer = fluid.validateContainer(parentContainer);
-    effect ( () => {
-        const containerMarkup = renderMarkup();
-        const template = fluid.parseMarkup(containerMarkup, true);
-        // Or polyfill at https://stackoverflow.com/a/66528507
-        const children = elideParent ? template.childNodes : [template];
-        resolvedContainer.replaceChildren(...children);
-        if (elideParent) {
-            resolvedContainer.classList.add(...template.classList);
-        }
-    });
-    return parentContainer;
-};
-
-fluid.renderStringTemplate = function (template, modelFetcher) {
-    return fluid.stringTemplate(template, modelFetcher());
-};
-
-fluid.derefSignal = function (signal, path) {
-    return computed( () => {
-        const value = signal.value;
-        return fluid.get(value, path);
-    });
-};
 
 
 fluid.defaults("hortis.checkbox", {
@@ -402,7 +304,7 @@ hortis.closeParentTaxa = function (rowFocus, rowById) {
         let row = rowById[id];
         while (row) {
             rowFocus[row.id] = true;
-            row = rowById[row.parentId];
+            row = row.parent;
         }
     });
     return rowFocus;
@@ -603,6 +505,7 @@ hortis.expandBounds = function (bounds, factor) {
 // Basic style: https://github.com/maplibre/maplibre-gl-js/issues/638
 fluid.defaults("hortis.libreMap", {
     gradeNames: "fluid.viewComponent",
+    zoomDuration: 1000,
     mapOptions: {
         style: {
             version: 8,
@@ -778,7 +681,11 @@ hortis.libreMap.swapBounds = function (bounds) {
 hortis.libreMap.fitBounds = function (that, fitBounds) {
     // MapLibre accepts coordinates in the opposite order (long, lat)
     const swapped = hortis.libreMap.swapBounds(fitBounds);
-    that.map.fitBounds(swapped);
+    that.map.fitBounds(swapped, {
+        duration: that.options.zoomDuration,
+        // Awkward to override the prefersReducedMotion setting but taking OS setting by default seems too severe
+        essential: true}
+    );
 };
 
 

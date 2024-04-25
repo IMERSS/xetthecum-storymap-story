@@ -19,14 +19,38 @@
                 }
             },
             paneHandlers: {
-                Acknowledgement: {
-                    type: "maxwell.paneHandler",
-                    gradeNames: "maxwell.mapHidingPaneHandler"
+                Welcome: {
+                    type: "maxwell.librePaneHandler",
+                    zoomAwayDuration: 5000
                 },
-                Introduction: {
+                Caves: {
                     type: "maxwell.librePaneHandler"
                 },
-                Historic: {
+                Respect: {
+                    type: "maxwell.librePaneHandler"
+                },
+                Acknowledgment: {
+                    type: "maxwell.librePaneHandler"
+                },
+                Xetthecum: {
+                    type: "maxwell.librePaneHandler"
+                },
+                Cove: {
+                    type: "maxwell.librePaneHandler"
+                },
+                Delta_past: {
+                    type: "maxwell.librePaneHandler"
+                },
+                Delta_present: {
+                    type: "maxwell.librePaneHandler"
+                },
+                Eelgrass: {
+                    type: "maxwell.librePaneHandler"
+                },
+                Greig: {
+                    type: "maxwell.librePaneHandler"
+                },
+                Laughlin: {
                     type: "maxwell.librePaneHandler"
                 },
                 Forests: {
@@ -44,34 +68,6 @@
                 Woodlands: {
                     type: "maxwell.xetthecumEcologicalPane",
                     selectRegion: "Woodlands"
-                },
-                Laughlin: {
-                    type: "maxwell.librePaneHandler"
-                },
-                Greig: {
-                    type: "maxwell.librePaneHandler"
-                },
-                Delta: {
-                    type: "maxwell.librePaneHandler"
-                },
-                Caves: {
-                    type: "maxwell.paneHandler",
-                    gradeNames: "maxwell.mapHidingPaneHandler"                
-                },
-                Retreat: {
-                    type: "maxwell.librePaneHandler"
-                },
-                Eelgrass: {
-                    type: "maxwell.librePaneHandler"                
-                },
-                Ecosystem: {
-                    type: "maxwell.librePaneHandler"                
-                },
-                Community: {
-                    type: "maxwell.librePaneHandler"                
-                },
-                Preservation: {
-                    type: "maxwell.librePaneHandler"
                 }
             }
         }
@@ -109,7 +105,7 @@
     }, {
         source: "%maxwell/src/js/client/*.js",
         target: "%maxwell/docs/js"
-    }, {
+    }, { // TODO: What do we include this for?
         source: "%imerss-bioinfo/docs/js/imerss-viz-all.js",
         target: "%maxwell/docs/js/imerss-viz-all.js"
     }, {
@@ -148,6 +144,9 @@
         source: "%maxwell/tabular_data/reintegrated-final-taxa.csv",
         target: "%maxwell/docs/data/reintegrated-final-taxa.csv"
     }, { // TODO: Source from internal %imerss-bioinfo once it stops changing
+        source: "%maxwell/../bagatelle/src/client/js/new/fluidNew.js",
+        target: "%maxwell/docs/js/fluidNew.js"
+    }, {
         source: "%maxwell/../bagatelle/src/client/js/new/imerss-new.js",
         target: "%maxwell/docs/js/imerss-new.js"
     }, {

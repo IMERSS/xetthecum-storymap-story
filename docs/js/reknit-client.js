@@ -502,7 +502,8 @@ fluid.defaults("maxwell.storyPage", {
         updateActivePaneSignal: {
             path: "activePane",
             args: ["{that}.activePane", "{change}.value"],
-            func: (activePaneSignal, activePane) => {activePaneSignal.value = activePane;}
+            func: (activePaneSignal, activePane) => {activePaneSignal.value = activePane;},
+            priority: "last"
         },
         mapVisible: {
             path: "activePane",
@@ -615,6 +616,9 @@ maxwell.updateActiveMapPane = function (that, map, activePane) {
     // TODO: Perhaps assign these into paneHandlers if frequently used?
     const widgetData = mapboxData.mapWidgets[activePaneName]?.x.layout.mapbox;
 
+    const paneHandler = maxwell.paneHandlerForName(that, activePaneName);
+    const zoomDuration = paneHandler?.options.zoomAwayDuration || map.options.zoomDuration;
+
     // Pretty terrible, there is no longer an ability to specify a callback: https://github.com/mapbox/mapbox-gl-js/issues/1794
     // API docs claim "maxDuration" but there is not
     const zoom = fluid.promise();
@@ -623,7 +627,7 @@ maxwell.updateActiveMapPane = function (that, map, activePane) {
             map.map.flyTo({
                 center: widgetData.center,
                 zoom: widgetData.zoom,
-                duration: map.options.zoomDuration,
+                duration: zoomDuration,
                 // Awkward to override the prefersReducedMotion setting but taking OS setting by default seems too severe
                 essential: true
             });
@@ -932,7 +936,8 @@ fluid.defaults("maxwell.paneHandler", {
         }
     },
     listeners: {
-        "onCreate.addPaneClass": "maxwell.paneHandler.addPaneClass({that}, {that}.options.parentContainer)"
+        "onCreate.addPaneClass": "maxwell.paneHandler.addPaneClass({that}, {that}.options.parentContainer)",
+        "onCreate.slingDataPane": "maxwell.paneHandler.slingDataPane({that})"
     },
     resolvedWidgets: "@expand:maxwell.unflattenOptions({that}.options.widgets)",
     dynamicComponents: {
@@ -951,9 +956,18 @@ maxwell.paneHandler.addPaneClass = function (that, parentContainer) {
     parentContainer[0].classList.add("mxcw-widgetPane-" + that.options.paneKey);
 };
 
+maxwell.paneHandler.slingDataPane = function (that) {
+    const inner = that.options.parentContainer[0].querySelector(".mxcw-sectionInner");
+    const dataPanes = [...inner.querySelectorAll(".data-pane")];
+    const rightCol = inner.ownerDocument.createElement("div");
+    inner.appendChild(rightCol);
+    rightCol.classList.add("mxcw-sectionColumn");
+    dataPanes.forEach(toDataPane => rightCol.appendChild(toDataPane));
+};
+
 fluid.defaults("maxwell.librePaneHandler", {
     gradeNames: "maxwell.paneHandler",
-
+    // zoomAwayDuration
     events: {
         markerClick: null
     }

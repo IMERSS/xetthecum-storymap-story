@@ -126,6 +126,12 @@ hortis.acceptChecklistRowAS = function (row, filterRanks, rowFocus) {
     return rowFocus[row.id] && (acceptBasic && !rejectSpecies && !alwaysReject || acceptChecklist);
 };
 
+hortis.acceptChecklistRowOBA = function (row, filterRanks/*, idToState*/) {
+    const acceptBasic = !filterRanks || filterRanks.includes(row.rank);
+    const alwaysReject = hortis.alwaysRejectRanks.includes(row.rank);
+    return acceptBasic && !alwaysReject;
+};
+
 hortis.rowToScientific = function (row) {
     return row.taxonName || row.iNaturalistTaxonName;
 };
@@ -187,7 +193,9 @@ fluid.defaults("hortis.checklist", {
     },
     members: {
         idToState: "@expand:signal({})",
-        rowSelection: "@expand:fluid.computed(hortis.checklist.checksToSelection, {checklist}.idToState, {checklist}.rowFocus, {checklist}.allRowFocus)",
+        // cache of old value used during generateChecklist render cycle
+        oldIdToState: {},
+        rowSelection: "@expand:fluid.computed(hortis.checklist.checksToSelection, {checklist}.idToState)",
         subscribeChecks: "@expand:hortis.checklist.subscribeChecks({that}.idToState, {that})",
         subscribeSelected: "@expand:hortis.checklist.subscribeSelected({that}, {that}.selectedId, {that}.rowById)",
         subscribeGenerate: "@expand:hortis.checklist.subscribeGenerate({that}, {that}.rootId, {that}.selectedId, {that}.rowFocus, {that}.rowById)"
@@ -195,6 +203,16 @@ fluid.defaults("hortis.checklist", {
     listeners: {
         "onCreate.bindTaxonHover": "hortis.bindTaxonHover({that}, {layoutHolder})",
         "onCreate.bindCheckboxClick": "hortis.checklist.bindCheckboxClick({that})"
+    }
+});
+
+fluid.defaults("hortis.checklist.withOBA", {
+    invokers: {
+        acceptChecklistRow: {
+            funcName: "hortis.acceptChecklistRowOBA",
+            //     row
+            args: ["{arguments}.0", "{that}.options.filterRanks", "{that}.oldIdToState"]
+        }
     }
 });
 
@@ -280,11 +298,13 @@ hortis.checklist.generate = function (that, element, layoutHolder, filterTaxonom
     const selectable = that.options.selectable;
 
     fluid.log("Generating checklist for id " + rootId);
+    // Don't read it to avoid creating a cycle since we are likely already in an effect
+    that.oldIdToState = that.idToState.peek();
     const rootChildren = fluid.makeArray(rowById[rootId]);
     const filteredEntries = filterTaxonomy(rootChildren, 0);
     that.rootEntry = {row: {id: hortis.checklist.ROOT_ID}, children: filteredEntries};
     if (selectable) {
-        const {idToEntry, idToState} = hortis.checklist.computeInitialModel(that.rootEntry, rowFocus);
+        const {idToEntry, idToState} = hortis.checklist.computeInitialModel(that.rootEntry, rowFocus, that.oldIdToState);
         that.idToEntry = idToEntry;
         that.idToState.value = idToState;
     }
@@ -330,7 +350,7 @@ hortis.checklist.check = function (checklist, id, checked) {
 // A fake ID to hold the checklist's root so we can display a polyphyletic set
 hortis.checklist.ROOT_ID = Number.NEGATIVE_INFINITY;
 
-hortis.checklist.computeInitialModel = function (rootEntry, rowFocus) {
+hortis.checklist.computeInitialModel = function (rootEntry, rowFocus, oldIdToState) {
     const idToState = {},
         idToEntry = {};
     const indexEntry = function (entry, parent) {
@@ -338,7 +358,7 @@ hortis.checklist.computeInitialModel = function (rootEntry, rowFocus) {
         if (!id) {
             fluid.log("Warning, discarding row ", entry.row, " without id set");
         } else if (rowFocus[id]) {
-            idToState[id] = hortis.UNSELECTED;
+            idToState[id] = oldIdToState[id] || hortis.UNSELECTED;
             idToEntry[id] = entry;
         }
         entry.parent = parent;
@@ -353,16 +373,16 @@ fluid.defaults("hortis.checklist.withHolder", {
 });
 
 // From the individual signals of each checkbox, compute the effective rowSelection - taking into account the "no selection is all selection" idiom
-hortis.checklist.checksToSelection = function (idToState, rowFocus, allRowFocus) {
+hortis.checklist.checksToSelection = function (idToState) {
     const selection = {};
+    const selectAll = {};
     let selected = 0;
     fluid.each(idToState, (state, key) => {
         if (state === hortis.SELECTED) {
             ++selected;
             selection[key] = true;
         }
+        selectAll[key] = true;
     });
-    const anyRowFocus = !$.isEmptyObject(rowFocus);
-    const rowSelection = selected === 0 ? (anyRowFocus ? {...rowFocus} : allRowFocus) : selection;
-    return rowSelection;
+    return selected === 0 ? selectAll : selection;
 };

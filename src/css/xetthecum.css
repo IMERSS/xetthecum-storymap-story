@@ -59,21 +59,6 @@ body #quarto-content {
     margin: 0;
 }
 
-/** TODO: move all this into imerss-viz-scrolly */
-.mxcw-map {
-    /* TODO: check that the 60vh/70vh definitions in imerss-scrolly.css are really shared */
-    width: 100%;
-    min-width: auto;
-    min-height: 30vh;
-    height: auto;
-}
-
-/** Need to reoverride this given we've overridden .mxcw-map **/
-.mxcw-hideMap.mxcw-map {
-    height: 0;
-    min-height: 0;
-}
-
 /** Special definitions for new "separate scrolling panels" - perhaps go into core **/
 
 .mxcw-content {
