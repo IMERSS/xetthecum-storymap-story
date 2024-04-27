@@ -39,7 +39,7 @@ introMap <- plot_mapbox_map("Caves", caves_bbox, allSources, classStyling, highl
 introMap
 ```
 
-<p>Many people know about the sandstone caves of Xetthecum, which attract people in large numbers throughout the year. However, few are aware that this area holds great cultural significance to Puneluxutth’ and other Hul’q’umi’num-speaking peoples, and that the caves are of particular spiritual importance. Over the last decade, the caves have become an increasingly popular tourist destination, and are consequently becoming degraded by vandalism and overuse. Concerned community members hope that the caves might some day be protected. Until then, this sacred site remains at serious risk of being irreversibly damaged.</p>
+<p>Many people know about the sandstone caves of Xetthecum, which attract people in large numbers throughout the year. However, few are aware that this area holds great cultural significance to Puneluxutth’ and other Hul'q'umi'num'-speaking peoples, and that the caves are of particular spiritual importance. Over the last decade, the caves have become an increasingly popular tourist destination, and are consequently becoming degraded by vandalism and overuse. Concerned community members hope that the caves might some day be protected. Until then, this sacred site remains at serious risk of being irreversibly damaged.</p>
 
 <div class="data-pane">
 <img src="img/CaveIllustration.png"/>
@@ -75,7 +75,7 @@ acknowledgmentMap <- plot_mapbox_map("Acknowledgment", context_bbox, allSources,
 acknowledgmentMap
 ```
 
-<p>In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat Cove), Galiano Island lies within the trans-boundary region of the Salish Sea, a diverse bioregion that has been tended to and cherished by Coast Salish peoples since time immemorial. Galiano Island is held within the shared, asserted, and unceded traditional territories of the Puneluxutth’, Lamalcha, and Hwlitsum First Nations, as well as the shared, asserted, and ceded traditional territories of Tsawwassen First Nation. We also acknowledge the territories of all other Hul’q’umi’num-speaking peoples who hold rights and responsibilities in this region.</p>
+<p>In the spirit of respect and gratitude, we acknowledge that Xetthecum (Retreat Cove), Galiano Island lies within the trans-boundary region of the Salish Sea, a diverse bioregion that has been tended to and cherished by Coast Salish peoples since time immemorial. Galiano Island is held within the shared, asserted, and unceded traditional territories of the Puneluxutth’, Lamalcha, and Hwlitsum First Nations, as well as the shared, asserted, and ceded traditional territories of Tsawwassen First Nation. We also acknowledge the territories of all other Hul'q'umi'num'-speaking peoples who hold rights and responsibilities in this region.</p>
 
 <p>This project is a work in progress and we are learning and fumbling together as we go. Please be in touch with us with any thoughts, questions or ideas regarding what you see here.</p>
 
@@ -206,7 +206,7 @@ greigMap <- plot_mapbox_map("Greig", greig_bbox, allSources, classStyling, highl
 greigMap
 ```
 
-<p>The Hul'qumi'num name for 'creek' is Hwta’loonèts, as shared by Thiyaas, who recounted her memories of Xetthecum.
+<p>The Hul'q'umi'num' name for 'creek' is Hwta’loonèts, as shared by Thiyaas, who recounted her memories of Xetthecum.
 Known as Greig Creek in English, this watercourse runs from Laughlin Lake to Retreat Cove and would have provided an important freshwater source for seafaring Coast Salish peoples. Historical evidence dating to the late 1980s suggests that the Greig Creek watershed may have once supported a run of Coho salmon, an important source of food for the Puneluxutth’. However, the watercourse has been severely degraded by intensive agricultural and logging practices. In the mid 1990s, a local educator by the name of Lynne Scott initiated a project, *Salmon in the Classroom*, to release Coho and Chum salmon fry to Hwta’loonèts with the help of youth at the Galiano Community School. Today, the Galiano Conservancy Association continues these efforts in collaboration with schools throughout the region.</p> 
 
 <div class="data-pane">
