@@ -15,16 +15,12 @@ fluid.defaults("maxwell.paneWithTaxonDisplay", {
         selectedTaxonId: "@expand:signal()",
         panelHash: "@expand:maxwell.panelsToHash({that}.dom.panels)",
         paneSelect: "@expand:fluid.effect(maxwell.taxonToPanel, {that}.options.defaultPanel, {that}.panelHash, {that}.selectedTaxonId)",
-        updateTaxonHash: "@expand:fluid.effect(maxwell.updateTaxonHash, {hashManager}, {vizLoader}.taxa.rowById, {that}.selectedTaxonId, {that}.isVisible)"
+        updateTaxonHash: "@expand:fluid.effect(maxwell.updateTaxonHash, {hashManager}, {vizLoader}.taxa.rowById, {that}.selectedTaxonId, {that}.isVisible)",
+        rewriteTaxonLinks: `@expand:fluid.effect(maxwell.rewriteTaxonLinks, {that}.options.parentContainer,
+             {that}.options.paneKey, {storyPage}.taxaByName, {that}.regionTaxa, {vizLoader}.resourcesLoaded)`
     },
     invokers: {
         addToParent: "maxwell.addToSectionInner({that}.options.parentContainer, {arguments}.0)"
-    },
-    listeners: {
-        "onCreate.rewriteTaxonLinks": {
-            args: ["{that}.options.parentContainer", "{that}.options.paneKey"],
-            funcName: "maxwell.rewriteTaxonLinks"
-        }
     },
     components: {
         taxonDisplay: {
@@ -46,6 +42,9 @@ fluid.defaults("maxwell.paneWithTaxonDisplay", {
 fluid.defaults("maxwell.taxonDisplayPane", {
     gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay"],
     markupTemplate: "%resourceBase/html/imerss-viz-story-taxon.html",
+    members: {
+        regionTaxa: "@expand:fluid.computed(fluid.identity, {vizLoader}.taxa.rowById, fluid.identity)"
+    },
     selectors: {
         dataPanel: ".imerss-panel-dataPanel"
     },
@@ -83,7 +82,7 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
     },
     selectors: {
         checklist: ".imerss-simple-checklist-holder",
-        checklistLabel: ".imerss-checklist-label",
+        checklistLabel: ".imerss-checklist-label"
     },
     defaultPanel: "checklist",
     markup: {
@@ -106,7 +105,6 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
         clearTooltips: "@expand:fluid.effect(hortis.clearAllTooltips, {that}.checklist, {that}.selectedTaxonId)",
         scrollVizToTop: "@expand:fluid.effect(maxwell.scrollVizToTop, {that}.container, {that}.selectedTaxonId)"
     },
-
     components: {
         checklist: {
             type: "hortis.checklist.withHolder",
@@ -143,14 +141,21 @@ maxwell.addToSectionInner = function (parentContainer, jNode) {
     target.append(jNode);
 };
 
-maxwell.rewriteTaxonLinks = function (parentContainer, paneKey) {
+maxwell.rewriteTaxonLinks = function (parentContainer, paneKey, taxaByName, regionTaxa) {
     const target = parentContainer.find(".mxcw-sectionInner")[0];
     const links = [...target.querySelectorAll("a")];
     links.forEach(link => {
         const hash = link.hash;
-        if (hash.startsWith("#taxon")) {
-            const newHash = `#pane:${paneKey}&` + hash.substring(1);
+        if (hash.startsWith("#taxon:")) {
+            const newHash = `#pane:${paneKey}&` + hash.substring("#".length);
             link.hash = newHash;
+            const taxon = decodeURIComponent(hash.substring("#taxon:".length));
+            const row = taxaByName[taxon];
+            if (!row) {
+                console.log(`Taxon ${taxon} linked in pane ${paneKey} not found`);
+            } else if (!regionTaxa[row.id]) {
+                console.log(`Taxon ${taxon} linked in pane ${paneKey} was not found for this region`);
+            }
         }
     });
 };

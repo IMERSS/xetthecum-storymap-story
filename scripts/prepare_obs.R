@@ -6,6 +6,8 @@ source("scripts/utils.R")
 obs <- timedFread("tabular_data/reintegrated-obs.csv")
 marine_animals <- timedFread("tabular_data/marine-animals-reintegrated.csv");
 
+reassign <- list("Acer macrophyllum" = "Woodlands")
+
 for (i in 1:nrow(obs)) {
   row <- obs[i, ]
   taxon <- row$`iNaturalist taxon name`
