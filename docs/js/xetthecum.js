@@ -62,6 +62,12 @@ maxwell.paneHandler.slingDataPane = function (that) {
     toDataPanes.forEach(toDataPane => panel.appendChild(toDataPane));
 };
 
+maxwell.accessRowCommonPhyla = function (row) {
+    return row.rank === "phylum" ? {
+        scientificName: row.commonName
+    } : hortis.accessRowHulq(row);
+};
+
 fluid.defaults("maxwell.xetthecumEcologicalPane", {
     // add in "maxwell.withNativeLegend" when there is one
     gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay"],
@@ -109,6 +115,11 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
                 gradeNames: "hortis.checklist.inLoader",
                 rootId: 48460,
                 filterRanks: "{paneHandler}.options.checklistRanks",
+                invokers: {
+                    accessRow: {
+                        funcName: "maxwell.accessRowCommonPhyla"
+                    }
+                },
                 members: {
                     rowById: "{vizLoader}.taxa.rowById",
                     // Perhaps eventually the map will allow interaction with obs

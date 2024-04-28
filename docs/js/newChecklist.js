@@ -44,7 +44,15 @@ hortis.rowToScientific = function (row) {
     return row.taxonName || row.iNaturalistTaxonName;
 };
 
-hortis.checklistItem = function (entry, selectedId, simple, selectable) {
+hortis.accessRowHulq = function (row) {
+    return {
+        nativeName: row["Hulquminum Name"],
+        commonName: row.commonName,
+        scientificName: hortis.rowToScientific(row)
+    }
+};
+
+hortis.checklistItem = function (accessRow, entry, selectedId, simple, selectable) {
     const record = entry.row;
     const styleprop = "";
     const rowid = ` data-row-id="${record.id}"`;
@@ -53,26 +61,26 @@ hortis.checklistItem = function (entry, selectedId, simple, selectable) {
     const rank = record.rank && !(simple && record.taxonName) ? record.rank : "species";
     const selectedClass = rank === "species" && record.id === selectedId ? " class=\"checklist-selected\"" : "";
     const header = "<li " + selectedClass + ">";
+    const accessed = accessRow(record);
     const render = rank === "species" ? hortis.renderSpeciesName : fluid.identity;
     let name = "<p " + styleprop + rowid + " class=\"checklist-rank-" +
-        rank + "\">" + render(hortis.encodeHTML(hortis.rowToScientific(record))) + "</p>";
-    if (record.commonName) {
-        name += " - <p " + styleprop + rowid + " class=\"checklist-common-name\">" + record.commonName + "</p>";
+        rank + "\">" + render(hortis.encodeHTML(accessed.scientificName)) + "</p>";
+    if (accessed.commonName) {
+        name += " - <p " + styleprop + rowid + " class=\"checklist-common-name\">" + accessed.commonName + "</p>";
     }
-    const hulqName = record["Hulquminum Name"];
-    if (hulqName) {
-        name += " - <p " + styleprop + rowid + " class=\"checklist-hulq-name\"><em>" + hulqName + "</em></p>";
+    if (accessed.nativeName) {
+        name += " - <p " + styleprop + rowid + " class=\"checklist-hulq-name\"><em>" + accessed.nativeName + "</em></p>";
     }
-    const subList = hortis.checklistList(entry.children, selectedId, simple, selectable);
+    const subList = hortis.checklistList(accessRow, entry.children, selectedId, simple, selectable);
     const footer = "</li>";
     const check = (selectable ? hortis.rowCheckbox(rowid) : "");
     return header + check + name + subList + footer;
 };
 
-hortis.checklistList = function (entries, selectedId, simple, selectable) {
+hortis.checklistList = function (accessRow, entries, selectedId, simple, selectable) {
     return entries.length ?
         "<ul>" + entries.map(function (entry) {
-            return hortis.checklistItem(entry, selectedId, simple, selectable);
+            return hortis.checklistItem(accessRow, entry, selectedId, simple, selectable);
         }).join("") + "</ul>" : "";
 };
 
@@ -161,6 +169,9 @@ fluid.defaults("hortis.checklist", {
         checklist: ".imerss-checklist"
     },
     invokers: {
+        accessRow: {
+            funcName: "hortis.accessRowHulq"
+        },
         acceptChecklistRow: {
             funcName: "hortis.acceptChecklistRowAS",
             //     row
@@ -297,7 +308,7 @@ hortis.checklist.generate = function (that, element, layoutHolder, filterTaxonom
         that.idToState.value = idToState;
     }
 
-    const markup = hortis.checklistList(filteredEntries, selectedId, simple, selectable);
+    const markup = hortis.checklistList(that.accessRow, filteredEntries, selectedId, simple, selectable);
     element[0].innerHTML = markup;
     if (selectable) {
         const checks = element[0].querySelectorAll(".checklist-check");

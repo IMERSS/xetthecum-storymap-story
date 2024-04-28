@@ -124,6 +124,7 @@ h2 {
 
 .mxcw-content {
     overflow-y: auto;
+    width: 100%;
 }
 
 .mxcw-content .section {
