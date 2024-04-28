@@ -20,6 +20,12 @@ fluid.defaults("maxwell.paneWithTaxonDisplay", {
     invokers: {
         addToParent: "maxwell.addToSectionInner({that}.options.parentContainer, {arguments}.0)"
     },
+    listeners: {
+        "onCreate.rewriteTaxonLinks": {
+            args: ["{that}.options.parentContainer", "{that}.options.paneKey"],
+            funcName: "maxwell.rewriteTaxonLinks"
+        }
+    },
     components: {
         taxonDisplay: {
             type: "hortis.taxonDisplay",
@@ -44,11 +50,7 @@ fluid.defaults("maxwell.taxonDisplayPane", {
         dataPanel: ".imerss-panel-dataPanel"
     },
     listeners: {
-        "onCreate.slingDataPane": "maxwell.paneHandler.slingDataPane({that})",
-        "onCreate.rewriteTaxonLinks": {
-            args: ["{that}.options.parentContainer", "{that}.options.paneKey"],
-            funcName: "maxwell.rewriteTaxonLinks"
-        }
+        "onCreate.slingDataPane": "maxwell.paneHandler.slingDataPane({that})"
     },
     defaultPanel: "dataPanel"
 });

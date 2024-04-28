@@ -39,6 +39,9 @@
                 Cove: {
                     type: "maxwell.taxonDisplayPane"
                 },
+                Future_Vision: {
+                    type: "maxwell.taxonDisplayPane"
+                },
                 Delta_past: {
                     type: "maxwell.taxonDisplayPane"
                 },

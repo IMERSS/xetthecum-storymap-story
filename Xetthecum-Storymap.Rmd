@@ -258,7 +258,7 @@ communityConnectionsMap
 
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c()
-futureVisionMap <- plot_mapbox_map("Future Vision", project_bbox, allSources, communityStyling, highlightedLayers)
+futureVisionMap <- plot_mapbox_map("Future_Vision", project_bbox, allSources, communityStyling, highlightedLayers)
 futureVisionMap
 ```
 
