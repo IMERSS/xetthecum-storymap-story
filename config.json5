@@ -22,37 +22,37 @@
             },
             paneHandlers: {
                 Welcome: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Caves: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Respect: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Acknowledgment: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Xetthecum: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Cove: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Delta_past: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Delta_present: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Eelgrass: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Greig: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Laughlin: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Forests: {
                     type: "maxwell.xetthecumEcologicalPane",
@@ -133,11 +133,8 @@
         source: "%maxwell/../bagatelle/docs/css/imerss-viz-all.css",
         target: "%maxwell/docs/css/imerss-viz-all.css"
     }, {
-        source: "%maxwell/src/html/imerss-viz-story.html",
-        target: "%maxwell/docs/html/imerss-viz-story.html"
-    }, {
-        source: "%maxwell/src/html/pane-info.html",
-        target: "%maxwell/docs/html/pane-info.html"
+        source: "%maxwell/src/html/*.html",
+        target: "%maxwell/docs/html"
     }, {
         source: "%maxwell/tabular_data/reintegrated-obs-assigned.csv",
         target: "%maxwell/docs/data/reintegrated-obs-assigned.csv"

@@ -788,10 +788,6 @@ body ::-webkit-scrollbar-thumb {
 }
 
 
-.imerss-panel {
-    position: relative;
-}
-
 .imerss-clickable {
     cursor: pointer;
 }
@@ -802,6 +798,7 @@ body ::-webkit-scrollbar-thumb {
     /* width: 480px; */
     border: black solid 2px;
     display: flex;
+    flex-direction: column;
     overflow-y: scroll;
     min-width: 320px;
 }
@@ -1174,10 +1171,6 @@ body ::-webkit-scrollbar-thumb {
     height: var(--imerss-sun-height);
     /** Overrides width: 480px which is now in core, probably shou */
     width: auto;
-}
-
-.imerss-panel {
-    position: relative;
 }
 
 .imerss-clickable {

@@ -625,7 +625,7 @@ Pteraster tesselatus,194701,Pteraster tesselatus,Echinodermata,iNat:2975879,48.9
 Asemichthys taylori,172639,Asemichthys taylori,Chordata,iNat:2975888,48.940362,-123.502507,2013-10-13,Peter,Marine
 Leucilla nuttingi,117713,Leucilla nuttingi,Porifera,iNat:2975914,48.940256,-123.502378,2013-10-13,Peter,Marine
 Armina californica,47499,Armina californica,Mollusca,iNat:2975918,48.940374,-123.502405,2013-10-13,Peter,Marine
-Virgularia,195571,Virgularia,Cnidaria,iNat:2975931,48.940211,-123.502679,2013-10-13,Peter,Forests
+Virgularia,195571,Virgularia,Cnidaria,iNat:2975931,48.940211,-123.502679,2013-10-13,Peter,Marine
 Virgularia,195571,Virgularia,Cnidaria,iNat:2975940,48.940324,-123.502362,2013-10-13,Peter,Marine
 Tritonia exsulans,253510,Tritonia exsulans,Mollusca,iNat:2975951,48.940341,-123.502353,2013-10-13,Peter,Marine
 Dendronotus iris,47706,Dendronotus iris,Mollusca,iNat:2975966,48.940329,-123.502328,2013-10-13,Peter,Marine
@@ -898,7 +898,7 @@ Oligocottus maculosus,67629,Oligocottus maculosus,Chordata,iNat:15726103,48.9410
 Evasterias troschelii,84265,Evasterias troschelii,Echinodermata,iNat:15726105,48.941318,-123.503883,2018-08-10 20:19:00,Karolle Wall,Marine
 Pisaster brevispinus,49539,Pisaster brevispinus,Echinodermata,iNat:15726106,48.94116,-123.50386,2018-08-10 19:35:00,Karolle Wall,Marine
 Saxidomus gigantea,130233,Saxidomus gigantea,Mollusca,iNat:19651746,48.942737,-123.513771,2019-01-14 12:40:00,,Marine
-Lontra canadensis,41777,Lontra canadensis,Chordata,iNat:19963152,48.943766,-123.515975,2018-11-19,Donna Talluto,Woodlands
+Lontra canadensis,41777,Lontra canadensis,Chordata,iNat:19963152,48.943766,-123.515975,2018-11-19,Donna Talluto,Marine
 Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:24588676,48.939533,-123.501725,2019-05-04 00:17:14,Charlene Wood,Marine
 Sebastes caurinus,68597,Sebastes caurinus,Chordata,iNat:24792028,48.939591,-123.504847,2019-05-04 20:45:00,,Marine
 Panopea generosa,117618,Panopea generosa,Mollusca,iNat:24792030,48.939591,-123.504847,2019-05-04 20:42:00,,Marine
@@ -1048,7 +1048,7 @@ Cyanea ferruginea,786996,Cyanea ferruginea,Cnidaria,iNat:80827327,48.941053,-123
 Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:82796380,48.93945,-123.501428,2021-06-13 01:05:26,Jemma Hicken,Marine
 Clinocardium nuttallii,69925,Clinocardium nuttallii,Mollusca,iNat:84344506,48.943238,-123.509713,2021-06-24 20:13:29,Audrey Irvine-Broque,Marine
 Leukoma staminea,333608,Leukoma staminea,Mollusca,iNat:84440834,48.943145,-123.50972,2021-06-24 20:14:28,Audrey Irvine-Broque,Marine
-Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:84766649,48.941479,-123.50108,2021-06-27 19:27:04,,Freshwater
+Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:84766649,48.941479,-123.50108,2021-06-27 19:27:04,,Marine
 Eudistylia vancouveri,84864,Eudistylia vancouveri,Annelida,iNat:89818314,48.940097,-123.501197,2021-08-02 19:09:08,,Marine
 Anthopleura elegantissima,52564,Anthopleura elegantissima,Cnidaria,iNat:89818408,48.939678,-123.50128,2021-08-02 19:00:14,,Marine
 Nucella lamellosa,117641,Nucella lamellosa,Mollusca,iNat:94383767,48.94173,-123.50149,2021-09-10 00:59:13,,Marine
@@ -1074,7 +1074,7 @@ Polyorchis penicillatus,51640,Polyorchis penicillatus,Cnidaria,iNat:97205565,48.
 Aulorhynchus flavidus,117568,Aulorhynchus flavidus,Chordata,iNat:97205567,48.940799,-123.503227,2009-11-13 23:33:00,Karolle Wall,Marine
 Polyorchis penicillatus,51640,Polyorchis penicillatus,Cnidaria,iNat:97205568,48.940799,-123.503227,2009-10-11 01:39:00,Karolle Wall,Marine
 Melibe leonina,48455,Melibe leonina,Mollusca,iNat:97205569,48.940799,-123.503227,2009-09-18 21:05:00,Karolle Wall,Marine
-Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:100015491,48.940772,-123.505704,2021-10-31 20:23:00,Brian Chapel,Forests
+Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:100015491,48.940772,-123.505704,2021-10-31 20:23:00,Brian Chapel,Marine
 Gasterosteus aculeatus,48403,Gasterosteus aculeatus,Chordata,iNat:100020627,48.940288,-123.505715,2021-11-02 05:44:00,Brian Chapel,Marine
 Anthopleura elegantissima,52564,Anthopleura elegantissima,Cnidaria,iNat:101350849,48.942975,-123.510537,2021-11-17 12:11:57,,Marine
 Metridium senile,49071,Metridium senile,Cnidaria,iNat:103178035,48.941082,-123.502597,2021-12-16 23:56:00,Andrew Simon,Marine
@@ -1124,11 +1124,11 @@ Crassadoma gigantea,54526,Crassadoma gigantea,Mollusca,iNat:107457350,48.939372,
 Lophopanopeus bellus,50818,Lophopanopeus bellus,Arthropoda,iNat:107457352,48.939372,-123.503078,2022-02-26 00:41:00,Andrew Simon,Marine
 Balanophyllia elegans,51799,Balanophyllia elegans,Cnidaria,iNat:107457355,48.939372,-123.503078,2022-02-26 00:42:00,Andrew Simon,Marine
 Dirona albolineata,47477,Dirona albolineata,Mollusca,iNat:107457357,48.939372,-123.503078,2022-02-26 00:43:00,Andrew Simon,Marine
-Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:107676153,48.93881,-123.500753,2022-03-01 01:00:27,Jared Connoy,Woodlands
+Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:107676153,48.93881,-123.500753,2022-03-01 01:00:27,Jared Connoy,Marine
 Anthopleura elegantissima,52564,Anthopleura elegantissima,Cnidaria,iNat:107676332,48.938818,-123.500872,2022-03-01 00:29:17,Jared Connoy,Marine
-Hemigrapsus nudus,48342,Hemigrapsus nudus,Arthropoda,iNat:107676712,48.938982,-123.500932,2022-03-01 00:38:45,Jared Connoy,Woodlands
+Hemigrapsus nudus,48342,Hemigrapsus nudus,Arthropoda,iNat:107676712,48.938982,-123.500932,2022-03-01 00:38:45,Jared Connoy,Marine
 Cucumaria miniata,117695,Cucumaria miniata,Echinodermata,iNat:107678289,48.939176,-123.501332,2022-03-01 01:01:47,Jared Connoy,Marine
-Anthopleura elegantissima,52564,Anthopleura elegantissima,Cnidaria,iNat:107678563,48.939266,-123.501106,2022-03-01 00:27:21,Alex Niese,Woodlands
+Anthopleura elegantissima,52564,Anthopleura elegantissima,Cnidaria,iNat:107678563,48.939266,-123.501106,2022-03-01 00:27:21,Alex Niese,Marine
 Pugettia producta,49723,Pugettia producta,Arthropoda,iNat:107685741,48.939981,-123.501213,2022-03-01 00:56:52,Alex Niese,Marine
 Cucumaria miniata,117695,Cucumaria miniata,Echinodermata,iNat:107685812,48.940183,-123.500967,2022-03-01 00:58:41,Alex Niese,Marine
 Eudistylia vancouveri,84864,Eudistylia vancouveri,Annelida,iNat:107685840,48.940176,-123.50106,2022-03-01 00:58:41,Alex Niese,Marine
@@ -1189,7 +1189,7 @@ Coryphella trilineata,1392222,Coryphella trilineata,Mollusca,iNat:129151045,48.9
 Arctonoe fragilis,69914,Arctonoe fragilis,Annelida,iNat:129151052,48.939909,-123.505711,2019-05-04 21:06:00,,Marine
 Peltodoris nobilis,48450,Peltodoris nobilis,Mollusca,iNat:129151056,48.939909,-123.505711,2019-05-04 21:08:00,,Marine
 Artedius harringtoni,117528,Artedius harringtoni,Chordata,iNat:129151057,48.939909,-123.505711,2019-05-04 21:12:00,,Marine
-Evasterias troschelii,84265,Evasterias troschelii,Echinodermata,iNat:132679207,48.944141,-123.500971,2022-08-23 17:54:02,,Forests
+Evasterias troschelii,84265,Evasterias troschelii,Echinodermata,iNat:132679207,48.944141,-123.500971,2022-08-23 17:54:02,,Marine
 Eudistylia vancouveri,84864,Eudistylia vancouveri,Annelida,iNat:133878457,48.94015,-123.501202,2022-09-06 00:47:56,,Marine
 Urticina grebelnyi,492672,Urticina grebelnyi,Cnidaria,iNat:136884689,48.939272,-123.501422,2022-09-28 21:38:00,Dave Zeuss Cochrane,Marine
 Eupentacta quinquesemita,51695,Eupentacta quinquesemita,Echinodermata,iNat:136884690,48.939272,-123.501422,2022-09-28 21:38:00,Dave Zeuss Cochrane,Marine
@@ -1210,7 +1210,7 @@ Cucumaria miniata,117695,Cucumaria miniata,Echinodermata,iNat:151258125,48.93945
 Dirona albolineata,47477,Dirona albolineata,Mollusca,iNat:151258139,48.939453,-123.502937,2023-03-15 20:07:00,Andrew Simon,Marine
 Pugettia producta,49723,Pugettia producta,Arthropoda,iNat:151258141,48.939453,-123.502937,2023-03-15 20:08:00,Andrew Simon,Marine
 Orcinus orca,41521,Orcinus orca,Chordata,BCCSN:31289,48.941717,-123.5076,2004-04-23,anonymous,Marine
-Oncorhynchus kisutch,53692,Oncorhynchus kisutch,Chordata,Gal-Salm:0,48.942045,-123.500449,2000-01-01,Keith Erickson,Freshwater
+Oncorhynchus kisutch,53692,Oncorhynchus kisutch,Chordata,Gal-Salm:0,48.942045,-123.500449,2000-01-01,Keith Erickson,Marine
 Rana aurora,25545,Rana aurora,Chordata,iNat:2333734,48.948238,-123.502164,2013-09-27,Bridget Spencer,Freshwater
 Taricha granulosa,27826,Taricha granulosa,Chordata,iNat:2333739,48.948175,-123.501499,2013-09-28,Bridget Spencer,Anthropogenic
 Lilium columbianum,77744,Lilium columbianum,Tracheophyta,iNat:2570696,48.941265,-123.497615,2013-06-05,,Forests
@@ -1234,7 +1234,7 @@ Demospongiae,57736,Demospongiae,Porifera,iNat:2975997,48.940211,-123.502679,2013
 Aplousobranchia,541417,Aplousobranchia,Chordata,iNat:2976065,48.940211,-123.502679,2013-10-13,Peter,Forests
 Clathria,63671,Clathria,Porifera,iNat:2976265,48.940211,-123.502679,2013-10-13,Peter,Forests
 Cottoidei,1303567,Cottoidei,Chordata,iNat:2976329,48.940211,-123.502679,2013-10-13,Peter,Forests
-Ophiura luetkenii,255865,Ophiura luetkenii,Echinodermata,iNat:2976586,48.940211,-123.502679,2013-10-13,Peter,Forests
+Ophiura luetkenii,255865,Ophiura luetkenii,Echinodermata,iNat:2976586,48.940211,-123.502679,2013-10-13,Peter,Marine
 Ophiuroidea,48836,Ophiuroidea,Echinodermata,iNat:2976608,48.940211,-123.502679,2013-10-13,Peter,Forests
 Cladobranchia,801475,Cladobranchia,Mollusca,iNat:2976633,48.940211,-123.502679,2013-10-13,Peter,Forests
 Demospongiae,57736,Demospongiae,Porifera,iNat:2976662,48.940211,-123.502679,2013-10-13,Peter,Forests
@@ -1356,7 +1356,7 @@ Plagiomnium insigne,122705,Plagiomnium insigne,Bryophyta,iNat:4058540,48.95003,-
 Hypnum circinale,125464,Hypnum circinale,Bryophyta,iNat:4058551,48.950521,-123.515428,2016-09-07 19:51:14,,Forests
 Prunella vulgaris,52764,Prunella vulgaris,Tracheophyta,iNat:4058554,48.950558,-123.515596,2016-09-07 19:52:22,,Forests
 Lonicera hispidula,53416,Lonicera hispidula,Tracheophyta,iNat:4058593,48.948996,-123.509803,2016-09-07 20:34:15,,Anthropogenic
-Pugettia producta,49723,Pugettia producta,Arthropoda,iNat:4103447,48.939598,-123.503055,2016-09-13 22:46:49,Nomadkris,Woodlands
+Pugettia producta,49723,Pugettia producta,Arthropoda,iNat:4103447,48.939598,-123.503055,2016-09-13 22:46:49,Nomadkris,Marine
 Pseudacris regilla,24259,Pseudacris regilla,Chordata,iNat:4167009,48.948693,-123.502797,2008-07-27 18:20:48,Ian Guthrie,Freshwater
 Pseudacris regilla,24259,Pseudacris regilla,Chordata,iNat:4167010,48.948693,-123.502797,2008-09-13 15:15:17,Ian Guthrie,Freshwater
 Antheraea polyphemus,47919,Antheraea polyphemus,Arthropoda,iNat:4167545,48.948009,-123.501735,2008-09-08 16:11:15,Ian Guthrie,Anthropogenic
@@ -2465,9 +2465,9 @@ Ceramiaceae,68613,Ceramiaceae,Rhodophyta,iNat:151258140,48.939453,-123.502937,20
 Odonthalia floccosa,322180,Odonthalia floccosa,Rhodophyta,iNat:151258144,48.939453,-123.502937,2023-03-15 20:09:00,Andrew Simon,Marine
 Ulvaceae,54643,Ulvaceae,Chlorophyta,iNat:151258145,48.939453,-123.502937,2023-03-15 20:10:00,Andrew Simon,Marine
 Metridium farcimen,51812,Metridium farcimen,Cnidaria,iNat:151955792,48.939911,-123.501328,2023-03-22 19:51:52,,Marine
-Dermasterias imbricata,63382,Dermasterias imbricata,Echinodermata,iNat:151956216,48.941986,-123.503578,2023-03-22 19:56:06,,Forests
+Dermasterias imbricata,63382,Dermasterias imbricata,Echinodermata,iNat:151956216,48.941986,-123.503578,2023-03-22 19:56:06,,Marine
 Dermasterias imbricata,63382,Dermasterias imbricata,Echinodermata,iNat:151956547,48.939758,-123.501274,2023-03-22 19:58:21,,Marine
-Cucumaria miniata,117695,Cucumaria miniata,Echinodermata,iNat:151956720,48.942139,-123.503792,2023-03-22 19:57:08,,Forests
+Cucumaria miniata,117695,Cucumaria miniata,Echinodermata,iNat:151956720,48.942139,-123.503792,2023-03-22 19:57:08,,Marine
 Anthopleura elegantissima,52564,Anthopleura elegantissima,Cnidaria,iNat:151958046,48.939209,-123.501297,2023-03-22 20:14:05,,Marine
 Collinsia parviflora,59013,Collinsia parviflora,Tracheophyta,iNat:151959722,48.938904,-123.500946,2023-03-22 20:31:33,,Woodlands
 Caryophyllales,47366,Caryophyllales,Tracheophyta,iNat:151959948,48.938904,-123.500931,2023-03-22 20:33:22,,Woodlands
@@ -2476,7 +2476,7 @@ Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:151961922,48.9400
 Pyrobombus,538900,Pyrobombus,Arthropoda,iNat:152046890,48.939614,-123.494319,2023-03-17 21:05:00,,Anthropogenic
 Crinocheta,343798,Crinocheta,Arthropoda,iNat:152049973,48.939452,-123.494057,2023-03-18 21:17:00,,Anthropogenic
 Bombus sitkensis,142269,Bombus sitkensis,Arthropoda,iNat:152989786,48.939318,-123.493858,2023-03-29 21:38:00,,Anthropogenic
-Nereis vexillosa,81790,Nereis vexillosa,Annelida,iNat:153219555,48.941709,-123.500735,2023-04-02 19:17:23,,Freshwater
+Nereis vexillosa,81790,Nereis vexillosa,Annelida,iNat:153219555,48.941709,-123.500735,2023-04-02 19:17:23,,Marine
 Phlebia radiata,155122,Phlebia radiata,Basidiomycota,iNat:154025547,48.946244,-123.49644,2023-04-08 22:04:00,,Forests
 Gyromitra esculenta,85120,Gyromitra esculenta,Ascomycota,iNat:154025932,48.944329,-123.494433,2023-04-08 22:09:00,,Forests
 Alucita montana,213109,Alucita montana,Arthropoda,iNat:154322773,48.939208,-123.493135,2023-04-10 06:34:00,,Anthropogenic
@@ -2542,9 +2542,9 @@ Pyropia,370272,Pyropia,Rhodophyta,iNat:163885531,48.939639,-123.501508,2023-05-2
 Sedum spathulifolium,58886,Sedum spathulifolium,Tracheophyta,iNat:163885665,48.939553,-123.501389,2023-05-26 21:52:34,,Woodlands
 Papilionoidea,47224,Papilionoidea,Arthropoda,iNat:163904432,48.939286,-123.493895,2023-05-26 21:26:00,,Anthropogenic
 Hemaris thetis,127170,Hemaris thetis,Arthropoda,iNat:163905204,48.9392,-123.4937,2023-05-26 22:00:00,,Forests
-Balanus glandula,81610,Balanus glandula,Arthropoda,iNat:163921886,48.93967,-123.501205,2023-05-26 21:48:09,Carolyn Prentice,Woodlands
+Balanus glandula,81610,Balanus glandula,Arthropoda,iNat:163921886,48.93967,-123.501205,2023-05-26 21:48:09,Carolyn Prentice,Marine
 Evasterias troschelii,84265,Evasterias troschelii,Echinodermata,iNat:163921924,48.939755,-123.501267,2023-05-26 21:53:31,Carolyn Prentice,Marine
-Anthopleura elegantissima,52564,Anthopleura elegantissima,Cnidaria,iNat:163921940,48.939603,-123.50125,2023-05-26 21:56:06,Carolyn Prentice,Woodlands
+Anthopleura elegantissima,52564,Anthopleura elegantissima,Cnidaria,iNat:163921940,48.939603,-123.50125,2023-05-26 21:56:06,Carolyn Prentice,Marine
 Fucus distichus,69155,Fucus distichus,Ochrophyta,iNat:163921989,48.939725,-123.50122,2023-05-26 21:49:51,Carolyn Prentice,Marine
 Leathesia marina,502380,Leathesia marina,Ochrophyta,iNat:163922045,48.93973,-123.501237,2023-05-26 21:49:38,Carolyn Prentice,Marine
 Cancer productus,47826,Cancer productus,Arthropoda,iNat:163922067,48.939767,-123.501267,2023-05-26 21:52:56,Carolyn Prentice,Marine
@@ -2769,7 +2769,7 @@ Podabrus pruinosus,210418,Podabrus pruinosus,Arthropoda,iNat:164088810,48.943512
 Dryopteris expansa,64055,Dryopteris expansa,Tracheophyta,iNat:164089155,48.943733,-123.512077,2023-05-27 19:49:17,,Freshwater
 Centaurea melitensis,57922,Centaurea melitensis,Tracheophyta,iNat:164089159,48.943847,-123.516455,2023-05-27 17:38:12,,Woodlands
 Trifolium microcephalum,58911,Trifolium microcephalum,Tracheophyta,iNat:164089456,48.94352,-123.51545,2023-05-27 18:28:08,,Woodlands
-Nuttallia obscurata,430211,Nuttallia obscurata,Mollusca,iNat:164089740,48.943553,-123.509583,2023-05-27 22:26:21,,Woodlands
+Nuttallia obscurata,430211,Nuttallia obscurata,Mollusca,iNat:164089740,48.943553,-123.509583,2023-05-27 22:26:21,,Marine
 Pteridium aquilinum,52681,Pteridium aquilinum,Tracheophyta,iNat:164089785,48.943798,-123.512213,2023-05-27 19:54:00,,Freshwater
 Lonicera hispidula,53416,Lonicera hispidula,Tracheophyta,iNat:164089828,48.943845,-123.516595,2023-05-27 17:36:04,,Marine
 Cancer productus,47826,Cancer productus,Arthropoda,iNat:164089950,48.943357,-123.50965,2023-05-27 22:28:51,,Marine
@@ -3078,13 +3078,13 @@ Cucumaria miniata,117695,Cucumaria miniata,Echinodermata,iNat:164274610,48.94018
 Phyllodocida,67314,Phyllodocida,Annelida,iNat:164274704,48.941958,-123.501747,2023-05-28 03:52:22,,Anthropogenic
 Eudistylia vancouveri,84864,Eudistylia vancouveri,Annelida,iNat:164274762,48.939983,-123.5011,2023-05-28 03:46:08,,Marine
 Pugettia producta,49723,Pugettia producta,Arthropoda,iNat:164275019,48.94027,-123.501167,2023-05-28 03:45:15,,Marine
-Diodora aspera,64148,Diodora aspera,Mollusca,iNat:164275159,48.943042,-123.507788,2023-05-27 22:35:57,,Anthropogenic
-Cnemidocarpa finmarkiensis,47807,Cnemidocarpa finmarkiensis,Chordata,iNat:164282517,48.943038,-123.507697,2023-05-27 22:43:04,,Anthropogenic
+Diodora aspera,64148,Diodora aspera,Mollusca,iNat:164275159,48.943042,-123.507788,2023-05-27 22:35:57,,Marine
+Cnemidocarpa finmarkiensis,47807,Cnemidocarpa finmarkiensis,Chordata,iNat:164282517,48.943038,-123.507697,2023-05-27 22:43:04,,Marine
 Pagurus granosimanus,127555,Pagurus granosimanus,Arthropoda,iNat:164282894,48.942375,-123.50743,2023-05-27 22:41:39,,Marine
-Cucumaria miniata,117695,Cucumaria miniata,Echinodermata,iNat:164283039,48.943012,-123.507545,2023-05-27 22:38:27,,Anthropogenic
+Cucumaria miniata,117695,Cucumaria miniata,Echinodermata,iNat:164283039,48.943012,-123.507545,2023-05-27 22:38:27,,Marine
 Terebellidae,47492,Terebellidae,Annelida,iNat:164283451,48.943037,-123.507745,2023-05-27 22:37:30,,Anthropogenic
-Mopalia muscosa,117633,Mopalia muscosa,Mollusca,iNat:164283605,48.943037,-123.507745,2023-05-27 22:37:29,,Anthropogenic
-Pentidotea wosnesenskii,126295,Pentidotea wosnesenskii,Arthropoda,iNat:164283683,48.943042,-123.507788,2023-05-27 22:35:53,,Anthropogenic
+Mopalia muscosa,117633,Mopalia muscosa,Mollusca,iNat:164283605,48.943037,-123.507745,2023-05-27 22:37:29,,Marine
+Pentidotea wosnesenskii,126295,Pentidotea wosnesenskii,Arthropoda,iNat:164283683,48.943042,-123.507788,2023-05-27 22:35:53,,Marine
 Microcionidae,63668,Microcionidae,Porifera,iNat:164285148,48.943008,-123.508025,2023-05-27 22:35:00,,Marine
 Microcladia borealis,339006,Microcladia borealis,Rhodophyta,iNat:164285651,48.943062,-123.508483,2023-05-27 22:06:39,,Marine
 Prionitis,1064906,Prionitis,Tracheophyta,iNat:164286992,48.943172,-123.509133,2023-05-27 21:48:52,,Marine
@@ -3138,7 +3138,7 @@ Pentagramma triangularis,52676,Pentagramma triangularis,Tracheophyta,iNat:164355
 Cytisus scoparius,48538,Cytisus scoparius,Tracheophyta,iNat:164355359,48.944325,-123.517655,2023-05-28 13:53:08,Joan Septembre,Woodlands
 Rubus parviflorus,51646,Rubus parviflorus,Tracheophyta,iNat:164355448,48.943195,-123.510522,2023-05-27 22:59:38,Joan Septembre,Marine
 Mastocarpus,117821,Mastocarpus,Rhodophyta,iNat:164355471,48.943262,-123.510222,2023-05-27 22:58:28,Joan Septembre,Marine
-Hemigrapsus oregonensis,69170,Hemigrapsus oregonensis,Arthropoda,iNat:164355500,48.94345,-123.5104,2023-05-27 22:57:11,Joan Septembre,Anthropogenic
+Hemigrapsus oregonensis,69170,Hemigrapsus oregonensis,Arthropoda,iNat:164355500,48.94345,-123.5104,2023-05-27 22:57:11,Joan Septembre,Marine
 Zostera marina,52614,Zostera marina,Tracheophyta,iNat:164355560,48.943058,-123.510063,2023-05-27 22:55:35,Joan Septembre,Marine
 Nereocystis luetkeana,120499,Nereocystis luetkeana,Ochrophyta,iNat:164355613,48.943203,-123.510383,2023-05-27 22:54:41,Joan Septembre,Marine
 Semibalanus cariosus,47658,Semibalanus cariosus,Arthropoda,iNat:164355637,48.942913,-123.510462,2023-05-27 22:51:43,Joan Septembre,Marine
@@ -3204,7 +3204,7 @@ Armadillidium vulgare,56083,Armadillidium vulgare,Arthropoda,iNat:164369137,48.9
 Scytosiphon lomentaria,182932,Scytosiphon lomentaria,Ochrophyta,iNat:164369658,48.943245,-123.509108,2023-05-27 21:50:56,,Marine
 Fucus distichus,69155,Fucus distichus,Ochrophyta,iNat:164370068,48.942792,-123.510667,2023-05-27 21:23:34,,Marine
 Asteroidea,47668,Asteroidea,Echinodermata,iNat:164370215,48.94303,-123.508147,2023-05-27 22:37:35,,Marine
-Nucella lamellosa,117641,Nucella lamellosa,Mollusca,iNat:164370336,48.943283,-123.510553,2023-05-27 20:32:33,,Freshwater
+Nucella lamellosa,117641,Nucella lamellosa,Mollusca,iNat:164370336,48.943283,-123.510553,2023-05-27 20:32:33,,Marine
 Brodiaea,51753,Brodiaea,Tracheophyta,iNat:164371376,48.936935,-123.514168,2023-05-27 17:42:29,,Marine
 Eudistylia vancouveri,84864,Eudistylia vancouveri,Annelida,iNat:164371868,48.936935,-123.514168,2023-05-28 18:03:27,,Marine
 Zootermopsis,121381,Zootermopsis,Arthropoda,iNat:164425339,48.945703,-123.516363,2023-05-27 21:27:44,Scott Gilmore,Forests
@@ -3553,7 +3553,7 @@ Lilium columbianum,77744,Lilium columbianum,Tracheophyta,iNat:167313711,48.94175
 Limenitis lorquini,50880,Limenitis lorquini,Arthropoda,iNat:167750982,48.94775,-123.501539,2023-06-05 22:02:31,,Anthropogenic
 Lonicera hispidula,53416,Lonicera hispidula,Tracheophyta,iNat:167751365,48.949725,-123.504197,2023-06-05 20:27:26,,Forests
 Actitis macularius,72458,Actitis macularius,Chordata,iNat:167756393,48.9418,-123.5015,2023-05-27 19:31:00,Libby &amp; Rick Avis,Anthropogenic
-Gnorimosphaeroma oregonense,123798,Gnorimosphaeroma oregonense,Arthropoda,iNat:167756396,48.9418,-123.5015,2023-05-27 19:33:00,Libby &amp; Rick Avis,Anthropogenic
+Gnorimosphaeroma oregonense,123798,Gnorimosphaeroma oregonense,Arthropoda,iNat:167756396,48.9418,-123.5015,2023-05-27 19:33:00,Libby &amp; Rick Avis,Marine
 Phragmidium,205077,Phragmidium,Basidiomycota,iNat:167761410,48.9436,-123.5141,2023-05-27 17:26:00,Libby &amp; Rick Avis,Anthropogenic
 Pentagramma triangularis,52676,Pentagramma triangularis,Tracheophyta,iNat:167770428,48.944265,-123.517619,2023-05-27 17:01:05,Undiné,Marine
 Pyrus communis,63951,Pyrus communis,Tracheophyta,iNat:167773230,48.943752,-123.516272,2023-05-27 17:48:07,Undiné,Woodlands
@@ -3692,7 +3692,7 @@ Fomitopsis mounceae,877361,Fomitopsis mounceae,Basidiomycota,iNat:188837102,48.9
 Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:188839900,48.939663,-123.501488,2023-09-10 02:02:25,Carly Dietrich,Marine
 Anthopleura elegantissima,52564,Anthopleura elegantissima,Cnidaria,iNat:188840548,48.938388,-123.500267,2023-09-10 02:31:39,Carly Dietrich,Marine
 Evasterias troschelii,84265,Evasterias troschelii,Echinodermata,iNat:188840581,48.939297,-123.50125,2023-09-10 02:43:53,Carly Dietrich,Marine
-Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:188840634,48.939595,-123.50145,2023-09-10 02:50:52,Carly Dietrich,Woodlands
+Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:188840634,48.939595,-123.50145,2023-09-10 02:50:52,Carly Dietrich,Marine
 Pisaster ochraceus,49699,Pisaster ochraceus,Echinodermata,iNat:188840662,48.939633,-123.501512,2023-09-10 02:47:38,Carly Dietrich,Marine
 Neoneides muticus,60039,Neoneides muticus,Arthropoda,iNat:189171845,48.939,-123.494,2023-05-02 20:57:00,,Forests
 Deroceras reticulatum,124432,Deroceras reticulatum,Mollusca,iNat:189250232,48.939,-123.494,2023-05-04 15:11:00,,Forests
@@ -4082,7 +4082,7 @@ Loxia curvirostra,10411,Loxia curvirostra,Chordata,Hunterston:314,48.945869,-123
 Lysimachia latifolia,496537,Lysimachia latifolia,Tracheophyta,Hunterston:315,48.945869,-123.51375,2010-05-22,,Forests
 Matricaria,52845,Matricaria sp.,Tracheophyta,Hunterston:316,48.945869,-123.51375,2010-05-22,,Forests
 Mycelis muralis,48543,Mycelis muralis,Tracheophyta,Hunterston:317,48.945869,-123.51375,2010-05-22,,Forests
-Neogale vison,1264432,Neogale vison,Chordata,Hunterston:318,48.945869,-123.51375,2010-05-22,,Forests
+Neogale vison,1264432,Neogale vison,Chordata,Hunterston:318,48.945869,-123.51375,2010-05-22,,Marine
 Entoloma sericeum,350740,Entoloma sericeum,Basidiomycota,Hunterston:319,48.945869,-123.51375,2010-05-22,,Forests
 Odocoileus hemionus columbianus,42221,Odocoileus hemionus columbianus,Chordata,Hunterston:320,48.945869,-123.51375,2010-05-22,,Forests
 Osmorhiza berteroi,53166,Osmorhiza berteroi,Tracheophyta,Hunterston:321,48.945869,-123.51375,2010-05-22,,Forests
@@ -4210,7 +4210,7 @@ Holodiscus discolor,53414,Holodiscus discolor,Tracheophyta,Hunterston:442,48.943
 Hypogymnia inactiva,126597,Hypogymnia inactiva,Ascomycota,Hunterston:443,48.943615,-123.511616,2010-05-22,,Freshwater
 Juncus effusus,56153,Juncus effusus,Tracheophyta,Hunterston:444,48.943615,-123.511616,2010-05-22,,Freshwater
 Lobaria pulmonaria,48711,Lobaria pulmonaria,Ascomycota,Hunterston:445,48.943615,-123.511616,2010-05-22,,Freshwater
-Lontra canadensis,41777,Lontra canadensis,Chordata,Hunterston:446,48.943615,-123.511616,2010-05-22,,Freshwater
+Lontra canadensis,41777,Lontra canadensis,Chordata,Hunterston:446,48.943615,-123.511616,2010-05-22,,Marine
 Lophocampa,67692,Lophocampa,Arthropoda,Hunterston:447,48.943615,-123.511616,2010-05-22,,Freshwater
 Madia sativa,53143,Madia sativa,Tracheophyta,Hunterston:448,48.943615,-123.511616,2010-05-22,,Freshwater
 Marmara arbutiella,177160,Marmara arbutiella,Arthropoda,Hunterston:449,48.943615,-123.511616,2010-05-22,,Freshwater

@@ -5,6 +5,7 @@
     --content-background: #E7DDCD;
     --panel-border: #362F24;
     --bio-background: #F2FCD6;
+    --margin-width: calc((100vw - 110vh)/2);
 
     /** This is defined in bootstrap.min.css **/
     font-family: var(--bs-body-font-family);
@@ -33,6 +34,8 @@ blockquote {
 
 body {
     font-family: var(--bs-body-font-family);
+    margin-left: max(var(--margin-width), 8px);
+    margin-right: max(var(--margin-width), 8px);
 }
 
 body #quarto-content {
@@ -61,7 +64,7 @@ body #quarto-content {
 
 /* Save a bit of space in the header */
 .navbar {
-    padding-tp: 0.5rem;
+    padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
 
@@ -94,10 +97,6 @@ body #quarto-content {
     padding-right: 8px;
 }
 
-.imerss-container {
-    overflow-y: scroll;
-}
-
 /** Definitions for "section buttons in panel sides" **/
 
 .mxcw-section-nav {
@@ -121,8 +120,16 @@ body #quarto-content {
 }
 
 .imerss-container {
-    background-color: var(--bio-background);
     position: relative;
+    overflow-y: auto;
+}
+
+.imerss-container-checklist {
+    background-color: var(--bio-background);
+}
+
+.imerss-panel-taxonDisplay {
+    background-color: var(--bio-background);
 }
 
 .imerss-taxonDisplay {

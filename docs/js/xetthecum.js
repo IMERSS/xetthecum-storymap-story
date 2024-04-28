@@ -4,12 +4,66 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
+fluid.defaults("maxwell.paneWithTaxonDisplay", {
+    selectors: {
+        taxonDisplay: ".imerss-taxonDisplay",
+        panels: ".imerss-panel",
+        sectionInner: ".mxcw-sectionInner"
+    },
+    // defaultPanel
+    members: {
+        selectedTaxonId: "@expand:signal()",
+        panelHash: "@expand:maxwell.panelsToHash({that}.dom.panels)",
+        paneSelect: "@expand:fluid.effect(maxwell.taxonToPanel, {that}.options.defaultPanel, {that}.panelHash, {that}.selectedTaxonId)",
+        updateTaxonHash: "@expand:fluid.effect(maxwell.updateTaxonHash, {hashManager}, {vizLoader}.taxa.rowById, {that}.selectedTaxonId, {that}.isVisible)"
+    },
+    invokers: {
+        addToParent: "maxwell.addToSectionInner({that}.options.parentContainer, {arguments}.0)"
+    },
+    components: {
+        taxonDisplay: {
+            type: "hortis.taxonDisplay",
+            container: "{that}.dom.taxonDisplay",
+            options: {
+                gradeNames: "hortis.taxonDisplay.withClose",
+                culturalValues: true,
+                members: {
+                    obsRows: "{vizLoader}.obsRows",
+                    taxaById: "{vizLoader}.taxa.rowById",
+                    selectedTaxonId: "{paneHandler}.selectedTaxonId"
+                }
+            }
+        }
+    }
+});
+
+fluid.defaults("maxwell.taxonDisplayPane", {
+    gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay"],
+    markupTemplate: "%resourceBase/html/imerss-viz-story-taxon.html",
+    selectors: {
+        dataPanel: ".imerss-panel-dataPanel"
+    },
+    listeners: {
+        "onCreate.slingDataPane": "maxwell.paneHandler.slingDataPane({that})",
+        "onCreate.rewriteTaxonLinks": {
+            args: ["{that}.options.parentContainer", "{that}.options.paneKey"],
+            funcName: "maxwell.rewriteTaxonLinks"
+        }
+    },
+    defaultPanel: "dataPanel"
+});
+
+maxwell.paneHandler.slingDataPane = function (that) {
+    const panel = that.find("dataPanel");
+    const inner = that.find("sectionInner");
+    const toDataPanes = [...inner.querySelectorAll(".data-pane")];
+    toDataPanes.forEach(toDataPane => panel.appendChild(toDataPane));
+};
+
 fluid.defaults("maxwell.xetthecumEcologicalPane", {
     // add in "maxwell.withNativeLegend" when there is one
-    gradeNames: ["maxwell.storyVizPane"],
-    events: {
-        mapLoaded: null
-    },
+    gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay"],
+    markupTemplate: "%resourceBase/html/imerss-viz-story-checklist.html",
     mergePolicy: {
         checklistRanks: "replace"
     },
@@ -20,39 +74,29 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
         unselectedOpacity: 0.5
     },
     selectors: {
-        sectionInner: ".mxcw-sectionInner",
         checklist: ".imerss-simple-checklist-holder",
         checklistLabel: ".imerss-checklist-label",
-        taxonDisplay: ".imerss-taxonDisplay",
-        panels: ".imerss-panel"
     },
+    defaultPanel: "checklist",
     markup: {
         checklistLabel: "%paneKey Community Species List"
     },
-    invokers: {
-        addToParent: "maxwell.addToSectionInner({that}.options.parentContainer, {arguments}.0)"
-    },
+
     listeners: {
         // Implementing this simple label was every bit as irritating as we imagined it would be
         "onCreate.renderChecklistLabel": {
             args: ["{that}.dom.checklistLabel.0", "{that}.options.markup.checklistLabel", "{that}.options.paneKey"],
             func: (node, template, paneKey) => node.innerHTML = fluid.stringTemplate(template, {paneKey})
-        },
-        "onCreate.rewriteTaxonLinks": {
-            args: ["{that}.options.parentContainer", "{that}.options.paneKey"],
-            funcName: "maxwell.rewriteTaxonLinks"
-        },
-        "onCreate.slingDataPane": "fluid.identity"
+        }
     },
     members: {
         regionToPane: "@expand:fluid.effect(maxwell.regionToPane, {storyPage}.map.selectedRegion, {paneHandler}, {storyPage})",
         regionObs: "@expand:fluid.computed(maxwell.filterRegionObs, {vizLoader}.obsRows, {that}.options.selectRegion)",
         regionTaxa: "@expand:fluid.computed(maxwell.nativeTaxaFromObs, {that}.regionObs, {vizLoader}.taxa.rowById, {that}.options.nativeDataOnly)",
-        selectedTaxonId: "@expand:signal()",
-        panelHash: "@expand:maxwell.panelsToHash({that}.dom.panels)",
-        paneSelect: "@expand:fluid.effect(maxwell.taxonToPanel, {that}.checklist, {that}.panelHash, {that}.selectedTaxonId)",
-        scrollVizToTop: "@expand:fluid.effect(maxwell.scrollVizToTop, {that}.container, {that}.selectedTaxonId)",
-        updateTaxonHash: "@expand:fluid.effect(maxwell.updateTaxonHash, {hashManager}, {vizLoader}.taxa.rowById, {that}.selectedTaxonId, {that}.isVisible)"
+
+        // TODO: Needs to be done at any time a hovered element gets hidden
+        clearTooltips: "@expand:fluid.effect(hortis.clearAllTooltips, {that}.checklist, {that}.selectedTaxonId)",
+        scrollVizToTop: "@expand:fluid.effect(maxwell.scrollVizToTop, {that}.container, {that}.selectedTaxonId)"
     },
 
     components: {
@@ -75,19 +119,6 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
                         args: ["{paneHandler}.selectedTaxonId", "{arguments}.0"],
                         func: (selectedTaxonId, id) => selectedTaxonId.value = id
                     }
-                }
-            }
-        },
-        taxonDisplay: {
-            type: "hortis.taxonDisplay",
-            container: "{that}.dom.taxonDisplay",
-            options: {
-                gradeNames: "hortis.taxonDisplay.withClose",
-                culturalValues: true,
-                members: {
-                    obsRows: "{paneHandler}.regionObs",
-                    taxaById: "{vizLoader}.taxa.rowById",
-                    selectedTaxonId: "{paneHandler}.selectedTaxonId"
                 }
             }
         }
@@ -174,17 +205,15 @@ maxwell.panelsToHash = function (panels) {
     return togo;
 };
 
-maxwell.taxonToPanel = function (checklist, panelHash, selectedTaxonId) {
+maxwell.taxonToPanel = function (defaultPanel, panelHash, selectedTaxonId) {
     // TODO: Proper tabbed panel impl, perhaps wrapping jQuery tabs? Certainly not bootstrap's!
     if (selectedTaxonId) {
-        panelHash.checklist.classList.remove("imerss-activePanel");
+        panelHash[defaultPanel].classList.remove("imerss-activePanel");
         panelHash.taxonDisplay.classList.add("imerss-activePanel");
     } else {
-        panelHash.checklist.classList.add("imerss-activePanel");
+        panelHash[defaultPanel].classList.add("imerss-activePanel");
         panelHash.taxonDisplay.classList.remove("imerss-activePanel");
     }
-    // TODO: Needs to be done at any time a hovered element gets hidden
-    hortis.clearAllTooltips(checklist);
 };
 
 maxwell.scrollVizToTop = function (container) {

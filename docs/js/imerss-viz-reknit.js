@@ -7,12 +7,11 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
-// mixin grade which mediates event flow from IMERSS viz (reached via hortis.scrollyMapLoader) to Leaflet pane
-// It is both a paneHandler as well as a sunburstLoader, which is defined in core viz leafletMap.js hortis.scrollyMapLoader
+// A pane holding some kind of viz from imerss-viz - now just a simple template loader
 fluid.defaults("maxwell.storyVizPane", {
     gradeNames: ["maxwell.templatePaneHandler"],
     resourceBase: ".",
-    markupTemplate: "%resourceBase/html/imerss-viz-story.html",
+    //
     resourceOptions: {
         terms: {
             resourceBase: "{that}.options.resourceBase"
@@ -20,6 +19,12 @@ fluid.defaults("maxwell.storyVizPane", {
     },
     styles: {
         paneClass: "mxcw-viz-pane"
+    },
+    invokers: {
+        find: {
+            args: ["{that}.options.parentContainer", "{that}.options.selectors", "{arguments}.0"],
+            func: (parentContainer, selectors, selectorName) => parentContainer[0].querySelector(selectors[selectorName])
+        }
     },
     resources: {
         template: {
@@ -37,6 +42,7 @@ fluid.defaults("maxwell.storyVizPane", {
     }
 });
 
+// Grade applied to the base storyPage routing a taxon selection to selectedTaxonId signal in a pane
 fluid.defaults("maxwell.storyPage.withPaneTaxon", {
     members: {
         taxaByName: "@expand:fluid.computed(hortis.taxaByName, {vizLoader}.taxaRows)"

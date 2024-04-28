@@ -38,6 +38,7 @@ h2 {
 .mxcw-container {
     display: flex;
     flex-direction: column;
+    height: calc(100vh - 10rem)
 }
 
 .mxcw-map-holder {
@@ -130,8 +131,10 @@ h2 {
 }
 
 .mxcw-content img {
-    max-height: 60vh;
+    max-height: 35vh;
     max-width: 100%;
+    display: block;
+    margin: auto;
 }
 
 .mxcw-mapPane {
@@ -236,6 +239,9 @@ body .mx-header ::-webkit-scrollbar-thumb {
     display: none;
 }
 
+.imerss-panel-dataPanel {
+    padding: 1rem;
+}
 
 /* Technique from https://www.w3schools.com/howto/howto_css_responsive_iframes.asp */
 

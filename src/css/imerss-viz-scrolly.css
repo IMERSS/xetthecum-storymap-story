@@ -2,9 +2,6 @@
 .mxcw-widgetPane {
     padding: 0
 }
-.mxcw-container {
-    height: calc(100vh - 12rem)
-}
 
 .imerss-container {
     flex-direction: column;

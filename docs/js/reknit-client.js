@@ -512,6 +512,8 @@ fluid.defaults("maxwell.storyPage", {
             priority: "first" // ensure map becomes visible before we attempt to set its initial bounds
         },
         updatePaneHash: {
+            // Close any open taxon panel - perhaps better to react to a change in activeSection instead,
+            // but we will still have the standard difficulty of distinguishing an initial value
             path: "activePane",
             funcName: "maxwell.updatePaneHash",
             args: ["{storyPage}", "{hashManager}", "{change}.value"],
@@ -568,8 +570,10 @@ maxwell.updateSectionClasses = function (that, activeSection) {
 maxwell.updatePaneHash = function (storyPage, hashManager, paneIndex) {
     const paneHandler = maxwell.paneHandlerForIndex(storyPage, paneIndex);
     const paneKey = paneHandler.options.paneKey;
-    // Blast the taxon in the hash since taxon selected for one panel will not be good for another
-    fluid.replaceModelValue(hashManager.applier, [], {pane: paneKey, taxon: null});
+    if (!fluid.globalInstantiator.hashSource) {
+        // Blast the taxon in the hash since taxon selected for one panel will not be good for another
+        fluid.replaceModelValue(hashManager.applier, [], {pane: paneKey, taxon: null});
+    }
 };
 
 maxwell.listenPaneHash = function (storyPage, paneName) {
@@ -937,8 +941,7 @@ fluid.defaults("maxwell.paneHandler", {
         }
     },
     listeners: {
-        "onCreate.addPaneClass": "maxwell.paneHandler.addPaneClass({that}, {that}.options.parentContainer)",
-        "onCreate.slingDataPane": "maxwell.paneHandler.slingDataPane({that})"
+        "onCreate.addPaneClass": "maxwell.paneHandler.addPaneClass({that}, {that}.options.parentContainer)"
     },
     resolvedWidgets: "@expand:maxwell.unflattenOptions({that}.options.widgets)",
     dynamicComponents: {
@@ -957,21 +960,8 @@ maxwell.paneHandler.addPaneClass = function (that, parentContainer) {
     parentContainer[0].classList.add("mxcw-widgetPane-" + that.options.paneKey);
 };
 
-// TODO: Should better be done during reknitting
-maxwell.paneHandler.slingDataPane = function (that) {
-    const inner = that.options.parentContainer[0].querySelector(".mxcw-sectionInner");
-    const dataPanes = [...inner.querySelectorAll(".data-pane")];
-    const rightCol = inner.ownerDocument.createElement("div");
-    inner.appendChild(rightCol);
-    rightCol.classList.add("mxcw-sectionColumn");
-    dataPanes.forEach(toDataPane => rightCol.appendChild(toDataPane));
-};
-
 fluid.defaults("maxwell.librePaneHandler", {
-    gradeNames: "maxwell.paneHandler",
-    events: {
-        markerClick: null
-    }
+    gradeNames: "maxwell.paneHandler"
 });
 
 // Tag interpreted by maxwell.updateMapVisible
@@ -989,12 +979,12 @@ fluid.defaults("maxwell.hashManager", {
         "onCreate.listenHash": "maxwell.hashManager.listenHash"
     },
     invokers: {
-        applyHash: "maxwell.hashManager.applyHash({that})"
+        applyHash: "maxwell.hashManager.applyHash({that}, {arguments}.0)"
     },
     members: {
         // We don't get a notification on startup, ingest any hash present in the initial URL, but delay to avoid
         // confusing initial model resolution and map loading TODO improve with initial model merging if we can
-        applyHashOnResources: "@expand:fluid.effect({that}.applyHash, {vizLoader}.resourcesLoaded)"
+        applyHashOnResources: "@expand:fluid.effect({that}.applyHash, load, {vizLoader}.resourcesLoaded)"
     },
     modelListeners: {
         "pushState": {
@@ -1022,7 +1012,11 @@ maxwell.hashManager.applyHash = function (that) {
     const parsedSections = sections.filter(section => section.includes(":"))
         .map(section => maxwell.parseHashSegment(section));
     const model = Object.fromEntries(parsedSections);
+    // We tried applying a transaction source here but there is a nested listener in maxwell.listenPaneHash and we
+    // never implemented transaction globbing for https://fluidproject.atlassian.net/browse/FLUID-5498
+    fluid.globalInstantiator.hashSource = true;
     fluid.replaceModelValue(that.applier, [], model);
+    delete fluid.globalInstantiator.hashSource;
 };
 
 maxwell.hashManager.listenHash = function (that) {
