@@ -15,7 +15,7 @@ for (i in 1:nrow(obs)) {
   }
   toForest <- function (rank, value) {
     print(str_glue("Correcting community for observation of {taxon} at row {i} from {row$COMMUNITY} to Forest since {rank} is {value}"))
-    obs[i, "COMMUNITY"] <- "Forest"
+    obs[i, "COMMUNITY"] <<- "Forest"
   }
   if (row$COMMUNITY == "Marine") {
     if (row$Phylum == "Tracheophyta" & row$Genus != "Zostera") {
