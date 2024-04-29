@@ -85,18 +85,22 @@ fluid.parseMarkup = function (template, hasRoot) {
     return hasRoot ? fragment.firstElementChild : fragment;
 };
 
+fluid.spliceContainer = function (target, source, elideParent) {
+    const children = elideParent ? source.childNodes : [source];
+    // Or polyfill at https://stackoverflow.com/a/66528507
+    target.replaceChildren(...children);
+    if (elideParent) {
+        target.classList.add(...source.classList);
+    }
+};
+
 // TODO: Could move to HTM's parser using virtual DOM for tree building
 fluid.renderContainerSplice = function (parentContainer, elideParent, hasRoot, renderMarkup) {
     const resolvedContainer = fluid.validateContainer(parentContainer);
     effect ( () => {
         const containerMarkup = renderMarkup();
         const template = fluid.parseMarkup(containerMarkup, true);
-        // Or polyfill at https://stackoverflow.com/a/66528507
-        const children = elideParent ? template.childNodes : [template];
-        resolvedContainer.replaceChildren(...children);
-        if (elideParent) {
-            resolvedContainer.classList.add(...template.classList);
-        }
+        fluid.spliceContainer(resolvedContainer, template, elideParent);
     });
     return parentContainer;
 };
@@ -119,9 +123,6 @@ fluid.defaults("fluid.stringTemplateRenderingView", {
     elideParent: true,
     hasRoot: true,
     members: {
-        // The smallest possible interval between evaluateContainers and subscribing to updates - but a fully integrated
-        // solution would set up the subscription as part of the action of fluid.containerRenderingView's "renderContainer"
-        // renderSubscribe: "@expand:fluid.renderSubscribe({that}, {that}.signalsToModel)"
     },
     signals: { // override with your signals in here
     }

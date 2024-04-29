@@ -342,12 +342,29 @@ fluid.defaults("hortis.libreMap", {
         selectedRegion: "@expand:signal()"
     },
     invokers: {
-        loadFillPatterns: "hortis.libreMap.loadFillPatterns({that}.map, {that}.options.fillPatternPath, {that}.options.fillPatterns)"
+        urlForFillPattern: {
+            args: ["{that}.options.fillPatternPath", "{arguments}.0"],
+            func: (fillPatternPath, fillPattern) => fillPatternPath + fillPattern + ".png"
+        },
+        loadFillPatterns: "hortis.libreMap.loadFillPatterns({that}, {that}.options.fillPatternPath, {that}.options.fillPatterns)"
+    },
+    modelListeners: {
+        paneToRegion: {
+            path: "{storyPage}.model.activePane",
+            args: ["{storyPage}", "{map}", "{change}.value"],
+            funcName: "maxwell.paneToRegion"
+        }
     },
     listeners: {
         "onCreate.bindRegionSelect": "hortis.libreMap.bindRegionSelect({that})"
     }
 });
+
+maxwell.paneToRegion = function (storyPage, map, activePane) {
+    const paneHandler = maxwell.paneHandlerForIndex(storyPage, activePane);
+    const selectRegion = paneHandler?.options.selectRegion;
+    map.selectedRegion.value = selectRegion;
+};
 
 hortis.libreMap.bindRegionSelect = function (that) {
     const map = that.map;
@@ -368,13 +385,13 @@ hortis.libreMap.bindRegionSelect = function (that) {
 
 hortis.libreMap.loadFillPatterns = function (map, fillPatternPath, fillPatterns) {
     return maxwell.asyncForEach(Object.keys(fillPatterns || {}), async fillPattern => {
-        const url = fillPatternPath + fillPattern + ".png";
-        const image = await map.loadImage(url);
+        const url = map.urlForFillPattern(fillPattern);
+        const image = await map.map.loadImage(url);
         console.log("Loaded image ", url);
         // Explained in https://github.com/mapbox/mapbox-gl-js/pull/9372
         // Drawn in here: https://github.com/mapbox/mapbox-gl-js/blob/3f1d023894f1fa4d0d2dae0f9ca284a8bab19eaf/js/render/draw_fill.js#L139
         // Or maybe in here, looks very different in libre: https://github.com/maplibre/maplibre-gl-js/blob/main/src/render/draw_fill.ts#L112
-        map.addImage(fillPattern, image.data, {pixelRatio: 6});
+        map.map.addImage(fillPattern, image.data, {pixelRatio: 6});
     });
 };
 
@@ -415,7 +432,12 @@ fluid.defaults("hortis.libreMap.inStoryPage", {
     }
 });
 
-
+fluid.defaults("hortis.libreMap.withRegionLegend", {
+    members: {
+        instantiateLegends: `@expand:fluid.effect(maxwell.legendKey.addLegendControl, {map}, {vizLoader}.regionLoader.rows,
+             {vizLoader}.resourcesLoaded)`
+    }
+});
 
 maxwell.resolveMapboxData = function () {
     const data = maxwell.mapboxData;
@@ -428,11 +450,13 @@ fluid.defaults("maxwell.storyPage", {
     // zoomDuration: 100,
     // selectableRegions: [],
     // fillPatternPath
+    // mapFlavourGrade
     resources: {
         plotlyReady: {
             promiseFunc: "maxwell.HTMLWidgetsPostRender"
         }
     },
+    //mapFlavourGrade: [],
     selectors: {
         sections: ".section.level2",
         heading: "h2",
@@ -450,7 +474,7 @@ fluid.defaults("maxwell.storyPage", {
         map: {
             type: "hortis.libreMap",
             options: {
-                gradeNames: "hortis.libreMap.inStoryPage",
+                gradeNames: ["hortis.libreMap.inStoryPage", "{storyPage}.options.mapFlavourGrade"],
                 mapOptions: {
                     style: "{that}.options.mapboxData.rootMap.x.layout.mapbox.style"
                 }
@@ -475,6 +499,9 @@ fluid.defaults("maxwell.storyPage", {
         activePane: "@expand:signal()",
         // "model listeners"
         updateActiveMapPane: "@expand:fluid.effect(maxwell.updateActiveMapPane, {that}, {that}.map, {that}.activePane, {that}.map.mapLoaded)"
+    },
+    invokers: {
+        navSection: "maxwell.navSection({that}.splitRanges, {arguments}.0, {arguments}.1)"
     },
     model: {
         // Currently this is at the head of updates - > activePane in model and then activePane signal
@@ -512,6 +539,8 @@ fluid.defaults("maxwell.storyPage", {
             priority: "first" // ensure map becomes visible before we attempt to set its initial bounds
         },
         updatePaneHash: {
+            // Close any open taxon panel - perhaps better to react to a change in activeSection instead,
+            // but we will still have the standard difficulty of distinguishing an initial value
             path: "activePane",
             funcName: "maxwell.updatePaneHash",
             args: ["{storyPage}", "{hashManager}", "{change}.value"],
@@ -568,18 +597,18 @@ maxwell.updateSectionClasses = function (that, activeSection) {
 maxwell.updatePaneHash = function (storyPage, hashManager, paneIndex) {
     const paneHandler = maxwell.paneHandlerForIndex(storyPage, paneIndex);
     const paneKey = paneHandler.options.paneKey;
-    // Blast the taxon in the hash since taxon selected for one panel will not be good for another
-    fluid.replaceModelValue(hashManager.applier, [], {pane: paneKey, taxon: null});
+    if (!fluid.globalInstantiator.hashSource) {
+        // Blast the taxon in the hash since taxon selected for one panel will not be good for another
+        fluid.replaceModelValue(hashManager.applier, [], {pane: paneKey, taxon: null});
+    }
 };
 
 maxwell.listenPaneHash = function (storyPage, paneName) {
     const paneHandler = maxwell.paneHandlerForName(storyPage, paneName);
-    const paneIndex = paneHandler.options.paneIndex;
+    const paneIndex = paneHandler ? paneHandler.options.paneIndex : 0;
     // TODO: Abolish distinction between pane indices and section indices
     storyPage.applier.change("activeSection", paneIndex);
 };
-
-
 
 /**
  * Convert the pane and subpane selection index state to an array of effectively active panes
@@ -657,37 +686,51 @@ maxwell.updateActiveMapPane = function (that, map, activePane) {
 
 maxwell.updateMapVisible = function (that, activePane) {
     const paneHandler = maxwell.paneHandlerForIndex(that, activePane);
+    if (!paneHandler) {
+        fluid.fail("No pane handler found for section with index ", activePane);
+    }
     const isVisible = !fluid.componentHasGrade(paneHandler, "maxwell.mapHidingPaneHandler");
     maxwell.toggleClass(that.dom.locate("mapHolder")[0], "mxcw-hideMap", isVisible, true);
+};
+
+maxwell.navSection = function (splitRanges, activeSection, offset) {
+    const navRangeIndex = splitRanges.indexToRange[activeSection];
+    const navRange = splitRanges.navRanges[navRangeIndex];
+    const navIndex = navRange.indexOf(activeSection);
+    return navRange[navIndex + offset];
 };
 
 maxwell.listenSectionButtons = function (that) {
     const sectionLeft = that.locate("sectionLeft")[0];
     sectionLeft.addEventListener("click", () => {
         const activeSection = that.model.activeSection;
-        if (activeSection > 0) {
-            that.applier.change("activeSection", activeSection - 1);
+        const navLeft = that.navSection(activeSection, -1);
+        if (navLeft !== undefined) {
+            that.applier.change("activeSection", navLeft);
         }
     });
     const sectionRight = that.locate("sectionRight")[0];
     sectionRight.addEventListener("click", () => {
         const activeSection = that.model.activeSection;
-        if (activeSection < that.sectionHolders.length - 1) {
-            that.applier.change("activeSection", activeSection + 1);
+        const navRight = that.navSection(activeSection, 1);
+        if (navRight !== undefined) {
+            that.applier.change("activeSection", navRight);
         }
     });
 };
 
 maxwell.updateSectionNav = function (that, activeSection) {
     const l = (selector) => that.locate(selector)[0];
-    const first = activeSection === 0;
-    const last = activeSection === that.sectionHolders.length - 1;
+    const navLeft = that.navSection(activeSection, -1);
+    const first = navLeft === undefined;
+    const navRight = that.navSection(activeSection, 1);
+    const last = navRight === undefined;
     maxwell.toggleClass(l("sectionLeft"), "disabled", first);
-    l("sectionLeftText").innerText = first ? "" : that.sectionHolders[activeSection - 1].headingText;
+    l("sectionLeftText").innerText = first ? "" : that.sectionHolders[navLeft].headingText;
     maxwell.toggleClass(l("sectionLeftDesc"), "mxcw-hidden", first);
 
     maxwell.toggleClass(l("sectionRight"), "disabled", last);
-    l("sectionRightText").innerText = last ? "" : that.sectionHolders[activeSection + 1].headingText;
+    l("sectionRightText").innerText = last ? "" : that.sectionHolders[navRight].headingText;
     maxwell.toggleClass(l("sectionRightDesc"), "mxcw-hidden", last);
 };
 
@@ -937,8 +980,7 @@ fluid.defaults("maxwell.paneHandler", {
         }
     },
     listeners: {
-        "onCreate.addPaneClass": "maxwell.paneHandler.addPaneClass({that}, {that}.options.parentContainer)",
-        "onCreate.slingDataPane": "maxwell.paneHandler.slingDataPane({that})"
+        "onCreate.addPaneClass": "maxwell.paneHandler.addPaneClass({that}, {that}.options.parentContainer)"
     },
     resolvedWidgets: "@expand:maxwell.unflattenOptions({that}.options.widgets)",
     dynamicComponents: {
@@ -957,21 +999,8 @@ maxwell.paneHandler.addPaneClass = function (that, parentContainer) {
     parentContainer[0].classList.add("mxcw-widgetPane-" + that.options.paneKey);
 };
 
-// TODO: Should better be done during reknitting
-maxwell.paneHandler.slingDataPane = function (that) {
-    const inner = that.options.parentContainer[0].querySelector(".mxcw-sectionInner");
-    const dataPanes = [...inner.querySelectorAll(".data-pane")];
-    const rightCol = inner.ownerDocument.createElement("div");
-    inner.appendChild(rightCol);
-    rightCol.classList.add("mxcw-sectionColumn");
-    dataPanes.forEach(toDataPane => rightCol.appendChild(toDataPane));
-};
-
 fluid.defaults("maxwell.librePaneHandler", {
-    gradeNames: "maxwell.paneHandler",
-    events: {
-        markerClick: null
-    }
+    gradeNames: "maxwell.paneHandler"
 });
 
 // Tag interpreted by maxwell.updateMapVisible
@@ -983,18 +1012,30 @@ fluid.defaults("maxwell.templatePaneHandler", {
     parentContainer: "@expand:maxwell.sectionForPaneHandler({that}, {maxwell.storyPage})"
 });
 
+fluid.defaults("hortis.vizLoader.withRegions", {
+    gradeNames: "hortis.vizLoader",
+    components: {
+        regionLoader: {
+            type: "hortis.urlCsvReader",
+            options: {
+                url: "{vizLoader}.options.regionFile"
+            }
+        }
+    }
+});
+
 fluid.defaults("maxwell.hashManager", {
     gradeNames: "fluid.modelComponent",
     listeners: {
         "onCreate.listenHash": "maxwell.hashManager.listenHash"
     },
     invokers: {
-        applyHash: "maxwell.hashManager.applyHash({that})"
+        applyHash: "maxwell.hashManager.applyHash({that}, {arguments}.0)"
     },
     members: {
         // We don't get a notification on startup, ingest any hash present in the initial URL, but delay to avoid
         // confusing initial model resolution and map loading TODO improve with initial model merging if we can
-        applyHashOnResources: "@expand:fluid.effect({that}.applyHash, {vizLoader}.resourcesLoaded)"
+        applyHashOnResources: "@expand:fluid.effect({that}.applyHash, load, {vizLoader}.resourcesLoaded)"
     },
     modelListeners: {
         "pushState": {
@@ -1022,7 +1063,11 @@ maxwell.hashManager.applyHash = function (that) {
     const parsedSections = sections.filter(section => section.includes(":"))
         .map(section => maxwell.parseHashSegment(section));
     const model = Object.fromEntries(parsedSections);
+    // We tried applying a transaction source here but there is a nested listener in maxwell.listenPaneHash and we
+    // never implemented transaction globbing for https://fluidproject.atlassian.net/browse/FLUID-5498
+    fluid.globalInstantiator.hashSource = true;
     fluid.replaceModelValue(that.applier, [], model);
+    delete fluid.globalInstantiator.hashSource;
 };
 
 maxwell.hashManager.listenHash = function (that) {

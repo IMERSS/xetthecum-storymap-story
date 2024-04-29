@@ -5,6 +5,7 @@
     --content-background: #E7DDCD;
     --panel-border: #362F24;
     --bio-background: #F2FCD6;
+    --margin-width: calc((100vw - 110vh)/2);
 
     /** This is defined in bootstrap.min.css **/
     font-family: var(--bs-body-font-family);
@@ -33,6 +34,8 @@ blockquote {
 
 body {
     font-family: var(--bs-body-font-family);
+    margin-left: max(var(--margin-width), 8px);
+    margin-right: max(var(--margin-width), 8px);
 }
 
 body #quarto-content {
@@ -61,7 +64,7 @@ body #quarto-content {
 
 /* Save a bit of space in the header */
 .navbar {
-    padding-tp: 0.5rem;
+    padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
 
@@ -94,10 +97,6 @@ body #quarto-content {
     padding-right: 8px;
 }
 
-.imerss-container {
-    overflow-y: scroll;
-}
-
 /** Definitions for "section buttons in panel sides" **/
 
 .mxcw-section-nav {
@@ -121,23 +120,93 @@ body #quarto-content {
 }
 
 .imerss-container {
-    background-color: var(--bio-background);
     position: relative;
+    overflow-y: auto;
+}
+
+.imerss-container-checklist {
+    background-color: var(--bio-background);
+    /* Can't make the taxon info smaller than 480px plus a bit of margin*/
+    /* min-width: 502px; */
+}
+
+.imerss-panel-taxonDisplay {
+    background-color: var(--bio-background);
 }
 
 .imerss-taxonDisplay {
     border: none;
     overflow: visible;
-    align-self: center;
-    width: 480px;
+    padding: 5px;
+    /* align-self: center; */
+    /* width: 480px;*/
 }
 
 .imerss-taxonDisplay > div {
     width: auto;
 }
 
+/** Wrapping rules port back into core */
+.taxonDisplay-row .taxonDisplay-row {
+    padding-left: 36px;
+    text-indent: -28px;
+}
+
+.imerss-cultural-values {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 480px;
+}
+
+@media screen and ( max-height: 1024px ) {
+
+    .imerss-cultural-value-img {
+        width: 54px;
+        height: 54px;
+        background-repeat: no-repeat;
+        background-size: 54px;
+    }
+
+    .imerss-cultural-values {
+        max-width: 300px;
+    }
+
+    .imerss-taxonDisplay {
+        font-size: smaller;
+    }
+}
+
 .imerss-checklist-label {
     padding-left: 1.4rem;
+}
+
+.imerss-legend-preview {
+    width: 40px;
+    height: 40px;
+    background-size: 96px;
+    /** Override silly definition from imerss-viz-scrolly.css - need to remove dependence **/
+    top: 0px;
+    margin: 3px;
+}
+
+.imerss-selected .imerss-legend-preview {
+    outline: 3px solid #FCFF63;
+}
+
+.imerss-legend-row:not(.imerss-selected) .imerss-legend-preview:hover {
+    outline: 1px #999 solid;
+    outline-offset: 2px;
+}
+
+.imerss-legend-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mxcw-legend {
+    width: 15rem;
+    margin: auto;
 }
 
 .historic-content-container {

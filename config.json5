@@ -6,7 +6,8 @@
             template: "%maxwell/src/html/template.html",
             checkLinks: false,
             storyPageOptions: {
-                gradeNames: "maxwell.storyPage.withPaneTaxon",
+                gradeNames: ["maxwell.storyPage.withPaneTaxon", "maxwell.storyPage.withSplitNavigation"],
+                mapFlavourGrade: "hortis.libreMap.withRegionLegend",
                 zoomDuration: 1500,
                 // Slow zooms for bigger transitions
                 slowZoomDuration: 5000,
@@ -15,44 +16,54 @@
             },
             components: {
                 vizLoader: {
-                    type: "hortis.vizLoader",
+                    type: "hortis.vizLoader.withRegions",
                     obsFile: "data/reintegrated-obs-assigned.csv",
-                    taxaFile: "data/reintegrated-final-taxa.csv"
+                    taxaFile: "data/reintegrated-final-taxa.csv",
+                    regionFile: "data/communityStyling.csv"
                 }
             },
             paneHandlers: {
                 Welcome: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Caves: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Respect: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Acknowledgment: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Xetthecum: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Cove: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
+                },
+                Future_Vision: {
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Delta_past: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Delta_present: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Eelgrass: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Greig: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Laughlin: {
-                    type: "maxwell.librePaneHandler"
+                    type: "maxwell.taxonDisplayPane"
+                },
+                Community_Connections: {
+                    type: "maxwell.taxonDisplayPane"
+                },
+                Future_Vision: {
+                    type: "maxwell.taxonDisplayPane"
                 },
                 Forests: {
                     type: "maxwell.xetthecumEcologicalPane",
@@ -133,17 +144,17 @@
         source: "%maxwell/../bagatelle/docs/css/imerss-viz-all.css",
         target: "%maxwell/docs/css/imerss-viz-all.css"
     }, {
-        source: "%maxwell/src/html/imerss-viz-story.html",
-        target: "%maxwell/docs/html/imerss-viz-story.html"
-    }, {
-        source: "%maxwell/src/html/pane-info.html",
-        target: "%maxwell/docs/html/pane-info.html"
+        source: "%maxwell/src/html/*.html",
+        target: "%maxwell/docs/html"
     }, {
         source: "%maxwell/tabular_data/reintegrated-obs-assigned.csv",
         target: "%maxwell/docs/data/reintegrated-obs-assigned.csv"
     }, {
         source: "%maxwell/tabular_data/reintegrated-final-taxa.csv",
         target: "%maxwell/docs/data/reintegrated-final-taxa.csv"
+    }, {
+        source: "%maxwell/tabular_data/communityStyling.csv",
+        target: "%maxwell/docs/data/communityStyling.csv"
     }, { // TODO: Source from internal %imerss-bioinfo once it stops changing
         source: "%maxwell/../bagatelle/src/client/js/new/fluidNew.js",
         target: "%maxwell/docs/js/fluidNew.js"

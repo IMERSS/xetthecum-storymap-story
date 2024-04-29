@@ -1,16 +1,26 @@
-reintegrated-obs.csv
-reintegrated.csv
+  reintegrated-obs.csv
+  reintegrated.csv
 Taken from https://github.com/IMERSS/imerss-bioinfo/tree/main/data/Xetthecum
 
-Then run scripts/prepare_obs.R generating
-reintegrated-obs-filtered.csv
+  marine-animals-reintegrated.csv
+Taken from https://github.com/IMERSS/imerss-bioinfo/tree/main/data/dataPaper-I-in
+
+Then run scripts/prepare_obs.R accepts
+  reintegrated-obs.csv
+  marine-animals-reintegrated.csv
+generates
+  reintegrated-obs-filtered.csv
 
 Finally run
 
-node src/assignBNames.js --reintegrated tabular_data/reintegrated-obs-filtered.csv
-to generate
-reintegrated-obs-assigned.csv -> into viz config.json5
-reintegrated-obs-assigned-taxa.csv (unused)
+node src/assignBNames.js --reintegrated ../xetthecum-storymap-story/tabular_data/reintegrated-obs-filtered.csv
+generates
+  reintegrated-obs-assigned.csv -> into viz config.json5
+  reintegrated-obs-assigned-taxa.csv
 
-Finally run scripts/prepare_taxa.R generating
-reintegrated-final-taxa.csv -> into viz via config.json5
+Finally run scripts/prepare_taxa.R
+accepts
+  reintegrated-obs-assigned-taxa.csv
+  reintegrated.csv (for original common names, hulq data)
+generates
+  reintegrated-final-taxa.csv -> into viz via config.json5

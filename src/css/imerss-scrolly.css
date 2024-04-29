@@ -38,6 +38,7 @@ h2 {
 .mxcw-container {
     display: flex;
     flex-direction: column;
+    height: calc(100vh - 10rem)
 }
 
 .mxcw-map-holder {
@@ -123,6 +124,7 @@ h2 {
 
 .mxcw-content {
     overflow-y: auto;
+    width: 100%;
 }
 
 .mxcw-content .section {
@@ -130,8 +132,10 @@ h2 {
 }
 
 .mxcw-content img {
-    max-height: 60vh;
+    max-height: 35vh;
     max-width: 100%;
+    display: block;
+    margin: auto;
 }
 
 .mxcw-mapPane {
@@ -165,6 +169,11 @@ h2 {
 
 .mxcw-content .mxcw-activeSection {
     display: flex;
+}
+
+/** TOTALLY INSANE, maplibre-gl.css disables pointer events from controls!**/
+.maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right, .maplibregl-ctrl-top-left, .maplibregl-ctrl-top-right {
+    pointer-events: auto;
 }
 
 .mxcw-mapLabel {
@@ -236,6 +245,9 @@ body .mx-header ::-webkit-scrollbar-thumb {
     display: none;
 }
 
+.imerss-panel-dataPanel {
+    padding: 1rem;
+}
 
 /* Technique from https://www.w3schools.com/howto/howto_css_responsive_iframes.asp */
 
