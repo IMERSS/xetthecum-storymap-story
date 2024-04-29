@@ -127,6 +127,18 @@ fluid.defaults("hortis.vizLoader", {
     }
 });
 
+// Do this by hand since we will have compressed viz one day
+hortis.vizLoader.bindResources = async function (that) {
+    const resourceLoaders = fluid.queryIoCSelector(that, "hortis.bareResourceLoader", true);
+    const promises = resourceLoaders.map(resourceLoader => resourceLoader.completionPromise);
+    const [taxa, obs] = await Promise.all(promises);
+    batch( () => {
+        that.taxaRows.value = taxa;
+        that.obsRows.value = obs;
+        that.resourcesLoaded.value = true;
+    });
+};
+
 fluid.defaults("hortis.filter", {
     // gradeNames: "fluid.component",
     members: {
@@ -161,18 +173,6 @@ hortis.wireObsFilters = function (that) {
         prevOutput = filterComp.filterOutput;
     });
     effect( () => that.allOutput.value = prevOutput.value);
-};
-
-// Do this by hand since we will have compressed viz one day
-hortis.vizLoader.bindResources = async function (that) {
-    const resourceLoaders = fluid.queryIoCSelector(that, "hortis.bareResourceLoader", true);
-    const promises = resourceLoaders.map(resourceLoader => resourceLoader.completionPromise);
-    const [taxa, obs] = await Promise.all(promises);
-    batch( () => {
-        that.taxaRows.value = taxa;
-        that.obsRows.value = obs;
-        that.resourcesLoaded.value = true;
-    });
 };
 
 // In indeterminate state, add p-is-indeterminate to div state

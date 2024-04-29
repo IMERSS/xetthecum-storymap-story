@@ -544,3 +544,48 @@ maxwell.applyZerothTiles = function (leafletWidgets, map) {
 maxwell.decodeLeafletWidgets = function (storyPage, leafletWidgets, map) {
     leafletWidgets.forEach((widget, i) => maxwell.leafletWidgetToPane(storyPage, map, widget, i));
 };
+
+fluid.registerNamespace("maxwell.legendKey");
+
+maxwell.legendKey.rowTemplate = "<div class=\"imerss-legend-row %rowClass\">" +
+    "<span class=\"imerss-legend-icon\"></span>" +
+    "<span class=\"imerss-legend-preview %previewClass\" style=\"%previewStyle\"></span>" +
+    "<span class=\"imerss-legend-label\">%keyLabel</span>" +
+    "</div>";
+
+
+maxwell.legendKey.renderMarkup = function (markup, clazz, className) {
+    const style = hortis.fillColorToStyle(clazz.fillColor || clazz.color);
+    const normal = hortis.normaliseToClass(className);
+    return fluid.stringTemplate(markup, {
+        rowClass: "imerss-legend-row-" + normal,
+        previewClass: "imerss-class-" + normal,
+        previewStyle: "background-color: " + style.fillColor,
+        keyLabel: className
+    });
+};
+
+// cf. Xetthecum's hortis.legendKey.drawLegend in leafletMapWithRegions.js - it has a block template and also makes
+// a fire to selectRegion with two arguments. Also ours is a Leaflet control
+maxwell.legendKey.drawLegend = function (map, paneHandler) {
+    const regionRows = fluid.transform(map.regions, function (troo, regionName) {
+        return maxwell.legendKey.renderMarkup(maxwell.legendKey.rowTemplate, map.regions[regionName], regionName);
+    });
+    const markup = Object.values(regionRows).join("\n");
+    const legend = L.control({position: "bottomright"});
+    const container = document.createElement("div");
+    container.classList.add("mxcw-legend");
+    container.innerHTML = markup;
+    legend.onAdd = function () {
+        return container;
+    };
+    legend.addTo(map.map);
+    map.clazzToLegendNodes = fluid.transform(map.regions, function (troo, regionName) {
+        const rowSel = ".imerss-legend-row-" + hortis.normaliseToClass(regionName);
+        const row = container.querySelector(rowSel);
+        row.addEventListener("click", function () {
+            paneHandler.triggerRegionSelection(regionName);
+        });
+    });
+    return container;
+};

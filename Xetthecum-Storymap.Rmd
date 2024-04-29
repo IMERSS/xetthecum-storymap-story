@@ -99,6 +99,9 @@ XetthecumMap
 
 <p>From here, you are welcome to explore Xetthecum's ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this narrative by clicking the right arrow.</p>
 
+<div class="imerss-map-legend">
+</div>
+
 <div class="data-pane">
 <blockquote>
 “We must protect the food sources. There are a lot of foods and medicines that are no longer there anymore.” Puneluxutth’ elder Thiyaas (Florence James)
@@ -243,7 +246,7 @@ laughlinMap
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c()
 cove_bbox <- mx_read("spatial_data/vectors/Cove") %>% st_bbox();
-communityConnectionsMap <- plot_mapbox_map("Cove", cove_bbox, allSources, classStyling, highlightedLayers)
+communityConnectionsMap <- plot_mapbox_map("Community_Connections", cove_bbox, allSources, classStyling, highlightedLayers)
 communityConnectionsMap
 ```
 

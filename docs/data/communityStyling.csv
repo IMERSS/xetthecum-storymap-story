@@ -1,0 +1,11 @@
+Layer,fillColor,fillOpacity,fillPattern,outlineColor,outlineOpacity,outlineWidth,ClassName,Z_Order
+Forests,"rgb(23,80,18)",1,mature-forest,"rgb(23,80,18)",1,1,imerss-region-mature-forest,0
+Woodlands,"rgb(191,103,58)",1,woodland,"rgb(191,103,58)",1,1,imerss-region-woodland,0
+Marine,"rgb(34,122,113)",1,marine,"rgb(34,122,113)",1,1,imerss-region-subtidal,0
+Freshwater,"rgb(0,133,188)",1,,"rgb(0,133,188)",1,1,imerss-region-lake-laughlin-lake,1
+Agricultural,"rgb(186,177,140)",1,,"rgb(186,177,140)",1,1,,0
+Developed,"rgb(114,108,84)",1,,"rgb(114,108,84)",1,1,,0
+Rural,"rgb(84,76,54)",1,,"rgb(84,76,54)",1,1,,0
+Dock,"rgb(127,127,127)",1,,"rgb(127,127,127)",1,1,,1
+Road,"rgb(127,127,127)",1,,"rgb(127,127,127)",1,1,,2
+ProjectBoundary,none,0,,black,1,1,,3

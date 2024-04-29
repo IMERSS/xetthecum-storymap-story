@@ -171,6 +171,11 @@ h2 {
     display: flex;
 }
 
+/** TOTALLY INSANE, maplibre-gl.css disables pointer events from controls!**/
+.maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right, .maplibregl-ctrl-top-left, .maplibregl-ctrl-top-right {
+    pointer-events: auto;
+}
+
 .mxcw-mapLabel {
     z-index: 999 !important;
 }

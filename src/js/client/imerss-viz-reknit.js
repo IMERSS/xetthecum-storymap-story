@@ -1,6 +1,6 @@
 "use strict";
 
-/* global L, Plotly */
+/* global effect, Plotly */
 
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var maxwell = fluid.registerNamespace("maxwell");
@@ -24,6 +24,10 @@ fluid.defaults("maxwell.storyVizPane", {
         find: {
             args: ["{that}.options.parentContainer", "{that}.options.selectors", "{arguments}.0"],
             func: (parentContainer, selectors, selectorName) => parentContainer[0].querySelector(selectors[selectorName])
+        },
+        findAll: {
+            args: ["{that}.options.parentContainer", "{that}.options.selectors", "{arguments}.0"],
+            func: (parentContainer, selectors, selectorName) => [...parentContainer[0].querySelectorAll(selectors[selectorName])]
         }
     },
     resources: {
@@ -89,41 +93,76 @@ maxwell.legendKey.rowTemplate = "<div class=\"imerss-legend-row %rowClass\">" +
     "<span class=\"imerss-legend-label\">%keyLabel</span>" +
     "</div>";
 
+// Improved version which deals with status|cell style regions seen in Marine Atlas
+// TODO: Do we need this any more?
+hortis.normaliseToClass = function (str) {
+    return str.toLowerCase().replace(/[| ]/g, "-");
+};
 
-maxwell.legendKey.renderMarkup = function (markup, clazz, className) {
-    const style = hortis.fillColorToStyle(clazz.fillColor || clazz.color);
-    const normal = hortis.normaliseToClass(className);
+maxwell.legendKey.renderMarkup = function (markup, regionInfo, regionName) {
+    const backColour = regionInfo.fillColor || regionInfo.color;
+    const normal = hortis.normaliseToClass(regionName);
     return fluid.stringTemplate(markup, {
         rowClass: "imerss-legend-row-" + normal,
-        previewClass: "imerss-class-" + normal,
-        previewStyle: "background-color: " + style.fillColor,
-        keyLabel: className
+        previewClass: "imerss-region-" + normal,
+        previewStyle: (regionInfo.fillPatternUrl ? `background-image: url(${regionInfo.fillPatternUrl});\n` : "") + "background-color: " + backColour,
+        keyLabel: regionName
     });
 };
 
 // cf. Xetthecum's hortis.legendKey.drawLegend in leafletMapWithRegions.js - it has a block template and also makes
-// a fire to selectRegion with two arguments. Also ours is a Leaflet control
-maxwell.legendKey.drawLegend = function (map, paneHandler) {
-    const regionRows = fluid.transform(map.regions, function (troo, regionName) {
-        return maxwell.legendKey.renderMarkup(maxwell.legendKey.rowTemplate, map.regions[regionName], regionName);
+// a fire to selectRegion with two arguments.
+maxwell.legendKey.addLegendControl = function (map, regionRows) {
+    const control = maxwell.legendKey.drawLegend(map, regionRows);
+    control.onAdd = () => control.container;
+    control.onRemove = () => control.cleanup();
+
+    map.map.addControl(control, "bottom-right");
+
+    return control;
+};
+
+maxwell.indexRegionRows = function (regionRows) {
+    return Object.fromEntries(regionRows.map(row => [row.Layer, row]));
+};
+
+maxwell.legendKey.drawLegend = function (map, regionRows) {
+    const selectableRegions = map.options.selectableRegions;
+    // TODO: Do this in the map
+    regionRows.forEach(row => {
+        if (row.fillPattern) {
+            row.fillPatternUrl = map.urlForFillPattern(row.fillPattern);
+        }
     });
-    const markup = Object.values(regionRows).join("\n");
-    const legend = L.control({position: "bottomright"});
+    const regionIndex = maxwell.indexRegionRows(regionRows);
+    const regionMarkupRows = selectableRegions.map(function (regionName) {
+        return maxwell.legendKey.renderMarkup(maxwell.legendKey.rowTemplate, regionIndex[regionName], regionName);
+    });
+    const markup = regionMarkupRows.join("\n");
     const container = document.createElement("div");
     container.classList.add("mxcw-legend");
     container.innerHTML = markup;
-    legend.onAdd = function () {
-        return container;
-    };
-    legend.addTo(map.map);
-    map.clazzToLegendNodes = fluid.transform(map.regions, function (troo, regionName) {
+    const f = regionName => {
         const rowSel = ".imerss-legend-row-" + hortis.normaliseToClass(regionName);
-        const row = container.querySelector(rowSel);
-        row.addEventListener("click", function () {
-            paneHandler.triggerRegionSelection(regionName);
+        return container.querySelector(rowSel);
+    };
+    selectableRegions.forEach(function (regionName) {
+        f(regionName).addEventListener("click", function () {
+            map.selectedRegion.value = regionName;
         });
     });
-    return container;
+
+    const cleanup = effect( () => {
+        const selectedRegion = map.selectedRegion.value;
+        selectableRegions.forEach(selectableRegion => {
+            try {
+                maxwell.toggleClass(f(selectableRegion), "imerss-selected", selectedRegion === selectableRegion);
+                maxwell.toggleClass(f(selectableRegion), "imerss-unselected", selectedRegion !== selectableRegion);
+            } catch {}
+        });
+    });
+
+    return {cleanup, container};
 };
 
 

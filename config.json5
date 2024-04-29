@@ -6,7 +6,8 @@
             template: "%maxwell/src/html/template.html",
             checkLinks: false,
             storyPageOptions: {
-                gradeNames: "maxwell.storyPage.withPaneTaxon",
+                gradeNames: ["maxwell.storyPage.withPaneTaxon", "maxwell.storyPage.withSplitNavigation"],
+                mapFlavourGrade: "hortis.libreMap.withRegionLegend",
                 zoomDuration: 1500,
                 // Slow zooms for bigger transitions
                 slowZoomDuration: 5000,
@@ -15,9 +16,10 @@
             },
             components: {
                 vizLoader: {
-                    type: "hortis.vizLoader",
+                    type: "hortis.vizLoader.withRegions",
                     obsFile: "data/reintegrated-obs-assigned.csv",
-                    taxaFile: "data/reintegrated-final-taxa.csv"
+                    taxaFile: "data/reintegrated-final-taxa.csv",
+                    regionFile: "data/communityStyling.csv"
                 }
             },
             paneHandlers: {
@@ -55,6 +57,12 @@
                     type: "maxwell.taxonDisplayPane"
                 },
                 Laughlin: {
+                    type: "maxwell.taxonDisplayPane"
+                },
+                Community_Connections: {
+                    type: "maxwell.taxonDisplayPane"
+                },
+                Future_Vision: {
                     type: "maxwell.taxonDisplayPane"
                 },
                 Forests: {
@@ -144,6 +152,9 @@
     }, {
         source: "%maxwell/tabular_data/reintegrated-final-taxa.csv",
         target: "%maxwell/docs/data/reintegrated-final-taxa.csv"
+    }, {
+        source: "%maxwell/tabular_data/communityStyling.csv",
+        target: "%maxwell/docs/data/communityStyling.csv"
     }, { // TODO: Source from internal %imerss-bioinfo once it stops changing
         source: "%maxwell/../bagatelle/src/client/js/new/fluidNew.js",
         target: "%maxwell/docs/js/fluidNew.js"

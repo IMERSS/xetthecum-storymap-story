@@ -8,7 +8,8 @@ fluid.defaults("maxwell.paneWithTaxonDisplay", {
     selectors: {
         taxonDisplay: ".imerss-taxonDisplay",
         panels: ".imerss-panel",
-        sectionInner: ".mxcw-sectionInner"
+        sectionInner: ".mxcw-sectionInner",
+        legends: ".imerss-map-legend"
     },
     // defaultPanel
     members: {
@@ -17,7 +18,9 @@ fluid.defaults("maxwell.paneWithTaxonDisplay", {
         paneSelect: "@expand:fluid.effect(maxwell.taxonToPanel, {that}.options.defaultPanel, {that}.panelHash, {that}.selectedTaxonId)",
         updateTaxonHash: "@expand:fluid.effect(maxwell.updateTaxonHash, {hashManager}, {vizLoader}.taxa.rowById, {that}.selectedTaxonId, {that}.isVisible)",
         rewriteTaxonLinks: `@expand:fluid.effect(maxwell.rewriteTaxonLinks, {that}.options.parentContainer,
-             {that}.options.paneKey, {storyPage}.taxaByName, {that}.regionTaxa, {vizLoader}.resourcesLoaded)`
+             {that}.options.paneKey, {storyPage}.taxaByName, {that}.regionTaxa, {vizLoader}.resourcesLoaded)`,
+        instantiateLegends: `@expand:fluid.effect(maxwell.paneHandler.instantiateLegends, {that}, {map}, {vizLoader}.regionLoader,
+             {vizLoader}.resourcesLoaded)`
     },
     invokers: {
         addToParent: "maxwell.addToSectionInner({that}.options.parentContainer, {arguments}.0)"
@@ -38,6 +41,15 @@ fluid.defaults("maxwell.paneWithTaxonDisplay", {
         }
     }
 });
+
+// TODO: Make general purpose widget instantiator
+maxwell.paneHandler.instantiateLegends = function (paneHandler, map, regionLoader) {
+    const containers = paneHandler.findAll("legends");
+    containers.forEach(target => {
+        const control = maxwell.legendKey.drawLegend(map, regionLoader.rows.value);
+        fluid.spliceContainer(target, control.container, true);
+    });
+};
 
 fluid.defaults("maxwell.taxonDisplayPane", {
     gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay"],
@@ -135,6 +147,32 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
         }
     }
 });
+
+fluid.defaults("maxwell.storyPage.withSplitNavigation", {
+    members: {
+        splitRanges: "@expand:maxwell.storyPage.constructRanges({that})"
+    }
+    //listeners: {
+    //    "onCreate.constructRanges": "maxwell.storyPage.constructRanges"
+    //}
+});
+
+maxwell.storyPage.constructRanges = function (storyPage) {
+    const storyPanes = fluid.queryIoCSelector(storyPage, "maxwell.taxonDisplayPane", true);
+    const regionPanes = fluid.queryIoCSelector(storyPage, "maxwell.xetthecumEcologicalPane", true);
+
+    const toIndex = paneHandler => maxwell.paneKeyToIndex(paneHandler, storyPage);
+
+    const storyIndices = storyPanes.map(toIndex);
+    const regionIndices = regionPanes.map(toIndex);
+
+    const navRanges = [storyIndices, regionIndices];
+    const indexToRange = [];
+    storyIndices.forEach(index => indexToRange[index] = 0);
+    regionIndices.forEach(index => indexToRange[index] = 1);
+
+    return {navRanges, indexToRange};
+};
 
 maxwell.addToSectionInner = function (parentContainer, jNode) {
     const target = parentContainer.find(".mxcw-sectionInner");

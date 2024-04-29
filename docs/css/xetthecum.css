@@ -146,6 +146,12 @@ body #quarto-content {
     width: auto;
 }
 
+/** Wrapping rules port back into core */
+.taxonDisplay-row .taxonDisplay-row {
+    padding-left: 36px;
+    text-indent: -28px;
+}
+
 .imerss-cultural-values {
     display: flex;
     flex-wrap: wrap;
@@ -172,6 +178,35 @@ body #quarto-content {
 
 .imerss-checklist-label {
     padding-left: 1.4rem;
+}
+
+.imerss-legend-preview {
+    width: 40px;
+    height: 40px;
+    background-size: 96px;
+    /** Override silly definition from imerss-viz-scrolly.css - need to remove dependence **/
+    top: 0px;
+    margin: 3px;
+}
+
+.imerss-selected .imerss-legend-preview {
+    outline: 3px solid #FCFF63;
+}
+
+.imerss-legend-row:not(.imerss-selected) .imerss-legend-preview:hover {
+    outline: 1px #999 solid;
+    outline-offset: 2px;
+}
+
+.imerss-legend-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mxcw-legend {
+    width: 15rem;
+    margin: auto;
 }
 
 .historic-content-container {
