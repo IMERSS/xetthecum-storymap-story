@@ -100,6 +100,7 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
         checklist: ".imerss-simple-checklist-holder",
         checklistLabel: ".imerss-checklist-label"
     },
+    contentClass: "imerss-ecological-pane",
     defaultPanel: "checklist",
     markup: {
         checklistLabel: "%paneKey Community Species List"

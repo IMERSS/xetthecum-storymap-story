@@ -177,7 +177,17 @@ hortis.driveToPreview = function (url) {
 
 hortis.hulqValues = ["Food", "Medicinal", "Spiritual", "Material", "Trade", "Indicator"];
 
-hortis.hulqValueItem = "<div class=\"imerss-cultural-value\"><div role=\"img\" class=\"imerss-value-%img imerss-cultural-value-img\"></div><div class=\"imerss-cultural-value-text\">%label</div></div>";
+hortis.hulqValueItem = `
+<div class=\"imerss-cultural-value\">
+    <div role=\"img\" class=\"imerss-value-%img imerss-cultural-value-img\"></div>
+    <div class=\"imerss-cultural-value-text\">%label</div>
+</div>`;
+
+hortis.emptyHulqValueItem = `
+<div class="imerss-cultural-value">
+    <div role="img" class="imerss-cultural-value-img"></div>
+</div>
+`;
 
 hortis.hulqValueBlock = "<div class=\"imerss-cultural-values\">%valueBlocks</div>";
 
@@ -193,7 +203,7 @@ hortis.dumpHulqValues = function (row, markup) {
     const valueBlocks = hortis.hulqValues.map(function (value) {
         return row[value.toLowerCase() + "Value"] === "1" ? value : "missing";
     }).map(function (img, index) {
-        return img === "missing" ? "<div class=\"imerss-cultural-value\"></div>" :
+        return img === "missing" ? hortis.emptyHulqValueItem :
             fluid.stringTemplate(hortis.hulqValueItem, {
                 img: img.toLowerCase(),
                 label: hortis.hulqValues[index]

@@ -110,7 +110,7 @@ XetthecumMap
 
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c()
-XetthecumMap <- plot_mapbox_map("Cultural Activities", project_bbox, allSources, communityStyling, highlightedLayers)
+XetthecumMap <- plot_mapbox_map("Cultural_Activities", project_bbox, allSources, communityStyling, highlightedLayers)
 XetthecumMap
 ```
 
