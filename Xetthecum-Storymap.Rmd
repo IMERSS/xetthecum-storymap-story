@@ -97,35 +97,47 @@ XetthecumMap <- plot_mapbox_map("Xetthecum", project_bbox, allSources, community
 XetthecumMap
 ```
 
-<img src="img/retreat2.jpg"/>
-<p>Xetthecum (Retreat Cove), Galiano Island, BC, Canada</p>
-
 <p>The name 'Xetthecum' is used by Hul'q'umi'num'-speakers to refer specifically to Retreat Cove. Yet in the landscape context, where everything is connected, its boundaries might be expanded to include the greater extent of the Greig Creek Watershed, including the creek which runs from Laughlin Lake to the cove. Indeed, stories told of Xetthecum always connect with the biodiversity present throughout the watershed. Today, this watershed spans residential and agricultural lands, protected and covenanted areas, as well as a public shore access and dock. Complex in its ecology, cultural history, and contemporary land-use, this coastal landscape is a vibrant mosaic including many intersecting ways of life, weaving together both human and more-than-human worlds.</p> 
-
-<p>Puneluxutth’ elder Thiyuas (Florence James) and her family once gathered a rich array of resources at Xetthecum, traveling from Retreat Cove to Laughlin Lake and back, collecting berries, fruit, shellfish, and medicinal resources along the way. This story map begins with the rich abundance of marine life found at the cove, before following in the footsteps of Thiyuas (Florence James) and her family up Greig Creek to Laughlin Lake.</p> 
 
 <p>From here, we welcome you to use the map legend to explore Xetthecum's ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this story map's main narrative by clicking the right arrow.</p>
 
 <div class="data-pane">
+<img src="img/retreat2.jpg"/>
+<p>Xetthecum (Retreat Cove), Galiano Island, BC, Canada</p>
+</div>
+
+## Cultural Activities
+
+```{r, echo=FALSE, message=FALSE}
+highlightedLayers <- c()
+XetthecumMap <- plot_mapbox_map("Cultural Activities", project_bbox, allSources, communityStyling, highlightedLayers)
+XetthecumMap
+```
+
 <blockquote>“We must protect the food sources. There are a lot of foods and medicines that are no longer there anymore.”<span>&#8212;</span>Puneluxutth’ elder Thiyuas (Florence James)</blockquote>
 
-<p>Puneluxutth’ elders hold sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people, much of which has not been included on this website. This knowledge will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately.</p>
+<p>Puneluxutth’ elder Thiyuas (Florence James) and her family once gathered a rich array of resources at Xetthecum, traveling from Retreat Cove to Laughlin Lake and back, collecting berries, fruit, shellfish, and medicinal resources along the way. This story map begins with the rich abundance of marine life found at the cove, before following in the footsteps of Thiyuas (Florence James) and her family up Greig Creek to Laughlin Lake.</p> 
+
+<p>Beyond its importance for resource gathering, fishing and hunting, Xetthecum was also a place of sacred ceremonial importance. Puneluxutth’ elders hold sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people, much of which has not been included on this website. This knowledge will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately.</p>
+
+<div class="data-pane">
 
 <p>Important cultural activities at Xetthecum include:</p>
 
-
 <div class="cultural-activities">
  <div class="cultural-activities-row">
-  <img src="img/icon_shellfish.png"><b>Fishing, Hunting and Shellfish Harvesting</b>
+  <img src="img/icon_salmon.png"><b>Fishing, Hunting and Shellfish Harvesting</b>
  </div>
  <div class="cultural-activities-row">
-  <img src="img/icon_berry.png"><b>Gathering Berries and Plant Materials</b>
+  <img src="img/icon_berry.png"><b>Gathering Berries and Natural Resources</b>
  </div>
  <div class="cultural-activities-row">
   <img src="img/icon_plant.png"><b>Gathering Medicine</b>
  </div>
+ <div class="cultural-activities-row">
+ <img src="img/icon_eagle.png"><b>Ceremonial and Spiritual Activities</b>
+ </div>
 </div>
-
 </div>
 
 ## Retreat Cove
@@ -139,7 +151,7 @@ CoveMap
 
 <p>For those arriving at Xetthecum by boat or canoe, the cove is of foremost importance as a place of refuge, where one can find calmer waters to rest or to retreat during a storm. Puneluxutth’ elder Augie Sylvester recalled canoeing from the North End reserve down to Retreat Cove, around Retreat Island, and sometimes all the way back up to the reserve. Canoe pullers trained hard to be able to race! The cove and surrounding offshore waters also provide habitat for a great diversity of fishes such as [the'wun](#taxon:Oncorhynchus kisutch) (coho), which made this place an important fishing site. Today, however, Retreat Cove lies within a marine protected area, to protect endangered [t'q'as](#taxon:Sebastes) (rockfish) from over-fishing.</p> 
 
-<p>Beyond a place of refuge and fish, Retreat Cove opens up on an important source of freshwater, as well as opportunities for hunting and travel. Lying at the narrowest point on the island, a shore-to-shore footpath connected Retreat Cove with Cable Bay, allowing over-land travel across the island. Augie recalled landing at Xetthecum and walking across the island to Pebble Beach, to hunt for [ha’put](#taxon:Odocoileus hemionus columbianus) (deer). Like other Indigenous community members, Augie also recalled harvesting shellfish at Xetthecum. After hunting or harvesting, they would sometimes row across to Fernwood to trade meat, fish, or shellfish for vegetables with the Sampson family.
+<p>Beyond a place of refuge and fish, Retreat Cove opens up on an important source of freshwater, as well as opportunities for hunting and travel. Lying at the narrowest point on the island, a shore-to-shore footpath connected Retreat Cove with Cable Bay, allowing over-land travel across the island. Augie recalled landing at Xetthecum and walking across the island to Pebble Beach, to hunt for [ha’put](#taxon:Odocoileus hemionus columbianus) (deer). Like other Indigenous community members, Augie had fond memories of harvesting shellfish at Xetthecum. After hunting or harvesting, he would sometimes row across to Fernwood to trade meat, fish, or shellfish for vegetables with the Sampson family.
 
 <div class="data-pane">
 <p>Those with a deep connection to Xetthecum all shared a common experience in relation to the rich marine biodiversity of this place:</p>
