@@ -74,9 +74,9 @@ introMap
 ## Land Acknowledgement
 
 ```{r, echo=FALSE, message=FALSE}
-highlightedLayers <- c()
-context_bbox <- mx_read("spatial_data/vectors/Context") %>% st_bbox();
-acknowledgmentMap <- plot_mapbox_map("Acknowledgment", context_bbox, allSources, communityStyling, highlightedLayers)
+highlightedLayers <- c("HulqTreaty")
+context_bbox <- mx_read("spatial_data/vectors/HulqTreaty") %>% st_bbox() %>% expand_bbox(0.2);
+acknowledgmentMap <- plot_mapbox_map("Acknowledgment", context_bbox, allSources, hulqStyling, highlightedLayers)
 acknowledgmentMap
 ```
 

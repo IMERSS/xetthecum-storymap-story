@@ -7,6 +7,16 @@ lat_lon <- function (data) {
   return (st_transform(data, "+proj=longlat +datum=WGS84"))
 }
 
+expand_bbox = function(bb, e) {
+	dx = diff(bb[c("xmin", "xmax")])
+	dy = diff(bb[c("ymin", "ymax")])
+	st_bbox(setNames(c(
+	    bb["xmin"] - e * dx,
+		bb["ymin"] - e * dy,
+		bb["xmax"] + e * dx,
+		bb["ymax"] + e * dy), c("xmin", "ymin", "xmax", "ymax")))
+}
+
 roundmultipolygon <- function (multi, digits) {
   multi <- lapply(multi, function (matrix) {
     matrix <- lapply(matrix, function (coords) {

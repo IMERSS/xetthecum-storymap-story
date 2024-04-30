@@ -11,7 +11,9 @@ classStyling <- rbind(polygonStyling, lineStyling)
 
 communityStyling <- timedFread("tabular_data/communityStyling.csv")
 
-allLayersVector = unique(c(classStyling$Layer, communityStyling$Layer))
+hulqStyling <- timedFread("tabular_data/hulqStyling.csv")
+
+allLayersVector = unique(c(classStyling$Layer, communityStyling$Layer, hulqStyling$Layer))
 
 # Method attested at https://stackoverflow.com/questions/14620972/how-to-combine-two-vectors-into-a-data-frame
 allLayers = data.frame(allLayersVector)

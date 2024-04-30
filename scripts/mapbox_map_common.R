@@ -86,7 +86,7 @@ plot_mapbox_map = function (id, bbox, sources, styling, highlightedLayers) {
 
   style <- list(id=id, version=8, sources=allSources, layers=allLayers, glyphs=baseStyle$glyphs);
 
-  map <- plot_ly(height = 800)
+  map <- plot_ly(height = 600, width = 800)
 
   map <- map %>% add_trace(
     type = "choroplethmapbox"
