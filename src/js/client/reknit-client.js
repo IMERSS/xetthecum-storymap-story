@@ -312,6 +312,21 @@ maxwell.widgetHandlerForName = function (paneHandler, widgetId) {
     return widgetHandlers.find(handler => fluid.getForComponent(handler, "options.widgetKey") === widgetId);
 };
 
+maxwell.applyContentClass = function (hash, contentClass) {
+    // TODO: split on space or iterate array etc.
+    if (contentClass) {
+        hash[contentClass] = true;
+    }
+};
+
+maxwell.computeAllContentClassHash = function (storyPage) {
+    const paneHandlers = fluid.queryIoCSelector(storyPage, "maxwell.paneHandler", true);
+    const contentClassHash = {};
+    paneHandlers.map(paneHandler => fluid.getForComponent(paneHandler, ["options", "contentClass"]))
+        .forEach(contentClass => maxwell.applyContentClass(contentClassHash, contentClass));
+    return contentClassHash;
+};
+
 maxwell.unflattenOptions = function (records) {
     return fluid.transform(records, record => ({
         type: record.type,
@@ -472,6 +487,7 @@ fluid.defaults("maxwell.storyPage", {
         heading: "h2",
         map: ".mxcw-map",
         mapHolder: ".mxcw-map-holder",
+        contentHolder: ".mxcw-content-holder",
         content: ".mxcw-content",
         sectionLeft: ".section-left",
         sectionLeftDesc: ".section-left-desc",
@@ -505,7 +521,7 @@ fluid.defaults("maxwell.storyPage", {
     members: {
         sectionHolders: "@expand:maxwell.mapSectionHolders({that})",
         paneKeyToIndex: "@expand:maxwell.sectionHoldersToIndex({that}.sectionHolders)",
-        outstandingResources: "@expand:signal(0)",
+        allContentClassHash: "@expand:maxwell.computeAllContentClassHash({that})",
         activePane: "@expand:signal()",
         // "model listeners"
         updateActiveMapPane: "@expand:fluid.effect(maxwell.updateActiveMapPane, {that}, {that}.map, {that}.activePane, {that}.map.mapLoaded)"
@@ -553,6 +569,11 @@ fluid.defaults("maxwell.storyPage", {
             funcName: "maxwell.updateLegendVisible",
             args: ["{that}", "{change}.value"],
             priority: "first"
+        },
+        contentClass: {
+            path: "activePane",
+            funcName: "maxwell.updateContentClass",
+            args: ["{that}", "{change}.value"]
         },
         updatePaneHash: {
             // Close any open taxon panel - perhaps better to react to a change in activeSection instead,
@@ -717,6 +738,15 @@ maxwell.updateLegendVisible = function (that, activePane) {
     }
     const hideLegend = paneHandler.options.hideLegend;
     that.map.legend.isVisible.value = !hideLegend;
+};
+
+maxwell.updateContentClass = function (that, activePane) {
+    const paneHandler = maxwell.paneHandlerForIndex(that, activePane);
+    const hash = fluid.transform(that.allContentClassHash, () => false);
+    maxwell.applyContentClass(hash, paneHandler.options.contentClass);
+    Object.entries(hash).forEach(([clazz, state]) => {
+        maxwell.toggleClass(that.locate("contentHolder")[0], clazz, state);
+    });
 };
 
 maxwell.navSection = function (splitRanges, activeSection, offset) {
