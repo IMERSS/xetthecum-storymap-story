@@ -113,6 +113,7 @@ h2 {
     height: 40%;
     transition-property: height;
     transition-duration: 800ms;
+    position: relative;
 }
 
 .mxcw-content-holder {
@@ -128,11 +129,22 @@ h2 {
 
 .section-button {
     stroke: #362F24;
+    fill: #FFFDFD;
     position: relative;
+}
+
+.imerss-ecological-pane .section-button {
+    stroke: #F2FCD6;
+    fill: #5A5244;
 }
 
 .section-button:hover:not(.disabled) {
     stroke: rgba(90,82,68,.8);
+    cursor: pointer;
+}
+
+.imerss-ecological-pane .section-button:hover:not(.disabled) {
+    stroke: #AAA;
     cursor: pointer;
 }
 

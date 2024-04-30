@@ -154,13 +154,40 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
 });
 
 fluid.defaults("maxwell.storyPage.withSplitNavigation", {
+    // TODO: Need to construct a default single-range in the base class
     members: {
         splitRanges: "@expand:maxwell.storyPage.constructRanges({that})"
+    },
+    selectors: {
+        "returnToMain": ".mxcw-return-to-main"
+    },
+    modelListeners: {
+        updateReturnVisible: {
+            path: "activePane",
+            funcName: "maxwell.updateReturnVisible",
+            args: ["{that}", "{change}.value"]
+        }
+    },
+    listeners: {
+        "onCreate.listenReturnToMain": "maxwell.listenReturnToMain"
     }
-    //listeners: {
-    //    "onCreate.constructRanges": "maxwell.storyPage.constructRanges"
-    //}
 });
+
+maxwell.updateReturnVisible = function (storyPage, activePane) {
+    const currentRange = storyPage.splitRanges.indexToRange[activePane];
+    const returnToMain = storyPage.locate("returnToMain")[0];
+    maxwell.toggleClass(returnToMain, "mxcw-hidden", currentRange === 0);
+    if (currentRange === 0) {
+        storyPage.lastMainActivePane = activePane;
+    }
+};
+
+maxwell.listenReturnToMain = function (storyPage) {
+    const returnToMain = storyPage.locate("returnToMain")[0];
+    returnToMain.addEventListener("click", function () {
+        storyPage.applier.change("activeSection", storyPage.lastMainActivePane || 0);
+    });
+};
 
 maxwell.storyPage.constructRanges = function (storyPage) {
     const storyPanes = fluid.queryIoCSelector(storyPage, "maxwell.taxonDisplayPane", true);

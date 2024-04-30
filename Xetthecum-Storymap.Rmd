@@ -126,16 +126,16 @@ XetthecumMap
 
 <div class="cultural-activities">
  <div class="cultural-activities-row">
-  <img src="img/icon_salmon.png"><p style="margin-left:5px;"><b>Fishing, Hunting and Shellfish Harvesting</b>
+  <img src="img/icon_salmon.png"><b>Fishing, Hunting and Shellfish Harvesting</b>
  </div>
  <div class="cultural-activities-row">
-  <img src="img/icon_berry.png"><p style="margin-left:5px;"><b>Gathering Berries and Natural Resources</b>
+  <img src="img/icon_berry.png"><b>Gathering Berries and Natural Resources</b>
  </div>
  <div class="cultural-activities-row">
-  <img src="img/icon_plant.png"><p style="margin-left:5px;"><b>Gathering Medicine</b>
+  <img src="img/icon_plant.png"><b>Gathering Medicine</b>
  </div>
  <div class="cultural-activities-row">
- <img src="img/icon_eagle.png"><p style="margin-left:5px;"><b>Social, Ceremonial and Spiritual Activities</b>
+ <img src="img/icon_eagle.png"><b>Social, Ceremonial and Spiritual Activities</b>
  </div>
 </div>
 </div>
