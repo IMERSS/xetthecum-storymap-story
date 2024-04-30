@@ -126,16 +126,16 @@ XetthecumMap
 
 <div class="cultural-activities">
  <div class="cultural-activities-row">
-  <img src="img/icon_salmon.png"><b>Fishing, Hunting and Shellfish Harvesting</b>
+  <img src="img/icon_salmon.png"><p style="margin-left:5px;"><b>Fishing, Hunting and Shellfish Harvesting</b>
  </div>
  <div class="cultural-activities-row">
-  <img src="img/icon_berry.png"><b>Gathering Berries and Natural Resources</b>
+  <img src="img/icon_berry.png"><p style="margin-left:5px;"><b>Gathering Berries and Natural Resources</b>
  </div>
  <div class="cultural-activities-row">
-  <img src="img/icon_plant.png"><b>Gathering Medicine</b>
+  <img src="img/icon_plant.png"><p style="margin-left:5px;"><b>Gathering Medicine</b>
  </div>
  <div class="cultural-activities-row">
- <img src="img/icon_eagle.png"><b>Ceremonial and Spiritual Activities</b>
+ <img src="img/icon_eagle.png"><p style="margin-left:5px;"><b>Social, Ceremonial and Spiritual Activities</b>
  </div>
 </div>
 </div>
@@ -149,7 +149,7 @@ CoveMap <- plot_mapbox_map("Cove", cove_bbox, allSources, communityStyling, high
 CoveMap
 ```
 
-<p>For those arriving at Xetthecum by boat or canoe, the cove is of foremost importance as a place of refuge, where one can find calmer waters to rest or to retreat during a storm. Puneluxutth’ elder Augie Sylvester recalled canoeing from the North End reserve down to Retreat Cove, around Retreat Island, and sometimes all the way back up to the reserve. Canoe pullers trained hard to be able to race! The cove and surrounding offshore waters also provide habitat for a great diversity of fishes such as [the'wun](#taxon:Oncorhynchus kisutch) (coho), which made this place an important fishing site. Today, however, Retreat Cove lies within a marine protected area, to protect endangered [t'q'as](#taxon:Sebastes) (rockfish) from over-fishing.</p> 
+<p>For those arriving at Xetthecum by boat or canoe, the cove is of foremost importance as a place of refuge, where one can find calmer waters to rest or to retreat during a storm. Training for canoe races, Puneluxutth’ elder Augie Sylvester recalled days canoeing from the North End reserve down to Retreat Cove, around Retreat Island, and all the way back home. The cove and surrounding offshore waters also provide habitat for a great diversity of fishes such as [the'wun](#taxon:Oncorhynchus kisutch) (coho), which made this place an important fishing site. Today, however, Retreat Cove lies within a marine protected area, to protect endangered [t'q'as](#taxon:Sebastes) (rockfish) from over-fishing.</p>
 
 <p>Beyond a place of refuge and fish, Retreat Cove opens up on an important source of freshwater, as well as opportunities for hunting and travel. Lying at the narrowest point on the island, a shore-to-shore footpath connected Retreat Cove with Cable Bay, allowing over-land travel across the island. Augie recalled landing at Xetthecum and walking across the island to Pebble Beach, to hunt for [ha’put](#taxon:Odocoileus hemionus columbianus) (deer). Like other Indigenous community members, Augie had fond memories of harvesting shellfish at Xetthecum. After hunting or harvesting, he would sometimes row across to Fernwood to trade meat, fish, or shellfish for vegetables with the Sampson family.
 
