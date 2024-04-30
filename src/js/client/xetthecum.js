@@ -1,4 +1,7 @@
 "use strict";
+
+/* global signal */
+
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
@@ -46,7 +49,7 @@ fluid.defaults("maxwell.paneWithTaxonDisplay", {
 maxwell.paneHandler.instantiateLegends = function (paneHandler, map, regionLoader) {
     const containers = paneHandler.findAll("legends");
     containers.forEach(target => {
-        const control = maxwell.legendKey.drawLegend(map, regionLoader.rows.value);
+        const control = maxwell.legendKey.drawLegend(map, regionLoader.rows.value, signal(true));
         fluid.spliceContainer(target, control.container, true);
     });
 };
@@ -54,6 +57,7 @@ maxwell.paneHandler.instantiateLegends = function (paneHandler, map, regionLoade
 fluid.defaults("maxwell.taxonDisplayPane", {
     gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay"],
     markupTemplate: "%resourceBase/html/imerss-viz-story-taxon.html",
+    hideLegend: false,
     members: {
         regionTaxa: "@expand:fluid.computed(fluid.identity, {vizLoader}.taxa.rowById, fluid.identity)"
     },

@@ -24,16 +24,20 @@
             },
             paneHandlers: {
                 Welcome: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.taxonDisplayPane",
+                    hideLegend: true
                 },
                 Caves: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.taxonDisplayPane",
+                    hideLegend: true
                 },
                 Respect: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.taxonDisplayPane",
+                    hideLegend: true
                 },
                 Acknowledgment: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.taxonDisplayPane",
+                    hideLegend: true
                 },
                 Xetthecum: {
                     type: "maxwell.taxonDisplayPane"
@@ -41,16 +45,16 @@
                 Cove: {
                     type: "maxwell.taxonDisplayPane"
                 },
-                Future_Vision: {
+                Delta_pI: {
                     type: "maxwell.taxonDisplayPane"
                 },
-                Delta_past: {
+                Delta_pII: {
                     type: "maxwell.taxonDisplayPane"
                 },
-                Delta_present: {
+                Eelgrass_pI: {
                     type: "maxwell.taxonDisplayPane"
                 },
-                Eelgrass: {
+                Eelgrass_pII: {
                     type: "maxwell.taxonDisplayPane"
                 },
                 Greig: {

@@ -253,11 +253,10 @@ hortis.checklist.subscribeChecks = function (idToStateSignal, checklist) {
 //         },
 hortis.checklist.subscribeSelected = function (that, selectedIdSignal, rowByIdSignal) {
     let oldSelectedId = undefined;
-    return effect( () => {
-        const newSelectedId = selectedIdSignal.value;
-        hortis.updateChecklistSelection(that.container, newSelectedId, oldSelectedId, rowByIdSignal.peek());
+    return fluid.effect(function (newSelectedId, rowById) {
+        hortis.updateChecklistSelection(that.container, newSelectedId, oldSelectedId, rowById);
         oldSelectedId = newSelectedId;
-    });
+    }, selectedIdSignal, rowByIdSignal);
 };
 
 // This used to read:
@@ -266,19 +265,14 @@ hortis.checklist.subscribeSelected = function (that, selectedIdSignal, rowByIdSi
 //         func: "{that}.generateChecklist"
 // },
 hortis.checklist.subscribeGenerate = function (that, rootIdSignal, selectedIdSignal, rowFocusSignal, rowByIdSignal) {
-    return effect( () => {
+    return fluid.effect(function (rootId, selectedId, rowFocus, rowById) {
         // note that this reads selectedId but does not depend on it because of rendering optimisation
-        const rootId = rootIdSignal.value,
-            selectedId = selectedIdSignal.value,
-            rowFocus = rowFocusSignal.value,
-            rowById = rowByIdSignal.value;
-
         const model = {rootId, selectedId, rowFocus, rowById};
         that.generateChecklist(model);
         // Writes: idToEntry, idToNode, idToState
         // idToNode is a cache just used in stateToCheck, no need to signalise it
         // Updates signal idToState
-    });
+    }, rootIdSignal, selectedIdSignal, rowFocusSignal, rowByIdSignal);
 };
 
 hortis.checklist.stateToCheck = function (checklist, state, id) {

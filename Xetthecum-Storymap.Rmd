@@ -106,19 +106,26 @@ XetthecumMap
 
 <p>From here, we welcome you to use the map legend to explore Xetthecum's ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this story map's main narrative by clicking the right arrow.</p>
 
-<div class="imerss-map-legend">
-</div>
-
 <div class="data-pane">
 <blockquote>“We must protect the food sources. There are a lot of foods and medicines that are no longer there anymore.”<span>&#8212;</span>Puneluxutth’ elder Thiyuas (Florence James)</blockquote>
 
 <p>Puneluxutth’ elders hold sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people, much of which has not been included on this website. This knowledge will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately.</p>
 
-<p>Important cultural activities at Xetthecum include:
-<img src="img/icon_shellfish.png"><b>Fishing, Hunting and Shellfish Harvesting</b>
-<img src="img/icon_berry.png"><b>Gathering Berries and Plant Materials</b>
-<img src="img/icon_plant.png"><b>Gathering Medicine</b>
-</p>
+<p>Important cultural activities at Xetthecum include:</p>
+
+
+<div class="cultural-activities">
+ <div class="cultural-activities-row">
+  <img src="img/icon_shellfish.png"><b>Fishing, Hunting and Shellfish Harvesting</b>
+ </div>
+ <div class="cultural-activities-row">
+  <img src="img/icon_berry.png"><b>Gathering Berries and Plant Materials</b>
+ </div>
+ <div class="cultural-activities-row">
+  <img src="img/icon_plant.png"><b>Gathering Medicine</b>
+ </div>
+</div>
+
 </div>
 
 ## Retreat Cove
@@ -214,7 +221,6 @@ eelgrassMap
 <iframe src="https://player.vimeo.com/video/32713022?h=659ac9c205" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
 </div>
 <p><a href="https://vimeo.com/32713022">&#039;Imush Q&#039;uyatl&#039;un</a> from <a href="https://vimeo.com/user5078648">Karolle Wall</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
-</div>
 </div>
 
 ## Hwta’loonèts / Greig Creek
@@ -344,7 +350,8 @@ freshwaterMap
 
 ## Ecological Communities - Shthuliim / Woodlands
 
-<p>Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest, most visually obvious species, [P'hwulhp](#taxon:Quercus garryana) (Garry oak, named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, [speenhw](#taxon:Camassia leichtlinii) (blue camas). Fields of [speenhw](#taxon:Camassia leichtlinii) have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, [stl’ults’uluqw’us](#taxon:Fritillaria affinis) (chocolate lily), are very beautiful and edible. [T’uliqw’ulhp](#taxon: Achillea millefolium) (yarrow) is another culturally significant species prized for its medicinal qualities.</p>
+<p>Often known as Garry Oak Meadow ecosystems, a decolonized perspective prioritizes not the largest, most visually obvious species, [P'hwulhp](#taxon:Quercus garryana) (Garry oak, named for a Hudson’s Bay Company officer, Nicholas Garry, by botanist David Douglas), but instead the most culturally significant species, [speenhw](#taxon:Camassia leichtlinii) (blue camas). Fields of [speenhw](#taxon:Camassia leichtlinii) have been cultivated for thousands of years by First Nations Camas Keepers throughout this region, creating a unique ecosystem that is not found anywhere else in the world. Like speenhw, [stl’ults’uluqw’us](#taxon:Fritillaria affinis) (chocolate lily), are very beautiful and edible.
+[T’uliqw’ulhp](#taxon:Achillea millefolium) (yarrow) is another culturally significant species prized for its medicinal qualities.</p>
 
 <p>Puneluxutth’ elder Thiyuas (Florence James) calls this type of ecosystem shthuliim: “a beautiful meadow with cushions for your feet made of moss, tender growth, grass…” She shared that p'hwulhp (Garry Oak) was made crooked by the creator so that its branches are useless to people and it will be left alone. In many parts of the Salish Sea, these communities have historically been maintained by controlled burning practices. Hence, Thiyuas regards the presence of p'hwulhp as evidence that the land is being taken care of. Thiyuas told us that pheasant, quail, and [miit'](#taxon:Dendragapus fuliginosus) (grouse) were once a lot more abundant in these woodland environments, and were once a regular part of Indigenous people’s diets in this area. Thiyuas used to collect fawn lilies and [ti'tuqw-el'tun'](#taxon:Calypso bulbosa occidentalis) (lady slippers) for her mother. “That was just our joy”... but there is not enough to collect anymore.”</p>
 

@@ -432,10 +432,20 @@ fluid.defaults("hortis.libreMap.inStoryPage", {
     }
 });
 
-fluid.defaults("hortis.libreMap.withRegionLegend", {
+fluid.defaults("hortis.libreMap.regionLegend", {
+    gradeNames: "fluid.component",
     members: {
-        instantiateLegends: `@expand:fluid.effect(maxwell.legendKey.addLegendControl, {map}, {vizLoader}.regionLoader.rows,
-             {vizLoader}.resourcesLoaded)`
+        regionRows: "{vizLoader}.regionLoader.rows",
+        control: "@expand:maxwell.legendKey.addLegendControl({map}, {that}.regionRows, {that}.isVisible)",
+        isVisible: "@expand:signal(true)"
+    }
+});
+
+fluid.defaults("hortis.libreMap.withRegionLegend", {
+    components: {
+        legend: {
+            type: "hortis.libreMap.regionLegend"
+        }
     }
 });
 
@@ -538,6 +548,12 @@ fluid.defaults("maxwell.storyPage", {
             args: ["{that}", "{change}.value"],
             priority: "first" // ensure map becomes visible before we attempt to set its initial bounds
         },
+        legendVisible: {
+            path: "activePane",
+            funcName: "maxwell.updateLegendVisible",
+            args: ["{that}", "{change}.value"],
+            priority: "first"
+        },
         updatePaneHash: {
             // Close any open taxon panel - perhaps better to react to a change in activeSection instead,
             // but we will still have the standard difficulty of distinguishing an initial value
@@ -638,7 +654,8 @@ maxwell.updateActiveMapPane = function (that, map, activePane) {
             // TODO: possible optimisation here from maplibre-gl-dev.js
             //         this.style.setPaintProperty(layerId, name, value, options);
             //         return this._update(true);
-            map.map.setPaintProperty(layer.id, opacityProp, layerVisibility[layer.id] ? 1 : 0);
+            const origOpacity = layer.paint[opacityProp];
+            map.map.setPaintProperty(layer.id, opacityProp, layerVisibility[layer.id] ? origOpacity : 0);
         }
     });
 
@@ -691,6 +708,15 @@ maxwell.updateMapVisible = function (that, activePane) {
     }
     const isVisible = !fluid.componentHasGrade(paneHandler, "maxwell.mapHidingPaneHandler");
     maxwell.toggleClass(that.dom.locate("mapHolder")[0], "mxcw-hideMap", isVisible, true);
+};
+
+maxwell.updateLegendVisible = function (that, activePane) {
+    const paneHandler = maxwell.paneHandlerForIndex(that, activePane);
+    if (!paneHandler) {
+        fluid.fail("No pane handler found for section with index ", activePane);
+    }
+    const hideLegend = paneHandler.options.hideLegend;
+    that.map.legend.isVisible.value = !hideLegend;
 };
 
 maxwell.navSection = function (splitRanges, activeSection, offset) {

@@ -1,0 +1,4 @@
+Scraped from https://native-land.ca/maps/territories/hulquminum-treaty-group/
+Particularly from request to https://native-land.ca/wp-json/mapster-wp-maps/map?id=27956&single_feature_id=36247
+
+Converted data within "polygons" to regular GeoJSON file

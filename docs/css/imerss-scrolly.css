@@ -41,6 +41,71 @@ h2 {
     height: calc(100vh - 10rem)
 }
 
+
+.mxcw-content {
+    overflow: hidden;
+}
+
+.main-container {
+    height: 100%;
+}
+
+.section.level2 {
+    height: 100%;
+    flex-direction: column;
+}
+
+.mxcw-sectionInner {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow: hidden;
+}
+
+.imerss-region-pane {
+    display: flex;
+    flex-direction: column;
+}
+
+.mxcw-viz-pane {
+    display: flex;
+    flex-direction: row;
+}
+
+.mxcw-viz-pane .imerss-container {
+    width: 50%;
+}
+
+.mxcw-sectionColumn {
+    width: 50%;
+    overflow-y: auto;
+    margin-right: 8px;
+    padding-right: 8px;
+}
+
+
+@media screen and ( max-width: 620px ) {
+    .mxcw-sectionInner {
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+
+    .mxcw-content {
+        flex-direction: column;
+    }
+
+    .mxcw-viz-pane .imerss-container {
+        width: 100%;
+        overflow-y: visible;
+    }
+
+    .mxcw-sectionColumn {
+        width: 100%;
+        overflow-y: visible;
+    }
+}
+
+
 .mxcw-map-holder {
     display: flex;
     flex-direction: column;

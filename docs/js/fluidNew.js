@@ -20,30 +20,35 @@ fluid.coerceToPrimitive = function (string) {
     return /^(true|false|null)$/.test(string) || /^[\[{0-9]/.test(string) && !/^{\w/.test(string) ? JSON.parse(string) : string;
 };
 
+fluid.processSignalArgs = function (args) {
+    let undefinedSignals = false;
+    const designalArgs = [];
+    for (const arg of args) {
+        if (arg instanceof preactSignalsCore.Signal) {
+            const value = arg.value;
+            designalArgs.push(arg.value);
+            if (value === undefined) {
+                undefinedSignals = true;
+            }
+        } else {
+            designalArgs.push(arg);
+        }
+    }
+    return {designalArgs, undefinedSignals};
+};
+
 fluid.computed = function (func, ...args) {
     return computed( () => {
-        const designalArgs = args.map(arg => arg instanceof preactSignalsCore.Signal ? arg.value : arg);
-        return typeof(func) === "string" ? fluid.invokeGlobalFunction(func, designalArgs) : func.apply(null, designalArgs);
+        const {designalArgs, undefinedSignals} = fluid.processSignalArgs(args);
+        return undefinedSignals ? undefined :
+            typeof(func) === "string" ? fluid.invokeGlobalFunction(func, designalArgs) : func.apply(null, designalArgs);
     });
 };
 
 // TODO: Return needs to be wrapped in a special marker so that component destruction can dispose it
 fluid.effect = function (func, ...args) {
     return effect( () => {
-        let undefinedSignals = false;
-        const designalArgs = [];
-        for (const arg of args) {
-            if (arg instanceof preactSignalsCore.Signal) {
-                const value = arg.value;
-                designalArgs.push(arg.value);
-                if (value === undefined) {
-                    undefinedSignals = true;
-                }
-            } else {
-                designalArgs.push(arg);
-            }
-        }
-        // const designalArgs = args.map(arg => arg instanceof preactSignalsCore.Signal ? arg.value : arg);
+        const {designalArgs, undefinedSignals} = fluid.processSignalArgs(args);
         if (!undefinedSignals) {
             return typeof(func) === "string" ? fluid.invokeGlobalFunction(func, designalArgs) : func.apply(null, designalArgs);
         }

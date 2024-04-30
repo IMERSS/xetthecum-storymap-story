@@ -98,7 +98,9 @@ plot_mapbox_map = function (id, bbox, sources, styling, highlightedLayers) {
     mapbox=list(
       style=style,
       center = list(lon = ((bbox[1] + bbox[3]) / 2), lat = ((bbox[2] + bbox[4]) / 2)),
-      zoom = calc_zoom(bbox) - 1.2
+      zoom = calc_zoom(bbox) - 1.2,
+      # Put this on to avoid blowing up the plotly driver
+      "_fitBounds" = list(bounds = bbox)
     )
   )
   map

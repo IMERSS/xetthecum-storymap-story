@@ -33,7 +33,7 @@ fluid.defaults("hortis.csvReader", {
         skipEmptyLines: true
     },
     members: {
-        rows: "@expand:signal([])"
+        rows: "@expand:signal()"
     },
     events: {
     },
@@ -106,10 +106,13 @@ fluid.defaults("hortis.vizLoader", {
             }
         }
     },
+    events: {
+        onResourcesLoaded: null
+    },
     members: {
         resourcesLoaded: "@expand:signal()",
-        taxaRows: "@expand:signal([])",
-        obsRows: "@expand:signal([])",
+        taxaRows: "@expand:signal()",
+        obsRows: "@expand:signal()",
         // Overridden by overall loader def to equal {filters}.allOutput
         filteredObs: "{that}.obsRows",
         // Proposed syntax: @compute:hortis.filterObs(*{that}.obs, {that}.obsFilter, *{that}.obsFilterVersion)
@@ -136,6 +139,7 @@ hortis.vizLoader.bindResources = async function (that) {
         that.taxaRows.value = taxa;
         that.obsRows.value = obs;
         that.resourcesLoaded.value = true;
+        that.events.onResourcesLoaded.fire();
     });
 };
 

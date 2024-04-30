@@ -112,10 +112,13 @@ maxwell.legendKey.renderMarkup = function (markup, regionInfo, regionName) {
 
 // cf. Xetthecum's hortis.legendKey.drawLegend in leafletMapWithRegions.js - it has a block template and also makes
 // a fire to selectRegion with two arguments.
-maxwell.legendKey.addLegendControl = function (map, regionRows) {
-    const control = maxwell.legendKey.drawLegend(map, regionRows);
+maxwell.legendKey.addLegendControl = function (map, regionRowsSignal, isVisibleSignal) {
+    const control = maxwell.legendKey.drawLegend(map, regionRowsSignal, isVisibleSignal);
     control.onAdd = () => control.container;
-    control.onRemove = () => control.cleanup();
+    control.onRemove = () => {
+        console.log("Cleaning up legend attached to ", control.container);
+        control.cleanup();
+    };
 
     map.map.addControl(control, "bottom-right");
 
@@ -126,43 +129,52 @@ maxwell.indexRegionRows = function (regionRows) {
     return Object.fromEntries(regionRows.map(row => [row.Layer, row]));
 };
 
-maxwell.legendKey.drawLegend = function (map, regionRows) {
-    const selectableRegions = map.options.selectableRegions;
-    // TODO: Do this in the map
-    regionRows.forEach(row => {
-        if (row.fillPattern) {
-            row.fillPatternUrl = map.urlForFillPattern(row.fillPattern);
-        }
-    });
-    const regionIndex = maxwell.indexRegionRows(regionRows);
-    const regionMarkupRows = selectableRegions.map(function (regionName) {
-        return maxwell.legendKey.renderMarkup(maxwell.legendKey.rowTemplate, regionIndex[regionName], regionName);
-    });
-    const markup = regionMarkupRows.join("\n");
+maxwell.legendKey.drawLegend = function (map, regionRowsSignal, isVisibleSignal) {
     const container = document.createElement("div");
     container.classList.add("mxcw-legend");
-    container.innerHTML = markup;
+
     const f = regionName => {
         const rowSel = ".imerss-legend-row-" + hortis.normaliseToClass(regionName);
         return container.querySelector(rowSel);
     };
-    selectableRegions.forEach(function (regionName) {
-        f(regionName).addEventListener("click", function () {
-            map.selectedRegion.value = regionName;
-        });
-    });
 
-    const cleanup = effect( () => {
-        const selectedRegion = map.selectedRegion.value;
-        selectableRegions.forEach(selectableRegion => {
-            try {
+    const renderLegend = function (regionRows) {
+        console.log("Rendering legend since " + regionRows.length + " rows have arrived");
+
+        // TODO: Do this in the map
+        regionRows.forEach(row => {
+            if (row.fillPattern) {
+                row.fillPatternUrl = map.urlForFillPattern(row.fillPattern);
+            }
+        });
+        const regionIndex = maxwell.indexRegionRows(regionRows);
+
+        const selectableRegions = map.options.selectableRegions;
+
+        const regionMarkupRows = selectableRegions.map(function (regionName) {
+            return maxwell.legendKey.renderMarkup(maxwell.legendKey.rowTemplate, regionIndex[regionName], regionName);
+        });
+        const markup = regionMarkupRows.join("\n");
+        container.innerHTML = markup;
+
+        selectableRegions.forEach(function (regionName) {
+            f(regionName).addEventListener("click", function () {
+                map.selectedRegion.value = regionName;
+            });
+        });
+
+        fluid.effect(function (selectedRegion) {
+            selectableRegions.forEach(selectableRegion => {
                 maxwell.toggleClass(f(selectableRegion), "imerss-selected", selectedRegion === selectableRegion);
-                maxwell.toggleClass(f(selectableRegion), "imerss-unselected", selectedRegion !== selectableRegion);
-            } catch {}
-        });
-    });
+            });
+        }, map.selectedRegion.value);
 
-    return {cleanup, container};
+    };
+
+    fluid.effect(renderLegend, regionRowsSignal);
+    fluid.effect(isVisible => maxwell.toggleClass(container, "mxcw-hidden", !isVisible), isVisibleSignal);
+
+    return {container};
 };
 
 
