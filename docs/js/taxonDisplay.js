@@ -185,18 +185,19 @@ hortis.dumpHulqName = function (row, hulqName, markup) {
     const player = row.audioLink ? fluid.stringTemplate(hortis.drivePlayer, {
         url: hortis.driveToPreview(row.audioLink)
     }) : "";
-    const nameRow = hortis.dumpRow("hulqName",hulqName + player, markup);
+    const nameRow = hortis.dumpRow("hulqName", hulqName + player, markup);
     return nameRow;
 };
 
 hortis.dumpHulqValues = function (row, markup) {
     const valueBlocks = hortis.hulqValues.map(function (value) {
-        return row[value + " Value"] === "1" ? value : "missing";
+        return row[value.toLowerCase() + "Value"] === "1" ? value : "missing";
     }).map(function (img, index) {
-        return fluid.stringTemplate(hortis.hulqValueItem, {
-            img: img.toLowerCase(),
-            label: hortis.hulqValues[index]
-        });
+        return img === "missing" ? "<div class=\"imerss-cultural-value\"></div>" :
+            fluid.stringTemplate(hortis.hulqValueItem, {
+                img: img.toLowerCase(),
+                label: hortis.hulqValues[index]
+            });
     });
     const valueBlock = fluid.stringTemplate(hortis.hulqValueBlock, {
         valueBlocks: valueBlocks.join("\n")
@@ -283,7 +284,7 @@ hortis.renderTaxonDisplay = function (row, markup, options) {
             // composed of taxon and infrataxon name but this is at least now complete and agrees with what is shown in the tooltip
             dumpRow("iNaturalistTaxonName", (row.taxonName || row.iNaturalistTaxonName) + (row.authority ? (" " + row.authority) : ""), "taxonDisplay-rank", options);
         }
-        const hulqName = row["Hulquminum Name"];
+        const hulqName = row.hulquminumName;
         if (hulqName) { // wot no polymorphism?
             togo += hortis.dumpHulqName(row, hulqName, markup);
         }

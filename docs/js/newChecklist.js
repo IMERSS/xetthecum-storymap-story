@@ -46,10 +46,10 @@ hortis.rowToScientific = function (row) {
 
 hortis.accessRowHulq = function (row) {
     return {
-        nativeName: row["Hulquminum Name"],
+        nativeName: row.hulquminumName,
         commonName: row.commonName,
         scientificName: hortis.rowToScientific(row)
-    }
+    };
 };
 
 hortis.checklistItem = function (accessRow, entry, selectedId, simple, selectable) {
