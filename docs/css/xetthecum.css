@@ -160,6 +160,12 @@ body #quarto-content {
     text-indent: -28px;
 }
 
+.imerss-checklist li:has(>.checklist-rank-species) {
+    text-indent: -80px;
+    margin-left: 80px;
+}
+
+
 .cultural-activities {
     display: table;
 }

@@ -79,7 +79,7 @@ maxwell.paneHandler.slingDataPane = function (that) {
 
 maxwell.accessRowCommonPhyla = function (row) {
     return row.rank === "phylum" ? {
-        scientificName: row.commonName
+        scientificName: row.commonName || row.iNaturalistTaxonName
     } : hortis.accessRowHulq(row);
 };
 

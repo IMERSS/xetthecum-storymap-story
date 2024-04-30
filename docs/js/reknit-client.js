@@ -1025,6 +1025,11 @@ fluid.defaults("maxwell.paneHandler", {
             path: "isVisible",
             args: ["{that}.isVisible", "{change}.value"],
             func: (isVisibleSignal, isVisible) => isVisibleSignal.value = isVisible
+        },
+        stopMedia: {
+            path: "isVisible",
+            args: ["{that}.options.parentContainer.0", "{change}.value"],
+            func: "maxwell.stopMedia"
         }
     },
 
@@ -1050,6 +1055,12 @@ fluid.defaults("maxwell.paneHandler", {
     parentContainer: "{that}.container"
 });
 
+maxwell.stopMedia = function (container, isVisible) {
+    if (!isVisible) {
+        const audios = [...container.querySelectorAll("audio")];
+        audios.forEach(audio => audio.pause());
+    }
+};
 
 maxwell.paneHandler.addPaneClass = function (that, parentContainer) {
     parentContainer[0].classList.add("mxcw-widgetPane-" + that.options.paneKey);
