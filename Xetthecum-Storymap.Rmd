@@ -100,7 +100,9 @@ XetthecumMap
 <p>The name 'Xetthecum' is used by Hul'q'umi'num'-speakers to refer specifically to Retreat Cove. Yet in the landscape context, where everything is connected, its boundaries might be expanded to include the greater extent of the Greig Creek Watershed, including the creek which runs from Laughlin Lake to the cove. Indeed, stories told of Xetthecum always connect with the biodiversity present throughout the watershed. Today, this watershed spans residential and agricultural lands, protected and covenanted areas, as well as a public shore access and dock. Complex in its ecology, cultural history, and contemporary land-use, this coastal landscape is a vibrant mosaic that includes many intersecting ways of life, weaving together both human and more-than-human worlds.</p> 
 
 <div class="data-pane">
-<p>From here, we welcome you to use the map legend to explore Xetthecum's ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this story map's main narrative by clicking the right arrow.</p>
+<p>From here, we welcome you to use the map legend to explore Xetthecum's ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this story map's main narrative.</p>
+<div class="xetthecum-map-legend">
+</div>
 </div>
 
 ## Cultural Activities Part I
