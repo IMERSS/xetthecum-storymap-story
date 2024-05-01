@@ -33,7 +33,7 @@ culturalTaxa <- Taxa[!(is.na(Taxa$hulquminumName) | Taxa$hulquminumName==""), ]
 
 <div class="data-pane">
 <img src="img/Xetthecum.jpg"/>
-<p>Bird's eye view of Xetthecum</p>
+<p>Bird's eye view of Xetthecum.</p>
 </div>
 
 ## The Caves at Xetthecum
@@ -49,7 +49,7 @@ introMap
 
 <div class="data-pane">
 <img src="img/CaveIllustration.png"/>
-<p>Caves at Xetthecum<span>&#8212;</span>Art by Josha Petronis-Akins and Cody Clayton</p>
+<p>Caves at Xetthecum.<span>&#8212;</span>Art by Josha Petronis-Akins and Cody Clayton.</p>
 </div>
 
 ## Respect and Protect
@@ -86,7 +86,7 @@ acknowledgmentMap
 
 <div class="data-pane">
 <img src="img/headline-20220218_172216.jpg"/>
-<p>Xetthecum (Retreat Cove), Galiano Island, BC, Canada</p>
+<p>Xetthecum (Retreat Cove) lies in the territories of the Hul'q'umi'num' Treaty Group.</p>
 </div>
 
 ## Xetthecum
@@ -119,7 +119,7 @@ XetthecumMap
 
 <div class="data-pane">
 <img src="img/retreat2.jpg"/>
-<p>Xetthecum (Retreat Cove), Galiano Island, BC, Canada</p>
+<p>Xetthecum (Retreat Cove), Galiano Island, BC, Canada.</p>
 </div>
 
 ## Cultural Activities Part II
@@ -183,7 +183,7 @@ CoveMap
 
 <div class="data-pane">
 <img src="img/retreat3.jpg">
-<p>View across the Trincomali Channel to Fernwood on Salt Spring Island</p>
+<p>View across the Trincomali Channel to Fernwood on Salt Spring Island.</p>
 </div>
 
 ## Greig Creek Delta Part I
@@ -221,7 +221,7 @@ deltaMap
 
 <div class="data-pane">
 <img src="img/tluxwtluxw.jpg">
-<p>[tl'uxwtl'uxw](#taxon:Magallana gigas) (Pacific oyster)</p>
+<p>[tl'uxwtl'uxw](#taxon:Magallana gigas) (Pacific oyster).</p>
 </div>
 
 ## Eelgrass Beds Part I
@@ -334,7 +334,7 @@ futureVisionMap
 
 <div class="data-pane">
 <img src="img/restoration.jpg">
-<p>Healing the land heals the people</p>
+<p>Healing the land heals the people.</p>
 </div>
 
 ## Preservation and Future Vision Part II
@@ -351,7 +351,7 @@ futureVisionMap
 
 <div class="data-pane">
 <img src="img/retreat1.jpg">
-<p>Envisioning a vibrant future for Xetthecum</p>
+<p>Envisioning a vibrant future for Xetthecum.</p>
 </div>
 
 ## Ecological Communities - Hwuiumqa' / Marine
