@@ -101,7 +101,7 @@ XetthecumMap
 
 <div class="data-pane">
 <p>From here, we welcome you to use the map legend to explore Xetthecum's ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this story map's main narrative.</p>
-<div class="xetthecum-map-legend">
+<div class="imerss-map-legend">
 </div>
 </div>
 
