@@ -1,7 +1,7 @@
 ---
 title: Xetthecum
 author: IMERSS Biodiversity Informatics Working Group and Ecocultural Mapping Team
-date: April 29th, 2024
+date: April 30th, 2024
 output:
   html_document:
     self_contained: false
@@ -65,10 +65,10 @@ introMap
 <p>Puneluxutth’ elders hold a deep and ancient knowledge about the plants, animals, places and ceremonies of their people, and have emphasized the need to protect important cultural places such as Xetthecum. We encourage you to enjoy the beauty and serenity of this place, while respecting the need to protect it from overuse and damage. Please respect all signage, do not trespass, and know that with these actions you are participating in the important work of reconciliation. Thank you. Huy'ch'qa!</p>
 
 <div class="data-pane">
-<audio controls src="audio/cavesRecording.mp3" loop="true"></audio>
 <div class="iframe-container">
 <iframe src="https://www.youtube.com/embed/XWTrRw38PuQ?si=bZnG3F_flXePUCab" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
+<audio controls src="audio/cavesRecording.mp3" loop="true"></audio>
 </div>
 
 ## Land Acknowledgement
@@ -247,10 +247,10 @@ greigMap
 <p>The Hul'q'umi'num' name for Greig Creek is Hwta’loonèts, as shared by Thiyuas. Known as Greig Creek in English, this watercourse runs from Laughlin Lake to Retreat Cove and would have provided an important freshwater source for seafaring Coast Salish peoples. Historical evidence dating to the late 1980s suggests that the Greig Creek watershed may have once supported a run of [the'wun](#taxon:Oncorhynchus kisutch) (coho), an important source of food for the Puneluxutth’. However, over the last century the watercourse has been severely degraded by intensive agricultural and logging practices. In the mid 1990s, a local educator by the name of Lynne Scott initiated a project, *Salmon in the Classroom*, to release coho and chum salmon fry to Hwta’loonèts with the help of youth at the Galiano Community School. Today, the Galiano Conservancy Association continues these efforts in collaboration with schools throughout the region.</p> 
 
 <div class="data-pane">
-<audio controls src="audio/greigRecording.mp3" loop="true"></audio>
 <div class="iframe-container">
 <iframe src="https://www.youtube.com/embed/AAdwf8mGWyE?si=w6oC687E_8us0x10" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
+<audio controls src="audio/greigRecording.mp3" loop="true"></audio>
 </div>
 
 ## Xatsa’ / Laughlin Lake
@@ -272,7 +272,7 @@ laughlinMap
 <div class="iframe-container">
 <iframe src="https://www.youtube-nocookie.com/embed/v_1NrdnZkY0?si=01FAAbocSIeMBCYi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
-<p>Although heavily modified, Laughlin Lake and its associated riparian areas provide critical habitat for species like black-tailed deer ([ha’put](#taxon:Odocoileus hemionus columbianus)) and red-legged frog.</p>
+<p>While heavily modified, Laughlin Lake still provides critical habitat for species like black-tailed deer ([ha’put](#taxon:Odocoileus hemionus columbianus)) and red-legged frog.</p>
 </div>
 
 ## Community Connections at Xetthecum
@@ -284,11 +284,13 @@ communityConnectionsMap <- plot_mapbox_map("Community_Connections", cove_bbox, a
 communityConnectionsMap
 ```
 
-<p>ADD TEXT, INC. ACKNOWLEDGMENTS</p>
+<p>The collaborative efforts of many individuals, groups and organizations have been instrumental to the restoration and protection of Xetthecum. Their contributions, support, and guidance have been essential as we navigated many complexities in learning about the importance of this sacred place. To learn more about ongoing stewardship, restoration and monitoring efforts on Galiano Island, visit the Resources page.</p>
+
+<p>We are grateful to the Access to Media Education Society, Capital Regional District, Community Engagement Fellows, Galiano Conservancy Association, Hunterston Farm community, Inclusive Design Research Centre, Indigenous Watersheds Initiative, Islands Trust Council, Southern Gulf Islands Community Resource Centre, MIT Solve Indigenous Communities Fellowship, Northeast Pacific Coastal Biodiversity Action Network, Social Sciences and Humanities Research Council, UBC BRITE Internship Program, and Whiteswan Environmental for making this work possible. We also thank our advisors, contributors, partners, Galiano Island community members, and especially Puneluxutth’ elders Florence James (Thiyuas) and Augie Sylvester for their contributions to this work.—huy ch q’a sii’em!</p>
 
 <div class="data-pane">
-<img src="img/Eelgrass.jpg">
-<p>Intergenerational gathering at Xetthecum</p>
+<img src="img/BioBlitz.jpg">
+<p>Community members gather at the BioBlitz organized at Hunterston Farms, Retreat Cove, to help document Xetthecum's biodiveresity</p>
 </div>
 
 ## Preservation and Future Vision
