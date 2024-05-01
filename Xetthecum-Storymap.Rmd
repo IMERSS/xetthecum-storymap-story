@@ -97,20 +97,17 @@ XetthecumMap <- plot_mapbox_map("Xetthecum", project_bbox, allSources, community
 XetthecumMap
 ```
 
-<p>The name 'Xetthecum' is used by Hul'q'umi'num'-speakers to refer specifically to Retreat Cove. Yet in the landscape context, where everything is connected, its boundaries might be expanded to include the greater extent of the Greig Creek Watershed, including the creek which runs from Laughlin Lake to the cove. Indeed, stories told of Xetthecum always connect with the biodiversity present throughout the watershed. Today, this watershed spans residential and agricultural lands, protected and covenanted areas, as well as a public shore access and dock. Complex in its ecology, cultural history, and contemporary land-use, this coastal landscape is a vibrant mosaic including many intersecting ways of life, weaving together both human and more-than-human worlds.</p> 
-
-<p>From here, we welcome you to use the map legend to explore Xetthecum's ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this story map's main narrative by clicking the right arrow.</p>
+<p>The name 'Xetthecum' is used by Hul'q'umi'num'-speakers to refer specifically to Retreat Cove. Yet in the landscape context, where everything is connected, its boundaries might be expanded to include the greater extent of the Greig Creek Watershed, including the creek which runs from Laughlin Lake to the cove. Indeed, stories told of Xetthecum always connect with the biodiversity present throughout the watershed. Today, this watershed spans residential and agricultural lands, protected and covenanted areas, as well as a public shore access and dock. Complex in its ecology, cultural history, and contemporary land-use, this coastal landscape is a vibrant mosaic that includes many intersecting ways of life, weaving together both human and more-than-human worlds.</p> 
 
 <div class="data-pane">
-<img src="img/retreat2.jpg"/>
-<p>Xetthecum (Retreat Cove), Galiano Island, BC, Canada</p>
+<p>From here, we welcome you to use the map legend to explore Xetthecum's ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this story map's main narrative by clicking the right arrow.</p>
 </div>
 
-## Cultural Activities
+## Cultural Activities Part I
 
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c()
-XetthecumMap <- plot_mapbox_map("Cultural_Activities", project_bbox, allSources, communityStyling, highlightedLayers)
+XetthecumMap <- plot_mapbox_map("Cultural_Activities_pI", project_bbox, allSources, communityStyling, highlightedLayers)
 XetthecumMap
 ```
 
@@ -118,10 +115,22 @@ XetthecumMap
 
 <p>Puneluxutth’ elder Thiyuas (Florence James) and her family once gathered a rich array of resources at Xetthecum, traveling from Retreat Cove to Laughlin Lake and back, collecting berries, fruit, shellfish, and medicinal resources along the way. This story map begins with the rich abundance of marine life found at the cove, before following in the footsteps of Thiyuas (Florence James) and her family up Greig Creek to Laughlin Lake.</p> 
 
+<div class="data-pane">
+<img src="img/retreat2.jpg"/>
+<p>Xetthecum (Retreat Cove), Galiano Island, BC, Canada</p>
+</div>
+
+## Cultural Activities Part II
+
+```{r, echo=FALSE, message=FALSE}
+highlightedLayers <- c()
+XetthecumMap <- plot_mapbox_map("Cultural_Activities_pII", project_bbox, allSources, communityStyling, highlightedLayers)
+XetthecumMap
+```
+
 <p>Beyond its importance for resource gathering, fishing and hunting, Xetthecum was also a place of sacred ceremonial importance. Puneluxutth’ elders hold sacred and spiritual knowledge regarding certain plants, animals, places and ceremonies of their people, much of which has not been included on this website. This knowledge will be passed down only to those with the rights and training to be able to receive it and use it safely and appropriately.</p>
 
 <div class="data-pane">
-
 <p>Important cultural activities at Xetthecum include:</p>
 
 <div class="cultural-activities">
@@ -140,25 +149,39 @@ XetthecumMap
 </div>
 </div>
 
-## Retreat Cove
+## Retreat Cove Part I
 
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c()
 cove_bbox <- mx_read("spatial_data/vectors/Cove") %>% st_bbox();
-CoveMap <- plot_mapbox_map("Cove", cove_bbox, allSources, communityStyling, highlightedLayers)
+CoveMap <- plot_mapbox_map("Cove_pI", cove_bbox, allSources, communityStyling, highlightedLayers)
 CoveMap
 ```
 
 <p>For those arriving at Xetthecum by boat or canoe, the cove is of foremost importance as a place of refuge, where one can find calmer waters to rest or to retreat during a storm. Training for canoe races, Puneluxutth’ elder Augie Sylvester recalled days canoeing from the North End reserve down to Retreat Cove, around Retreat Island, and all the way back home. The cove and surrounding offshore waters also provide habitat for a great diversity of fishes such as [the'wun](#taxon:Oncorhynchus kisutch) (coho), which made this place an important fishing site. Today, however, Retreat Cove lies within a marine protected area, to protect endangered [t'q'as](#taxon:Sebastes) (rockfish) from over-fishing.</p>
 
-<p>Beyond a place of refuge and fish, Retreat Cove opens up on an important source of freshwater, as well as opportunities for hunting and travel. Lying at the narrowest point on the island, a shore-to-shore footpath connected Retreat Cove with Cable Bay, allowing over-land travel across the island. Augie recalled landing at Xetthecum and walking across the island to Pebble Beach, to hunt for [ha’put](#taxon:Odocoileus hemionus columbianus) (deer). Like other Indigenous community members, Augie had fond memories of harvesting shellfish at Xetthecum. After hunting or harvesting, he would sometimes row across to Fernwood to trade meat, fish, or shellfish for vegetables with the Sampson family.
-
 <div class="data-pane">
-<p>Those with a deep connection to Xetthecum all shared a common experience in relation to the rich marine biodiversity of this place:</p>
+<p>Those with a deep connection to Xetthecum all shared a common experience in relation to the rich biodiversity of this place:</p>
 <blockquote>“I used to spend time up in Xetthecum with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.”<span>&#8212;</span>Rosemary Georgeson</blockquote>
 <blockquote> "Xetthecum was important for social and cultural gatherings, as well as for traditional activities such as fishing and clam digging."<span>&#8212;</span>Lorne Silvey</blockquote>
 <blockquote> Landing at Retreat Cove with her family, Thiyuas recalled that stsa'kwum (surf smelts) would go by and move in circles, while the seagulls swooped and dived trying get them.</blockquote>
 <blockquote>Fred Wilson recounted that Xetthecum was a place he used to go to hunt and to fish for lingcod.</blockquote>
+</div>
+
+## Retreat Cove Part II
+
+```{r, echo=FALSE, message=FALSE}
+highlightedLayers <- c()
+cove_bbox <- mx_read("spatial_data/vectors/Cove") %>% st_bbox();
+CoveMap <- plot_mapbox_map("Cove_pII", cove_bbox, allSources, communityStyling, highlightedLayers)
+CoveMap
+```
+
+<p>Beyond a place of refuge and fish, Retreat Cove opens up on an important source of freshwater, as well as opportunities for hunting and travel. Lying at the narrowest point on the island, a shore-to-shore footpath connected Retreat Cove with Cable Bay, allowing over-land travel across the island. Augie recalled landing at Xetthecum and walking across the island to Pebble Beach, to hunt for [ha’put](#taxon:Odocoileus hemionus columbianus) (deer). Like other Indigenous community members, Augie has fond memories of harvesting shellfish at Xetthecum. After hunting or harvesting, he remembered that he would sometimes row across the Trincomali Channel to Fernwood to trade meat, fish, or shellfish for vegetables with the Sampson family.</p>
+
+<div class="data-pane">
+<img src="img/retreat3.jpg">
+<p>View across the Trincomali Channel to Fernwood on Salt Spring Island</p>
 </div>
 
 ## Greig Creek Delta Part I
@@ -244,7 +267,7 @@ greigMap <- plot_mapbox_map("Greig", greig_bbox, allSources, communityStyling, h
 greigMap
 ```
 
-<p>The Hul'q'umi'num' name for Greig Creek is Hwta’loonèts, as shared by Thiyuas. Known as Greig Creek in English, this watercourse runs from Laughlin Lake to Retreat Cove and would have provided an important freshwater source for seafaring Coast Salish peoples. Historical evidence dating to the late 1980s suggests that the Greig Creek watershed may have once supported a run of [the'wun](#taxon:Oncorhynchus kisutch) (coho), an important source of food for the Puneluxutth’. However, over the last century the watercourse has been severely degraded by intensive agricultural and logging practices. In the mid 1990s, a local educator by the name of Lynne Scott initiated a project, *Salmon in the Classroom*, to release coho and chum salmon fry to Hwta’loonèts with the help of youth at the Galiano Community School. Today, the Galiano Conservancy Association continues these efforts in collaboration with schools throughout the region.</p> 
+<p>The Hul'q'umi'num' name for Greig Creek is Hwta’loonèts, as shared by Thiyuas. This watercourse runs from Laughlin Lake to Retreat Cove, providing an important freshwater source for seafaring Coast Salish peoples. Historical evidence dating to the late 1980s suggests that the Greig Creek watershed may have once supported a run of [the'wun](#taxon:Oncorhynchus kisutch) (coho), an important source of food for the Puneluxutth’. However, over the last century the watercourse has been severely degraded by intensive agricultural and logging practices. In the mid 1990s, a local educator by the name of Lynne Scott initiated a project, *Salmon in the Classroom*, to release coho and chum salmon fry to Hwta’loonèts with the help of youth at the Galiano Community School. Today, the Galiano Conservancy Association continues these efforts in collaboration with schools throughout the region.</p> 
 
 <div class="data-pane">
 <div class="iframe-container">
@@ -284,28 +307,45 @@ communityConnectionsMap <- plot_mapbox_map("Community_Connections", cove_bbox, a
 communityConnectionsMap
 ```
 
-<p>The collaborative efforts of many individuals, groups and organizations have been instrumental to the restoration and protection of Xetthecum. Their contributions, support, and guidance have been essential as we navigated many complexities in learning about the importance of this sacred place. To learn more about ongoing stewardship, restoration and monitoring efforts on Galiano Island, visit the Resources page.</p>
+<p>The collaborative efforts of many individuals, groups and organizations have been instrumental to the restoration and protection of Xetthecum. Their contributions, support, and guidance have been essential as we navigated many complexities in learning about the importance of this sacred place.</p> 
 
 <p>We are grateful to the Access to Media Education Society, Capital Regional District, Community Engagement Fellows, Galiano Conservancy Association, Hunterston Farm community, Inclusive Design Research Centre, Indigenous Watersheds Initiative, Islands Trust Council, Southern Gulf Islands Community Resource Centre, MIT Solve Indigenous Communities Fellowship, Northeast Pacific Coastal Biodiversity Action Network, Social Sciences and Humanities Research Council, UBC BRITE Internship Program, and Whiteswan Environmental for making this work possible. We also thank our advisors, contributors, partners, Galiano Island community members, and especially Puneluxutth’ elders Florence James (Thiyuas) and Augie Sylvester for their contributions to this work.—huy ch q’a sii’em!</p>
 
 <div class="data-pane">
-<img src="img/BioBlitz.jpg">
-<p>Community members gather at the BioBlitz organized at Hunterston Farms, Retreat Cove, to help document Xetthecum's biodiveresity</p>
+<img src="img/gathering.jpg">
+<p>Augie Sylvester and family members gather along with Xetthecum team members to share stories at Retreat Cove.</p>
 </div>
 
-## Preservation and Future Vision
+## Preservation and Future Vision Part I
 
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c()
-futureVisionMap <- plot_mapbox_map("Future_Vision", project_bbox, allSources, communityStyling, highlightedLayers)
+futureVisionMap <- plot_mapbox_map("Future_Vision_pII", project_bbox, allSources, communityStyling, highlightedLayers)
 futureVisionMap
 ```
 
-<p>Xetthecum is a vital marine sanctuary and a protected area crucial for preserving rockfish and shellfish populations. Restoration initiatives coupled with approaches that follow Indigenous wisdom and practices will help to safeguard the area’s resources for future generations. From what we learned from knowledge keepers at Xetthecum, there is basis to consider restoring clam garadens at Xetthecum, as well as continuing efforts to restore Greig Creek</p>
+p>Xetthecum is a vital marine sanctuary and protected area crucial for preserving rockfish and shellfish populations. Restoration initiatives grounded in Indigenous wisdom and practices will help to safeguard the area’s resources for future generations. Knowledge keepers have encouraged the restoration of clam gardens and eelgrass at Xetthecum, as well as continuing efforts to restore Greig Creek.</p>
 
 <p>Both Indigenous and non-Indigenous communities are actively involved in preserving and reconnecting with the land through educational initiatives and conservation projects, aiming for a sustainable future vision for Galiano Island. Visit our Resources page for examples of ongoing restoration efforts on Galiano Island.</p>
 
 <p>May our work on this project and presence on this island contribute to a future that recognizes the importance of reconciliation, collaboration, and the rightful place of Indigenous knowledge in shaping the well-being of the Salish Sea and its inhabitants.</p>
+
+<div class="data-pane">
+<img src="img/restoration.jpg">
+<p>Healing the land heals the people</p>
+</div>
+
+## Preservation and Future Vision Part II
+
+```{r, echo=FALSE, message=FALSE}
+highlightedLayers <- c()
+futureVisionMap <- plot_mapbox_map("Future_Vision_pII", context_bbox, allSources, communityStyling, highlightedLayers)
+futureVisionMap
+```
+
+<p>For generations, Xetthecum has been a vital refuge for Indigenous community members from Pune’luxutth and Galiano, as well as for travelers seeking shelter from inclement weather. However, the relentless tide of colonization has severed crucial connections to family, culture, language, and place—based practices and protocols that once bound Indigenous people to this sacred land. Thiyaas, a respected elder, articulated during our discussions the profound harm of assimilation, emphasizing the loss of language, family ties, and cultural heritage.</p>
+
+<p>FThrough our endeavours at Xetthecum and in similar locales, we strive to support the reestablishment of the profound connections to place, family, culture, language, and spiritual traditions that have defined the way of life for the Hwulmuhw Mustimuhw (Indigenous People) since time immemorial. As we navigate our learning journey, fumbling at times but steadfast in our commitment, we are reminded of the adage: healing the land heals the people. Our collective pursuit aims to restore biodiversity and traditional land stewardship practices, bolstered by contemporary knowledge, with the overarching goal of achieving food sovereignty through ancestral stewardship and harvesting practices for the Hwulmuhw Mustimuhw (Indigenous People) of Pune’luxutth and Galiano. Moreover, our efforts seek to nurture the learning and perpetuation of language, cultural, and spiritual practices, while fostering the continued healing and leadership of Indigenous communities.</p>
 
 <div class="data-pane">
 <img src="img/retreat1.jpg">
