@@ -42,10 +42,16 @@
                 Xetthecum: {
                     type: "maxwell.taxonDisplayPane"
                 },
-                Cultural_Activities: {
+                Cultural_Activities_pI: {
                     type: "maxwell.taxonDisplayPane"
                 },
-                Cove: {
+                Cultural_Activities_pII: {
+                    type: "maxwell.taxonDisplayPane"
+                },
+                Cove_pI: {
+                    type: "maxwell.taxonDisplayPane"
+                },
+                Cove_pII: {
                     type: "maxwell.taxonDisplayPane"
                 },
                 Delta_pI: {
@@ -69,7 +75,10 @@
                 Community_Connections: {
                     type: "maxwell.taxonDisplayPane"
                 },
-                Future_Vision: {
+                Future_Vision_pI: {
+                    type: "maxwell.taxonDisplayPane"
+                },
+                Future_Vision_pII: {
                     type: "maxwell.taxonDisplayPane"
                 },
                 Forests: {

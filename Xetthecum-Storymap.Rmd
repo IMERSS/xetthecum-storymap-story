@@ -320,11 +320,11 @@ communityConnectionsMap
 
 ```{r, echo=FALSE, message=FALSE}
 highlightedLayers <- c()
-futureVisionMap <- plot_mapbox_map("Future_Vision_pII", project_bbox, allSources, communityStyling, highlightedLayers)
+futureVisionMap <- plot_mapbox_map("Future_Vision_pI", project_bbox, allSources, communityStyling, highlightedLayers)
 futureVisionMap
 ```
 
-p>Xetthecum is a vital marine sanctuary and protected area crucial for preserving rockfish and shellfish populations. Restoration initiatives grounded in Indigenous wisdom and practices will help to safeguard the area’s resources for future generations. Knowledge keepers have encouraged the restoration of clam gardens and eelgrass at Xetthecum, as well as continuing efforts to restore Greig Creek.</p>
+<p>Xetthecum is a vital marine sanctuary and protected area crucial for preserving rockfish and shellfish populations. Restoration initiatives grounded in Indigenous wisdom and practices will help to safeguard the area’s resources for future generations. Knowledge keepers have encouraged the restoration of clam gardens and eelgrass at Xetthecum, as well as continuing efforts to restore Greig Creek.</p>
 
 <p>Both Indigenous and non-Indigenous communities are actively involved in preserving and reconnecting with the land through educational initiatives and conservation projects, aiming for a sustainable future vision for Galiano Island. Visit our Resources page for examples of ongoing restoration efforts on Galiano Island.</p>
 
@@ -345,7 +345,7 @@ futureVisionMap
 
 <p>For generations, Xetthecum has been a vital refuge for Indigenous community members from Pune’luxutth and Galiano, as well as for travelers seeking shelter from inclement weather. However, the relentless tide of colonization has severed crucial connections to family, culture, language, and place—based practices and protocols that once bound Indigenous people to this sacred land. Thiyaas, a respected elder, articulated during our discussions the profound harm of assimilation, emphasizing the loss of language, family ties, and cultural heritage.</p>
 
-<p>FThrough our endeavours at Xetthecum and in similar locales, we strive to support the reestablishment of the profound connections to place, family, culture, language, and spiritual traditions that have defined the way of life for the Hwulmuhw Mustimuhw (Indigenous People) since time immemorial. As we navigate our learning journey, fumbling at times but steadfast in our commitment, we are reminded of the adage: healing the land heals the people. Our collective pursuit aims to restore biodiversity and traditional land stewardship practices, bolstered by contemporary knowledge, with the overarching goal of achieving food sovereignty through ancestral stewardship and harvesting practices for the Hwulmuhw Mustimuhw (Indigenous People) of Pune’luxutth and Galiano. Moreover, our efforts seek to nurture the learning and perpetuation of language, cultural, and spiritual practices, while fostering the continued healing and leadership of Indigenous communities.</p>
+<p>Through our endeavours at Xetthecum and in similar locales, we strive to support the reestablishment of the profound connections to place, family, culture, language, and spiritual traditions that have defined the way of life for the Hwulmuhw Mustimuhw (Indigenous People) since time immemorial. As we navigate our learning journey, fumbling at times but steadfast in our commitment, we are reminded of the adage: healing the land heals the people. Our collective pursuit aims to restore biodiversity and traditional land stewardship practices, bolstered by contemporary knowledge, with the overarching goal of achieving food sovereignty through ancestral stewardship and harvesting practices for the Hwulmuhw Mustimuhw (Indigenous People) of Pune’luxutth and Galiano. Moreover, our efforts seek to nurture the learning and perpetuation of language, cultural, and spiritual practices, while fostering the continued healing and leadership of Indigenous communities.</p>
 
 <div class="data-pane">
 <img src="img/retreat1.jpg">

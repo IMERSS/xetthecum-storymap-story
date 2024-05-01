@@ -1,0 +1,346 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h2 {
+    margin-block-start: 0px;
+}
+
+.main-container h2 {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.mxcw-banner {
+    font-size: 36px;
+}
+
+.mxcw-section-nav {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding-bottom: 1rem;
+}
+
+.mxcw-section-nav .mxcw-hidden {
+    display: none;
+}
+
+.section-left-desc, .section-right-desc {
+    white-space: nowrap;
+    padding: 0 0.8rem 0 0.8rem;
+}
+
+.section-nav-spacer {
+    width: 100%
+}
+
+.mxcw-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 10rem)
+}
+
+
+.mxcw-content {
+    overflow: hidden;
+}
+
+.main-container {
+    height: 100%;
+}
+
+.section.level2 {
+    height: 100%;
+    flex-direction: column;
+}
+
+.mxcw-sectionInner {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow: hidden;
+}
+
+.imerss-region-pane {
+    display: flex;
+    flex-direction: column;
+}
+
+.mxcw-viz-pane {
+    display: flex;
+    flex-direction: row;
+}
+
+.mxcw-viz-pane .imerss-container {
+    width: 50%;
+}
+
+.mxcw-sectionColumn {
+    width: 50%;
+    overflow-y: auto;
+    margin-right: 8px;
+    padding-right: 8px;
+}
+
+
+@media screen and ( max-width: 620px ) {
+    .mxcw-sectionInner {
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+
+    .mxcw-content {
+        flex-direction: column;
+    }
+
+    .mxcw-viz-pane .imerss-container {
+        width: 100%;
+        overflow-y: visible;
+    }
+
+    .mxcw-sectionColumn {
+        width: 100%;
+        overflow-y: visible;
+    }
+}
+
+
+.mxcw-map-holder {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    height: 40%;
+    transition-property: height;
+    transition-duration: 800ms;
+    position: relative;
+}
+
+.mxcw-content-holder {
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    font-size: 18px;
+    padding: 1rem;
+    align-items: center;
+    transition-property: height;
+    transition-duration: 800ms;
+}
+
+.section-button {
+    stroke: #362F24;
+    fill: #FFFDFD;
+    position: relative;
+}
+
+.imerss-ecological-pane .section-button {
+    stroke: #F2FCD6;
+    fill: #5A5244;
+}
+
+.section-button:hover:not(.disabled) {
+    stroke: rgba(90,82,68,.8);
+    cursor: pointer;
+}
+
+.imerss-ecological-pane .section-button:hover:not(.disabled) {
+    stroke: #AAA;
+    cursor: pointer;
+}
+
+.section-button.disabled {
+    stroke: #ccc;
+}
+
+.section-button-desc {
+    display: none;
+    position: absolute;
+    border: solid 1px black;
+    background-color: white;
+}
+
+.section-right-desc {
+    right: 0;
+}
+
+.section-button:hover:not(.disabled) .section-button-desc {
+    display: block;
+}
+
+.mxcw-map {
+    height: 100%;
+    min-height: 0;
+    width: 100%;
+    min-width: auto;
+    transition-property: height;
+    margin: 0px auto;
+    overflow: hidden;
+
+    /** Somehow this works when hiding but not when showing */
+    transition-duration: 800ms;
+}
+
+.mxcw-hideMap .mxcw-map {
+    height: 0;
+    min-height: 0;
+}
+
+/* "Data pane" has been abolished, keep around since some widgets might end up in here at some point */
+.mxcw-data {
+    /* height: 50%;*/
+    display: none;
+}
+
+.mxcw-hideMap ~ .mxcw-content-holder {
+    height: 100%;
+}
+
+.mxcw-hideMap {
+    height: 0;
+}
+
+.mxcw-content {
+    overflow-y: auto;
+    width: 100%;
+}
+
+.mxcw-content .section {
+    padding: 8px;
+}
+
+.mxcw-content img {
+    max-height: 35vh;
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.mxcw-mapPane {
+    opacity: 0;
+    visibility: hidden;
+    transition-property: opacity, visibility;
+    transition-duration: 800ms;
+}
+
+.mxcw-mapPane.mxcw-activeMapPane {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mxcw-mapSubPane.mxcw-mapPane {
+    transition-duration: 0ms;
+}
+
+.mxcw-widgetPane {
+    display: none;
+    padding: 2em;
+}
+
+.mxcw-widgetPane.mxcw-activeWidgetPane {
+    display: flex;
+}
+
+.mxcw-content .section {
+    display: none;
+}
+
+.mxcw-content .mxcw-activeSection {
+    display: flex;
+}
+
+/** TOTALLY INSANE, maplibre-gl.css disables pointer events from controls!**/
+.maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right, .maplibregl-ctrl-top-left, .maplibregl-ctrl-top-right {
+    pointer-events: auto;
+}
+
+.mxcw-mapLabel {
+    z-index: 999 !important;
+}
+
+.mxcw-mapLabel > div {
+    transform: translateX(-50%) translateY(-50%);
+}
+
+body ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 12px;
+    background-color: #eee
+}
+
+body ::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: #C1C1C1;
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #A8A8A8;
+}
+
+body .mx-header ::-webkit-scrollbar {
+    width: 8px;
+}
+
+body .mx-header ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+}
+
+/* Override Xetthecum definition */
+.imerss-container {
+    margin: 0px;
+}
+
+/* Styling for native legends */
+
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+
+.legend i {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+    opacity: 0.7;
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgb(0 0 0 / 20%);
+    border-radius: 5px;
+}
+
+.mxcw-hidden.legend {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+}
+
+.imerss-panel-dataPanel {
+    padding: 1rem;
+}
+
+/* Technique from https://www.w3schools.com/howto/howto_css_responsive_iframes.asp */
+
+.iframe-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+}
+
+.data-pane iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
