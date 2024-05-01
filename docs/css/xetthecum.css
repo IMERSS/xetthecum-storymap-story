@@ -71,6 +71,11 @@ body #quarto-content {
     padding-bottom: 0.5rem;
 }
 
+/* Somehow without this nav bar does not push to right */
+.navbar-collapse {
+    flex-grow: 0;
+}
+
 /** Definitions for "section buttons in panel sides" **/
 
 .mxcw-section-nav {
