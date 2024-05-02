@@ -251,7 +251,7 @@ eelgrassMap
 ```
 
 <b>‘Imush Q’uyatl’un</b>
-<p>The eelgrass meadow at Xetthecum is home to [q’uyatl’un](#taxon:Melibe leonina) (hooded nudibranch). The short film *I’mush q’uyatl’un* follows the movements of this sea slug as it dances through the water during a receding tide. In the film, q’uyatl’un dances to a Puneluxutth’ song titled, *Imush ‘Q’uyatl’un* (“Be with me Seaslug”), accompanied by text composed by Karolle Wall. It is a simple story, explaining the importance of moving slowly, paying attention, and observing every little aspect of the environment.</p>
+<p>The eelgrass meadow at Xetthecum is home to [q’uyatl’un](#taxon:Melibe leonina) (hooded nudibranch). The short film *I’mush q’uyatl’un* follows the movements of this sea slug as it dances through the water during a receding tide. In the film, q’uyatl’un dances to a Puneluxutth’ song titled, *Imush ‘Q’uyatl’un* (“Be with me Seaslug”), sung by Thiyuas (Florence James). The short film is accompanied by text composed by Karolle Wall. It is a simple story, explaining the importance of moving slowly, paying attention, and observing every little aspect of the environment.</p>
 
 <div class="data-pane">
 <div class="iframe-container">
