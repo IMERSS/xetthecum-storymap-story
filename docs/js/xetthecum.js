@@ -187,6 +187,9 @@ maxwell.listenReturnToMain = function (storyPage) {
     returnToMain.addEventListener("click", function () {
         storyPage.applier.change("activeSection", storyPage.lastMainActivePane || 0);
     });
+    // Jam this in here since we happen to have a storyPage listener here
+    fluid.effect(() => fluid.invokeLater( () => console.log(`Total of ${maxwell.brokenTaxonLinks} broken taxon links`)),
+        storyPage.vizLoader.resourcesLoaded);
 };
 
 maxwell.storyPage.constructRanges = function (storyPage) {
@@ -211,6 +214,8 @@ maxwell.addToSectionInner = function (parentContainer, jNode) {
     target.append(jNode);
 };
 
+maxwell.brokenTaxonLinks = 0;
+
 maxwell.rewriteTaxonLinks = function (parentContainer, paneKey, taxaByName, regionTaxa) {
     const target = parentContainer.find(".mxcw-sectionInner")[0];
     const links = [...target.querySelectorAll("a")];
@@ -223,8 +228,10 @@ maxwell.rewriteTaxonLinks = function (parentContainer, paneKey, taxaByName, regi
             const row = taxaByName[taxon];
             if (!row) {
                 console.log(`Taxon ${taxon} linked in pane ${paneKey} not found`);
+                ++maxwell.brokenTaxonLinks;
             } else if (!regionTaxa[row.id]) {
                 console.log(`Taxon ${taxon} linked in pane ${paneKey} was not found for this region`);
+                ++maxwell.brokenTaxonLinks;
             }
         }
     });

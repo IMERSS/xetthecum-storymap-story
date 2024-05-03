@@ -24,7 +24,7 @@ hortis.annoteRegex = new RegExp("(" + hortis.sppAnnotations.map(annot => annot.r
 
 // Render a species name with annotation specially rendered in Roman font
 hortis.renderSpeciesName = function (name) {
-    return name.replace(hortis.annoteRegex, "<span class=\"checklist-annote\">$1</span>");
+    return name.replace(hortis.annoteRegex, `<span class="checklist-annote">$1</span>`);
 };
 
 // Duplicate from renderSVG.js so we don't need to rebuild temporarily whilst we work on Xetthecum
@@ -45,32 +45,37 @@ hortis.rowToScientific = function (row) {
 };
 
 hortis.accessRowHulq = function (row) {
-    return {
+    const togo = {
         nativeName: row.hulquminumName,
-        commonName: row.commonName,
-        scientificName: hortis.rowToScientific(row)
+        scientificName: hortis.rowToScientific(row),
+        commonName: row.commonName
     };
+    togo.featuredName = togo.nativeName || togo.commonName;
+    return togo;
 };
 
 hortis.checklistItem = function (accessRow, entry, selectedId, simple, selectable) {
     const record = entry.row;
-    const styleprop = "";
     const rowid = ` data-row-id="${record.id}"`;
     // Note: "species" really means "has obs " and could be a higher taxon - in the case of a simple checklist
     // we promote e.g. a genus-level obs to species level so it appears inline
     const rank = record.rank && !(simple && record.taxonName) ? record.rank : "species";
-    const selectedClass = rank === "species" && record.id === selectedId ? " class=\"checklist-selected\"" : "";
-    const header = "<li " + selectedClass + ">";
+    const selectedClass = rank === "species" && record.id === selectedId ? " checklist-selected" : "";
+    const header = `<li class="checklist-rank-${rank}${selectedClass}">`;
     const accessed = accessRow(record);
     const render = rank === "species" ? hortis.renderSpeciesName : fluid.identity;
-    let name = "<p " + styleprop + rowid + " class=\"checklist-rank-" +
-        rank + "\">" + render(hortis.encodeHTML(accessed.scientificName)) + "</p>";
-    if (accessed.commonName) {
-        name += " - <p " + styleprop + rowid + " class=\"checklist-common-name\">" + accessed.commonName + "</p>";
-    }
+    const names = {};
     if (accessed.nativeName) {
-        name += " - <p " + styleprop + rowid + " class=\"checklist-hulq-name\"><em>" + accessed.nativeName + "</em></p>";
+        names.nativeName = `<p ${rowid} class="checklist-hulq-name"><em>${accessed.nativeName}</em></p>`;
+    };
+    if (accessed.scientificName) {
+        names.scientificName = `<p ${rowid} class="checklist-scientific-name">${render(hortis.encodeHTML(accessed.scientificName))}</p>`;
     }
+    if (accessed.commonName) {
+        names.commonName = `<p ${rowid} class="checklist-common-name">${accessed.commonName}</p>`;
+    }
+    // TODO: Sort according to order in accessRow
+    const name = Object.values(names).join(" - ");
     const subList = hortis.checklistList(accessRow, entry.children, selectedId, simple, selectable);
     const footer = "</li>";
     const check = (selectable ? hortis.rowCheckbox(rowid) : "");

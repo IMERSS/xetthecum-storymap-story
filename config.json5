@@ -148,6 +148,9 @@
         source: "%maxwell/img/fillPatterns/*.png",
         target: "%maxwell/docs/img/fillPatterns"
     }, {
+        source: "%maxwell/audio/Species_media/*.mp3",
+        target: "%maxwell/docs/audio"
+    }, {
         source: "%imerss-bioinfo/src/client/img/Arrow-down.svg",
         target: "%maxwell/docs/img/Arrow-down.svg"
     }, {

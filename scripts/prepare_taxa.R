@@ -10,8 +10,8 @@ mergedTaxa <- merge(x = taxa, y = oldTaxa, by.x = "id", by.y = "iNaturalist taxo
 commonName <- dplyr::coalesce(mergedTaxa$commonName.y, mergedTaxa$commonName.x)
 
 finalTaxa <- mergedTaxa[, names(mergedTaxa) %in% c("id", "parentId", "iNaturalistTaxonName", "rank", "iNaturalistTaxonImage", "taxonName",
-                                                   "Food Value", "Medicinal Value", "Spiritual Value", "Material Value",
-                                                   "Trade Value", "Indicator Value", "Hulquminum Name", "Hulquminum Authority","Audio Link")]
+                                                   "foodValue", "medicinalValue", "spiritualValue", "materialValue",
+                                                   "tradeValue", "indicatorValue", "hulquminumName", "hulquminumAuthority","audioLink")]
 
 finalTaxa$commonName = commonName;
 

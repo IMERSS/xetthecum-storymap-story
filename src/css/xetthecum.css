@@ -50,7 +50,7 @@ body #quarto-content {
     background-color: var(--content-background);
 }
 
-/** Override silly definiion in bootstrap-min **/
+/** Override silly definition in bootstrap-min **/
 #quarto-content>* {
     padding: 0
 }
@@ -74,6 +74,11 @@ body #quarto-content {
 /* Somehow without this nav bar does not push to right */
 .navbar-collapse {
     flex-grow: 0;
+}
+
+audio {
+    width: 100px;
+    height: 40px;
 }
 
 /** Definitions for "section buttons in panel sides" **/
