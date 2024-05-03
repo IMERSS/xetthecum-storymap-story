@@ -100,7 +100,7 @@ XetthecumMap
 <p>The name 'Xetthecum' is used by Hul'q'umi'num'-speakers to refer specifically to Retreat Cove. Yet in the landscape context, where everything is connected, its boundaries might be expanded to include the greater extent of the Greig Creek Watershed, including the creek which runs from Laughlin Lake to the cove. Indeed, stories told of Xetthecum always connect with the biodiversity present throughout the watershed. Today, this watershed spans residential and agricultural lands, protected and covenanted areas, as well as a public shore access and dock. Complex in its ecology, cultural history, and contemporary land-use, this coastal landscape is a vibrant mosaic that includes many intersecting ways of life, weaving together both human and more-than-human worlds.</p> 
 
 <div class="data-pane">
-<p>From here, we welcome you to use the map legend to explore Xetthecum's ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this story map's main narrative.</p>
+<p>From here, we welcome you to use the map legend to explore the cultural significance of Xetthecum's ecological communities, or continue along the lines of this story map's main narrative.</p>
 <div class="imerss-map-legend">
 </div>
 </div>
@@ -115,7 +115,7 @@ XetthecumMap
 
 <blockquote>“We must protect the food sources. There are a lot of foods and medicines that are no longer there anymore.”<span>&#8212;</span>Puneluxutth’ elder Thiyuas (Florence James)</blockquote>
 
-<p>Puneluxutth’ elder Thiyuas (Florence James) and her family once gathered a rich array of resources at Xetthecum, traveling from Retreat Cove to Laughlin Lake and back, collecting berries, fruit, shellfish, and medicinal resources along the way. This story map begins with the rich abundance of marine life found at the cove, before following in the footsteps of Thiyuas (Florence James) and her family up Greig Creek to Laughlin Lake.</p> 
+<p>Puneluxutth’ elder Thiyuas (Florence James) and her family once gathered a rich array of resources at Xetthecum, traveling from Retreat Cove to Laughlin Lake and back, collecting berries, fruit, shellfish, and other resources along the way. This story map begins with the rich abundance of marine life found at the cove, before following in the footsteps of Thiyuas (Florence James) and her family up Greig Creek to Laughlin Lake.</p> 
 
 <div class="data-pane">
 <img src="img/retreat2.jpg"/>
