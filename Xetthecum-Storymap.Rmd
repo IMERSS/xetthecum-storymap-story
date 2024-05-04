@@ -29,7 +29,7 @@ culturalTaxa <- Taxa[!(is.na(Taxa$hulquminumName) | Taxa$hulquminumName==""), ]
 
 ```
 
-<p>Tth'ihwum m'i 'ewu i' Xetthecum sii’em.<span>&#8212;</span>Welcome to Xetthecum, a culturally significant place on Galiano Island, BC, in the heart of the Salish Sea. Known as Retreat Cove in English, this is a place endeared to many. Elders and community members have shared their stories of these cherished lands and waters. Others have helped to document the many species that make their home here. So far, community members have documented over a thousand species at Xetthecum, including `r nrow(culturalTaxa)` culturally significant species. Our aim with this story map is to engage you in learning about the rich biodiversity and cultural values of this special place, so that you can contribute to restoring and protecting it.</p>
+<p>Tth'ihwum m'i 'ewu i' Xetthecum sii’em.<span>&#8212;</span>Welcome to Xetthecum, a culturally significant place in the heart of the Salish Sea, on Galiano Island, BC. Known as Retreat Cove in English, this is a place endeared to many. Elders and community members have shared their stories of these cherished lands and waters. Others have helped to document the many species that make their home here. So far, community members have documented over a thousand species at Xetthecum, including `r nrow(culturalTaxa)` culturally significant species. Our aim with this story map is to engage you in learning about the rich biodiversity and cultural values of this special place, so that you can contribute to restoring and protecting it.</p>
 
 <div class="data-pane">
 <img src="img/Xetthecum.jpg"/>
@@ -251,7 +251,7 @@ eelgrassMap
 ```
 
 <b>‘Imush Q’uyatl’un</b>
-<p>The eelgrass meadow at Xetthecum is home to [q’uyatl’un](#taxon:Melibe leonina) (hooded nudibranch). The short film *I’mush q’uyatl’un*, produced by Karolle Wall, follows the movements of this sea slug as it dances through the water during a receding tide. In the film, q’uyatl’un dances to a Puneluxutth’ song titled, *Imush ‘Q’uyatl’un* (“Be with me Seaslug”), sung by Thiyuas (Florence James). The short film is accompanied by text composed by Karolle Wall. It is a simple story, explaining the importance of moving slowly, paying attention, and observing every little aspect of the environment.</p>
+<p>The eelgrass meadow at Xetthecum is home to [q’uyatl’un](#taxon:Melibe leonina) (hooded nudibranch). The short film *I’mush q’uyatl’un*, follows the movements of this sea slug as it dances through the water during a receding tide. In the film, q’uyatl’un dances to a Puneluxutth’ song titled, *Imush ‘Q’uyatl’un* (“Be with me Seaslug”), sung by Thiyuas (Florence James). The short film is accompanied by text composed by Karolle Wall. It is a simple story, explaining the importance of moving slowly, paying attention, and observing every little aspect of the environment.</p>
 
 <div class="data-pane">
 <div class="iframe-container">
