@@ -29,7 +29,7 @@ culturalTaxa <- Taxa[!(is.na(Taxa$hulquminumName) | Taxa$hulquminumName==""), ]
 
 ```
 
-<p>Tth'ihwum m'i 'ewu i' Xetthecum sii’em.<span>&#8212;</span>Welcome to Xetthecum, an ecologically and culturally significant place on Galiano Island, which lies within the Salish Sea. Known as Retreat Cove in English, this is a place endeared to many. Elders and community members have shared their stories of these cherished lands and waters, while others have helped to document the many species that make their home here. So far, community members have documented over a thousand species at Xetthecum, including `r nrow(culturalTaxa)` culturally significant species. Our aim with this story map is to engage you in learning about the rich biodiversity and cultural values of this special place, so that you can contribute to restoring and protecting it.</p>
+<p>Tth'ihwum m'i 'ewu i' Xetthecum sii’em.<span>&#8212;</span>Welcome to Xetthecum, a culturally significant place on Galiano Island, BC, in the heart of the Salish Sea. Known as Retreat Cove in English, this is a place endeared to many. Elders and community members have shared their stories of these cherished lands and waters. Others have helped to document the many species that make their home here. So far, community members have documented over a thousand species at Xetthecum, including `r nrow(culturalTaxa)` culturally significant species. Our aim with this story map is to engage you in learning about the rich biodiversity and cultural values of this special place, so that you can contribute to restoring and protecting it.</p>
 
 <div class="data-pane">
 <img src="img/Xetthecum.jpg"/>
@@ -163,10 +163,10 @@ CoveMap
 <p>For those arriving at Xetthecum by boat or canoe, the cove is of foremost importance as a place of refuge, where one can find calmer waters to rest or to retreat during a storm. Training for canoe races, Puneluxutth’ elder Augie Sylvester recalled days canoeing from the North End reserve down to Retreat Cove, around Retreat Island, and all the way back home. The cove and surrounding offshore waters also provide habitat for a great diversity of fishes such as [the'wun](#taxon:Oncorhynchus kisutch) (coho), which made this place an important fishing site. Today, however, Retreat Cove lies within a marine protected area, to protect endangered [t'q'as](#taxon:Sebastes) (rockfish) from over-fishing.</p>
 
 <div class="data-pane">
-<p>Those with a deep connection to Xetthecum all shared a common experience in relation to the rich biodiversity of this place:</p>
+<p>Those with a deep connection to Xetthecum share a common experience in relation to the rich biodiversity of this place:</p>
 <blockquote>“I used to spend time up in Xetthecum with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.”<span>&#8212;</span>Rosemary Georgeson</blockquote>
 <blockquote> "Xetthecum was important for social and cultural gatherings, as well as for traditional activities such as fishing and clam digging."<span>&#8212;</span>Lorne Silvey</blockquote>
-<blockquote> Landing at Retreat Cove with her family, Thiyuas recalled that stsa'kwum (surf smelts) would go by and move in circles, while the seagulls swooped and dived trying get them.</blockquote>
+<blockquote> Landing at Retreat Cove with her family, Thiyuas recalled that stsa'kwum (surf smelts) would go by and move in circles, while the seagulls swooped and dived trying to get them.</blockquote>
 <blockquote>Fred Wilson recounted that Xetthecum was a place he used to go to hunt and to fish for lingcod.</blockquote>
 </div>
 
