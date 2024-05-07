@@ -1,7 +1,7 @@
 id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
-48460,,Life,life,stateofmatter,https://inaturalist-open-data.s3.amazonaws.com/photos/73661252/medium.jpg,
+48460,,Life,life,stateofmatter,https://static.inaturalist.org/photos/5011941/medium.jpg,
 1,48460,Animalia,Animals,kingdom,https://inaturalist-open-data.s3.amazonaws.com/photos/80678745/medium.jpg,
-47126,48460,Plantae,plants,kingdom,https://inaturalist-open-data.s3.amazonaws.com/photos/370083317/medium.jpg,
+47126,48460,Plantae,plants,kingdom,https://static.inaturalist.org/photos/221143410/medium.jpeg,
 47170,48460,Fungi,Fungi Including Lichens,kingdom,https://inaturalist-open-data.s3.amazonaws.com/photos/260296784/medium.jpg,
 47686,48460,Protozoa,protozoans,kingdom,https://inaturalist-open-data.s3.amazonaws.com/photos/176600140/medium.jpg,
 48222,48460,Chromista,"kelp, diatoms, and allies",kingdom,https://inaturalist-open-data.s3.amazonaws.com/photos/131300/medium.jpg,
@@ -27,9 +27,9 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 211194,47126,Tracheophyta,vascular plants,phylum,https://inaturalist-open-data.s3.amazonaws.com/photos/78650848/medium.jpeg,
 311249,47126,Bryophyta,mosses,phylum,https://inaturalist-open-data.s3.amazonaws.com/photos/3180282/medium.JPG,
 311313,47126,Charophyta,charophyte algae,phylum,https://inaturalist-open-data.s3.amazonaws.com/photos/15816635/medium.jpg,
-47114,47115,Gastropoda,Gastropods,class,https://inaturalist-open-data.s3.amazonaws.com/photos/15443371/medium.jpg,
+47114,47115,Gastropoda,Gastropods,class,https://inaturalist-open-data.s3.amazonaws.com/photos/1166551/medium.jpg,
 47125,211194,Angiospermae,flowering plants,subphylum,https://inaturalist-open-data.s3.amazonaws.com/photos/6943609/medium.jpg,
-47429,47115,Polyplacophora,Chitons,class,https://inaturalist-open-data.s3.amazonaws.com/photos/86929035/medium.jpg,
+47429,47115,Polyplacophora,Chitons,class,https://static.inaturalist.org/photos/8111603/medium.jpg,
 47459,47115,Cephalopoda,Cephalopods,class,https://inaturalist-open-data.s3.amazonaws.com/photos/32158737/medium.jpg,
 47490,47491,Polychaeta,Polychaete Worms,class,https://static.inaturalist.org/photos/12387857/medium.jpg,
 47533,47534,Anthozoa,Sea Anemones and Corals,class,https://inaturalist-open-data.s3.amazonaws.com/photos/4440362/medium.jpg,
@@ -46,7 +46,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 57736,48824,Demospongiae,Demosponges,class,https://inaturalist-open-data.s3.amazonaws.com/photos/136085285/medium.jpg,
 60583,48824,Calcarea,Calcareous Sponges,class,https://inaturalist-open-data.s3.amazonaws.com/photos/14681238/medium.jpg,
 67852,64615,Jungermanniopsida,leafy and simple thalloid liverworts,class,https://inaturalist-open-data.s3.amazonaws.com/photos/41483/medium.jpg,
-85493,47120,Crustacea,Crustaceans,subphylum,https://inaturalist-open-data.s3.amazonaws.com/photos/110062992/medium.jpeg,
+85493,47120,Crustacea,Crustaceans,subphylum,https://static.inaturalist.org/photos/59799843/medium.jpg,
 117708,51508,Tentaculata,Tentaculate Comb Jellies,class,https://inaturalist-open-data.s3.amazonaws.com/photos/178599/medium.jpg,
 121943,211194,Polypodiopsida,ferns,class,https://inaturalist-open-data.s3.amazonaws.com/photos/97935359/medium.jpeg,
 123880,48221,Bacillariophyceae,Diatoms,class,https://inaturalist-open-data.s3.amazonaws.com/photos/82186/medium.jpg,
@@ -126,15 +126,15 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 1134698,551699,Tubulaniformes,,order,https://inaturalist-open-data.s3.amazonaws.com/photos/110588700/medium.jpg,
 573,3,Galliformes,Landfowl,order,https://static.inaturalist.org/photos/101730709/medium.jpeg,
 2114,3,Coraciiformes,"Kingfishers, Bee-eaters, Rollers And Allies",order,https://static.inaturalist.org/photos/64855144/medium.jpg,
-2708,3,Columbiformes,Pigeons and Doves,order,https://inaturalist-open-data.s3.amazonaws.com/photos/3005241/medium.jpg,
-6888,3,Anseriformes,Waterfowl,order,https://inaturalist-open-data.s3.amazonaws.com/photos/1954574/medium.jpg,
-7251,3,Passeriformes,Perching Birds,order,https://inaturalist-open-data.s3.amazonaws.com/photos/5864947/medium.jpeg,
+2708,3,Columbiformes,Pigeons and Doves,order,https://inaturalist-open-data.s3.amazonaws.com/photos/59311155/medium.jpg,
+6888,3,Anseriformes,Waterfowl,order,https://inaturalist-open-data.s3.amazonaws.com/photos/1544258/medium.jpg,
+7251,3,Passeriformes,Perching Birds,order,https://inaturalist-open-data.s3.amazonaws.com/photos/99165595/medium.png,
 17550,3,Piciformes,"Woodpeckers, Barbets, Toucans and Honeyguides",order,https://inaturalist-open-data.s3.amazonaws.com/photos/13295346/medium.jpg,
 19350,3,Strigiformes,Owls,order,https://inaturalist-open-data.s3.amazonaws.com/photos/5642/medium.jpg,
 20979,20978,Anura,Frogs and Toads,order,https://inaturalist-open-data.s3.amazonaws.com/photos/2261717/medium.jpg,
 26172,26036,Squamata,Snakes and Lizards,order,https://inaturalist-open-data.s3.amazonaws.com/photos/28516312/medium.jpeg,
 26718,20978,Caudata,Salamanders,order,https://static.inaturalist.org/photos/27436795/medium.jpg,
-39532,26036,Testudines,Turtles and Tortoises,order,https://inaturalist-open-data.s3.amazonaws.com/photos/48987498/medium.jpeg,
+39532,26036,Testudines,Turtles and Tortoises,order,https://static.inaturalist.org/photos/220986539/medium.jpg,
 47118,47119,Araneae,Spiders,order,https://inaturalist-open-data.s3.amazonaws.com/photos/269162938/medium.jpeg,
 47123,47124,Fabales,"legumes, milkworts, and allies",order,https://inaturalist-open-data.s3.amazonaws.com/photos/73034071/medium.jpg,
 47132,47124,Rosales,"roses, elms, figs, and allies",order,https://inaturalist-open-data.s3.amazonaws.com/photos/11763754/medium.jpg,
@@ -211,7 +211,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 67833,48370,Pottiaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/61882321/medium.jpeg,
 67853,67852,Porellales,,order,https://inaturalist-open-data.s3.amazonaws.com/photos/29845827/medium.jpeg,
 67859,67858,Brachytheciaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/32634488/medium.jpg,
-67866,49392,Bryaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/262521073/medium.jpg,
+67866,49392,Bryaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/101842/medium.jpg,
 67879,67877,Dicranaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/1308825/medium.jpg,
 67918,67858,Plagiotheciaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/1662294/medium.jpg,
 68789,48220,Laminariales,Kelps,order,https://inaturalist-open-data.s3.amazonaws.com/photos/21049/medium.jpg,
@@ -248,9 +248,10 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 155802,67858,Lembophyllaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/5454866/medium.jpg,
 156359,67877,Rhabdoweisiaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/32486907/medium.jpg,
 171735,152925,Bolinopsidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/255400/medium.jpg,
-172373,47119,Pseudoscorpiones,Pseudoscorpions,order,https://inaturalist-open-data.s3.amazonaws.com/photos/27145113/medium.jpg,
+172373,47119,Pseudoscorpiones,Pseudoscorpions,order,https://static.inaturalist.org/photos/369622061/medium.jpg,
 182778,152731,Ulotrichaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/1760657/medium.jpg,
 182785,152731,Monostromataceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/10988050/medium.jpeg,
+184884,47158,Pterygota,Winged and Once-winged Insects,subclass,https://inaturalist-open-data.s3.amazonaws.com/photos/14350736/medium.jpg,Pterygota
 200876,123849,Desmidiaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/449570/medium.jpg,
 345873,152929,Diaperoforma,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/2868423/medium.jpeg,
 347984,47811,Phlebobranchia,,order,https://inaturalist-open-data.s3.amazonaws.com/photos/6879772/medium.jpg,
@@ -286,10 +287,10 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 6912,6888,Anatidae,"Ducks, Geese, and Swans",family,https://inaturalist-open-data.s3.amazonaws.com/photos/109604096/medium.jpg,
 7423,7251,Bombycillidae,Waxwings,family,https://inaturalist-open-data.s3.amazonaws.com/photos/14602/medium.jpg,
 7448,7251,Certhiidae,Treecreepers,family,https://static.inaturalist.org/photos/31423761/medium.jpg,
-7823,7251,Corvidae,"Crows, Jays, and Magpies",family,https://inaturalist-open-data.s3.amazonaws.com/photos/216581067/medium.jpeg,
+7823,7251,Corvidae,"Crows, Jays, and Magpies",family,https://inaturalist-open-data.s3.amazonaws.com/photos/238951287/medium.jpg,
 9079,7251,Fringillidae,"Finches, Euphonias, and Allies",family,https://static.inaturalist.org/photos/31423764/medium.jpg,
 11853,7251,Hirundinidae,Swallows and Martins,family,https://static.inaturalist.org/photos/106779240/medium.jpg,
-11989,7251,Icteridae,New World Blackbirds and Orioles,family,https://inaturalist-open-data.s3.amazonaws.com/photos/69769/medium.jpg,
+11989,7251,Icteridae,New World Blackbirds and Orioles,family,https://inaturalist-open-data.s3.amazonaws.com/photos/40716010/medium.jpg,
 13547,7251,Paridae,"Tits, Chickadees, and Titmice",family,https://static.inaturalist.org/photos/11906853/medium.jpeg,
 14799,7251,Sittidae,Nuthatches,family,https://inaturalist-open-data.s3.amazonaws.com/photos/1178/medium.jpg,
 15964,7251,Troglodytidae,Wrens,family,https://inaturalist-open-data.s3.amazonaws.com/photos/150980755/medium.jpg,
@@ -311,7 +312,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 47194,47195,Cornaceae,Dogwood family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/79182213/medium.jpg,
 47201,47158,Hymenoptera,"Ants, Bees, Wasps, and Sawflies",order,https://inaturalist-open-data.s3.amazonaws.com/photos/301992102/medium.jpeg,
 47204,71275,Brassicaceae,mustard family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/17880512/medium.jpg,
-47208,47158,Coleoptera,Beetles,order,https://inaturalist-open-data.s3.amazonaws.com/photos/192668334/medium.jpg,
+47208,47158,Coleoptera,Beetles,order,https://inaturalist-open-data.s3.amazonaws.com/photos/15152305/medium.jpg,
 47217,47218,Orchidaceae,orchids,family,https://inaturalist-open-data.s3.amazonaws.com/photos/108347006/medium.jpeg,
 47308,1303725,Gobiidae,Gobies,family,https://inaturalist-open-data.s3.amazonaws.com/photos/236253107/medium.jpg,
 47322,48151,Orobanchaceae,broomrape family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/218490138/medium.jpeg,
@@ -336,7 +337,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 47693,47363,Rubiaceae,madder family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/217150548/medium.jpeg,
 47704,551470,Cerianthidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/446/medium.jpg,
 47733,48151,Oleaceae,olive family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/7363/medium.jpg,
-47744,47158,Hemiptera,"True Bugs, Hoppers, Aphids, and allies",order,https://static.inaturalist.org/photos/20305240/medium.jpeg,
+47744,47158,Hemiptera,"True Bugs, Hoppers, Aphids, and allies",order,https://inaturalist-open-data.s3.amazonaws.com/photos/29250775/medium.jpg,
 47747,47748,Equisetaceae,horsetail family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/50758026/medium.jpg,
 47759,70233,Oxalidaceae,woodsorrel family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/30011270/medium.jpg,
 47781,47218,Iridaceae,irises and allies,family,https://inaturalist-open-data.s3.amazonaws.com/photos/939730/medium.jpg,
@@ -345,7 +346,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 47793,47158,Dermaptera,Earwigs,order,https://inaturalist-open-data.s3.amazonaws.com/photos/44458839/medium.jpg,
 47794,47158,Raphidioptera,Snakeflies,order,https://inaturalist-open-data.s3.amazonaws.com/photos/78270022/medium.jpg,
 47809,448038,Styelidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/10850647/medium.jpg,
-47822,47158,Diptera,Flies,order,https://static.inaturalist.org/photos/360429459/medium.jpg,
+47822,47158,Diptera,Flies,order,https://inaturalist-open-data.s3.amazonaws.com/photos/145526721/medium.jpg,
 47852,47853,Fagaceae,beech family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/9429093/medium.jpg,
 48064,47181,Primulaceae,primroses,family,https://inaturalist-open-data.s3.amazonaws.com/photos/15229725/medium.jpeg,
 48150,523723,Boraginaceae,borage family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/31342774/medium.jpg,
@@ -379,7 +380,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 49482,47720,Dendrochirotida,Filtering sea cucumbers,order,https://inaturalist-open-data.s3.amazonaws.com/photos/227985/medium.jpg,
 49501,47668,Valvatida,Valvatidan Sea Stars,order,https://inaturalist-open-data.s3.amazonaws.com/photos/11537/medium.jpg,
 49537,48925,Campanulariidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/744551/medium.jpg,
-50151,48151,Acanthaceae,acanthus family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/100819149/medium.jpeg,
 50313,48796,Thymelaeaceae,Stringbarks,family,https://inaturalist-open-data.s3.amazonaws.com/photos/11609675/medium.jpg,
 50638,48151,Plantaginaceae,plantain family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/11147978/medium.jpg,
 50828,51820,Violaceae,violet family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/19508334/medium.jpeg,
@@ -389,7 +389,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 51374,51373,Batrachoididae,Toadfishes,family,https://inaturalist-open-data.s3.amazonaws.com/photos/3570/medium.jpg,
 51507,51511,Beroe,Cigar Comb Jellies,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/4259/medium.jpg,
 51800,47532,Dendrophylliidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/2592942/medium.jpg,
-51821,51820,Euphorbiaceae,spurge family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/10222510/medium.jpg,
 51885,47132,Urticaceae,nettle family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/60191852/medium.jpeg,
 51890,71289,Crassulaceae,stonecrop family,family,https://inaturalist-open-data.s3.amazonaws.com/photos/26707624/medium.jpg,
 52327,47366,Amaranthaceae,amaranths,family,https://inaturalist-open-data.s3.amazonaws.com/photos/34572/medium.jpg,
@@ -547,7 +546,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 4620,4619,Gavia,Loons,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/40716113/medium.jpg,
 4755,71306,Cathartes,Turkey and Yellow-headed Vultures,genus,https://static.inaturalist.org/photos/106776262/medium.jpg,
 4837,71325,Haematopus,Oystercatchers,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/20323/medium.jpg,
-5303,5067,Haliaeetus,Northern Sea-Eagles and Fish-Eagles,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/45572716/medium.jpg,
 6913,6912,Cygnus,True Swans,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/13096818/medium.jpg,
 6922,6912,Anas,"Mallards, Pintails, and Allies",genus,https://inaturalist-open-data.s3.amazonaws.com/photos/94136093/medium.jpeg,
 6989,6912,Bucephala,Goldeneyes and Bufflehead,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/7135/medium.jpg,
@@ -587,7 +585,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 18459,17599,Sphyrapicus,Sapsuckers,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/17779/medium.jpg,
 19660,180354,Regulus,"Firecrests, Goldcrests, and Allies",genus,https://inaturalist-open-data.s3.amazonaws.com/photos/31747178/medium.jpg,
 19885,19728,Strix,Wood Owls and Allies,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/54581797/medium.jpg,
-20351,19728,Aegolius,Forest Owls,genus,https://static.inaturalist.org/photos/102115787/medium.jpg,
+20351,19728,Aegolius,Saw-whet Owls and Allies,genus,https://static.inaturalist.org/photos/102115787/medium.jpg,
 25474,25473,Rana,Pond Frogs,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/2055749/medium.jpg,
 26504,26172,Colubridae,Colubrid Snakes,family,https://inaturalist-open-data.s3.amazonaws.com/photos/1813733/medium.jpg,
 26721,26720,Ambystoma,Mole Salamanders,genus,https://static.inaturalist.org/photos/31391521/medium.jpg,
@@ -658,7 +656,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 50829,50828,Viola,violets,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/11654351/medium.jpeg,
 51652,48922,Corynidae,Bell Jellies,family,https://inaturalist-open-data.s3.amazonaws.com/photos/4265999/medium.jpg,
 51672,47119,Ixodida,Ticks,order,https://inaturalist-open-data.s3.amazonaws.com/photos/19240115/medium.jpg,
-51696,49482,Sclerodactylidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/21605/medium.jpg,
+51696,49482,Sclerodactylidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/369666784/medium.jpg,
 51801,51800,Balanophyllia,Acorn cup corals,genus,https://static.inaturalist.org/photos/38409410/medium.jpg,
 51882,47233,Rhamphocottidae,Grunt Sculpins,family,https://inaturalist-open-data.s3.amazonaws.com/photos/4139/medium.jpg,
 51886,51885,Urtica,nettles,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/80103364/medium.jpg,
@@ -901,10 +899,10 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 4626,4620,Gavia immer,Common Loon,species,https://inaturalist-open-data.s3.amazonaws.com/photos/54184759/medium.jpg,Gavia immer
 4756,4755,Cathartes aura,Turkey Vulture,species,https://inaturalist-open-data.s3.amazonaws.com/photos/52277010/medium.jpg,Cathartes aura
 4838,4837,Haematopus bachmani,Black Oystercatcher,species,https://inaturalist-open-data.s3.amazonaws.com/photos/2059/medium.jpg,Haematopus bachmani
-4950,4929,Ardea,Great Herons,genus,https://static.inaturalist.org/photos/194963173/medium.jpg,
+4950,4929,Ardea,Great Herons and Egrets,genus,https://static.inaturalist.org/photos/194963173/medium.jpg,
 5085,5067,Accipiter,Accipiters,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/114451103/medium.jpg,
 5163,5067,Circus,Harriers,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/12275327/medium.jpg,
-5305,5303,Haliaeetus leucocephalus,Bald Eagle,species,https://static.inaturalist.org/photos/6149726/medium.jpg,Haliaeetus leucocephalus
+5303,5067,Haliaeetus,Northern Sea-Eagles and Fish-Eagles,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/45572716/medium.jpg,
 6915,6913,Cygnus buccinator,Trumpeter Swan,species,https://inaturalist-open-data.s3.amazonaws.com/photos/5930863/medium.jpeg,Cygnus buccinator
 6930,6922,Anas platyrhynchos,Mallard,species,https://inaturalist-open-data.s3.amazonaws.com/photos/95268822/medium.jpg,Anas platyrhynchos
 6993,6989,Bucephala albeola,Bufflehead,species,https://static.inaturalist.org/photos/159782700/medium.jpg,Bucephala albeola
@@ -953,7 +951,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 26754,26721,Ambystoma macrodactylum,Long-toed Salamander,species,https://inaturalist-open-data.s3.amazonaws.com/photos/30262875/medium.jpg,Ambystoma macrodactylum
 27816,27701,Taricha,Pacific Newts,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/13979999/medium.jpeg,
 39776,39760,Trachemys,Sliders,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/13590/medium.jpg,
-41573,40151,Carnivora,Carnivorans,order,https://inaturalist-open-data.s3.amazonaws.com/photos/11354784/medium.jpg,
+41573,40151,Carnivora,Carnivorans,order,https://inaturalist-open-data.s3.amazonaws.com/photos/158168495/medium.jpg,
 43698,40151,Rodentia,Rodents,order,https://inaturalist-open-data.s3.amazonaws.com/photos/24165841/medium.jpg,
 47113,47114,Nudibranchia,Nudibranchs,order,https://inaturalist-open-data.s3.amazonaws.com/photos/5149/medium.jpg,
 47155,47157,Tortricidae,Tortricid Leafroller Moths,family,https://static.inaturalist.org/photos/46496208/medium.jpg,
@@ -1245,7 +1243,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 415129,81619,Ascidia paratropa,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/11250463/medium.jpg,Ascidia paratropa
 416512,47167,Hymenogastraceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/5748389/medium.jpeg,
 416523,47167,Tubariaceae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/100063791/medium.jpg,
-418641,48797,Pterygota,,genus,https://static.inaturalist.org/photos/14330566/medium.jpeg,
 423721,423722,Lafoea dumosa,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/28566648/medium.jpg,Lafoea dumosa
 423950,49206,Helvella vespertina,Western Black Elfin Saddle,species,https://inaturalist-open-data.s3.amazonaws.com/photos/5749655/medium.jpeg,Helvella vespertina
 424811,62615,Cliona californiana,California Boring Sponge,species,https://static.inaturalist.org/photos/222321146/medium.jpeg,Cliona californiana
@@ -1284,7 +1281,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 885690,83303,Neostylidium,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/737929/medium.JPG,
 895193,895194,Neoagarum fimbriatum,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/47071366/medium.jpeg,Neoagarum fimbriatum
 914077,48626,Oenothera,Oenothera sect. Oenothera,section,https://inaturalist-open-data.s3.amazonaws.com/photos/52167724/medium.jpeg,Oenothera
-979757,979751,Leiothlypis celata,Orange-crowned Warbler,species,https://inaturalist-open-data.s3.amazonaws.com/photos/45819399/medium.jpg,Leiothlypis celata
+979757,979751,Leiothlypis celata,Orange-crowned Warbler,species,https://inaturalist-open-data.s3.amazonaws.com/photos/227039/medium.jpg,Leiothlypis celata
 1094690,54321,Parmelioideae,typical shield lichens,subfamily,https://inaturalist-open-data.s3.amazonaws.com/photos/76536882/medium.jpg,Parmelioideae
 1128531,47167,Sarcomyxaceae,,family,https://static.inaturalist.org/photos/100961849/medium.jpeg,
 1155395,47167,Clitocybaceae,,family,https://static.inaturalist.org/photos/314518956/medium.jpeg,
@@ -1303,6 +1300,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 4399,4343,Larus glaucescens,Glaucous-winged Gull,species,https://inaturalist-open-data.s3.amazonaws.com/photos/70108336/medium.jpeg,Larus glaucescens
 5097,5085,Accipiter striatus,Sharp-shinned Hawk,species,https://static.inaturalist.org/photos/112860673/medium.jpeg,Accipiter striatus
 5112,5085,Accipiter cooperii,Cooper's Hawk,species,https://inaturalist-open-data.s3.amazonaws.com/photos/170370008/medium.jpg,Accipiter cooperii
+5305,5303,Haliaeetus leucocephalus,Bald Eagle,species,https://static.inaturalist.org/photos/6149726/medium.jpg,Haliaeetus leucocephalus
 6315,5562,Calypte,Anna's and Costa's Hummingbirds,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/1872/medium.jpg,
 6358,5562,Selasphorus,"Rufous, Allen's, and Allied Hummingbirds",genus,https://static.inaturalist.org/photos/69311285/medium.jpg,
 24259,24253,Pseudacris regilla,Pacific chorus frog,species,https://inaturalist-open-data.s3.amazonaws.com/photos/173430494/medium.jpg,Pseudacris regilla
@@ -1310,7 +1308,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 28339,26504,Thamnophis,Garter Snakes,genus,https://static.inaturalist.org/photos/1348028/medium.JPG,
 32049,31888,Elgaria,Western Alligator Lizards,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/19680/medium.jpg,
 41770,41573,Mustelidae,Mustelids,family,https://inaturalist-open-data.s3.amazonaws.com/photos/154469560/medium.jpeg,
-42043,41573,Canidae,Canids,family,https://inaturalist-open-data.s3.amazonaws.com/photos/109101551/medium.jpg,
+42043,41573,Canidae,Canids,family,https://inaturalist-open-data.s3.amazonaws.com/photos/65295517/medium.jpg,
 47165,47166,Entoloma,Pinkgills,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/12719625/medium.jpg,
 47199,47201,Ichneumonidae,Ichneumonid Wasps,family,https://inaturalist-open-data.s3.amazonaws.com/photos/287485650/medium.jpg,
 47351,47148,Prunus,"plums, cherries, and allies",genus,https://inaturalist-open-data.s3.amazonaws.com/photos/93584919/medium.jpg,
@@ -1343,7 +1341,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 48453,48454,Oxylebius,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/20240/medium.jpg,
 48493,48231,Delphinium,larkspurs,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/39931004/medium.jpg,
 48496,48495,Pleurotus,Oyster Mushrooms,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/47169050/medium.jpeg,
-48523,48528,Symphoricarpos albus,Common Snowberry,species,https://inaturalist-open-data.s3.amazonaws.com/photos/147408582/medium.jpg,Symphoricarpos albus
+48523,48528,Symphoricarpos albus,Common Snowberry,species,https://inaturalist-open-data.s3.amazonaws.com/photos/85721919/medium.jpg,Symphoricarpos albus
 48537,48729,Lysichiton americanus,western skunk cabbage,species,https://static.inaturalist.org/photos/107900/medium.jpg,Lysichiton americanus
 48539,47122,Cytisus,brooms,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/1179457/medium.jpg,
 48571,47161,Carex,true sedges,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/18432491/medium.jpeg,
@@ -1384,7 +1382,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 51640,51642,Polyorchis penicillatus,Red-eye Medusa,species,https://inaturalist-open-data.s3.amazonaws.com/photos/102852524/medium.jpeg,Polyorchis penicillatus
 51643,51644,Tiarella trifoliata,Threeleaf Foamflower,species,https://inaturalist-open-data.s3.amazonaws.com/photos/61878/medium.jpg,Tiarella trifoliata
 51655,51656,Tellima grandiflora,fringe cups,species,https://inaturalist-open-data.s3.amazonaws.com/photos/143999155/medium.jpg,Tellima grandiflora
-51674,51673,Ixodes,,genus,https://static.inaturalist.org/photos/35772417/medium.jpg,
+51674,51673,Ixodes,,genus,https://static.inaturalist.org/photos/68242550/medium.jpg,
 51695,51697,Eupentacta quinquesemita,Stiff-footed sea cucumber,species,https://inaturalist-open-data.s3.amazonaws.com/photos/3819/medium.jpg,Eupentacta quinquesemita
 51811,47122,Laburnum,Laburnum,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/12186994/medium.jpg,
 51876,47122,Trifolium,clovers,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/226413420/medium.jpg,
@@ -1465,7 +1463,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 60783,48420,Pluteus,Deer Mushrooms,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/12971449/medium.jpeg,
 61884,61885,Moehringia macrophylla,Largeleaf Sandwort,species,https://inaturalist-open-data.s3.amazonaws.com/photos/16342/medium.jpg,Moehringia macrophylla
 62207,48626,Oenothera biennis,common evening-primrose,species,https://static.inaturalist.org/photos/16944/medium.jpg,Oenothera biennis
-62218,62219,Camassia leichtlinii,Leichtlin's Camassia,species,https://static.inaturalist.org/photos/38919809/medium.jpg,Camassia leichtlinii
+62218,62219,Camassia leichtlinii,Leichtlin's camas,species,https://static.inaturalist.org/photos/38919809/medium.jpg,Camassia leichtlinii
 62484,47498,Tricholoma,Knights,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/103064869/medium.jpg,
 62608,62607,Pholis,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/88606920/medium.jpeg,
 63382,63384,Dermasterias imbricata,Leather Star,species,https://inaturalist-open-data.s3.amazonaws.com/photos/4008104/medium.jpg,Dermasterias imbricata
@@ -1490,8 +1488,8 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 69999,50766,Nucella,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/1557245/medium.jpg,
 70204,48148,Alucita,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/30731/medium.jpg,
 71118,71120,Mazzaella splendens,splendid iridescent seaweed,species,https://inaturalist-open-data.s3.amazonaws.com/photos/85617/medium.jpg,Mazzaella splendens
-75505,47179,Arctostaphylos columbiana,Columbia manzanita,species,https://inaturalist-open-data.s3.amazonaws.com/photos/814361/medium.jpg,Arctostaphylos columbiana
-75609,71992,Asplenium trichomanes,maidenhair spleenwort,species,https://static.inaturalist.org/photos/211232317/medium.jpeg,Asplenium trichomanes
+75505,47179,Arctostaphylos columbiana,hairy manzanita,species,https://inaturalist-open-data.s3.amazonaws.com/photos/814361/medium.jpg,Arctostaphylos columbiana
+75609,71992,Asplenium trichomanes,maidenhair spleenwort,species,https://static.inaturalist.org/photos/150720177/medium.jpeg,Asplenium trichomanes
 76148,49340,Castilleja miniata,giant red Indian paintbrush,species,https://inaturalist-open-data.s3.amazonaws.com/photos/62118988/medium.jpeg,Castilleja miniata
 76409,47324,Collinsia grandiflora,Giant Blue-eyed Mary,species,https://static.inaturalist.org/photos/19082966/medium.jpeg,Collinsia grandiflora
 77611,72206,Kopsiopsis hookeri,small ground-cone,species,https://inaturalist-open-data.s3.amazonaws.com/photos/814356/medium.jpg,Kopsiopsis hookeri
@@ -1502,7 +1500,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 81785,81784,Diadumene,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/50406537/medium.jpeg,
 81791,49581,Nereis,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/79379/medium.jpg,
 81948,48445,Bovista,True Puffballs,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/32153416/medium.jpg,
-82268,50151,Barleria,Bushviolets,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/34149574/medium.jpeg,
 84265,84266,Evasterias troschelii,Mottled Star,species,https://inaturalist-open-data.s3.amazonaws.com/photos/131966574/medium.jpeg,Evasterias troschelii
 84865,49282,Eudistylia,,genus,https://static.inaturalist.org/photos/12387857/medium.jpg,
 85120,85118,Gyromitra esculenta,False Morel,species,https://inaturalist-open-data.s3.amazonaws.com/photos/1865611/medium.jpg,Gyromitra esculenta
@@ -1534,7 +1531,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 117886,54321,Platismatia,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/78419/medium.jpg,
 117950,49490,Cladonia macilenta,Lipstick Powderhorn,species,https://inaturalist-open-data.s3.amazonaws.com/photos/308268644/medium.jpg,Cladonia macilenta
 117963,49490,Cladonia squamosa,Dragon Horn,species,https://inaturalist-open-data.s3.amazonaws.com/photos/34311804/medium.jpeg,Cladonia squamosa
-117987,117992,Graphis scripta,Common Script Lichen,species,https://inaturalist-open-data.s3.amazonaws.com/photos/188198/medium.jpg,Graphis scripta
+117987,117992,Graphis scripta,Common Script Lichen,species,https://inaturalist-open-data.s3.amazonaws.com/photos/172864710/medium.jpg,Graphis scripta
 117988,54321,Hypogymnia,Tube Lichens,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/2981861/medium.jpg,
 117994,85118,Gyromitra infula,Saddle-shaped False Morel,species,https://inaturalist-open-data.s3.amazonaws.com/photos/172415270/medium.jpeg,Gyromitra infula
 117997,49206,Helvella compressa,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/6925086/medium.jpg,Helvella compressa
@@ -1550,7 +1547,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 122224,48670,Noctuinae,Cutworms and Dart Moths,subfamily,https://inaturalist-open-data.s3.amazonaws.com/photos/75104/medium.jpg,Noctuinae
 123176,54321,Evernia,oakmoss lichens,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/77182/medium.jpg,
 123649,123648,Halosaccion glandiforme,Sea Sacks,species,https://inaturalist-open-data.s3.amazonaws.com/photos/120561/medium.jpg,Halosaccion glandiforme
-126638,47599,Hyacinthus,Hyacinth,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/268143177/medium.jpeg,
+126638,47599,Hyacinthus,Hyacinths,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/268143177/medium.jpeg,
 126741,56091,Morus nigra,black mulberry,species,https://inaturalist-open-data.s3.amazonaws.com/photos/260207304/medium.jpg,Morus nigra
 127153,117813,Chondracanthus exasperatus,Turkish Towel,species,https://inaturalist-open-data.s3.amazonaws.com/photos/490612/medium.JPG,Chondracanthus exasperatus
 128204,49340,Castilleja hispida,harsh indian paintbrush,species,https://inaturalist-open-data.s3.amazonaws.com/photos/43820742/medium.jpg,Castilleja hispida
@@ -1570,7 +1567,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 172435,172373,Cheliferoidea,,superfamily,https://inaturalist-open-data.s3.amazonaws.com/photos/99607574/medium.jpg,Cheliferoidea
 172638,86030,Asemichthys,,genus,https://static.inaturalist.org/photos/57339375/medium.jpg,
 179755,71060,Ochrolechia laevigata,Smooth Saucer Lichen,species,https://inaturalist-open-data.s3.amazonaws.com/photos/62834149/medium.jpeg,Ochrolechia laevigata
-180029,63743,Gadus macrocephalus,Pacific Cod,species,https://inaturalist-open-data.s3.amazonaws.com/photos/144936509/medium.jpg,Gadus macrocephalus
+180029,63743,Gadus macrocephalus,Pacific Cod,species,https://static.inaturalist.org/photos/340745230/medium.jpg,Gadus macrocephalus
 182631,175440,Phlyctis argena,Whitewash Lichen,species,https://inaturalist-open-data.s3.amazonaws.com/photos/12764569/medium.jpeg,Phlyctis argena
 182732,48325,Ramalina dilacerata,Punctured Bushy Lichen,species,https://inaturalist-open-data.s3.amazonaws.com/photos/58149783/medium.jpg,Ramalina dilacerata
 192687,192688,Crossaster papposus,Rose Sun Star,species,https://inaturalist-open-data.s3.amazonaws.com/photos/2240095/medium.jpg,Crossaster papposus
@@ -1623,7 +1620,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 473064,49481,Psolus chitonoides,armored sea cucumber,species,https://inaturalist-open-data.s3.amazonaws.com/photos/6383960/medium.jpg,Psolus chitonoides
 491131,247202,Neoturris breviconis,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/68273534/medium.jpg,Neoturris breviconis
 496216,205077,Phragmidium rosae-multiflorae,Multiflora rose rust,species,https://inaturalist-open-data.s3.amazonaws.com/photos/3705138/medium.jpg,Phragmidium rosae-multiflorae
-506580,506581,Nanomia bijuga,Common Siphonophore,species,https://inaturalist-open-data.s3.amazonaws.com/photos/134199995/medium.jpg,Nanomia bijuga
+506580,506581,Nanomia bijuga,Common Siphonophore,species,https://inaturalist-open-data.s3.amazonaws.com/photos/179024284/medium.jpeg,Nanomia bijuga
 519486,196034,Schizoporella japonica,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/753399/medium.jpg,Schizoporella japonica
 532312,526743,Scytinium polycarpum,Peacock Vinyl Lichen,species,https://inaturalist-open-data.s3.amazonaws.com/photos/67586578/medium.jpeg,Scytinium polycarpum
 545973,319976,Erythranthe nasuta,shy monkeyflower,species,https://inaturalist-open-data.s3.amazonaws.com/photos/117995360/medium.jpeg,Erythranthe nasuta
@@ -1639,11 +1636,10 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 813872,54321,Tuckermanopsis,Wrinkle Lichens,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/14873/medium.jpg,
 857908,118903,Archotermopsidae,Dampwood termites,family,https://inaturalist-open-data.s3.amazonaws.com/photos/20170816/medium.jpg,
 877361,118056,Fomitopsis mounceae,Northern Red Belt,species,https://inaturalist-open-data.s3.amazonaws.com/photos/215836404/medium.jpg,Fomitopsis mounceae
-889013,57777,Vertebrata,,genus,https://static.inaturalist.org/photos/17111167/medium.jpg,
 897701,885690,Neostylidium eschrichtii,Threaded Bittium,species,https://inaturalist-open-data.s3.amazonaws.com/photos/78370237/medium.jpeg,Neostylidium eschrichtii
 901819,994028,Phaeotremella foliacea,Leafy Brain,species,https://inaturalist-open-data.s3.amazonaws.com/photos/244338/medium.jpg,Phaeotremella foliacea
 910795,50766,Paciocinebrina,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/11592721/medium.jpg,
-950583,48231,Anemonoides,,genus,https://static.inaturalist.org/photos/33295711/medium.jpeg,
+950583,48231,Anemonoides,,genus,https://static.inaturalist.org/photos/76285174/medium.jpg,
 960510,321372,Epichloe typhina,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/279732773/medium.jpg,Epichloe typhina
 964919,47701,Geranium,Section Geranium,section,https://inaturalist-open-data.s3.amazonaws.com/photos/8416265/medium.jpeg,Geranium
 1023136,47758,Oxalis,,section,https://inaturalist-open-data.s3.amazonaws.com/photos/60226313/medium.jpg,Oxalis
@@ -1721,7 +1717,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 49550,47118,Amaurobiidae,Hackledmesh Weavers,family,https://inaturalist-open-data.s3.amazonaws.com/photos/245558396/medium.jpg,
 49652,47204,Cardamine,Bittercresses and Toothworts,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/17401/medium.jpg,
 49814,49813,Haminoea,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/11371/medium.jpg,
-49841,49840,Gastropteron,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/29945602/medium.jpg,
+49841,49840,Gastropteron,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/128984844/medium.jpg,
 49844,49843,Aglaja,,genus,https://static.inaturalist.org/photos/1055887/medium.jpg,
 49865,48656,Phyllaplysia,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/4249/medium.jpg,
 49900,775833,Pleurobranchidae,,family,https://static.inaturalist.org/photos/73685183/medium.jpg,
@@ -1736,7 +1732,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 51146,47208,Chrysomelidae,Leaf Beetles,family,https://inaturalist-open-data.s3.amazonaws.com/photos/28711963/medium.jpg,
 51159,47744,Acanthosomatidae,Shield Bugs,family,https://inaturalist-open-data.s3.amazonaws.com/photos/18216466/medium.jpeg,
 51225,47822,Tipulidae,Large Crane Flies,family,https://inaturalist-open-data.s3.amazonaws.com/photos/33088193/medium.jpg,
-51271,39776,Trachemys scripta elegans,Red-eared Slider,subspecies,https://inaturalist-open-data.s3.amazonaws.com/photos/120834277/medium.jpg,Trachemys scripta elegans
+51271,39776,Trachemys scripta elegans,Red-eared Slider,subspecies,https://inaturalist-open-data.s3.amazonaws.com/photos/107072446/medium.jpg,Trachemys scripta elegans
 51274,48385,Heuchera micrantha,crevice alumroot,species,https://inaturalist-open-data.s3.amazonaws.com/photos/3498/medium.jpg,Heuchera micrantha
 51556,47819,Sympetrum,Meadowhawks,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/15951/medium.jpg,
 51558,47822,Bombyliidae,Bee Flies,family,https://inaturalist-open-data.s3.amazonaws.com/photos/71752536/medium.jpg,
@@ -1746,7 +1742,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 51777,47744,Coreidae,Leaf-footed Bugs,family,https://static.inaturalist.org/photos/8076766/medium.jpeg,
 51810,51811,Laburnum anagyroides,Common Laburnum,species,https://inaturalist-open-data.s3.amazonaws.com/photos/70994958/medium.jpg,Laburnum anagyroides
 51812,49069,Metridium farcimen,Giant Plumose Anemone,species,https://inaturalist-open-data.s3.amazonaws.com/photos/1672886/medium.jpg,Metridium farcimen
-51822,51821,Euphorbia,spurges,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/10222514/medium.jpg,
 51875,51876,Trifolium pratense,Red Clover,species,https://inaturalist-open-data.s3.amazonaws.com/photos/35545444/medium.jpg,Trifolium pratense
 51900,47604,Hypochaeris,Cat's-Ears,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/2280301/medium.jpg,
 51955,47201,Crabronidae,"Square-headed Wasps, Sand Wasps, and Allies",family,https://inaturalist-open-data.s3.amazonaws.com/photos/152074108/medium.jpg,
@@ -1799,7 +1794,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 53305,48699,Torilis,hedge parslies,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/176506656/medium.jpg,
 53320,52472,Vicia americana,American vetch,species,https://inaturalist-open-data.s3.amazonaws.com/photos/71578389/medium.jpg,Vicia americana
 53322,52472,Vicia gigantea,giant vetch,species,https://inaturalist-open-data.s3.amazonaws.com/photos/34664752/medium.jpeg,Vicia gigantea
-53324,52472,Vicia sativa,Common Vetch,species,https://inaturalist-open-data.s3.amazonaws.com/photos/235019995/medium.jpeg,Vicia sativa
+53324,52472,Vicia sativa,Common Vetch,species,https://inaturalist-open-data.s3.amazonaws.com/photos/187398427/medium.jpg,Vicia sativa
 53327,47362,Vinca,periwinkles,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/94954066/medium.jpeg,
 53396,47604,Eriophyllum,Woolly sunflowers,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/200883682/medium.jpg,
 53414,53415,Holodiscus discolor,Ocean spray,species,https://inaturalist-open-data.s3.amazonaws.com/photos/41885248/medium.jpg,Holodiscus discolor
@@ -1838,7 +1833,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 56063,48582,Sorbus aucuparia,European mountain ash,species,https://inaturalist-open-data.s3.amazonaws.com/photos/10451/medium.jpg,Sorbus aucuparia
 56195,47744,Aphrophoridae,True Spittlebugs,family,https://inaturalist-open-data.s3.amazonaws.com/photos/3957516/medium.JPG,
 56236,56234,Centaurium erythraea,Common centaury,species,https://inaturalist-open-data.s3.amazonaws.com/photos/4291565/medium.jpg,Centaurium erythraea
-56611,47868,Philodromus,Running Crab Spiders,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/244834534/medium.jpeg,
 56854,56855,Adenocaulon bicolor,American trailplant,species,https://inaturalist-open-data.s3.amazonaws.com/photos/3471018/medium.jpeg,Adenocaulon bicolor
 57032,47746,Equisetum telmateia braunii,Braun's Giant Horsetail,subspecies,https://static.inaturalist.org/photos/66893591/medium.jpg,Equisetum telmateia braunii
 57048,64336,Acmispon parviflorus,Short-flower Deervetch,species,https://inaturalist-open-data.s3.amazonaws.com/photos/147260/medium.jpg,Acmispon parviflorus
@@ -1853,7 +1847,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 57976,47604,Filago,cudweeds,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/16708/medium.jpg,
 58728,49289,Berberis,Barberries,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/256350818/medium.jpg,
 58911,51876,Trifolium microcephalum,small-headed clover,species,https://inaturalist-open-data.s3.amazonaws.com/photos/18932/medium.jpg,Trifolium microcephalum
-58917,47701,Geranium carolinianum,Carolina crane's-bill,species,https://inaturalist-open-data.s3.amazonaws.com/photos/63391496/medium.jpg,Geranium carolinianum
+58917,47701,Geranium carolinianum,Carolina crane's-bill,species,https://static.inaturalist.org/photos/116546288/medium.jpg,Geranium carolinianum
 59068,49371,Scirpus microcarpus,Panicled Bulrush,species,https://inaturalist-open-data.s3.amazonaws.com/photos/12835/medium.jpg,Scirpus microcarpus
 59520,48241,Erythronium oregonum,giant white fawn lily,species,https://inaturalist-open-data.s3.amazonaws.com/photos/192044591/medium.jpg,Erythronium oregonum
 59653,47744,Gerridae,Water Striders,family,https://inaturalist-open-data.s3.amazonaws.com/photos/1427421/medium.JPG,
@@ -1868,7 +1862,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 60996,49389,Stellaria borealis sitchana,Sitka starwort,variety,https://inaturalist-open-data.s3.amazonaws.com/photos/9000132/medium.jpg,Stellaria borealis sitchana
 61086,53196,Rumex occidentalis,western dock,species,https://inaturalist-open-data.s3.amazonaws.com/photos/43937491/medium.jpeg,Rumex occidentalis
 61100,53453,Salix sitchensis,Sitka willow,species,https://inaturalist-open-data.s3.amazonaws.com/photos/3717180/medium.jpeg,Salix sitchensis
-61112,51611,Veronica scutellata,Marsh Speedwell,species,https://inaturalist-open-data.s3.amazonaws.com/photos/44969228/medium.jpeg,Veronica scutellata
+61112,51611,Veronica scutellata,Marsh Speedwell,species,https://inaturalist-open-data.s3.amazonaws.com/photos/143547507/medium.jpg,Veronica scutellata
 61441,47651,Rhaphidophoridae,"Camel Crickets, Cave Crickets, and Cave Wēta",family,https://inaturalist-open-data.s3.amazonaws.com/photos/912842/medium.jpg,
 61786,56584,Malacosoma,Tent Caterpillar Moths,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/2054469/medium.jpg,
 61824,51876,Trifolium hybridum,Alsike clover,species,https://inaturalist-open-data.s3.amazonaws.com/photos/12164535/medium.jpg,Trifolium hybridum
@@ -1919,7 +1913,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 77266,55751,Geum macrophyllum,Large-leaved Avens,species,https://inaturalist-open-data.s3.amazonaws.com/photos/17098116/medium.jpeg,Geum macrophyllum
 77638,50321,Lathyrus japonicus,seaside pea,species,https://inaturalist-open-data.s3.amazonaws.com/photos/354009189/medium.jpeg,Lathyrus japonicus
 77640,50321,Lathyrus nevadensis,Sierra Nevada Peavine,species,https://inaturalist-open-data.s3.amazonaws.com/photos/12840970/medium.jpg,Lathyrus nevadensis
-77744,48928,Lilium columbianum,Columbia lily,species,https://inaturalist-open-data.s3.amazonaws.com/photos/45444/medium.jpg,Lilium columbianum
 77832,51874,Lonicera ciliosa,orange honeysuckle,species,https://static.inaturalist.org/photos/18945520/medium.jpg,Lonicera ciliosa
 77952,55978,Malva neglecta,dwarf mallow,species,https://inaturalist-open-data.s3.amazonaws.com/photos/83395271/medium.jpg,Malva neglecta
 77986,52803,Melica subulata,Alaska Oniongrass,species,https://inaturalist-open-data.s3.amazonaws.com/photos/18310877/medium.jpeg,Melica subulata
@@ -1928,13 +1921,11 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 78832,48230,Ranunculus sardous,hairy buttercup,species,https://inaturalist-open-data.s3.amazonaws.com/photos/37498081/medium.jpeg,Ranunculus sardous
 78930,52617,Salicornia depressa,Virginia Glasswort,species,https://inaturalist-open-data.s3.amazonaws.com/photos/23010186/medium.jpg,Salicornia depressa
 78941,53453,Salix hookeriana,coastal willow,species,https://inaturalist-open-data.s3.amazonaws.com/photos/131374502/medium.jpg,Salix hookeriana
-79659,62219,Camassia leichtlinii suksdorfii,Suksdorf's Large Camas,subspecies,https://inaturalist-open-data.s3.amazonaws.com/photos/2862271/medium.JPG,Camassia leichtlinii suksdorfii
 81570,47744,Belostomatidae,Giant Water Bugs,family,https://inaturalist-open-data.s3.amazonaws.com/photos/2379636/medium.jpg,
 81635,81622,Myidae,Softshell Clams,family,https://inaturalist-open-data.s3.amazonaws.com/photos/159280494/medium.jpg,
 81783,81785,Diadumene lineata,Striped Green Sea Anemone,species,https://inaturalist-open-data.s3.amazonaws.com/photos/162510068/medium.jpeg,Diadumene lineata
-81790,81791,Nereis vexillosa,Pile Worm,species,https://static.inaturalist.org/photos/14786956/medium.jpg,Nereis vexillosa
+81790,81791,Nereis vexillosa,Pile Worm,species,https://inaturalist-open-data.s3.amazonaws.com/photos/114361582/medium.jpg,Nereis vexillosa
 82167,47208,Ptinidae,"Deathwatch, Spider, and Wood-borer Beetles",family,https://inaturalist-open-data.s3.amazonaws.com/photos/668383/medium.jpg,
-83159,47217,Liparis,Widelip Orchids,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/66849236/medium.jpg,
 84864,84865,Eudistylia vancouveri,Northern Feather Duster Worm,species,https://static.inaturalist.org/photos/12387857/medium.jpg,Eudistylia vancouveri
 85012,47201,Eulophidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/13097635/medium.jpg,
 116687,116684,Ceratostoma foliatum,Leafy Hornmouth,species,https://inaturalist-open-data.s3.amazonaws.com/photos/6377388/medium.jpeg,Ceratostoma foliatum
@@ -1958,7 +1949,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 118179,48339,Russula brevipes,Short-stemmed Russula,species,https://static.inaturalist.org/photos/23537342/medium.jpg,Russula brevipes
 118192,133083,Strobilurus trullisatus,Fir-Cone Mushroom,species,https://inaturalist-open-data.s3.amazonaws.com/photos/163392292/medium.jpeg,Strobilurus trullisatus
 118240,54067,Marasmius oreades,fairy ring marasmius,species,https://inaturalist-open-data.s3.amazonaws.com/photos/35760467/medium.jpg,Marasmius oreades
-119236,47217,Disa,Disas,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/142159/medium.jpg,
 121381,857908,Zootermopsis,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/231352464/medium.jpg,
 122162,122161,Terebratalia,,genus,https://static.inaturalist.org/photos/1394735/medium.JPG,
 122704,69999,Nucella ostrina,Striped Dogwinkle,species,https://static.inaturalist.org/photos/137133/medium.jpg,Nucella ostrina
@@ -2021,6 +2011,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 339069,131379,Polyneura,,genus,https://static.inaturalist.org/photos/2745393/medium.jpg,
 339143,48752,Lottia persona,Mask Limpet,species,https://inaturalist-open-data.s3.amazonaws.com/photos/297616/medium.JPG,Lottia persona
 339561,339562,Schizobranchia insignis,Split-branch Feather Duster Worm,species,https://static.inaturalist.org/photos/2551655/medium.jpg,Schizobranchia insignis
+342767,47822,Calyptratae,Calyptrate Flies,zoosubsection,https://static.inaturalist.org/photos/313761328/medium.jpeg,Calyptratae
 342912,47186,Caridea,Caridean Shrimps,infraorder,https://static.inaturalist.org/photos/177833907/medium.jpg,Caridea
 345131,117836,Polysiphonia paniculata,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/43195877/medium.jpg,Polysiphonia paniculata
 345132,117836,Polysiphonia pacifica,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/3768942/medium.jpg,Polysiphonia pacifica
@@ -2038,13 +2029,13 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 465156,69915,Arctonoe pulchra,Red Commensal Scaleworm,species,https://static.inaturalist.org/photos/32118836/medium.jpg,Arctonoe pulchra
 492672,47795,Urticina grebelnyi,Painted Anemone,species,https://inaturalist-open-data.s3.amazonaws.com/photos/4089766/medium.jpg,Urticina grebelnyi
 494511,195030,Oxydromus,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/176521031/medium.jpeg,
-496537,48063,Lysimachia latifolia,Western Starflower,species,https://inaturalist-open-data.s3.amazonaws.com/photos/125642/medium.jpg,Lysimachia latifolia
+496537,48063,Lysimachia latifolia,Western Starflower,species,https://static.inaturalist.org/photos/146237736/medium.jpg,Lysimachia latifolia
 564817,47113,Aeolidioidea,Aeolid Nudibranchs,superfamily,https://inaturalist-open-data.s3.amazonaws.com/photos/10950779/medium.jpg,Aeolidioidea
 605990,47582,Magallana,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/12398800/medium.jpg,
 630955,47201,Anthophila,Bees,epifamily,https://inaturalist-open-data.s3.amazonaws.com/photos/153272738/medium.jpg,
 739040,273241,Aphyllon purpureum,oneflower broomrape,species,https://inaturalist-open-data.s3.amazonaws.com/photos/21050136/medium.jpg,Aphyllon purpureum
 791071,55922,Mycena robusta,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/176160154/medium.jpg,Mycena robusta
-791928,48063,Lysimachia arvensis,scarlet pimpernel,species,https://static.inaturalist.org/photos/358381177/medium.jpeg,Lysimachia arvensis
+791928,48063,Lysimachia arvensis,scarlet pimpernel,species,https://inaturalist-open-data.s3.amazonaws.com/photos/223278664/medium.jpg,Lysimachia arvensis
 813868,813872,Tuckermanopsis orbata,variable wrinkle-lichen,species,https://inaturalist-open-data.s3.amazonaws.com/photos/14873/medium.jpg,Tuckermanopsis orbata
 868292,118536,Hyacinthoides,Hyacinth Poison Squills,section,,Hyacinthoides
 873876,116660,Euspira pallida,Pale moonsnail,species,https://inaturalist-open-data.s3.amazonaws.com/photos/72288421/medium.jpg,Euspira pallida
@@ -2052,9 +2043,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 898651,47795,Urticina clandestina,Pacific Stubby Rose Anemone,species,https://inaturalist-open-data.s3.amazonaws.com/photos/4084936/medium.jpg,Urticina clandestina
 910800,910795,Paciocinebrina lurida,Lurid Rocksnail,species,https://inaturalist-open-data.s3.amazonaws.com/photos/1398012/medium.jpg,Paciocinebrina lurida
 950617,950583,Anemonoides blanda,Greek Anemone,species,https://inaturalist-open-data.s3.amazonaws.com/photos/11137686/medium.jpg,Anemonoides blanda
-1064906,82268,Prionitis,Section Prionitis,section,,Prionitis
 1115984,152973,Alitta williami,,species,https://static.inaturalist.org/photos/111921901/medium.jpg,Alitta williami
-1120852,48571,Carex,Carex subg. Carex,subgenus,https://static.inaturalist.org/photos/85706958/medium.jpg,Carex
 1265168,47665,Henricia aspera aspera,,subspecies,,Henricia aspera aspera
 1392780,50829,Bracteolatae,,subsection,https://inaturalist-open-data.s3.amazonaws.com/photos/110778865/medium.jpeg,Bracteolatae
 1413390,56536,Chlorophyllum,Chlorophyllum sect. Chlorophyllum,section,https://static.inaturalist.org/photos/485208/medium.jpg,Chlorophyllum
@@ -2071,7 +2060,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 47144,42044,Canis familiaris,Domestic Dog,species,https://static.inaturalist.org/photos/335291326/medium.jpg,Canis familiaris
 47221,630955,Apidae,"Honey Bees, Bumble Bees, and Allies",family,https://inaturalist-open-data.s3.amazonaws.com/photos/45462820/medium.jpg,
 47225,47223,Papilio,Common Swallowtails,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/75995610/medium.jpg,
-47370,47371,Latrodectus,Widow Spiders,genus,https://static.inaturalist.org/photos/247484255/medium.jpg,
+47370,47371,Latrodectus,Widow Spiders,genus,https://static.inaturalist.org/photos/112596615/medium.jpeg,
 47397,47186,Lithodidae,King Crabs,family,https://inaturalist-open-data.s3.amazonaws.com/photos/6245963/medium.jpg,
 47425,47426,Tonicella lineata,Lined Chiton,species,https://static.inaturalist.org/photos/8111619/medium.jpg,Tonicella lineata
 47465,47113,Aeolidiidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/11374/medium.jpg,
@@ -2137,12 +2126,12 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 53076,47701,Geranium molle,Dove's-foot crane's-bill,species,https://inaturalist-open-data.s3.amazonaws.com/photos/71225717/medium.jpg,Geranium molle
 53104,51900,Hypochaeris radicata,Common Cat's-ear,species,https://inaturalist-open-data.s3.amazonaws.com/photos/49330430/medium.jpg,Hypochaeris radicata
 53166,53167,Osmorhiza berteroi,mountain sweet cicely,species,https://inaturalist-open-data.s3.amazonaws.com/photos/22613/medium.jpg,Osmorhiza berteroi
-53178,50636,Plantago lanceolata,ribwort plantain,species,https://inaturalist-open-data.s3.amazonaws.com/photos/289213594/medium.jpg,Plantago lanceolata
+53178,50636,Plantago lanceolata,ribwort plantain,species,https://inaturalist-open-data.s3.amazonaws.com/photos/66892509/medium.jpg,Plantago lanceolata
 53203,53204,Clinopodium douglasii,yerba buena,species,https://inaturalist-open-data.s3.amazonaws.com/photos/6758827/medium.jpg,Clinopodium douglasii
 53210,53207,Senecio sylvaticus,Heath Groundsel,species,https://inaturalist-open-data.s3.amazonaws.com/photos/5286/medium.jpg,Senecio sylvaticus
 53211,53207,Senecio vulgaris,common groundsel,species,https://inaturalist-open-data.s3.amazonaws.com/photos/67415508/medium.jpg,Senecio vulgaris
-53266,53267,Sisymbrium officinale,Hedge mustard,species,https://inaturalist-open-data.s3.amazonaws.com/photos/105671299/medium.jpg,Sisymbrium officinale
-53269,53270,Sonchus asper,prickly sowthistle,species,https://inaturalist-open-data.s3.amazonaws.com/photos/254422387/medium.jpg,Sonchus asper
+53266,53267,Sisymbrium officinale,Hedge mustard,species,https://static.inaturalist.org/photos/131342649/medium.jpeg,Sisymbrium officinale
+53269,53270,Sonchus asper,prickly sowthistle,species,https://inaturalist-open-data.s3.amazonaws.com/photos/261760280/medium.jpeg,Sonchus asper
 53294,53270,Sonchus oleraceus,Common Sow-thistle,species,https://static.inaturalist.org/photos/28460419/medium.jpeg,Sonchus oleraceus
 53313,51876,Trifolium dubium,Lesser hop trefoil,species,https://inaturalist-open-data.s3.amazonaws.com/photos/73250580/medium.jpg,Trifolium dubium
 53328,50829,Viola adunca,hookedspur violet,species,https://static.inaturalist.org/photos/192684110/medium.jpg,Viola adunca
@@ -2150,7 +2139,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 54050,54051,Crepis capillaris,Smooth hawksbeard,species,https://inaturalist-open-data.s3.amazonaws.com/photos/151130085/medium.jpeg,Crepis capillaris
 54524,54525,Crassadoma,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/19707103/medium.jpeg,
 54992,47822,Muscoidea,Muscoid Flies,superfamily,https://inaturalist-open-data.s3.amazonaws.com/photos/591777/medium.jpg,Muscoidea
-55563,55564,Bellis perennis,Lawn daisy,species,https://inaturalist-open-data.s3.amazonaws.com/photos/259085158/medium.jpg,Bellis perennis
+55563,55564,Bellis perennis,Lawn daisy,species,https://inaturalist-open-data.s3.amazonaws.com/photos/360603587/medium.jpeg,Bellis perennis
 55573,55575,Tubaria furfuracea,scurfy twiglet,species,https://inaturalist-open-data.s3.amazonaws.com/photos/29470374/medium.jpg,Tubaria furfuracea
 55797,50619,Fritillaria meleagris,snake's-head fritillary,species,https://inaturalist-open-data.s3.amazonaws.com/photos/9668/medium.jpg,Fritillaria meleagris
 55829,49652,Cardamine hirsuta,hairy bittercress,species,https://inaturalist-open-data.s3.amazonaws.com/photos/156216282/medium.jpg,Cardamine hirsuta
@@ -2161,6 +2150,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 56153,52643,Juncus effusus,Soft Rush,species,https://inaturalist-open-data.s3.amazonaws.com/photos/20650489/medium.jpeg,Juncus effusus
 56188,52472,Vicia hirsuta,Hairy tare,species,https://inaturalist-open-data.s3.amazonaws.com/photos/105701010/medium.jpeg,Vicia hirsuta
 56251,56253,Xeromphalina campanella,Pinewood Gingertail,species,https://inaturalist-open-data.s3.amazonaws.com/photos/270127275/medium.jpg,Xeromphalina campanella
+56611,47868,Philodromus,Running Crab Spiders,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/244834534/medium.jpeg,
 56657,47186,Callianassidae,Ghost Shrimps,family,https://static.inaturalist.org/photos/92018800/medium.jpg,
 57163,52701,Bromus sterilis,Barren Brome,species,https://inaturalist-open-data.s3.amazonaws.com/photos/152944035/medium.jpeg,Bromus sterilis
 57215,53196,Rumex conglomeratus,Clustered Dock,species,https://inaturalist-open-data.s3.amazonaws.com/photos/79061685/medium.jpeg,Rumex conglomeratus
@@ -2174,7 +2164,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 59091,57170,Festuca occidentalis,western fescue,species,https://inaturalist-open-data.s3.amazonaws.com/photos/129430507/medium.jpeg,Festuca occidentalis
 59774,59775,Pachydiplax longipennis,Blue Dasher,species,https://inaturalist-open-data.s3.amazonaws.com/photos/28379940/medium.jpg,Pachydiplax longipennis
 60132,48561,Cirsium arvense,creeping thistle,species,https://inaturalist-open-data.s3.amazonaws.com/photos/42462240/medium.jpg,Cirsium arvense
-60307,52809,Poa pratensis,Smooth Meadow-grass,species,https://inaturalist-open-data.s3.amazonaws.com/photos/14390/medium.jpg,Poa pratensis
 60782,60783,Pluteus cervinus,Deer Mushroom,species,https://static.inaturalist.org/photos/116658302/medium.jpeg,Pluteus cervinus
 60982,52163,Cakile maritima,European Searocket,species,https://static.inaturalist.org/photos/35287617/medium.jpg,Cakile maritima
 61032,52761,Hypericum anagalloides,Bog St. John's-wort,species,https://inaturalist-open-data.s3.amazonaws.com/photos/140562958/medium.jpg,Hypericum anagalloides
@@ -2201,6 +2190,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 76003,49652,Cardamine occidentalis,Western Bittercress,species,https://inaturalist-open-data.s3.amazonaws.com/photos/192453142/medium.jpg,Cardamine occidentalis
 76782,57022,Eleocharis palustris,Common Spike-rush,species,https://inaturalist-open-data.s3.amazonaws.com/photos/35116249/medium.jpeg,Eleocharis palustris
 77493,72194,Ipheion uniflorum,Spring starflower,species,https://inaturalist-open-data.s3.amazonaws.com/photos/12001/medium.jpg,Ipheion uniflorum
+77744,48928,Lilium columbianum,Columbia lily,species,https://inaturalist-open-data.s3.amazonaws.com/photos/45444/medium.jpg,Lilium columbianum
 77991,54570,Mentha canadensis,Canada mint,species,https://inaturalist-open-data.s3.amazonaws.com/photos/46047059/medium.jpeg,Mentha canadensis
 78174,54332,Nasturtium officinale,watercress,species,https://inaturalist-open-data.s3.amazonaws.com/photos/203236672/medium.jpeg,Nasturtium officinale
 78883,53438,Rosa nutkana,Nootka rose,species,https://inaturalist-open-data.s3.amazonaws.com/photos/26171318/medium.jpg,Rosa nutkana
@@ -2248,7 +2238,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 195902,195909,Florometra serratissima,Common Feather Star,species,https://inaturalist-open-data.s3.amazonaws.com/photos/6391429/medium.jpg,Florometra serratissima
 200017,200018,Graphopsocus cruciatus,F-winged Barklouse,species,https://static.inaturalist.org/photos/3043093/medium.jpg,Graphopsocus cruciatus
 203418,203416,Lonchoptera,,genus,https://static.inaturalist.org/photos/115587841/medium.jpg,
-227754,56611,Philodromus dispar,Eurasian Running Crab Spider,species,https://inaturalist-open-data.s3.amazonaws.com/photos/126650770/medium.jpeg,Philodromus dispar
 228854,124474,Protodeltote albidula,Pale Glyph,species,https://inaturalist-open-data.s3.amazonaws.com/photos/19798499/medium.jpg,Protodeltote albidula
 241251,50321,Lathyrus nevadensis pilosellus,,variety,https://inaturalist-open-data.s3.amazonaws.com/photos/3827170/medium.JPG,Lathyrus nevadensis pilosellus
 244834,47336,Formicinae,Formicine Ants,subfamily,https://static.inaturalist.org/photos/52013788/medium.jpeg,Formicinae
@@ -2271,8 +2260,8 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 498132,47426,Tonicella insignis,Remarkable Red Chiton,species,https://inaturalist-open-data.s3.amazonaws.com/photos/8070143/medium.jpg,Tonicella insignis
 525277,47113,Tethydidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/790/medium.jpg,
 605992,605990,Magallana gigas,Pacific Oyster,species,https://inaturalist-open-data.s3.amazonaws.com/photos/50908026/medium.jpg,Magallana gigas
+633229,48571,Carex,Carex sect. Carex,section,https://inaturalist-open-data.s3.amazonaws.com/photos/63311503/medium.jpeg,Carex
 634625,57976,Filago germanica,Common Cudweed,species,https://inaturalist-open-data.s3.amazonaws.com/photos/46514976/medium.jpg,Filago germanica
-738438,119236,Monadenia,Monadisas,section,https://inaturalist-open-data.s3.amazonaws.com/photos/11344542/medium.jpg,Monadenia
 814187,774991,Ophiopholidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/30830971/medium.jpeg,
 870988,47113,Myrrhinidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/6475598/medium.jpg,
 870989,47113,Coryphellidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/10610804/medium.jpeg,
@@ -2283,7 +2272,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 989731,47113,Janolidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/228183498/medium.jpg,
 993276,53597,Narcissus,,section,https://inaturalist-open-data.s3.amazonaws.com/photos/1903327/medium.JPG,Narcissus
 1091372,130015,Limnephilini,,tribe,https://inaturalist-open-data.s3.amazonaws.com/photos/45172533/medium.jpeg,Limnephilini
-1202422,49900,Boreoberthella,,genus,,
+1202422,49900,Boreoberthella,,genus,https://static.inaturalist.org/photos/1072118/medium.jpg,
 1205922,47351,Prunus,Old World Plums,section,https://inaturalist-open-data.s3.amazonaws.com/photos/141125964/medium.jpeg,Prunus
 1251448,47345,Ageleninae,Typical Funnel Weavers,subfamily,https://static.inaturalist.org/photos/231461438/medium.jpg,Ageleninae
 1264428,41770,Neogale,New World Weasels,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/50691752/medium.jpg,
@@ -2323,12 +2312,11 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 50880,50881,Limenitis lorquini,Lorquin's Admiral,species,https://static.inaturalist.org/photos/77233288/medium.jpeg,Limenitis lorquini
 50913,50914,Hyalophora euryalus,Ceanothus Silk Moth,species,https://inaturalist-open-data.s3.amazonaws.com/photos/38299152/medium.jpeg,Hyalophora euryalus
 50940,47923,Strymon,Scrub-Hairstreaks,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/104932582/medium.jpg,
-51503,51225,Ctenophora,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/4091138/medium.JPG,
 51669,47213,Hemaris,Clearwings and Bee Hawkmoths,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/82020993/medium.jpg,
 51953,47822,Tachinidae,Bristle Flies,family,https://inaturalist-open-data.s3.amazonaws.com/photos/6026528/medium.jpg,
 52485,47923,Celastrina,Holarctic Azures,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/74552432/medium.jpeg,
 52801,52800,Lolium perenne,Perennial Ryegrass,species,https://static.inaturalist.org/photos/3607783/medium.jpg,Lolium perenne
-52808,52809,Poa annua,Annual Meadow-grass,species,https://inaturalist-open-data.s3.amazonaws.com/photos/123506323/medium.jpg,Poa annua
+52808,52809,Poa annua,Annual Meadow-grass,species,https://inaturalist-open-data.s3.amazonaws.com/photos/119472992/medium.jpeg,Poa annua
 52821,52818,Achillea millefolium,common yarrow,species,https://inaturalist-open-data.s3.amazonaws.com/photos/4902/medium.jpg,Achillea millefolium
 52910,47822,Sarcophagidae,Flesh Flies and Satellite Flies,family,https://inaturalist-open-data.s3.amazonaws.com/photos/31185037/medium.jpeg,
 52912,52747,Dolichovespula,Aerial Yellowjackets,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/35444089/medium.jpeg,
@@ -2349,6 +2337,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 59187,47652,Erynnis propertius,Propertius Duskywing,species,https://inaturalist-open-data.s3.amazonaws.com/photos/75528456/medium.jpeg,Erynnis propertius
 59676,121850,Pyrrharctia,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/97881145/medium.jpeg,
 60040,57804,Neoneides,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/6318864/medium.jpg,
+60307,52809,Poa pratensis,Smooth Meadow-grass,species,https://inaturalist-open-data.s3.amazonaws.com/photos/14390/medium.jpg,Poa pratensis
 60393,51225,Tipula,Common Crane Flies,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/125550/medium.jpg,
 60840,121850,Spilosoma,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/30553/medium.jpg,
 61000,48571,Carex obnupta,slough sedge,species,https://static.inaturalist.org/photos/82391485/medium.jpg,Carex obnupta
@@ -2381,7 +2370,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 117613,50588,Saxidomus,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/6253260/medium.jpg,
 117618,117629,Panopea generosa,Pacific Geoduck,species,https://static.inaturalist.org/photos/41098566/medium.jpg,Panopea generosa
 117624,117623,Tresus,Gaper Clams,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/983435/medium.jpg,
-117650,62807,Mytilus edulis,Blue Mussel,species,https://inaturalist-open-data.s3.amazonaws.com/photos/73540771/medium.jpg,Mytilus edulis
+117650,62807,Mytilus edulis,Blue Mussel,species,https://inaturalist-open-data.s3.amazonaws.com/photos/340131446/medium.jpg,Mytilus edulis
 120954,120955,Neomolgus,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/74399841/medium.jpg,
 121991,49995,Syrphini,,tribe,https://inaturalist-open-data.s3.amazonaws.com/photos/92958448/medium.jpg,Syrphini
 123797,49532,Gnorimosphaeroma,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/142179815/medium.jpg,
@@ -2410,6 +2399,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 224588,118861,Melanolophia imitata,Western Carpet,species,https://inaturalist-open-data.s3.amazonaws.com/photos/714244/medium.jpg,Melanolophia imitata
 224947,177055,Mesoleuca gratulata,Western White-Ribboned Carpet,species,https://inaturalist-open-data.s3.amazonaws.com/photos/126816115/medium.jpeg,Mesoleuca gratulata
 226647,176203,Orthosia pacifica,Pacific Quaker,species,https://static.inaturalist.org/photos/184605272/medium.jpg,Orthosia pacifica
+227754,56611,Philodromus dispar,Eurasian Running Crab Spider,species,https://inaturalist-open-data.s3.amazonaws.com/photos/126650770/medium.jpeg,Philodromus dispar
 322379,47485,Agriolimacidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/73772936/medium.jpg,
 324542,50588,Ruditapes,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/148386888/medium.jpg,
 324796,324797,Ditula angustiorana,Red-barred Tortrix,species,https://inaturalist-open-data.s3.amazonaws.com/photos/2631211/medium.jpg,Ditula angustiorana
@@ -2444,7 +2434,6 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 933404,48160,Centaurea cyanus,Cornflower,species,https://inaturalist-open-data.s3.amazonaws.com/photos/143259272/medium.jpg,Centaurea cyanus
 936827,59653,Gerrini,,tribe,https://static.inaturalist.org/photos/3416924/medium.jpg,Gerrini
 973955,85012,Eulophini,,tribe,https://static.inaturalist.org/photos/11602882/medium.jpg,Eulophini
-975166,51822,Calyptratae,,section,https://inaturalist-open-data.s3.amazonaws.com/photos/77082752/medium.jpeg,Calyptratae
 1264432,1264428,Neogale vison,American Mink,species,https://inaturalist-open-data.s3.amazonaws.com/photos/13832871/medium.jpeg,Neogale vison
 1452907,56023,Alchemilla occidentalis,western lady's mantle,species,https://inaturalist-open-data.s3.amazonaws.com/photos/272953944/medium.jpg,Alchemilla occidentalis
 1532046,1202422,Boreoberthella chacei,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/1751010/medium.jpg,Boreoberthella chacei
@@ -2493,11 +2482,11 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 52911,52912,Dolichovespula maculata,Bald-faced Hornet,species,https://inaturalist-open-data.s3.amazonaws.com/photos/229793202/medium.jpeg,Dolichovespula maculata
 54467,48486,Psyllobora,Fungus-eating Lady Beetles,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/149507295/medium.jpeg,
 54516,53113,Brassica oleracea,"cabbage, broccoli, and allies",species,https://static.inaturalist.org/photos/40901964/medium.jpg,Brassica oleracea
-54582,47778,Arion,Arion Slugs,genus,https://static.inaturalist.org/photos/352785522/medium.jpg,
+54582,47778,Arion,Arion Slugs,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/367268441/medium.jpeg,
 55002,47649,Dissosteira,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/18745/medium.jpg,
 55490,48486,Cycloneda,Spotless Lady Beetles,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/49307293/medium.jpg,
 55521,47225,Papilio eurymedon,Pale Swallowtail,species,https://inaturalist-open-data.s3.amazonaws.com/photos/19451846/medium.jpg,Papilio eurymedon
-55626,55690,Pieris rapae,Small White,species,https://inaturalist-open-data.s3.amazonaws.com/photos/58317325/medium.jpg,Pieris rapae
+55626,55690,Pieris rapae,Small White,species,https://inaturalist-open-data.s3.amazonaws.com/photos/28420401/medium.jpg,Pieris rapae
 55746,55747,Misumena vatia,Goldenrod Crab Spider,species,https://inaturalist-open-data.s3.amazonaws.com/photos/42263061/medium.jpeg,Misumena vatia
 55823,55824,Draba verna,Common Whitlowgrass,species,https://inaturalist-open-data.s3.amazonaws.com/photos/847762/medium.jpg,Draba verna
 56196,56195,Philaenus,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/10761/medium.jpg,
@@ -2506,12 +2495,12 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 58753,49995,Toxomerus,Calligrapher Flies,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/14170127/medium.jpg,
 59194,55786,Ochlodes sylvanoides,Woodland Skipper,species,https://static.inaturalist.org/photos/9357306/medium.jpg,Ochlodes sylvanoides
 59476,48201,Diplotaxis,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/13190/medium.jpg,
-59675,59676,Pyrrharctia isabella,Isabella Tiger Moth,species,https://inaturalist-open-data.s3.amazonaws.com/photos/4216233/medium.jpg,Pyrrharctia isabella
+59675,59676,Pyrrharctia isabella,Isabella Tiger Moth,species,https://inaturalist-open-data.s3.amazonaws.com/photos/27900764/medium.jpg,Pyrrharctia isabella
 60039,60040,Neoneides muticus,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/197890860/medium.jpg,Neoneides muticus
 60637,47628,Podoceridae,,family,https://static.inaturalist.org/photos/1387731/medium.JPG,
-60839,60840,Spilosoma virginica,Virginian Tiger Moth,species,https://static.inaturalist.org/photos/124033742/medium.jpg,Spilosoma virginica
+60839,60840,Spilosoma virginica,Virginian Tiger Moth,species,https://inaturalist-open-data.s3.amazonaws.com/photos/18984537/medium.jpg,Spilosoma virginica
 61257,51777,Leptoglossus,,genus,https://static.inaturalist.org/photos/21335446/medium.jpg,
-61465,52932,Cantharis,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/12295/medium.jpg,
+61465,52932,Cantharis,,genus,https://static.inaturalist.org/photos/129020068/medium.jpg,
 61525,49528,Forficula,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/15939/medium.jpg,
 61762,48139,Evarcha,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/16679/medium.jpg,
 62781,47336,Camponotus,"Carpenter Ants, Typical Sugar Ants and Allies",genus,https://static.inaturalist.org/photos/52135431/medium.jpeg,
@@ -2541,9 +2530,9 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 118913,52912,Dolichovespula arenaria,Common Aerial Yellowjacket,species,https://inaturalist-open-data.s3.amazonaws.com/photos/1850359/medium.jpg,Dolichovespula arenaria
 119736,47742,Banasa,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/60815702/medium.jpeg,
 120070,48036,Strongylocentrotus droebachiensis,Arctic Green Sea Urchin,species,https://static.inaturalist.org/photos/88054286/medium.jpeg,Strongylocentrotus droebachiensis
-120956,120954,Neomolgus littoralis,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/74399841/medium.jpg,Neomolgus littoralis
+120956,120954,Neomolgus littoralis,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/2138325/medium.jpg,Neomolgus littoralis
 121294,48736,Curculio,Nut and Acorn Weevils,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/170275/medium.jpg,
-123798,123797,Gnorimosphaeroma oregonense,Oregon pillbug,species,https://inaturalist-open-data.s3.amazonaws.com/photos/35699424/medium.jpeg,Gnorimosphaeroma oregonense
+123798,123797,Gnorimosphaeroma oregonense,Oregon pillbug,species,https://inaturalist-open-data.s3.amazonaws.com/photos/142179815/medium.jpg,Gnorimosphaeroma oregonense
 125629,47731,Ellychnia,Diurnal Fireflies,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/332144/medium.jpg,
 126927,117624,Tresus capax,Fat Gaper,species,https://inaturalist-open-data.s3.amazonaws.com/photos/222211331/medium.jpeg,Tresus capax
 127170,51669,Hemaris thetis,Rocky Mountain Clearwing,species,https://inaturalist-open-data.s3.amazonaws.com/photos/44371760/medium.jpg,Hemaris thetis
@@ -2671,7 +2660,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 68938,68941,Brachymyrmex depilis,Hairless Rover Ant,species,https://inaturalist-open-data.s3.amazonaws.com/photos/203089233/medium.jpg,Brachymyrmex depilis
 78891,47544,Rubus laciniatus,Cutleaf Blackberry,species,https://inaturalist-open-data.s3.amazonaws.com/photos/223841507/medium.jpg,Rubus laciniatus
 81610,49129,Balanus glandula,Pacific Acorn Barnacle,species,https://inaturalist-open-data.s3.amazonaws.com/photos/750710/medium.JPG,Balanus glandula
-82080,146918,Chalcophora angulicollis,Western Sculptured Pine Borer,species,https://inaturalist-open-data.s3.amazonaws.com/photos/903415/medium.jpg,Chalcophora angulicollis
+82080,146918,Chalcophora angulicollis,Western Sculptured Pine Borer,species,https://inaturalist-open-data.s3.amazonaws.com/photos/146486889/medium.jpg,Chalcophora angulicollis
 84268,47186,Oregoniidae,,family,https://inaturalist-open-data.s3.amazonaws.com/photos/48871/medium.jpg,
 87902,322379,Deroceras,Smooth Land Slugs,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/58479709/medium.jpg,
 117702,117701,Dendraster,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/107806/medium.jpg,
@@ -2699,7 +2688,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 225295,176902,Mulsantina picta,Painted Ladybird,species,https://inaturalist-open-data.s3.amazonaws.com/photos/145455841/medium.png,Mulsantina picta
 228730,91306,Pristoceuthophilus celatus,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/5343045/medium.jpg,Pristoceuthophilus celatus
 243759,70076,Euschistus conspersus,Consperse Stink Bug,species,https://inaturalist-open-data.s3.amazonaws.com/photos/89358423/medium.jpg,Euschistus conspersus
-253510,48829,Tritonia exsulans,Pink Tritonid,species,https://inaturalist-open-data.s3.amazonaws.com/photos/109823390/medium.jpeg,Tritonia exsulans
+253510,48829,Tritonia exsulans,Pink Tritonid,species,https://inaturalist-open-data.s3.amazonaws.com/photos/163507221/medium.jpg,Tritonia exsulans
 260159,133493,Dolichopus plumipes,,species,https://static.inaturalist.org/photos/236087015/medium.jpg,Dolichopus plumipes
 266335,250736,Aporus luxus,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/9879401/medium.jpg,Aporus luxus
 296335,178158,Gastrodes pacificus,,species,https://inaturalist-open-data.s3.amazonaws.com/photos/19549661/medium.jpeg,Gastrodes pacificus
@@ -2745,7 +2734,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 1127584,84094,Chlorochroa,,subgenus,https://inaturalist-open-data.s3.amazonaws.com/photos/9427609/medium.jpeg,Chlorochroa
 1364199,1364183,Atalodoris jannae,Janna's Dorid,species,https://inaturalist-open-data.s3.amazonaws.com/photos/162145594/medium.jpg,Atalodoris jannae
 1439280,1439279,Echidnocerus cibarius,Puget Sound King Crab,species,https://inaturalist-open-data.s3.amazonaws.com/photos/11250508/medium.jpg,Echidnocerus cibarius
-41521,41520,Orcinus orca,Orca,species,https://inaturalist-open-data.s3.amazonaws.com/photos/153239969/medium.jpg,Orcinus orca
+41521,41520,Orcinus orca,Orca,species,https://inaturalist-open-data.s3.amazonaws.com/photos/360303852/medium.jpg,Orcinus orca
 42221,42219,Odocoileus hemionus columbianus,Columbian Black-tailed Deer,subspecies,https://static.inaturalist.org/photos/26270120/medium.jpg,Odocoileus hemionus columbianus
 47629,47626,Caprella,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/145505/medium.jpg,
 47776,47777,Ariolimax columbianus,Pacific Banana Slug,species,https://inaturalist-open-data.s3.amazonaws.com/photos/59264526/medium.jpeg,Ariolimax columbianus
@@ -2764,7 +2753,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 92667,781332,Trochoidea,,genus,https://static.inaturalist.org/photos/123464713/medium.jpeg,
 116719,47828,Metacarcinus,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/19062/medium.jpg,
 117696,117702,Dendraster excentricus,Eccentric Sand Dollar,species,https://inaturalist-open-data.s3.amazonaws.com/photos/174315455/medium.jpg,Dendraster excentricus
-119170,119171,Meconema thalassinum,Oak Bush-cricket,species,https://inaturalist-open-data.s3.amazonaws.com/photos/4331150/medium.jpg,Meconema thalassinum
+119170,119171,Meconema thalassinum,Oak Bush-cricket,species,https://static.inaturalist.org/photos/160002075/medium.jpg,Meconema thalassinum
 124432,87902,Deroceras reticulatum,Milky Slug,species,https://inaturalist-open-data.s3.amazonaws.com/photos/17942033/medium.jpeg,Deroceras reticulatum
 126545,57678,Dialictus,Metallic Sweat Bees,subgenus,https://inaturalist-open-data.s3.amazonaws.com/photos/41969563/medium.jpg,Dialictus
 130120,130121,Chrysis ignita,,species,https://static.inaturalist.org/photos/83131533/medium.jpeg,Chrysis ignita
@@ -2801,7 +2790,7 @@ id,parentId,iNaturalistTaxonName,commonName,rank,iNaturalistTaxonImage,taxonName
 48343,48344,Hemigrapsus,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/7519619/medium.jpeg,
 49725,49724,Pugettia,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/787/medium.jpg,
 50818,50820,Lophopanopeus bellus,Blackclaw Crestleg Crab,species,https://inaturalist-open-data.s3.amazonaws.com/photos/2742/medium.jpg,Lophopanopeus bellus
-57689,52775,Bombus vosnesenskii,Yellow-faced Bumble Bee,species,https://inaturalist-open-data.s3.amazonaws.com/photos/44979465/medium.jpeg,Bombus vosnesenskii
+57689,52775,Bombus vosnesenskii,Yellow-faced Bumble Bee,species,https://inaturalist-open-data.s3.amazonaws.com/photos/353270971/medium.jpg,Bombus vosnesenskii
 63697,116719,Metacarcinus magister,Dungeness Crab,species,https://inaturalist-open-data.s3.amazonaws.com/photos/138356832/medium.jpeg,Metacarcinus magister
 84269,84268,Oregonia,,genus,https://inaturalist-open-data.s3.amazonaws.com/photos/163957059/medium.jpeg,
 116721,116719,Metacarcinus gracilis,Graceful Rock Crab,species,https://static.inaturalist.org/photos/7129596/medium.jpg,Metacarcinus gracilis

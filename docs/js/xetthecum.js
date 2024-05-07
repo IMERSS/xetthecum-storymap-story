@@ -7,6 +7,7 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
+// Abstractish base grade common between those which can display info on a taxon in toggleable panel
 fluid.defaults("maxwell.paneWithTaxonDisplay", {
     selectors: {
         taxonDisplay: ".imerss-taxonDisplay",
@@ -83,9 +84,25 @@ maxwell.accessRowCommonPhyla = function (row) {
     } : hortis.accessRowHulq(row);
 };
 
+fluid.defaults("maxwell.paneWithDownloadLink", {
+    // downloadLinkTemplate
+    selectors: {
+        downloadControl: ".imerss-download",
+        downloadLink: ".imerss-download-link"
+    },
+    listeners: {
+        "onCreate.renderDownloadLink": "maxwell.renderDownloadLink({that}, {paneHandler}.options.downloadLinkTemplate, {that}.options.selectRegion)"
+    }
+});
+
+maxwell.renderDownloadLink = function (paneInfo, downloadLinkTemplate, regionName) {
+    const target = fluid.stringTemplate(downloadLinkTemplate, {regionName});
+    paneInfo.locate("downloadLink").attr("href", target);
+};
+
 fluid.defaults("maxwell.xetthecumEcologicalPane", {
     // add in "maxwell.withNativeLegend" when there is one
-    gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay"],
+    gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay", "maxwell.paneWithDownloadLink"],
     markupTemplate: "%resourceBase/html/imerss-viz-story-checklist.html",
     mergePolicy: {
         checklistRanks: "replace"
@@ -105,6 +122,7 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
     markup: {
         checklistLabel: "%paneKey Community Species List"
     },
+    downloadLinkTemplate: "data/Xetthecum-community-%regionName-observations.csv",
 
     listeners: {
         // Implementing this simple label was every bit as irritating as we imagined it would be

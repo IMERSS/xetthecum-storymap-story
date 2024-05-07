@@ -589,3 +589,34 @@ maxwell.legendKey.drawLegend = function (map, paneHandler) {
     });
     return container;
 };
+
+
+fluid.defaults("maxwell.withDownloadLink", {
+    selectors: {
+        downloadControl: ".imerss-download",
+        downloadLink: ".imerss-download-link"
+    },
+    invokers: {
+        "renderDownloadLink": "maxwell.renderDownloadLink({that}, {paneHandler}.options.downloadTemplate, {arguments}.0)"
+    },
+    distributeOptions: {
+        target: "{paneHandler hortis.leafletMap}.options.modelListeners.downloadLinkDisplay",
+        record: {
+            // TOOD: rename mapBlockTooltipId to selectedRegion
+            path: "{that}.model.mapBlockTooltipId",
+            listener: "{maxwell.withDownloadLink}.renderDownloadLink",
+            args: "{change}.value"
+        }
+    }
+});
+
+maxwell.renderDownloadLink = function (paneInfo, downloadTemplate, regionName) {
+    const downloadControl = paneInfo.locate("downloadControl");
+    if (regionName && downloadTemplate) {
+        const target = fluid.stringTemplate(downloadTemplate, {regionName});
+        paneInfo.locate("downloadLink").attr("href", target);
+        downloadControl.addClass("active");
+    } else {
+        downloadControl.removeClass("active");
+    }
+};

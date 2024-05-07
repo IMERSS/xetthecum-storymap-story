@@ -81,16 +81,18 @@ mx_writeJSON = function (data, filename) {
 
 timedFread <- function (toread) {
   start <- Sys.time()
-  frame <- data.table::fread(toread)
+  # https://stackoverflow.com/questions/51019041/blank-space-not-recognised-as-na-in-fread
+  # Also, return a data.frame otherwise traditional R indexing notation fails
+  frame <- data.table::fread(toread, data.table = FALSE, na.strings = c(""))
   end <- Sys.time()
   message("Read ", nrow(frame), " rows from ", toread, " in ", round(end - start, 3), "s")
-  # Otherwise traditional R indexing notation fails
-  as.data.frame(frame)
+  # as.data.frame(frame)
+  frame
 }
 
 timedWrite <- function (x, towrite) {
   start <- Sys.time()
   write.csv(x, towrite, na = "", row.names = FALSE)
   end <- Sys.time()
-  cat("Written ", nrow(x), " rows to ", towrite, " in ", (end - start), "s")
+  message("Written ", nrow(x), " rows to ", towrite, " in ", round(end - start, 3), "s")
 }

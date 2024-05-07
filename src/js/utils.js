@@ -41,3 +41,29 @@ maxwell.writeJSONSync = function (inFilename, doc) {
     fs.writeFileSync(filename, formatted);
     fluid.log("Written " + formatted.length + " bytes to " + filename);
 };
+
+// Monkey-patch this utility from Fluid module.js to ensure we don't overwrite an override definition or indeed any other
+fluid.module.register = function (name, baseDir, moduleRequire) {
+    const existing = fluid.module.modules[name];
+    if (!existing || !existing.override) {
+        fluid.log(fluid.logLevel.WARN, "Registering module " + name + " from path " + baseDir);
+        fluid.module.modules[name] = {
+            baseDir: fluid.module.canonPath(baseDir),
+            require: moduleRequire
+        };
+    }
+};
+
+maxwell.applyModuleOverrides = function () {
+    const resolved = fluid.module.resolvePath("%maxwell/moduleOverrides.json5");
+    if (fs.existsSync(resolved)) {
+        fluid.log("Applying module overrides from path ", resolved);
+        const moduleOverrides = maxwell.loadJSON5File(resolved);
+        moduleOverrides.forEach(override => {
+            fluid.module.modules[override.moduleName] = {...override, override: true};
+            fluid.log(`Overriding base path for module ${override.moduleName} with ${override.baseDir}`);
+        });
+    }
+};
+
+maxwell.applyModuleOverrides();

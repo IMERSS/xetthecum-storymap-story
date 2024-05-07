@@ -14,6 +14,9 @@ generates
 Finally run
 
 node src/assignBNames.js --reintegrated ../xetthecum-storymap-story/tabular_data/reintegrated-obs-filtered.csv
+OR
+node ../bagatelle/src/assignBNames.js --reintegrated tabular_data/reintegrated-obs-filtered.csv
+
 generates
   reintegrated-obs-assigned.csv -> into viz config.json5
   reintegrated-obs-assigned-taxa.csv

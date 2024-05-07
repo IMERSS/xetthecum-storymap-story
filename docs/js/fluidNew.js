@@ -11,9 +11,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
 "use strict";
 
-// TODO: Hoist this into some kind of core library
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
-var {signal, effect, computed, batch} = preactSignalsCore;
+var {signal, effect, computed} = preactSignalsCore;
 
 // Monkey-patch core framework to support wide range of primitives and JSON initial values
 fluid.coerceToPrimitive = function (string) {

@@ -160,7 +160,10 @@
         source: "%imerss-bioinfo/src/client/img/external-link.svg",
         target: "%maxwell/docs/img/external-link.svg"
     }, {
-        source: "%maxwell/../bagatelle/docs/css/imerss-viz-all.css",
+        source: "%imerss-bioinfo/src/client/img/download.svg",
+        target: "%maxwell/docs/img/download.svg"
+    }, { // TODO Axe in favour of viz-new
+        source: "%imerss-bioinfo/docs/css/imerss-viz-all.css",
         target: "%maxwell/docs/css/imerss-viz-all.css"
     }, {
         source: "%maxwell/src/html/*.html",
@@ -174,17 +177,20 @@
     }, {
         source: "%maxwell/tabular_data/communityStyling.csv",
         target: "%maxwell/docs/data/communityStyling.csv"
-    }, { // TODO: Source from internal %imerss-bioinfo once it stops changing
-        source: "%maxwell/../bagatelle/src/client/js/new/fluidNew.js",
+    }, {
+        source: "%maxwell/tabular_data/Xetthecum-community-*.csv",
+        target: "%maxwell/docs/data"
+    }, {
+        source: "%imerss-bioinfo/src/client/js/new/fluidNew.js",
         target: "%maxwell/docs/js/fluidNew.js"
     }, {
-        source: "%maxwell/../bagatelle/src/client/js/new/imerss-new.js",
+        source: "%imerss-bioinfo/src/client/js/new/imerss-new.js",
         target: "%maxwell/docs/js/imerss-new.js"
     }, {
-        source: "%maxwell/../bagatelle/src/client/js/new/newChecklist.js",
+        source: "%imerss-bioinfo/src/client/js/new/newChecklist.js",
         target: "%maxwell/docs/js/newChecklist.js"
     }, {
-        source: "%maxwell/../bagatelle/src/client/js/new/taxonDisplay.js",
+        source: "%imerss-bioinfo/src/client/js/new/taxonDisplay.js",
         target: "%maxwell/docs/js/taxonDisplay.js"
     }
     ]
