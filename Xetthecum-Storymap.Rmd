@@ -29,7 +29,7 @@ culturalTaxa <- Taxa[!(is.na(Taxa$hulquminumName) | Taxa$hulquminumName==""), ]
 
 ```
 
-<p>Tth'ihwum m'i 'ewu i' Xetthecum sii’em.<span>&#8212;</span>Welcome to Xetthecum, an ecologically and culturally significant place on Galiano Island, which lies within the Salish Sea. Known as Retreat Cove in English, this is a place endeared to many. Elders and community members have shared their stories of these cherished lands and waters, while others have helped to document the many species that make their home here. So far, community members have documented over a thousand species at Xetthecum, including `r nrow(culturalTaxa)` culturally significant species. Our aim with this story map is to engage you in learning about the rich biodiversity and cultural values of this special place, so that you can contribute to restoring and protecting it.</p>
+<p>Tth'ihwum m'i 'ewu i' Xetthecum sii’em.<span>&#8212;</span>Welcome to Xetthecum, a culturally significant place in the heart of the Salish Sea, on Galiano Island, BC. Known as Retreat Cove in English, this is a place endeared to many. Elders and community members have shared their stories of these cherished lands and waters. Others have helped to document the many species that make their home here. So far, community members have documented over a thousand species at Xetthecum, including `r nrow(culturalTaxa)` culturally significant species. Our aim with this story map is to engage you in learning about the rich biodiversity and cultural values of this special place, so that you can contribute to restoring and protecting it.</p>
 
 <div class="data-pane">
 <img src="img/Xetthecum.jpg"/>
@@ -100,7 +100,7 @@ XetthecumMap
 <p>The name 'Xetthecum' is used by Hul'q'umi'num'-speakers to refer specifically to Retreat Cove. Yet in the landscape context, where everything is connected, its boundaries might be expanded to include the greater extent of the Greig Creek Watershed, including the creek which runs from Laughlin Lake to the cove. Indeed, stories told of Xetthecum always connect with the biodiversity present throughout the watershed. Today, this watershed spans residential and agricultural lands, protected and covenanted areas, as well as a public shore access and dock. Complex in its ecology, cultural history, and contemporary land-use, this coastal landscape is a vibrant mosaic that includes many intersecting ways of life, weaving together both human and more-than-human worlds.</p> 
 
 <div class="data-pane">
-<p>From here, we welcome you to use the map legend to explore Xetthecum's ecological communities, including their biodiversity and cultural values as shared by community members, or continue along the lines of this story map's main narrative.</p>
+<p>From here, we welcome you to use the map legend to explore the cultural significance of Xetthecum's ecological communities, or continue along the lines of this story map's main narrative.</p>
 <div class="imerss-map-legend">
 </div>
 </div>
@@ -115,7 +115,7 @@ XetthecumMap
 
 <blockquote>“We must protect the food sources. There are a lot of foods and medicines that are no longer there anymore.”<span>&#8212;</span>Puneluxutth’ elder Thiyuas (Florence James)</blockquote>
 
-<p>Puneluxutth’ elder Thiyuas (Florence James) and her family once gathered a rich array of resources at Xetthecum, traveling from Retreat Cove to Laughlin Lake and back, collecting berries, fruit, shellfish, and medicinal resources along the way. This story map begins with the rich abundance of marine life found at the cove, before following in the footsteps of Thiyuas (Florence James) and her family up Greig Creek to Laughlin Lake.</p> 
+<p>Puneluxutth’ elder Thiyuas (Florence James) and her family once gathered a rich array of resources at Xetthecum, traveling from Retreat Cove to Laughlin Lake and back, collecting berries, fruit, shellfish, and other resources along the way. This story map begins with the rich abundance of marine life found at the cove, before following in the footsteps of Thiyuas (Florence James) and her family up Greig Creek to Laughlin Lake.</p> 
 
 <div class="data-pane">
 <img src="img/retreat2.jpg"/>
@@ -163,10 +163,10 @@ CoveMap
 <p>For those arriving at Xetthecum by boat or canoe, the cove is of foremost importance as a place of refuge, where one can find calmer waters to rest or to retreat during a storm. Training for canoe races, Puneluxutth’ elder Augie Sylvester recalled days canoeing from the North End reserve down to Retreat Cove, around Retreat Island, and all the way back home. The cove and surrounding offshore waters also provide habitat for a great diversity of fishes such as [the'wun](#taxon:Oncorhynchus kisutch) (coho), which made this place an important fishing site. Today, however, Retreat Cove lies within a marine protected area, to protect endangered [t'q'as](#taxon:Sebastes) (rockfish) from over-fishing.</p>
 
 <div class="data-pane">
-<p>Those with a deep connection to Xetthecum all shared a common experience in relation to the rich biodiversity of this place:</p>
+<p>Those with a deep connection to Xetthecum share a common experience in relation to the rich biodiversity of this place:</p>
 <blockquote>“I used to spend time up in Xetthecum with my grandparents visiting with friends and picking berries and fruit. Sometimes we would anchor in there if we had to when we were on the boats.”<span>&#8212;</span>Rosemary Georgeson</blockquote>
 <blockquote> "Xetthecum was important for social and cultural gatherings, as well as for traditional activities such as fishing and clam digging."<span>&#8212;</span>Lorne Silvey</blockquote>
-<blockquote> Landing at Retreat Cove with her family, Thiyuas recalled that stsa'kwum (surf smelts) would go by and move in circles, while the seagulls swooped and dived trying get them.</blockquote>
+<blockquote> Landing at Retreat Cove with her family, Thiyuas recalled that stsa'kwum (surf smelts) would go by and move in circles, while the seagulls swooped and dived trying to get them.</blockquote>
 <blockquote>Fred Wilson recounted that Xetthecum was a place he used to go to hunt and to fish for lingcod.</blockquote>
 </div>
 
@@ -251,7 +251,7 @@ eelgrassMap
 ```
 
 <b>‘Imush Q’uyatl’un</b>
-<p>The eelgrass meadow at Xetthecum is home to [q’uyatl’un](#taxon:Melibe leonina) (hooded nudibranch). The short film *I’mush q’uyatl’un*, produced by Karolle Wall, follows the movements of this sea slug as it dances through the water during a receding tide. In the film, q’uyatl’un dances to a Puneluxutth’ song titled, *Imush ‘Q’uyatl’un* (“Be with me Seaslug”), sung by Thiyuas (Florence James). The short film is accompanied by text composed by Karolle Wall. It is a simple story, explaining the importance of moving slowly, paying attention, and observing every little aspect of the environment.</p>
+<p>The eelgrass meadow at Xetthecum is home to [q’uyatl’un](#taxon:Melibe leonina) (hooded nudibranch). The short film *I’mush q’uyatl’un*, follows the movements of this sea slug as it dances through the water during a receding tide. In the film, q’uyatl’un dances to a Puneluxutth’ song titled, *Imush ‘Q’uyatl’un* (“Be with me Seaslug”), sung by Thiyuas (Florence James). The short film is accompanied by text composed by Karolle Wall. It is a simple story, explaining the importance of moving slowly, paying attention, and observing every little aspect of the environment.</p>
 
 <div class="data-pane">
 <div class="iframe-container">
