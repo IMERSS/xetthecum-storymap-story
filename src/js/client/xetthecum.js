@@ -100,6 +100,15 @@ maxwell.renderDownloadLink = function (paneInfo, downloadLinkTemplate, regionNam
     paneInfo.locate("downloadLink").attr("href", target);
 };
 
+hortis.acceptChecklistRowNew = function (row, filterRanks, rowFocus) {
+    const acceptBasic = !filterRanks || filterRanks.includes(row.rank);
+    const alwaysReject = hortis.alwaysRejectRanks.includes(row.rank);
+    const acceptLeaf = row.taxonName && row.children.length === 0;
+
+    return rowFocus[row.id] && ((acceptBasic || acceptLeaf) && !alwaysReject);
+};
+
+
 fluid.defaults("maxwell.xetthecumEcologicalPane", {
     // add in "maxwell.withNativeLegend" when there is one
     gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay", "maxwell.paneWithDownloadLink"],
@@ -151,6 +160,11 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
                 invokers: {
                     accessRow: {
                         funcName: "maxwell.accessRowCommonPhyla"
+                    },
+                    acceptChecklistRow: {
+                        funcName: "hortis.acceptChecklistRowNew",
+                        //     row
+                        args: ["{arguments}.0", "{that}.options.filterRanks", "{that}.rowFocus.value"]
                     }
                 },
                 members: {

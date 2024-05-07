@@ -3,7 +3,9 @@ library(dplyr)
 source("scripts/utils.R")
 
 taxa <- timedFread("tabular_data/reintegrated-obs-assigned-taxa.csv") # x
-oldTaxa <- timedFread("tabular_data/reintegrated.csv") # y - includes original common names, hulq data
+oldTaxa <- timedFread("tabular_data/reintegrated.csv") # y - includes original common names, hulq data, taxonName
+
+names(oldTaxa)[names(oldTaxa) == "Taxon name"] <- "taxonName"
 
 mergedTaxa <- merge(x = taxa, y = oldTaxa, by.x = "id", by.y = "iNaturalist taxon ID", all.x = TRUE)
 
