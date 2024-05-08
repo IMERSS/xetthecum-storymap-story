@@ -161,7 +161,7 @@ fluid.defaults("hortis.filters", {
     },
     members: {
         allInput: "{vizLoader}.obsRows",
-        allOutput: "@expand:signal([])"
+        allOutput: "@expand:signal()"
     }
 });
 
@@ -171,11 +171,11 @@ hortis.wireObsFilters = function (that) {
 
     filterComps.forEach(filterComp => {
         filterComp.filterInput = prevOutput;
-        filterComp.filterOutput = computed( () => {
-            return filterComp.doFilter(filterComp.filterInput.value, filterComp.filterState.value);
-        });
+        filterComp.filterOutput = fluid.computed(filterComp.doFilter, filterComp.filterInput, filterComp.filterState);
         prevOutput = filterComp.filterOutput;
     });
+    // This is the bit we can't wire up with a computed - it would be great to be able to "wire" the pre-existing
+    // allOutput.value onto prevOutput.value after it had been constructed
     effect( () => that.allOutput.value = prevOutput.value);
 };
 
@@ -279,7 +279,15 @@ hortis.subscribeHover = function (that) {
     });
 };
 
-
+fluid.defaults("hortis.withTooltip", {
+    // tooltipKey,
+    invokers: {
+        renderTooltip: "fluid.notImplemented"
+    },
+    members: {
+        subscribeHover: "@expand:hortis.subscribeHover({that})"
+    }
+});
 
 
 
@@ -442,7 +450,7 @@ hortis.taxa.map = function (rows, byId) {
 
 // Holds model state shared with checklist and index - TODO rename after purpose, "layout" used to refer to sunburst root
 fluid.defaults("hortis.layoutHolder", {
-    gradeNames: "fluid.modelComponent",
+    gradeNames: ["fluid.modelComponent", "hortis.withTooltip"],
     tooltipKey: "hoverId",
     events: {
         taxonSelect: null
@@ -457,10 +465,8 @@ fluid.defaults("hortis.layoutHolder", {
         rowFocus: "@expand:signal({})", // non-taxon based selection external to the checklist, e.g. incoming from a map?
         rowSelection: "@expand:signal({})", // taxon-based selection from the checklist - will be subset of rowFocus
 
-        selectedId: "@expand:signal()",
-        hoverId: "@expand:signal()",
-
-        subscribeHover: "@expand:hortis.subscribeHover({that})"
+        selectedId: "@expand:signal(null)",
+        hoverId: "@expand:signal(null)"
     },
     // rootId
     modelRelay: {

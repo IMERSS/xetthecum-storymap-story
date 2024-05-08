@@ -334,9 +334,13 @@ maxwell.resolvePaneHandlers = function () {
     return maxwell.unflattenOptions(rawPaneHandlers);
 };
 
+hortis.libreMap.layerToLabel = function (layers) {
+    return Object.fromEntries(layers.filter(layer => layer.label).map(layer => [layer.id, layer.label]));
+};
+
 // Basic style: https://github.com/maplibre/maplibre-gl-js/issues/638
 fluid.defaults("hortis.libreMap", {
-    gradeNames: "fluid.viewComponent",
+    gradeNames: ["fluid.viewComponent", "hortis.withTooltip"],
     mapOptions: {
         style: {
             version: 8,
@@ -346,11 +350,21 @@ fluid.defaults("hortis.libreMap", {
     },
     members: {
         map: "@expand:hortis.libreMap.make({that}.container.0, {that}.options.mapOptions, {that}.mapLoaded, {that}.loadFillPatterns)",
+        layerToLabel: "@expand:hortis.libreMap.layerToLabel({that}.options.mapOptions.style.layers)",
         mapLoaded: "@expand:signal()",
         hasBounds: false,
-        selectedRegion: "@expand:signal()"
+        selectedRegion: "@expand:signal()",
+        hoverRegion: "@expand:signal(null)"
     },
+    tooltipKey: "hoverRegion",
     invokers: {
+        renderTooltip: {
+            args: ["{that}.layerToLabel", "{arguments}.0"],
+            func: (layerToLabel, id) => {
+                const label = layerToLabel[id];
+                return label ? `<div class="imerss-tooltip">${label}</div>` : null;
+            }
+        },
         urlForFillPattern: {
             args: ["{that}.options.fillPatternPath", "{arguments}.0"],
             func: (fillPatternPath, fillPattern) => fillPatternPath + fillPattern + ".png"
@@ -375,6 +389,10 @@ maxwell.paneToRegion = function (storyPage, map, activePane) {
     map.selectedRegion.value = selectRegion;
 };
 
+hortis.libreMap.layersToLabels = function (layers) {
+    return Object.fromEntries(layers.filter(layer => layer.label).map(layer => [layer.id, layer.label]));
+};
+
 hortis.libreMap.bindRegionSelect = function (that) {
     const map = that.map;
     that.options.selectableRegions.forEach(selectableRegion => {
@@ -390,6 +408,15 @@ hortis.libreMap.bindRegionSelect = function (that) {
             map.getCanvas().style.cursor = "";
         });
     });
+
+    map.on("mousemove", (e) => {
+        const features = map.queryRenderedFeatures(e.point);
+        const visibleFeatures = features.filter(feature => feature.layer.paint["fill-opacity"] > 0);
+        that.hoverEvent = e.originalEvent;
+        that.hoverRegion.value = visibleFeatures[0]?.layer.id || null;
+    });
+
+    map.getCanvas().addEventListener("mouseleave", () => hortis.clearAllTooltips(that));
 };
 
 hortis.libreMap.loadFillPatterns = function (map, fillPatternPath, fillPatterns) {

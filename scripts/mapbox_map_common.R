@@ -62,6 +62,7 @@ rowsToLayers <- function (rows, highlightedLayers) {
     if(row$fillOpacity != 0) {
       message("fillLayer ", row$Layer)
       fillLayer <- list(type="fill", id=row$Layer, source=row$Layer, "fill-sort-key"=row$Z_Order, "mx-fill-pattern"=row$fillPattern,
+                        label=row$Label,
                         paint=list("fill-color"=row$fillColor, "fill-opacity"=row$fillOpacity))
       # Nutty syntax explained in https://stackoverflow.com/questions/14054120/adding-elements-to-a-list-in-r-in-nested-lists
       layers <- c(layers, list(fillLayer))
@@ -83,8 +84,12 @@ plot_mapbox_map = function (id, bbox, sources, styling, highlightedLayers) {
 
   allSources <- c(baseStyle$sources, sources);
   allLayers <- c(baseStyle$layers, rowsToLayers(styling, highlightedLayers));
+  
+  usedSourceNames <- sapply(allLayers, function (layer) {layer$source});
+  usedSourcesIndex = sapply(names(allSources), function (name) {name %in% usedSourceNames})
+  usedSources <- allSources[usedSourcesIndex]
 
-  style <- list(id=id, version=8, sources=allSources, layers=allLayers, glyphs=baseStyle$glyphs);
+  style <- list(id=id, version=8, sources=usedSources, layers=allLayers, glyphs=baseStyle$glyphs);
 
   map <- plot_ly(height = 600, width = 800)
 

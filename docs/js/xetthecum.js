@@ -17,7 +17,7 @@ fluid.defaults("maxwell.paneWithTaxonDisplay", {
     },
     // defaultPanel
     members: {
-        selectedTaxonId: "@expand:signal()",
+        selectedTaxonId: "@expand:signal(null)",
         panelHash: "@expand:maxwell.panelsToHash({that}.dom.panels)",
         paneSelect: "@expand:fluid.effect(maxwell.taxonToPanel, {that}.options.defaultPanel, {that}.panelHash, {that}.selectedTaxonId)",
         updateTaxonHash: "@expand:fluid.effect(maxwell.updateTaxonHash, {hashManager}, {vizLoader}.taxa.rowById, {that}.selectedTaxonId, {that}.isVisible)",

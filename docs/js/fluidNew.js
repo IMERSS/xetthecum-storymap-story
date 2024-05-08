@@ -109,30 +109,32 @@ fluid.renderContainerSplice = function (parentContainer, elideParent, hasRoot, r
     return parentContainer;
 };
 
-fluid.renderStringTemplate = function (template, modelFetcher) {
-    return fluid.stringTemplate(template, modelFetcher());
+fluid.renderStringTemplate = function (markup, renderModelSignal) {
+    const renderModel = renderModelSignal.value;
+    return renderModel === undefined ? markup.fallbackContainer : fluid.stringTemplate(markup.container, renderModel);
 };
 
 
 fluid.defaults("fluid.stringTemplateRenderingView", {
     gradeNames: "fluid.containerRenderingView",
+    markup: {
+        fallbackContainer: "<div></div>"
+    },
     invokers: {
-        renderMarkup: "fluid.renderStringTemplate({that}.options.markup.container, {that}.signalsToModel)",
+        renderMarkup: "fluid.renderStringTemplate({that}.options.markup, {that}.renderModel)",
         renderContainer: "fluid.renderContainerSplice({that}.options.parentContainer, {that}.options.elideParent, {that}.options.hasRoot, {that}.renderMarkup)",
         // Blast this unnecessary invoker definition
-        addToParent: null,
-        // Need an empty default so that initial rendering effect is triggered
-        signalsToModel: "fluid.emptySignalsToModel()"
+        addToParent: null
     },
     elideParent: true,
     hasRoot: true,
     members: {
-    },
-    signals: { // override with your signals in here
+        // Need an blank default so that initial rendering effect is triggered
+        renderModel: "@expand:fluid.computed(fluid.blankRenderModel)"
     }
 });
 
-fluid.emptySignalsToModel = function () {
-    const emptySignal = signal();
-    return emptySignal.value;
+fluid.blankRenderModel = function () {
+    const blankSignal = signal(true);
+    return blankSignal.value;
 };
