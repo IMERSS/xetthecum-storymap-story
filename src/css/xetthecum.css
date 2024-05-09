@@ -253,6 +253,7 @@ audio {
     width: 15rem;
     margin: auto;
     background: #555a;
+    pointer-events: all;
 }
 
 
