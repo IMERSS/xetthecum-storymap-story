@@ -770,6 +770,7 @@ maxwell.updateContentClass = function (that, activePane) {
     });
 };
 
+// Compute the destination section for a navigation operation, given a "splitRange" record, the current active section and the desired offset
 maxwell.navSection = function (splitRanges, activeSection, offset) {
     const navRangeIndex = splitRanges.indexToRange[activeSection];
     const navRange = splitRanges.navRanges[navRangeIndex];
@@ -802,13 +803,18 @@ maxwell.updateSectionNav = function (that, activeSection) {
     const first = navLeft === undefined;
     const navRight = that.navSection(activeSection, 1);
     const last = navRight === undefined;
+
     maxwell.toggleClass(l("sectionLeft"), "disabled", first);
     l("sectionLeftText").innerText = first ? "" : that.sectionHolders[navLeft].headingText;
     maxwell.toggleClass(l("sectionLeftDesc"), "mxcw-hidden", first);
+    const paneHandlerLeft = maxwell.paneHandlerForIndex(that, navLeft);
+    l("sectionLeft").style.setProperty("--section-circle-fill", paneHandlerLeft?.options.sectionButtonFill || "#eee");
 
     maxwell.toggleClass(l("sectionRight"), "disabled", last);
     l("sectionRightText").innerText = last ? "" : that.sectionHolders[navRight].headingText;
     maxwell.toggleClass(l("sectionRightDesc"), "mxcw-hidden", last);
+    const paneHandlerRight = maxwell.paneHandlerForIndex(that, navRight);
+    l("sectionRight").style.setProperty("--section-circle-fill", paneHandlerRight?.options.sectionButtonFill || "#eee");
 };
 
 // Base definitions

@@ -1,4 +1,5 @@
 "use strict";
+/* global Plotly */
 
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var maxwell = fluid.registerNamespace("maxwell");
@@ -85,11 +86,12 @@ maxwell.updateTaxonHash = function (hashManager, taxaById, selectedTaxonId, isVi
 
 fluid.registerNamespace("maxwell.legendKey");
 
-maxwell.legendKey.rowTemplate = "<div class=\"imerss-legend-row %rowClass\">" +
-    "<span class=\"imerss-legend-icon\"></span>" +
-    "<span class=\"imerss-legend-preview %previewClass\" style=\"%previewStyle\"></span>" +
-    "<span class=\"imerss-legend-label\">%keyLabel</span>" +
-    "</div>";
+maxwell.legendKey.rowTemplate = `
+<div class="imerss-legend-row %rowClass">
+    <span class="imerss-legend-icon"></span>
+    <span class="imerss-legend-preview %previewClass" style="%previewStyle"></span>
+    <span class="imerss-legend-label">%keyLabel</span>
+</div>`;
 
 // Improved version which deals with status|cell style regions seen in Marine Atlas
 // TODO: Do we need this any more?

@@ -133,9 +133,13 @@ h2 {
     position: relative;
 }
 
+.imerss-ecological-pane {
+    --section-circle-stroke-width: 0;
+}
+
 .imerss-ecological-pane .section-button {
     stroke: #F2FCD6;
-    fill: #5A5244;
+    fill: var(--section-circle-fill);
 }
 
 .section-button:hover:not(.disabled) {

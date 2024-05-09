@@ -108,6 +108,10 @@ hortis.acceptChecklistRowNew = function (row, filterRanks, rowFocus) {
     return rowFocus[row.id] && ((acceptBasic || acceptLeaf) && !alwaysReject);
 };
 
+maxwell.selectRegionToButtonFill = function (sectionClass) {
+    return `url(#fill-pattern-${sectionClass.toLowerCase()})`;
+};
+
 
 fluid.defaults("maxwell.xetthecumEcologicalPane", {
     // add in "maxwell.withNativeLegend" when there is one
@@ -117,6 +121,7 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
         checklistRanks: "replace"
     },
     // selectRegion from config
+    sectionButtonFill: "@expand:maxwell.selectRegionToButtonFill({that}.options.selectRegion)",
     checklistRanks: ["phylum"],
     nativeDataOnly: true,
     regionStyles: {

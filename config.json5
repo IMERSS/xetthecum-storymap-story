@@ -83,7 +83,7 @@
                 },
                 Forests: {
                     type: "maxwell.xetthecumEcologicalPane",
-                    selectRegion: "Forests",
+                    selectRegion: "Forests"
                 },
                 Freshwater: {
                     type: "maxwell.xetthecumEcologicalPane",

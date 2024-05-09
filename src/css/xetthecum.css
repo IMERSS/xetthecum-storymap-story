@@ -10,6 +10,9 @@
     --section-button-background: #FFFDFD;
     --section-button-stroke: #362F24;
 
+    --section-circle-stroke-width: 4px;
+    --section-circle-fill: black;
+
     /** This is defined in bootstrap.min.css **/
     font-family: var(--bs-body-font-family);
     color: var(--text-brown);
@@ -120,6 +123,7 @@ audio {
 
 .imerss-ecological-pane {
     background-color: var(--bio-background);
+    --section-circle-stroke-width: 0px;
 }
 
 .mxcw-return-to-main {

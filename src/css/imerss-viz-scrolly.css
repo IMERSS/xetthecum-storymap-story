@@ -147,6 +147,7 @@
     margin: 2px;
     position: relative;
     top: 3px;
+    cursor: pointer;
 }
 
 .imerss-map-legend > span {
