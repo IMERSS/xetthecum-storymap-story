@@ -191,6 +191,8 @@
 
 .imerss-photo {
     height: 300px;
+    /* Another definition to axe from core */
+    min-width: auto;
 }
 
 .taxonDisplay-row {

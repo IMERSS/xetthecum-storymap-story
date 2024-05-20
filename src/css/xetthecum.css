@@ -160,9 +160,15 @@ audio {
     margin-right: 0.5rem;
 }
 
+@media screen and ( max-width: 896px ) {
+    #return-main-label {
+        display: none;
+    }
+}
+
 .imerss-taxonDisplay {
     border: none;
-    overflow: visible;
+    /* overflow: visible; */
     padding: 5px;
     /* align-self: center; */
     /* width: 480px;*/
@@ -226,9 +232,9 @@ audio {
 }
 
 .imerss-legend-preview {
-    width: 40px;
-    height: 40px;
-    background-size: 96px;
+    width: 32px;
+    height: 32px;
+    background-size: 72px;
     /** Override silly definition from imerss-viz-scrolly.css - need to remove dependence **/
     top: 0px;
     margin: 3px;
@@ -256,7 +262,11 @@ audio {
     pointer-events: all;
 }
 
-
+@media screen and ( max-height: 764px ) {
+    .mxcw-legend {
+        display: none
+    }
+}
 
 
 /* Reoverride this theme colour back again which is unreadable against the background

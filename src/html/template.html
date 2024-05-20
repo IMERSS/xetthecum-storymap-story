@@ -73,21 +73,21 @@
                 <path d="M9.85938 17.4619L2.34477 9.9473" stroke="#F2FCD6" stroke-width="3" stroke-linecap="round"/>
             </symbol>
 
-            <!-- These patterns agree with data in tabular_data/communityStyling.csv -->
-            <pattern id="fill-pattern-forests" patternUnits="userSpaceOnUse" width="128" height="128">
-                <image xlink:href="img/fillPatterns/mature-forest.png" x="0" y="0" width="128" height="128">
+            <!-- These patterns agree with data in tabular_data/communityStyling.csv and are used in the section buttons -->
+            <pattern id="fill-pattern-forests" patternUnits="userSpaceOnUse" width="80" height="80">
+                <image xlink:href="img/fillPatterns/mature-forest.png" x="0" y="0" width="80" height="80">
                 </image>
             </pattern>
-            <pattern id="fill-pattern-freshwater" patternUnits="userSpaceOnUse" width="128" height="128">
-                <rect fill="rgb(0,133,188)" x="0" y="0" width="128" height="128">
+            <pattern id="fill-pattern-freshwater" patternUnits="userSpaceOnUse" width="80" height="80">
+                <image xlink:href="img/fillPatterns/freshwater.png" x="0" y="0" width="80" height="80">
                 </rect>
             </pattern>
-            <pattern id="fill-pattern-marine" patternUnits="userSpaceOnUse" width="128" height="128">
-                <image xlink:href="img/fillPatterns/marine.png" x="0" y="0" width="128" height="128">
+            <pattern id="fill-pattern-marine" patternUnits="userSpaceOnUse" width="80" height="80">
+                <image xlink:href="img/fillPatterns/marine.png" x="0" y="0" width="80" height="80">
                 </image>
             </pattern>
-            <pattern id="fill-pattern-woodlands" patternUnits="userSpaceOnUse" width="128" height="128">
-                <image xlink:href="img/fillPatterns/woodland.png" x="0" y="0" width="128" height="128">
+            <pattern id="fill-pattern-woodlands" patternUnits="userSpaceOnUse" width="80" height="80">
+                <image xlink:href="img/fillPatterns/woodland.png" x="0" y="0" width="80" height="80">
                 </image>
             </pattern>
         </defs>
@@ -159,10 +159,10 @@
     <div class="mxcw-container">
         <div class="mxcw-map-holder">
             <div class="mxcw-return-to-main">
-                <svg width="12" height="19">
+                <svg aria-labelledby="return-main-label" width="12" height="19">
                     <use href="#return-left"/>
                 </svg>
-                <span>Return to main story</span>
+                <span id="return-main-label">Return to main story</span>
             </div>
             <div class="mxcw-map imerss-nodismiss-map">
             </div>
