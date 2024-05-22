@@ -116,15 +116,6 @@
         source: "%maxwell/node_modules/@imerss/inat-components/dist/standalone.min.js",
         target: "%maxwell/docs/js/inat-components-standalone.min.js"
     }, {
-        source: "%maxwell/node_modules/@preact/signals-core/dist/signals-core.min.js",
-        target: "%maxwell/docs/js/signals-core.min.js"
-    }, {
-        source: "%maxwell/node_modules/maplibre-gl/dist/maplibre-gl-dev.js",
-        target: "%maxwell/docs/js/maplibre-gl-dev.js"
-    }, {
-        source: "%maxwell/node_modules/maplibre-gl/dist/maplibre-gl.css",
-        target: "%maxwell/docs/css/maplibre-gl.css"
-    }, {
         source: "%maxwell/node_modules/papaparse/papaparse.min.js",
         target: "%maxwell/docs/js/papaparse.min.js"
     }, {
@@ -133,12 +124,20 @@
     }, {
         source: "%maxwell/src/js/client/*.js",
         target: "%maxwell/docs/js"
-    }, { // TODO: What do we include this for?
-        source: "%imerss-bioinfo/docs/js/imerss-viz-all.js",
-        target: "%maxwell/docs/js/imerss-viz-all.js"
     }, {
-        source: "%imerss-bioinfo/docs/js/imerss-viz-all.js.map",
-        target: "%maxwell/docs/js/imerss-viz-all.js.map",
+        source: "%imerss-bioinfo/docs/js/imerss-viz-lib.js",
+        target: "%maxwell/docs/js/imerss-viz-lib.js"
+    }, {
+        source: "%imerss-bioinfo/docs/js/imerss-viz-lib.js.map",
+        target: "%maxwell/docs/js/imerss-viz-lib.js.map",
+        replaceSource: "\"sourceRoot\":\"../..\"",
+        replaceTarget: "\"sourceRoot\":\"../../../bagatelle/\""
+    }, {
+        source: "%imerss-bioinfo/docs/js/imerss-viz-new.js",
+        target: "%maxwell/docs/js/imerss-viz-new.js"
+    }, {
+        source: "%imerss-bioinfo/docs/js/imerss-viz-new.js.map",
+        target: "%maxwell/docs/js/imerss-viz-new.js.map",
         replaceSource: "\"sourceRoot\":\"../..\"",
         replaceTarget: "\"sourceRoot\":\"../../../bagatelle/\""
     }, {
@@ -162,9 +161,15 @@
     }, {
         source: "%imerss-bioinfo/src/client/img/download.svg",
         target: "%maxwell/docs/img/download.svg"
-    }, { // TODO Axe in favour of viz-new
-        source: "%imerss-bioinfo/docs/css/imerss-viz-all.css",
-        target: "%maxwell/docs/css/imerss-viz-all.css"
+    }, {
+        source: "%imerss-bioinfo/docs/css/imerss-viz-lib.css",
+        target: "%maxwell/docs/css/imerss-viz-lib.css"
+    }, {
+        source: "%imerss-bioinfo/docs/css/imerss-core.css",
+        target: "%maxwell/docs/css/imerss-core.css"
+    }, {
+        source: "%imerss-bioinfo/docs/css/xetthecum-core.css",
+        target: "%maxwell/docs/css/xetthecum-core.css"
     }, {
         source: "%maxwell/src/html/*.html",
         target: "%maxwell/docs/html"
@@ -177,7 +182,7 @@
     }, {
         source: "%maxwell/tabular_data/communityStyling.csv",
         target: "%maxwell/docs/data/communityStyling.csv"
-    }, {
+    }, { // The CSV downloads of obs per community
         source: "%maxwell/tabular_data/Xetthecum-community-*.csv",
         target: "%maxwell/docs/data"
     }, {

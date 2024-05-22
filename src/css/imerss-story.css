@@ -88,10 +88,6 @@ h2 {
     flex-direction: row;
 }
 
-.mxcw-viz-pane .imerss-container {
-    width: 50%;
-}
-
 .mxcw-sectionColumn {
     width: 50%;
     overflow-y: auto;
@@ -99,6 +95,11 @@ h2 {
     padding-right: 8px;
 }
 
+.mxcw-sectionColumn.mxcw-vizColumn {
+    overflow-y: visible;
+    border: solid 1px black;
+    padding: 8px 8px 8px 0;
+}
 
 @media screen and ( max-width: 620px ) {
     .mxcw-sectionInner {

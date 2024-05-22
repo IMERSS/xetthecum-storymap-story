@@ -1,0 +1,406 @@
+:root {
+    --imerss-scrollbar-width: 12px;
+}
+
+.imerss-container ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: var(--imerss-scrollbar-width);
+    background-color: #eee
+}
+
+.imerss-container ::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: #C1C1C1;
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+.imerss-container ::-webkit-scrollbar-thumb:hover {
+    background-color: #A8A8A8;
+}
+
+
+/* Styling for checkboxes with indeterminate value */
+/* Grabbed definition for default "checked" to apply to indeterminate checkboxes */
+.pretty input:indeterminate~.state label:after {
+    background-color: #bdc3c7!important;
+    transform: scale(.6);
+}
+
+.pretty .state label:after, .pretty .state label:before {
+    width: calc(1em + 0px);
+    height: calc(1em + 0px);
+}
+
+.pretty.p-icon .state .icon {
+    width: calc(1em + 0px);
+    height: calc(1em + 0px);
+}
+
+.pretty {
+    margin-right: 0.3em;
+}
+
+
+/** This block refers to standalone viz rather than story
+ */
+
+.imerss-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0; /* Essential otherwise it overflows */
+}
+
+.imerss-map-and-taxa {
+    display: flex;
+    /** Old viz do this in a column */
+    flex-direction: row;
+}
+
+.imerss-tabs-and-search {
+    display: flex;
+    flex-direction: column;
+}
+
+.imerss-taxa {
+    display: flex;
+    flex-direction: row;
+}
+
+
+/* Refers to a viz map e.g. gridded rather than story which is .mxcw-map */
+.imerss-map {
+    height: 100%;
+    width: 100%;
+    min-width: 480px;
+    min-height: 320px;
+}
+
+
+.imerss-clickable {
+    cursor: pointer;
+}
+
+/** Inside, e.g. taxonDisplay-iNat-extern */
+
+.external-link {
+    width: 1rem;
+    height: 0.9rem;
+    display: inline-block;
+    background-image: url("../img/external-link.svg");
+    background-repeat: no-repeat;
+    background-size: 0.9rem;
+    margin-left: 8px;
+}
+
+.imerss-taxonDisplay {
+    /* height: calc(800px + 6rem); */ /* Viz dimens plus tab height */
+    /* width: 480px; */
+    width: 100%;
+    border: black solid 2px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    min-width: 320px;
+}
+
+.taxonDisplay-row {
+    padding: 10px 8px 6px 8px;
+    border-bottom: #ccc 2px solid;
+    width: auto;
+    min-width: 320px;
+}
+
+/* unindent nested rows a bit */
+.taxonDisplay-row .taxonDisplay-row {
+    margin-left: -0.5rem;
+}
+
+.taxonDisplay-row.taxonDisplay-expandable-remainder.taxonDisplay-runon-remainder :last-child {
+    margin-bottom: -0.2rem;
+}
+
+/* No idea why we do this, but we need to undo it for imerss-media-name */
+.taxonDisplay-row.taxonDisplay-expandable-remainder.taxonDisplay-runon-remainder :first-child {
+    margin-top: -0.5rem;
+}
+
+.taxonDisplay-row.taxonDisplay-expandable-remainder.taxonDisplay-runon-remainder .imerss-media-name {
+    padding-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.taxonDisplay-row .imerss-media-image {
+    padding-bottom: 5px;
+}
+
+.taxonDisplay-row.taxonDisplay-expandable-remainder.taxonDisplay-runon-remainder.taxonDisplay-row {
+    border-bottom: none;
+}
+
+.taxonDisplay-row.taxonDisplay-expandable-remainder.taxonDisplay-runon-remainder .taxonDisplay-row .taxonDisplay-key {
+    margin-left: 1rem;
+}
+
+.taxonDisplay-runon-header.taxonDisplay-expanded {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.taxonDisplay-empty-header {
+    border-bottom: none;
+}
+
+.taxonDisplay-empty-row .taxonDisplay-key {
+    display: none;
+}
+
+.taxonDisplay-key {
+    width: 12em;
+    margin-right: 4px;
+    font-weight: bold;
+    padding: 2px;
+}
+
+.taxonDisplay-value {
+    width: 100%;
+}
+
+.taxonDisplay-expand {
+    width: 2rem;
+    background-size: 2rem;
+    height: 1rem;
+    background-image: url("../img/Arrow-down.svg");
+    cursor: pointer;
+    float: right;
+    /* From https://codepen.io/sosuke/pen/Pjoqqp */
+    filter: invert(57%) sepia(0%) saturate(6%) hue-rotate(187deg) brightness(94%) contrast(88%);
+}
+
+.taxonDisplay-unexpanded .taxonDisplay-expand {
+    background-image: url("../img/Arrow-down.svg");
+}
+
+.taxonDisplay-expanded .taxonDisplay-expand {
+    background-image: url("../img/Arrow-up.svg");
+}
+
+.taxonDisplay-runon-remainder.taxonDisplay-unexpanded {
+    display: none
+}
+
+.taxonDisplay-expandable-remainder {
+    padding-left: 20px;
+}
+
+.taxonDisplay-expandable-remainder.taxonDisplay-runon-remainder {
+    padding-left: 8px; /* Back to value in taxonDisplay-row */
+    padding-right: 0; /* Avoid right gap */
+}
+
+.taxonDisplay-runon-remainder > .taxonDisplay-key {
+    padding: 0;
+    margin: 0;
+}
+
+.taxonDisplay-image-holder {
+    position: relative;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.taxonDisplay-iNat-extern {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    background: #ddd;
+    padding: 4px;
+    padding-left: 6px;
+    color: black;
+}
+
+
+.imerss-photo {
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imerss-photo-caption {
+    padding-left: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+}
+
+.imerss-tooltip .imerss-photo {
+    width: 165px;
+    height: 125px;
+    min-width: auto;
+}
+
+.imerss-tooltip div.text {
+    max-width: 165px;
+    margin-top: 0.5rem;
+}
+
+
+.imerss-autocomplete {
+    width: 30em;
+    margin-left: 1rem;
+    display: inline-block;
+}
+
+.imerss-autocomplete-row {
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.imerss-autocomplete-row label {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.autocomplete__menu {
+    max-height: 600px;
+}
+
+
+#fli-tab-checklist.ui-tabs-panel, #fli-tab-simple-checklist.ui-tabs-panel {
+    padding: 0;
+}
+
+.imerss-tabs .ui-state-active.ui-tabs-tab {
+    background: #fff;
+}
+
+.imerss-tabs .ui-state-active.ui-tabs-tab a {
+    background: #fff;
+    color: #444;
+}
+
+.imerss-checklist-holder {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    overflow: auto;
+}
+
+.imerss-panel-label {
+    font-size: 1.5rem;
+    padding-bottom: 5px;
+}
+
+.imerss-checklist {
+    height: 100%;
+    overflow-y: auto;
+    /** Otherwise top checkbox gets clipped */
+    padding-top: 2px;
+}
+
+.imerss-checklist p {
+    display: inline;
+    padding: 1px;
+}
+
+.imerss-checklist p:hover {
+    background: #dde;
+}
+
+.checklist-selected {
+    outline: 2px solid black;
+}
+
+.imerss-checklist ul {
+    margin-block-start: 0;
+    list-style-type: none;
+}
+
+.imerss-checklist-no-indent ul {
+    padding-inline-start: 0;
+}
+
+li.checklist-rank-species {
+    margin-left: 40px;
+    padding-left: 40px;
+    text-indent: -40px;
+}
+
+.imerss-checklist > ul {
+    padding: 0;
+}
+
+.imerss-checklist-up {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url(../img/up-arrow.svg);
+    background-size: cover;
+    margin-left: -0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.imerss-checklist-up:hover {
+    outline: 1px solid black;
+    outline-offset: 1px;
+}
+
+/* The checklist rank highlighting */
+
+.checklist-rank-life > p {
+    text-transform: uppercase;
+    font-size: 1.2em;
+}
+
+.checklist-rank-kingdom > p {
+    text-transform: uppercase;
+    font-size: 1.2em;
+}
+
+.checklist-rank-phylum > p {
+    text-transform: uppercase;
+    font-size: 1.1em;
+}
+
+.checklist-rank-class > p {
+    text-transform: uppercase;
+    font-style: italic;
+    font-size: 1.0em;
+}
+
+.checklist-rank-subclass > p {
+    text-transform: uppercase;
+    font-size: 1.0em;
+}
+
+.checklist-rank-order > p {
+    text-transform: uppercase;
+    font-size: 1.0em;
+}
+
+.checklist-rank-family > p {
+    text-transform: uppercase;
+    font-size: 1.0em;
+}
+
+.checklist-rank-genus > p {
+    font-size: 1.0em;
+    font-style: italic;
+}
+
+.checklist-rank-species > p {
+    font-size: 1.0em;
+    font-style: italic;
+}
+
+.checklist-annote {
+    font-style: normal
+}

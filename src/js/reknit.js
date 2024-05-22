@@ -162,19 +162,28 @@ maxwell.parseMapboxWidgets = function (container) {
     return {rootMap, layersByPaneId, mapWidgets, fillPatterns};
 };
 
-// Move all children rather than the heading itself into nested "sectionInner" node to enable 2-column layout
+maxwell.makeCreateElement = function (dokkument) {
+    return (tagName, props) => {
+        const element = dokkument.createElement(tagName);
+        Object.entries(props).forEach(([key, value]) => element.setAttribute(key, value));
+        return element;
+    };
+};
+
+// Move all children other than the heading itself into nested "sectionInner" node to enable 2-column layout
 maxwell.encloseSections = function (container) {
+    const h = maxwell.makeCreateElement(container.ownerDocument);
     const sections = [...container.querySelectorAll(".section.level2")];
     sections.forEach(function (section) {
         const children = [...section.childNodes].filter(node => node.tagName !== "H2");
-        const inner = section.ownerDocument.createElement("div");
-        inner.setAttribute("class", "mxcw-sectionInner");
+        const inner = h("div", {"class": "mxcw-sectionInner"});
         section.appendChild(inner);
         // Move to inner column - perhaps optional behaviour
-        const innerColumn = section.ownerDocument.createElement("div");
-        innerColumn.setAttribute("class", "mxcw-sectionColumn");
+        const innerColumn = h("div", {"class": "mxcw-sectionColumn"});
         inner.appendChild(innerColumn);
         children.forEach(child => innerColumn.appendChild(child));
+        const vizColumn = h("div", {"class": "mxcw-sectionColumn mxcw-vizColumn"});
+        inner.appendChild(vizColumn);
     });
 };
 
@@ -249,7 +258,7 @@ maxwell.reknitFile = async function (infile, outfile, options, config) {
             // TODO: Allow prefix to be contributed representing entire page, e.g. "Mollusca-"
             return maxwell.integratePaneHandler(paneHandler, key);
         });
-        const scrollyPaneHandlers = "maxwell.scrollyPaneHandlers = " + JSON.stringify(integratedHandlers) + ";\n";
+        const rawPaneHandlers = "maxwell.rawPaneHandlers = " + JSON.stringify(integratedHandlers) + ";\n";
         const storyPageOptions = options.storyPageOptions || {};
         if (options.components) {
             const unflattened = maxwell.unflattenOptions(options.components);
@@ -257,7 +266,7 @@ maxwell.reknitFile = async function (infile, outfile, options, config) {
         }
         const storyPageLinkage = maxwell.makeRootLinkage("maxwell.storyPage", storyPageOptions);
         const scriptNode = template.createElement("script");
-        scriptNode.innerHTML = mapboxDataVar + scrollyPaneHandlers + storyPageLinkage;
+        scriptNode.innerHTML = mapboxDataVar + rawPaneHandlers + storyPageLinkage;
         const head = template.querySelector("head");
         head.appendChild(scriptNode);
     }

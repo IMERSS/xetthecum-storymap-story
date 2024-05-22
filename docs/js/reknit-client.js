@@ -277,7 +277,7 @@ maxwell.paneKeyToIndex = function (handler, storyPage) {
 
 /**
  * Given a paneHandler component, find its section holder
- * @param {maxwell.scrollyPaneHandler} handler - The paneHandler to be looked up
+ * @param {maxwell.paneHandler} handler - The paneHandler to be looked up
  * @param {maxwell.storyPage} storyPage - The overall storyPage component
  * @return {jQuery} A jQuery-wrapped container node suitable for instantiating a component.
  */
@@ -330,7 +330,7 @@ maxwell.unflattenOptions = function (records) {
 
 maxwell.resolvePaneHandlers = function () {
     // Written into the markup by maxwell.reknitFile in reknit.js
-    const rawPaneHandlers = maxwell.scrollyPaneHandlers;
+    const rawPaneHandlers = maxwell.rawPaneHandlers;
     return maxwell.unflattenOptions(rawPaneHandlers);
 };
 

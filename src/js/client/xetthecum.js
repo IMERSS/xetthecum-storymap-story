@@ -7,6 +7,12 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
+maxwell.addToVizColumn = function (parentContainer, jNode) {
+    const target = parentContainer.find(".mxcw-vizColumn");
+    target.append(jNode);
+};
+
+
 // Abstractish base grade common between those which can display info on a taxon in toggleable panel
 fluid.defaults("maxwell.paneWithTaxonDisplay", {
     selectors: {
@@ -27,7 +33,8 @@ fluid.defaults("maxwell.paneWithTaxonDisplay", {
              {vizLoader}.resourcesLoaded)`
     },
     invokers: {
-        addToParent: "maxwell.addToSectionInner({that}.options.parentContainer, {arguments}.0)"
+        // override from fluid.containerRenderingView
+        addToParent: "maxwell.addToVizColumn({that}.options.parentContainer, {arguments}.0)"
     },
     components: {
         taxonDisplay: {
@@ -72,8 +79,8 @@ fluid.defaults("maxwell.taxonDisplayPane", {
 });
 
 maxwell.paneHandler.slingDataPane = function (that) {
-    const panel = that.find("dataPanel");
     const inner = that.find("sectionInner");
+    const panel = that.find("dataPanel");
     const toDataPanes = [...inner.querySelectorAll(".data-pane")];
     toDataPanes.forEach(toDataPane => panel.appendChild(toDataPane));
 };
@@ -244,11 +251,6 @@ maxwell.storyPage.constructRanges = function (storyPage) {
     regionIndices.forEach(index => indexToRange[index] = 1);
 
     return {navRanges, indexToRange};
-};
-
-maxwell.addToSectionInner = function (parentContainer, jNode) {
-    const target = parentContainer.find(".mxcw-sectionInner");
-    target.append(jNode);
 };
 
 maxwell.brokenTaxonLinks = 0;

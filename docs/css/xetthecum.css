@@ -275,16 +275,14 @@ audio {
     color: #5a5244;
 }
 
-.imerss-checklist-holder {
-    height: 100%;
-    padding: 6px;
-    margin: 0.5em 1.2em;
-    overflow: auto;
-}
-
 #map-svg {
     height: 0px;
     position: absolute;
+}
+
+/* Make margins agree with label and header */
+.imerss-checklist-holder {
+    margin: 0.5em 1.2em;
 }
 
 .checklist-hulq-name {
