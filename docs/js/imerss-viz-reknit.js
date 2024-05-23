@@ -262,14 +262,72 @@ fluid.defaults("maxwell.bareRegionsExtra.withLegend", {
     }
 });
 
-// TODO: Monkey-patch of version in checklist.js to ensure we display Barentsia
 
-hortis.acceptChecklistRow = function (row, filterRanks) {
-    const acceptBasic = !filterRanks || filterRanks.includes(row.rank) || row.species;
-    // Special request from AS - suppress any checklist entry at species level if there are any ssp
-    const rejectSpecies = row.rank === "species" && row.children.length > 0;
-    // Presumed special request - display Barentsia spp. - perhaps we should display any leaf?
-    const acceptGenus = row.genus && row.children.length === 0;
-    return acceptBasic && !rejectSpecies || acceptGenus;
+maxwell.addToVizColumn = function (parentContainer, jNode) {
+    const target = parentContainer.find(".mxcw-vizColumn");
+    target.append(jNode);
 };
 
+fluid.defaults("hortis.taxonDisplay.withClose", {
+    selectors: {
+        close: ".imerss-taxonDisplay-close"
+    },
+    markup: { /** TODO: This should probably be in a snippet/resource */
+        taxonDisplayHeader:
+            `<div class="imerss-taxonDisplay-close">
+                <div>close</div>
+                <div class="imerss-taxonDisplay-x">
+                    <svg width="20" height="20">
+                        <use href="#close-x" />
+                    </svg>
+                </div>
+            </div>`
+    },
+    listeners: {
+        "onCreate.bindClose": {
+            args: ["{that}.container", "{that}.options.selectors.close", "{that}.selectedTaxonId"],
+            /* TODO: Materialise all delegates! */
+            func: (container, close, selectedTaxonId) => container.on("click", close, () => selectedTaxonId.value = null)
+        }
+    }
+});
+
+// Abstractish base grade common between those which can display info on a taxon in toggleable panel
+fluid.defaults("maxwell.paneWithTaxonDisplay", {
+    selectors: {
+        taxonDisplay: ".imerss-taxonDisplay",
+        panels: ".imerss-panel",
+        sectionInner: ".mxcw-sectionInner",
+        legends: ".imerss-map-legend"
+    },
+    // defaultPanel
+    members: {
+        selectedTaxonId: "@expand:signal(null)",
+        panelHash: "@expand:maxwell.panelsToHash({that}.dom.panels)",
+        paneSelect: "@expand:fluid.effect(maxwell.taxonToPanel, {that}.options.defaultPanel, {that}.panelHash, {that}.selectedTaxonId)",
+        updateTaxonHash: "@expand:fluid.effect(maxwell.updateTaxonHash, {hashManager}, {vizLoader}.taxa.rowById, {that}.selectedTaxonId, {that}.isVisible)",
+        rewriteTaxonLinks: `@expand:fluid.effect(maxwell.rewriteTaxonLinks, {that}.options.parentContainer,
+             {that}.options.paneKey, {storyPage}.taxaByName, {that}.regionTaxa, {vizLoader}.resourcesLoaded)`,
+        instantiateLegends: `@expand:fluid.effect(maxwell.paneHandler.instantiateLegends, {that}, {map}, {vizLoader}.regionLoader,
+             {vizLoader}.resourcesLoaded)`
+    },
+    invokers: {
+        // override from fluid.containerRenderingView
+        addToParent: "maxwell.addToVizColumn({that}.options.parentContainer, {arguments}.0)"
+    },
+    components: {
+        taxonDisplay: {
+            type: "hortis.taxonDisplay",
+            container: "{that}.dom.taxonDisplay",
+            options: {
+                gradeNames: "hortis.taxonDisplay.withClose",
+                culturalValues: true,
+                members: {
+                    obsRows: "{vizLoader}.obsRows",
+                    taxaById: "{vizLoader}.taxa.rowById",
+                    selectedTaxonId: "{paneHandler}.selectedTaxonId"
+                }
+            }
+        }
+    }
+});

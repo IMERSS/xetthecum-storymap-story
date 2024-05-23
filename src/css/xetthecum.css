@@ -1,19 +1,22 @@
 :root {
-    --text-brown: #362F24;
+    --dark-brown: #362F24;
+    --light-brown: #5A5244;
+    --text-brown: var(--dark-brown);
+    /* Not quite the same as --bs-body-color which is #5A5244 */
     --page-background: #F2FCD6;
     --panel-background: #FFFDFD;
     --content-background: #E7DDCD;
-    --panel-border: #362F24;
+    --panel-border: var(--dark-brown);
     --bio-background: #F2FCD6;
     --margin-width: calc((100vw - 110vh)/2);
 
     --section-button-background: #FFFDFD;
-    --section-button-stroke: #362F24;
+    --section-button-stroke: var(--dark-brown);
 
     --section-circle-stroke-width: 4px;
     --section-circle-fill: black;
 
-    /** This is defined in bootstrap.min.css **/
+    /** This is defined in bootstrap.min.css  which ends up in site_libs/bootstrap **/
     font-family: var(--bs-body-font-family);
     color: var(--text-brown);
 }
@@ -54,7 +57,7 @@ body #quarto-content {
 }
 
 /** Override silly definition in bootstrap-min **/
-#quarto-content>* {
+#quarto-content > * {
     padding: 0
 }
 
@@ -106,6 +109,10 @@ audio {
     position: relative;
 }
 
+.mxcw-sectionColumn.mxcw-vizColumn {
+    border-color: var(--panel-border);
+}
+
 .imerss-container {
     position: relative;
     overflow-y: auto;
@@ -128,7 +135,7 @@ audio {
 
 .mxcw-return-to-main {
     position: absolute;
-    background-color: #5A5244;
+    background-color: var(--light-brown);
     color: var(--bio-background);
     stroke: var(--bio-background);
     left: 40px;
@@ -145,6 +152,10 @@ audio {
     border-radius: 4px;
     cursor: pointer;
     padding: 1rem;
+}
+
+.imerss-taxonDisplay-close {
+    stroke: var(--light-brown);
 }
 
 .mxcw-return-to-main.mxcw-hidden {
@@ -258,7 +269,7 @@ audio {
 .mxcw-legend {
     width: 15rem;
     margin: auto;
-    background: #555a;
+    background: #5A5244E0;
     pointer-events: all;
 }
 

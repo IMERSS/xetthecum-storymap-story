@@ -7,52 +7,6 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
-maxwell.addToVizColumn = function (parentContainer, jNode) {
-    const target = parentContainer.find(".mxcw-vizColumn");
-    target.append(jNode);
-};
-
-
-// Abstractish base grade common between those which can display info on a taxon in toggleable panel
-fluid.defaults("maxwell.paneWithTaxonDisplay", {
-    selectors: {
-        taxonDisplay: ".imerss-taxonDisplay",
-        panels: ".imerss-panel",
-        sectionInner: ".mxcw-sectionInner",
-        legends: ".imerss-map-legend"
-    },
-    // defaultPanel
-    members: {
-        selectedTaxonId: "@expand:signal(null)",
-        panelHash: "@expand:maxwell.panelsToHash({that}.dom.panels)",
-        paneSelect: "@expand:fluid.effect(maxwell.taxonToPanel, {that}.options.defaultPanel, {that}.panelHash, {that}.selectedTaxonId)",
-        updateTaxonHash: "@expand:fluid.effect(maxwell.updateTaxonHash, {hashManager}, {vizLoader}.taxa.rowById, {that}.selectedTaxonId, {that}.isVisible)",
-        rewriteTaxonLinks: `@expand:fluid.effect(maxwell.rewriteTaxonLinks, {that}.options.parentContainer,
-             {that}.options.paneKey, {storyPage}.taxaByName, {that}.regionTaxa, {vizLoader}.resourcesLoaded)`,
-        instantiateLegends: `@expand:fluid.effect(maxwell.paneHandler.instantiateLegends, {that}, {map}, {vizLoader}.regionLoader,
-             {vizLoader}.resourcesLoaded)`
-    },
-    invokers: {
-        // override from fluid.containerRenderingView
-        addToParent: "maxwell.addToVizColumn({that}.options.parentContainer, {arguments}.0)"
-    },
-    components: {
-        taxonDisplay: {
-            type: "hortis.taxonDisplay",
-            container: "{that}.dom.taxonDisplay",
-            options: {
-                gradeNames: "hortis.taxonDisplay.withClose",
-                culturalValues: true,
-                members: {
-                    obsRows: "{vizLoader}.obsRows",
-                    taxaById: "{vizLoader}.taxa.rowById",
-                    selectedTaxonId: "{paneHandler}.selectedTaxonId"
-                }
-            }
-        }
-    }
-});
-
 // TODO: Make general purpose widget instantiator
 maxwell.paneHandler.instantiateLegends = function (paneHandler, map, regionLoader) {
     const containers = paneHandler.findAll("legends");
@@ -275,30 +229,6 @@ maxwell.rewriteTaxonLinks = function (parentContainer, paneKey, taxaByName, regi
         }
     });
 };
-
-fluid.defaults("hortis.taxonDisplay.withClose", {
-    selectors: {
-        close: ".imerss-taxonDisplay-close"
-    },
-    markup: { /** TODO: This should probably be in a snippet/resource */
-        taxonDisplayHeader:
-            `<div class="imerss-taxonDisplay-close">
-                <div>close</div>
-                <div class="imerss-taxonDisplay-x">
-                    <svg width="23" height="23">
-                        <use href="#close-x" />
-                    </svg>
-                </div>
-            </div>`
-    },
-    listeners: {
-        "onCreate.bindClose": {
-            args: ["{that}.container", "{that}.options.selectors.close", "{that}.selectedTaxonId"],
-            /* TODO: Materialise all delegates! */
-            func: (container, close, selectedTaxonId) => container.on("click", close, () => selectedTaxonId.value = null)
-        }
-    }
-});
 
 maxwell.filterRegionObs = function (obsRows, region) {
     return obsRows.filter(row => row.Community === region);
