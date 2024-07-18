@@ -7,7 +7,7 @@ h2 {
 }
 
 .main-container h2 {
-    margin-bottom: 2rem;
+    margin-bottom: 1.1rem;
     text-align: center;
 }
 
@@ -38,7 +38,7 @@ h2 {
 .mxcw-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 10rem)
+    height: calc(100vh - 8rem)
 }
 
 .mxcw-container ::-webkit-scrollbar {
@@ -127,7 +127,7 @@ h2 {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
-    height: 40%;
+    height: 50%;
     transition-property: height;
     transition-duration: 800ms;
     position: relative;
@@ -136,9 +136,9 @@ h2 {
 .mxcw-content-holder {
     display: flex;
     flex-direction: column;
-    height: 60%;
+    height: 50%;
     font-size: 18px;
-    padding: 1rem;
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
     align-items: center;
     transition-property: height;
     transition-duration: 800ms;
@@ -177,6 +177,7 @@ h2 {
 .section-button-desc {
     display: none;
     position: absolute;
+    z-index: 50;
     border: solid 1px black;
     background-color: white;
 }
@@ -316,7 +317,7 @@ body .mx-header ::-webkit-scrollbar-thumb {
 }
 
 .imerss-panel-dataPanel {
-    padding: 1rem;
+    padding: 0 1rem 1rem 1rem;
 }
 
 /* Technique from https://www.w3schools.com/howto/howto_css_responsive_iframes.asp */

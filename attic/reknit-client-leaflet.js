@@ -279,6 +279,19 @@ maxwell.decodeLeafletWidgetCall = function (options, call) {
     }
 };
 
+// From https://gis.stackexchange.com/questions/31951/showing-popup-on-mouse-over-not-on-click-using-leaflet
+maxwell.hoverPopup = function (layer, paneOptions) {
+    const mouseHandler = function (ev) {
+        layer.openPopup(ev.latlng);
+        console.log("Open popup for pane " + paneOptions.pane);
+    };
+    layer.on("mouseover", mouseHandler);
+    layer.on("mousemove", mouseHandler);
+    layer.on("mouseout", function () {
+        this.closePopup();
+    });
+};
+
 
 // Allocate a polygonal leaflet call into a pane or subpane
 maxwell.assignPolyToPane = function (rawPaneHandler, callArgs, polyMethod, paneInfo) {

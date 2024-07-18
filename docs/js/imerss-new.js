@@ -16,7 +16,7 @@ var hortis = fluid.registerNamespace("hortis");
 
 // TODO: Hoist this into some kind of core library
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
-var {effect, computed, batch} = preactSignalsCore;
+var {effect, batch} = preactSignalsCore;
 
 fluid.defaults("hortis.bareResourceLoader", {
     gradeNames: "fluid.component",
@@ -179,20 +179,6 @@ hortis.wireObsFilters = function (that) {
     effect( () => that.allOutput.value = prevOutput.value);
 };
 
-// In indeterminate state, add p-is-indeterminate to div state
-// In indeterminate state remove mdi-check from i
-
-hortis.rowCheckbox = function (rowid) {
-    return `
-    <span class="pretty p-icon">
-      <input type="checkbox" class="checklist-check" ${rowid}/>
-      <span class="state p-success">
-        <i class="icon mdi mdi-check"></i>
-        <label></label>
-      </span>
-    </span>`;
-};
-
 hortis.taxonTooltipTemplate =
 `<div class="imerss-tooltip">
     <div class="imerss-photo" style="background-image: url(%imgUrl)"></div>
@@ -317,12 +303,13 @@ fluid.defaults("hortis.checkbox", {
 });
 
 hortis.checkbox.valueToDom = function (value, node) {
-    const state = value ? hortis.SELECTED : hortis.UNSELECTED;
-    node.checked = state === hortis.SELECTED;
-    node.indeterminate = state === hortis.INDETERMINATE;
+    const state = value ? "selected" : "unselected";
+    node.checked = state === "selected";
+    // State currently unused
+    node.setAttribute("indeterminate", state === "indeterminate");
     const holder = node.closest(".p-icon");
     const ui = holder.querySelector(".icon");
-    $(ui).toggleClass("mdi-check", state !== hortis.INDETERMINATE);
+    $(ui).toggleClass("mdi-check", state !== "indeterminate");
 };
 
 hortis.checkbox.listenCheck = function (that) {
@@ -462,7 +449,7 @@ fluid.defaults("hortis.layoutHolder", {
         historyIndex: "@expand:signal(0)",
 
         rootId: "@expand:signal({that}.options.rootId)",
-        rowFocus: "@expand:signal({})", // non-taxon based selection external to the checklist, e.g. incoming from a map?
+        rowFocus: "@expand:signal({})", // non-taxon based selection external to the checklist, e.g. derived from filtered Obs
         rowSelection: "@expand:signal({})", // taxon-based selection from the checklist - will be subset of rowFocus
 
         selectedId: "@expand:signal(null)",
@@ -524,14 +511,14 @@ hortis.updateBounds = function (bounds, lat, long) {
     bounds[1][1] = Math.max(bounds[1][1], long);
 };
 
-hortis.expandBounds = function (bounds, factor) {
-    const width = bounds[1][1] - bounds[0][1];
-    const height = bounds[1][0] - bounds[0][0];
-    const he = width * factor;
-    const ve = height * factor;
-    if (width < 360) {
-        bounds[0][0] -= ve; bounds[0][1] -= he;
-        bounds[1][0] += ve; bounds[1][1] += he;
+hortis.expandBounds = function (bounds, factor, latMin, longMin) {
+    const longSpan = bounds[1][1] - bounds[0][1];
+    const latSpan = bounds[1][0] - bounds[0][0];
+    const longD = Math.max(longSpan * factor, longMin / 2);
+    const latD = Math.max(latSpan * factor, latMin / 2);
+    if (longSpan < 360) {
+        bounds[1][1] += longD; bounds[0][1] -= longD;
+        bounds[1][0] += latD; bounds[0][0] -= latD;
     }
 };
 
@@ -625,6 +612,8 @@ hortis.libreMap.natureStops = [
 
 // TODO: Convert into subcomponent, possibly of something completely different - we may want one layer for each map, etc.
 fluid.defaults("hortis.libreMap.withObsGrid", {
+    gradeNames: ["hortis.withTooltip"],
+    tooltipKey: "hoverCell",
     fillStops: hortis.libreMap.viridisStops,
     fillOpacity: 0.7,
     outlineColour: "black",
@@ -632,10 +621,53 @@ fluid.defaults("hortis.libreMap.withObsGrid", {
         // TODO: "Trundling dereferencer" in the framework
         gridBounds: "@expand:fluid.derefSignal({obsQuantiser}.grid, bounds)",
         updateObsGrid: "@expand:fluid.effect(hortis.libreMap.updateObsGrid, {that}, {obsQuantiser}, {obsQuantiser}.grid, {that}.mapLoaded)",
-        fitBounds: "@expand:fluid.effect(hortis.libreMap.fitBounds, {that}, {that}.gridBounds, {that}.mapLoaded)"
+        fitBounds: "@expand:fluid.effect(hortis.libreMap.fitBounds, {that}, {that}.gridBounds, {that}.mapLoaded)",
+        hoverCell: "@expand:signal(null)"
+    },
+    invokers: {
+        // Need to override renderTooltip
+    },
+    listeners: {
+        "onCreate.bindGridSelect": "hortis.libreMap.bindGridSelect({that})"
     }
 });
 
+
+
+hortis.capitalize = function (string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+hortis.renderTaxonTooltip = function (that, hoverId) {
+    const row = that.rowById.value[hoverId];
+    const terms = {
+        imgUrl: row.iNaturalistTaxonImage || ""
+    };
+    if (row.rank) {
+        terms.taxonRank = hortis.capitalize(row.rank);
+    } else {
+        terms.taxonRank = "Species";
+    }
+    const names = [(row.taxonName || row.iNaturalistTaxonName), row.commonName, row.hulqName].filter(name => name);
+    terms.taxonNames = names.join(" / ");
+    return fluid.stringTemplate(hortis.taxonTooltipTemplate, terms);
+};
+
+// cf. hortis.libreMap.bindRegionSelect in reknit-client.js
+hortis.libreMap.bindGridSelect = function (that) {
+    const map = that.map;
+
+    map.on("mousemove", (e) => {
+        const features = map.queryRenderedFeatures(e.point);
+        const visibleFeatures = features.filter(feature => feature.properties.cellId);
+        that.hoverEvent = e.originalEvent;
+        const cellId = visibleFeatures[0]?.properties.cellId || null;
+        that.hoverCell.value = cellId;
+        map.getCanvas().style.cursor = cellId ? "default" : "";
+    });
+
+    map.getCanvas().addEventListener("mouseleave", () => hortis.clearAllTooltips(that));
+};
 
 // GeoJSON-style (long, lat) polygon traversed anticlockwise
 hortis.libreMap.rectFromCorner = function (lat, long, latres, longres) {
@@ -663,6 +695,7 @@ hortis.libreMap.obsGridFeature = function (map, obsQuantiser, grid) {
                     coordinates: [hortis.libreMap.rectFromCorner(lat, long, latres, longres)]
                 },
                 properties: {
+                    cellId: key,
                     obsprop: bucket.count / grid.maxCount
                 }
             };
@@ -826,7 +859,8 @@ hortis.obsQuantiser.indexObs = function (that, rows, latRes, longRes) {
     if (rows.length === 0) {
         grid.bounds = [...that.maxBounds.value];
     }
-    hortis.expandBounds(grid.bounds, 0.1); // mapBox fitBounds are a bit tight
+
+    hortis.expandBounds(grid.bounds, 0.1, latRes * 6, longRes * 6); // mapBox fitBounds are a bit tight
 
     const delay = Date.now() - now;
     fluid.log("Gridded " + rows.length + " rows in " + delay + " ms: " + 1000 * (delay / rows.length) + " us/row");
