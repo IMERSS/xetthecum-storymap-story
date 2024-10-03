@@ -44,7 +44,7 @@ h2 {
 .mxcw-container ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: var(--imerss-scrollbar-width);
-    background-color: #eee
+    background-color: revert;
 }
 
 .mxcw-container ::-webkit-scrollbar-thumb {

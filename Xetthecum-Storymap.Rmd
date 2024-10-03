@@ -68,7 +68,8 @@ introMap
 <div class="iframe-container">
 <iframe src="https://www.youtube.com/embed/XWTrRw38PuQ?si=bZnG3F_flXePUCab" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
-<audio controls src="audio/cavesRecording.mp3" loop="true"></audio>
+<p>Listen to the Caves:</p>
+<audio controls src="audio/cavesRecording.mp3" loop="true" title="Listen to the Caves"></audio>
 </div>
 
 ## Land Acknowledgement
@@ -275,7 +276,8 @@ greigMap
 <div class="iframe-container">
 <iframe src="https://www.youtube.com/embed/AAdwf8mGWyE?si=w6oC687E_8us0x10" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
-<audio controls src="audio/greigRecording.mp3" loop="true"></audio>
+<p>Listen to the Creek:</p>
+<audio controls src="audio/greigRecording.mp3" loop="true" title="Listen to the Creek"></audio>
 </div>
 
 ## Xatsa’ / Laughlin Lake

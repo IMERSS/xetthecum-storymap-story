@@ -1,7 +1,7 @@
 {
-    "name": "xetthecum-storymap-scrolly",
+    "name": "xetthecum-storymap-story",
     "description": "Howe Sound Biosphere Vegetation Analysis Storymapping in R",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "author": "IMERSS, Transition Salt Spring",
     "scripts": {
         "lint": "fluid-lint-all",
@@ -26,7 +26,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/IMERSS/xetthecum-storymap-scrolly"
+        "url": "https://github.com/IMERSS/xetthecum-storymap-story"
     },
     "engines": {
         "node": ">=14.0.0"

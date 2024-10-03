@@ -1,5 +1,5 @@
 "use strict";
-/* global HTMLWidgets, maplibregl, Plotly */
+/* global maplibregl, Plotly */
 
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var maxwell = fluid.registerNamespace("maxwell");
@@ -336,7 +336,7 @@ fluid.defaults("hortis.libreMap", {
         }
     },
     members: {
-        map: "@expand:hortis.libreMap.make({that}.container.0, {that}.options.mapOptions, {that}.mapLoaded, {that}.loadFillPatterns)",
+        map: "@expand:hortis.libreMap.make({that}.container.0, {that}.options.mapOptions, {that}.options.zoomDuration, {that}.mapLoaded, {that}.loadFillPatterns)",
         layerToLabel: "@expand:hortis.libreMap.layerToLabel({that}.options.mapOptions.style.layers)",
         mapLoaded: "@expand:signal()",
         hasBounds: false,
@@ -369,6 +369,26 @@ fluid.defaults("hortis.libreMap", {
         "onCreate.bindRegionSelect": "hortis.libreMap.bindRegionSelect({that})"
     }
 });
+
+// TODO: Consolidate with imerss-new.js hortis.libreMap which we currently override - this initialisation
+// needs to be eventised somehow
+hortis.libreMap.make = function (container, mapOptions, zoomDuration, mapLoaded, loadFillPatterns) {
+    const emptyOptions = fluid.copy(fluid.defaults("hortis.libreMap").mapOptions);
+    const map = new maplibregl.Map({container, ...emptyOptions});
+    // Very long-standing bugs with mapbox load event: https://github.com/mapbox/mapbox-gl-js/issues/6707
+    // and https://github.com/mapbox/mapbox-gl-js/issues/9779
+    map.on("load", async function () {
+        console.log("Map loaded");
+        await loadFillPatterns();
+        // Have to do this after fill patterns are loaded otherwise images are not resolved
+        map.setStyle(mapOptions.style);
+        map.once("styledata", () => {
+            mapLoaded.value = 1;
+        });
+    });
+    hortis.libreMap.zoomControls(map, zoomDuration);
+    return map;
+};
 
 maxwell.paneToRegion = function (storyPage, map, activePane) {
     const paneHandler = maxwell.paneHandlerForIndex(storyPage, activePane);
@@ -416,28 +436,6 @@ hortis.libreMap.loadFillPatterns = function (map, fillPatternPath, fillPatterns)
         // Or maybe in here, looks very different in libre: https://github.com/maplibre/maplibre-gl-js/blob/main/src/render/draw_fill.ts#L112
         map.map.addImage(fillPattern, image.data, {pixelRatio: 6});
     });
-};
-
-hortis.libreMap.make = function (container, mapOptions, mapLoaded, loadFillPatterns) {
-    const emptyOptions = fluid.copy(fluid.defaults("hortis.libreMap").mapOptions);
-    const map = new maplibregl.Map({container, ...emptyOptions});
-    // Very long-standing bugs with mapbox load event: https://github.com/mapbox/mapbox-gl-js/issues/6707
-    // and https://github.com/mapbox/mapbox-gl-js/issues/9779
-    map.on("load", async function () {
-        console.log("Map loaded");
-        await loadFillPatterns();
-        // Have to do this after fill patterns are loaded otherwise images are not resolved
-        map.setStyle(mapOptions.style);
-        map.once("styledata", () => {
-            mapLoaded.value = 1;
-        });
-    });
-    map.addControl(new maplibregl.NavigationControl({showCompass: false}));
-    // disable map rotation using right click + drag
-    map.dragRotate.disable();
-    // disable map rotation using touch rotation gesture
-    map.touchZoomRotate.disableRotation();
-    return map;
 };
 
 fluid.defaults("hortis.libreMap.inStoryPage", {
@@ -625,8 +623,8 @@ fluid.defaults("maxwell.storyPage", {
 // Convert the HTMLWidgets postRenderHandler into a promise
 maxwell.HTMLWidgetsPostRender = function () {
     const togo = fluid.promise();
-    if (HTMLWidgets.addPostRenderHandler) {
-        HTMLWidgets.addPostRenderHandler(function () {
+    if (window.HTMLWidgets?.addPostRenderHandler) {
+        window.HTMLWidgets.addPostRenderHandler(function () {
             togo.resolve(true);
         });
     } else {

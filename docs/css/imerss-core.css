@@ -18,6 +18,82 @@
     background-color: #A8A8A8;
 }
 
+#inline-svg {
+    height: 0px;
+    position: absolute;
+}
+
+.imerss-legend-preview {
+    width: 18px;
+    height: 18px;
+    margin: 2px;
+    border: 1px solid gray;
+}
+
+.imerss-legend-label {
+    display: inline-block;
+    width: 8rem;
+    margin-left: 6px;
+    position: relative;
+    top: 1px;
+}
+
+.imerss-legend-cell-size {
+    align-self: center;
+    font-size: 12px;
+    padding-top: 5px;
+}
+
+.imerss-legend {
+    width: 10rem;
+    margin-left: auto;
+    margin-right: 10px;
+    background: #555e;
+    pointer-events: all;
+    display: flex;
+    flex-direction: column;
+
+    /* This section taken from R Leaflet's ".info" */
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    /* background: #555; */
+    color: #eee;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    /* Solution from https://stackoverflow.com/a/21335440 */
+    visibility: visible;
+    transition-property: opacity, visibility;
+    transition-duration: 400ms;
+}
+
+.imerss-legend-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Styling for polygon draw */
+
+/* Notion from https://stackoverflow.com/questions/6312067/border-radius-background-color-cropped-border */
+.maplibregl-ctrl-group {
+    overflow: hidden;
+}
+
+.mapbox-gl-draw_ctrl-draw-btn:hover {
+    background-color: #eee;
+}
+
+.mapbox-gl-draw_ctrl-draw-btn.active {
+    background-color: #ccc;
+}
+
+.mapbox-gl-draw_ctrl-draw-btn.active:hover {
+    background-color: #ddd;
+}
+
+.mode-draw_polygon .maplibregl-canvas-container.maplibregl-interactive {
+    cursor: crosshair;
+}
 
 /* Styling for checkboxes with indeterminate value */
 /* Grabbed definition for default "checked" to apply to indeterminate checkboxes */
@@ -67,6 +143,8 @@
 .imerss-taxa {
     display: flex;
     flex-direction: row;
+    /** Grabbed from Xetthecum's style produced by bootstrap */
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 
@@ -104,6 +182,19 @@
     min-width: 320px;
 }
 
+/** Give some space but absorb space of empty key */
+.taxonDisplay-value.taxonDisplay-wikipediaSummary {
+    display: block;
+    margin-top: -12px;
+}
+
+.imerss-taxonDisplay p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    text-indent: -2em;
+    padding-left: 2em
+}
+
 .taxonDisplay-row {
     padding: 10px 8px 6px 8px;
     border-bottom: #ccc 2px solid;
@@ -114,15 +205,6 @@
 /* unindent nested rows a bit */
 .taxonDisplay-row .taxonDisplay-row {
     margin-left: -0.5rem;
-}
-
-.taxonDisplay-row.taxonDisplay-expandable-remainder.taxonDisplay-runon-remainder :last-child {
-    margin-bottom: -0.2rem;
-}
-
-/* No idea why we do this, but we need to undo it for imerss-media-name */
-.taxonDisplay-row.taxonDisplay-expandable-remainder.taxonDisplay-runon-remainder :first-child {
-    margin-top: -0.5rem;
 }
 
 .taxonDisplay-row.taxonDisplay-expandable-remainder.taxonDisplay-runon-remainder .imerss-media-name {
@@ -196,6 +278,11 @@
 .taxonDisplay-expandable-remainder.taxonDisplay-runon-remainder {
     padding-left: 8px; /* Back to value in taxonDisplay-row */
     padding-right: 0; /* Avoid right gap */
+    padding-top: 0;
+}
+
+.taxonDisplay-group > p {
+    display: none;
 }
 
 .taxonDisplay-runon-remainder > .taxonDisplay-key {
@@ -274,6 +361,98 @@
 }
 
 
+.imerss-filter-panel {
+    padding: 2px 1rem 2px 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.imerss-filter {
+    padding: 2px 0 2px;
+    border-bottom: 1px solid #dbe3e7;
+}
+
+.imerss-filters {
+    height: 100%;
+    width: 20rem;
+    overflow-y: auto;
+    padding-right: 0.5em;
+}
+
+.imerss-filter-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.imerss-reset-filter {
+    cursor: pointer;
+    margin-right: 5px;
+    padding: 2px;
+    border-radius: 6px;
+}
+
+.imerss-reset-filter:hover {
+    /* outline: 1px solid gray;*/
+    background: #d0d7de33;
+}
+
+.imerss-record-reporter {
+    padding-top: 2px;
+}
+
+.imerss-filter-title {
+    font-size: smaller;
+}
+
+.imerss-filter-body {
+    padding-left: 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.imerss-filter-clear {
+    background-image: url(../img/x-circle-close.svg);
+    background-size: 20px;
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.imerss-filter-clear.imerss-hidden {
+    display: none;
+}
+
+.imerss-filters .autocomplete__hint, .imerss-filters .autocomplete__input, .imerss-filters .autocomplete__option {
+    font-size: 16px;
+    line-height: 1.25;
+}
+
+.imerss-filters .autocomplete__input--default {
+    padding: 2px 4px 2px 4px;
+    border-width: 1px;
+    width: 15rem;
+}
+
+.imerss-region-filter-rows {
+    display: flex;
+    font-size: smaller;
+    flex-direction: column;
+    overflow-y: auto;
+    align-items: end;
+}
+
+.imerss-filter-row {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 100%;
+}
+
+
 #fli-tab-checklist.ui-tabs-panel, #fli-tab-simple-checklist.ui-tabs-panel {
     padding: 0;
 }
@@ -295,9 +474,46 @@
     overflow: auto;
 }
 
+/** These "panels" currently only exist in the old-style jQuery tabbed panes. This definition is here to make
+ * Xetthecum phase II panel labels show up in the right place but might be helpful in future.
+ * These two uses of "imerss-panel-label" (in Xetthecum and BBEAS) are unconnected.
+ */
+.imerss-panel {
+    position: relative;
+}
+
 .imerss-panel-label {
     font-size: 1.5rem;
     padding-bottom: 5px;
+}
+
+.imerss-copy-checklist {
+    display: inline-block;
+    fill: #636c76;
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-top: 5px;
+    margin-top: -5px;
+    /* margin-top: -10px; */
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    border-radius: 6px;
+    position: relative;
+    top: 3px;
+}
+
+.imerss-copy-checklist-copied {
+    fill: #1a7f37;
+}
+
+.imerss-copy-checklist svg {
+    /** Ripped off from GitHub so positioning is a little wonky **/
+    vertical-align: top;
+}
+
+.imerss-copy-checklist:hover {
+    background: #d0d7de33;
 }
 
 .imerss-checklist {
@@ -353,8 +569,10 @@
 }
 
 li.checklist-row {
-    margin-left: 10px;
-    padding-left: 20px;
+    /** TODO: We put in margin-left: 10px and padding-left: 20px for Xetthecum but this ruins highlighting - figure
+     * out why we did this
+     */
+    padding-left: 30px;
     text-indent: -30px;
 }
 
@@ -365,9 +583,10 @@ li.checklist-row {
 .imerss-checklist-up {
     width: 1.5rem;
     height: 1.5rem;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
     background-image: url(../img/up-arrow.svg);
     background-size: cover;
-    margin-left: -0.5rem;
     margin-bottom: 0.2rem;
 }
 
@@ -425,5 +644,19 @@ li.checklist-row {
 }
 
 .checklist-annote {
+    font-style: normal
+}
+
+/* AS edict of 25th August 2024 - bold for phylum and kingdom names */
+
+.checklist-rank-phylum > .checklist-scientific-name {
+    font-weight: bold
+}
+
+.checklist-rank-kingdom > .checklist-scientific-name {
+    font-weight: bold
+}
+
+.imerss-checklist-holder .checklist-common-name {
     font-style: normal
 }

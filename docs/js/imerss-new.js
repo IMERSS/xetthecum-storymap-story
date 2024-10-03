@@ -143,41 +143,6 @@ hortis.vizLoader.bindResources = async function (that) {
     });
 };
 
-fluid.defaults("hortis.filter", {
-    // gradeNames: "fluid.component",
-    members: {
-        filterInput: null, // must be overridden
-        filterOutput: null // must be overridden
-    },
-    invokers: {
-        // doFilter
-    }
-});
-
-fluid.defaults("hortis.filters", {
-    // gradeNames: "fluid.component",
-    listeners: {
-        "onCreate.wireFilters": "hortis.wireObsFilters"
-    },
-    members: {
-        allInput: "{vizLoader}.obsRows",
-        allOutput: "@expand:signal()"
-    }
-});
-
-hortis.wireObsFilters = function (that) {
-    const filterComps = fluid.queryIoCSelector(that, "hortis.filter", true);
-    let prevOutput = that.allInput;
-
-    filterComps.forEach(filterComp => {
-        filterComp.filterInput = prevOutput;
-        filterComp.filterOutput = fluid.computed(filterComp.doFilter, filterComp.filterInput, filterComp.filterState);
-        prevOutput = filterComp.filterOutput;
-    });
-    // This is the bit we can't wire up with a computed - it would be great to be able to "wire" the pre-existing
-    // allOutput.value onto prevOutput.value after it had been constructed
-    effect( () => that.allOutput.value = prevOutput.value);
-};
 
 hortis.taxonTooltipTemplate =
 `<div class="imerss-tooltip">
@@ -271,6 +236,7 @@ fluid.defaults("hortis.withTooltip", {
         renderTooltip: "fluid.notImplemented"
     },
     members: {
+        // hoverEvent applied manually
         subscribeHover: "@expand:hortis.subscribeHover({that})"
     }
 });
@@ -534,24 +500,83 @@ fluid.defaults("hortis.libreMap", {
         }
     },
     members: {
-        map: "@expand:hortis.libreMap.make({that}.container.0, {that}.options.mapOptions, {that}.mapLoaded)",
+        map: "@expand:hortis.libreMap.make({that}.container.0, {that}.options.mapOptions, {that}.options.zoomDuration, {that}.mapLoaded)",
         mapLoaded: "@expand:signal()"
     }
+
 });
+
+
+const initNavigationControl = function (options) {
+    this.options = options;
+    this._container = fluid.h("div", {class: "maplibregl-ctrl maplibregl-ctrl-group"});
+    this._zoomInButton = this._createButton("maplibregl-ctrl-zoom-in", (e) =>
+        this._map.zoomIn({
+            duration: options.zoomDuration,
+            essential: true
+        }, {originalEvent: e})
+    );
+    this._zoomInButton.appendChild(fluid.h("span", {
+        class: "maplibregl-ctrl-icon",
+        "aria-hidden": true
+    }));
+    this._zoomOutButton = this._createButton("maplibregl-ctrl-zoom-out", (e) =>
+        this._map.zoomOut({
+            duration: options.zoomDuration,
+            essential: true
+        }, {originalEvent: e})
+    );
+    this._zoomOutButton.appendChild(fluid.h("span", {
+        class: "maplibregl-ctrl-icon",
+        "aria-hidden": true
+    }));
+    // These two methods need to be copied in because bizarrely the ES6 class -> prototype mangling process sticks these
+    // into the constructor - perhaps this is part of TS
+    this._updateZoomButtons = () => {
+        const zoom = this._map.getZoom();
+        const isMax = zoom === this._map.getMaxZoom();
+        const isMin = zoom === this._map.getMinZoom();
+        this._zoomInButton.disabled = isMax;
+        this._zoomOutButton.disabled = isMin;
+        this._zoomInButton.setAttribute("aria-disabled", isMax.toString());
+        this._zoomOutButton.setAttribute("aria-disabled", isMin.toString());
+    };
+    this._setButtonTitle = (button, title) => {
+        const str = this._map._getUIString(`NavigationControl.${title}`);
+        button.title = str;
+        button.setAttribute("aria-label", str);
+    };
+};
+
+const makeNavigationControl = function (options) {
+    const inst = Object.create(maplibregl.NavigationControl.prototype);
+    initNavigationControl.bind(inst)(options);
+    return inst;
+};
+
+
+hortis.libreMap.zoomControls = function (map, zoomDuration) {
+    map.addControl(makeNavigationControl({showCompass: false, showZoom: true, zoomDuration}));
+    // disable map rotation using right click + drag
+    map.dragRotate.disable();
+    // disable map rotation using touch rotation gesture
+    map.touchZoomRotate.disableRotation();
+};
+
+hortis.libreMap.make = function (container, mapOptions, zoomDuration, mapLoaded) {
+    const map = new maplibregl.Map({container, ...mapOptions});
+    map.on("load", function () {
+        console.log("Map loaded");
+        mapLoaded.value = 1;
+    });
+    hortis.libreMap.zoomControls(map, zoomDuration);
+    return map;
+};
 
 fluid.defaults("hortis.libreMap.withTiles", {
     // TODO: Syntax for throwing away arguments
     addTiles: "@expand:fluid.effect(hortis.libreMap.addTileLayers, {that}.map, {that}.options.tileSets, {that}.mapLoaded)"
 });
-
-hortis.libreMap.make = function (container, mapOptions, mapLoaded) {
-    const togo = new maplibregl.Map({container, ...mapOptions});
-    togo.on("load", function () {
-        console.log("Map loaded");
-        mapLoaded.value = 1;
-    });
-    return togo;
-};
 
 fluid.defaults("hortis.libreMap.streetmapTiles", {
     tileSets: {
@@ -617,22 +642,89 @@ fluid.defaults("hortis.libreMap.withObsGrid", {
     fillStops: hortis.libreMap.viridisStops,
     fillOpacity: 0.7,
     outlineColour: "black",
+    legendStops: 5,
     members: {
         // TODO: "Trundling dereferencer" in the framework
         gridBounds: "@expand:fluid.derefSignal({obsQuantiser}.grid, bounds)",
         updateObsGrid: "@expand:fluid.effect(hortis.libreMap.updateObsGrid, {that}, {obsQuantiser}, {obsQuantiser}.grid, {that}.mapLoaded)",
         fitBounds: "@expand:fluid.effect(hortis.libreMap.fitBounds, {that}, {that}.gridBounds, {that}.mapLoaded)",
-        hoverCell: "@expand:signal(null)"
+
+        memoStops: "@expand:fluid.colour.memoStops({that}.options.fillStops, 256)",
+        // cf. maxwell.legendKey.addLegendControl in reknit-client.js - produces a DOM node immediately, renders as effect
+        control: "@expand:hortis.libreMap.withObsGrid.addLegendControl({map}, {obsQuantiser}.grid, {that}.gridVisible)",
+
+        hoverCell: "@expand:signal(null)",
+        gridVisible: "@expand:signal(true)"
     },
     invokers: {
-        // Need to override renderTooltip
+        drawObsGridLegend: "hortis.libreMap.withObsGrid.drawLegend({map}, {obsQuantiser}.grid, {that}.gridVisible)"
+        // Client needs to override renderTooltip
     },
     listeners: {
         "onCreate.bindGridSelect": "hortis.libreMap.bindGridSelect({that})"
     }
 });
 
+fluid.registerNamespace("hortis.legend");
 
+hortis.legend.rowTemplate = `
+<div class="imerss-legend-row">
+    <span class="imerss-legend-icon"></span>
+    <span class="imerss-legend-preview %previewClass" style="%previewStyle"></span>
+    <span class="imerss-legend-label">%keyLabel</span>
+</div>`;
+
+// Very similar to maxwell.legendKey.addLegendControl and in practice generic, see if we can fold up - parameterised by
+// rendering function, whatever signal args it has, and also visibility func
+hortis.libreMap.withObsGrid.addLegendControl = function (map) {
+    const control = map.drawObsGridLegend();
+    control.onAdd = () => control.container;
+    control.onRemove = () => {
+        console.log("Cleaning up legend attached to ", control.container);
+        control.cleanup();
+    };
+
+    map.map.addControl(control, "bottom-right");
+
+    return control;
+};
+
+hortis.libreMap.withObsGrid.drawLegend = function (map, gridSignal, gridVisibleSignal) {
+    const quant = map.obsQuantiser;
+    const container = document.createElement("div");
+    container.classList.add("imerss-legend");
+    const cstops = map.options.legendStops;
+    const stops = fluid.iota(cstops);
+    // Proportions from 0 to 1 at which legend entries are generated
+    const legendStopProps = fluid.iota(cstops + 1).map(stop => stop / cstops);
+
+    const renderLegend = function (grid) {
+        // TODO: parameterise what the legend is with respect to
+        const propToLevel = prop => Math.floor(prop * grid.maxObsCount);
+        const regionMarkupRows = stops.map(function (stop) {
+            const midProp = (legendStopProps[stop] + legendStopProps[stop + 1]) / 2;
+            const colour = fluid.colour.lookupStop(map.memoStops, midProp);
+            const label = propToLevel(legendStopProps[stop]) + " - " + propToLevel(legendStopProps[stop + 1]);
+            return fluid.stringTemplate(hortis.legend.rowTemplate, {
+                previewStyle: "background-color: " + colour,
+                keyLabel: label
+            });
+        });
+        const longRes = quant.longResolution.value;
+        const baseLat = quant.baseLatitude.value;
+        const longLen = Math.floor(longRes * hortis.longitudeLength(baseLat));
+
+        const markup = `<div class="imerss-legend-title">Observation count</div>` +
+            regionMarkupRows.join("\n") +
+            `<div class="imerss-legend-cell-size">Cell size: ${longLen}m</div>`;
+        container.innerHTML = markup;
+    };
+
+    fluid.effect(renderLegend, gridSignal);
+    fluid.effect(isVisible => hortis.toggleClass(container, "imerss-hidden", !isVisible), gridVisibleSignal);
+
+    return {container};
+};
 
 hortis.capitalize = function (string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -696,7 +788,7 @@ hortis.libreMap.obsGridFeature = function (map, obsQuantiser, grid) {
                 },
                 properties: {
                     cellId: key,
-                    obsprop: bucket.count / grid.maxCount
+                    obsprop: bucket.obsCount / grid.maxObsCount
                 }
             };
         })
@@ -789,12 +881,12 @@ fluid.registerNamespace("hortis.obsQuantiser");
 hortis.obsQuantiser.initGrid = function () {
     const grid = {};
     grid.bounds = hortis.initBounds();
-    grid.maxCount = 0;
+    grid.maxObsCount = 0;
     grid.buckets = {}; // hash of id to {count, byId}
     return grid;
 };
 
-hortis.gridBucket = () => ({count: 0, byTaxonId: {}});
+hortis.gridBucket = () => ({obsCount: 0, byTaxonId: {}});
 
 hortis.indexObs = function (bucket, row, index) {
     // TODO: some kind of mapping for standard rows, lightweight version of readCSVWithMap - current standard is for
@@ -852,8 +944,8 @@ hortis.obsQuantiser.indexObs = function (that, rows, latRes, longRes) {
         if (!bucket) {
             bucket = grid.buckets[coordIndex] = that.newBucket();
         }
-        bucket.count++;
-        grid.maxCount = Math.max(grid.maxCount, bucket.count);
+        bucket.obsCount++;
+        grid.maxObsCount = Math.max(grid.maxObsCount, bucket.obsCount);
         that.indexObs(bucket, row, index);
     });
     if (rows.length === 0) {

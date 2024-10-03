@@ -86,6 +86,10 @@ hortis.rowCheckbox = function (id, state) {
     </span>`;
 };
 
+hortis.resetChecks = function (parent) {
+    [...parent.querySelectorAll(".pretty input")].forEach(input => input.checked = false);
+};
+
 hortis.checklistItem = function (entry, options, state) {
     const record = entry.row,
         id = record.id;
@@ -229,7 +233,8 @@ fluid.defaults("hortis.checklist", {
             args: ["{that}", "{that}.dom.checklist", "{that}.idToState.value", "{that}.rootEntry.value", "{that}.selectedId.value"]
         },
         check: "hortis.checklist.check({that}, {arguments}.0, {arguments}.1)",
-        toggleFold: "hortis.checklist.toggleFold({that}, {arguments}.0)"
+        toggleFold: "hortis.checklist.toggleFold({that}, {arguments}.0)",
+        reset: "hortis.checklist.reset({that})"
     },
     members: {
         // Can't return 2 signals from computeRootEntry, do this collaterally
@@ -246,11 +251,12 @@ fluid.defaults("hortis.checklist", {
         rowSelection: "@expand:fluid.computed(hortis.checklist.checksToSelection, {that}.idToState)",
         subscribeChecks: "@expand:fluid.effect(hortis.checklist.subscribeChecks, {that}, {that}.idToStateUI)",
         subscribeSelected: "@expand:hortis.checklist.subscribeSelected({that}, {that}.selectedId, {that}.rowById)",
+        allLeaves: "@expand:fluid.computed(hortis.checklist.computeLeaves, {that}.idToEntry, {that}.rowSelection)",
         renderEffect: "@expand:fluid.effect(fluid.identity, {that}.idToState)"
     },
     listeners: {
         "onCreate.bindTaxonHover": "hortis.bindTaxonHover({that}, {layoutHolder})",
-        "onCreate.bindCheckboxClick": "hortis.checklist.bindCheckboxClick({that})"
+        "onCreate.bindCheckboxClick": "hortis.checklist.bindCheckboxClick({that}, {that}.dom.checklist)"
     }
 });
 
@@ -264,15 +270,97 @@ fluid.defaults("hortis.checklist.withOBA", {
     }
 });
 
-hortis.checklist.bindCheckboxClick = function (checklist) {
-    checklist.container.on("click", ".pretty input", function () {
+fluid.defaults("hortis.checklist.withCopy", {
+    selectors: {
+        copyButton: ".imerss-copy-checklist"
+    },
+    // copyButtonMessage
+    components: {
+        copyButton: {
+            type: "fluid.viewComponent",
+            container: "{that}.dom.copyButton",
+            options: {
+                gradeNames: "hortis.withTooltip",
+                tooltipKey: "tooltipKey",
+                members: {
+                    hovered: "@expand:signal(null)",
+                    inCopy: "@expand:signal(null)",
+                    tooltipKey: "@expand:fluid.computed(hortis.checklist.withCopy.deriveTooltipKey, {that}.hovered, {that}.inCopy)",
+                    inCopyEffect: "@expand:fluid.effect(hortis.checklist.withCopy.inCopyEffect, {that}.container.0, {that}.inCopy)"
+                },
+                invokers: {
+                    renderTooltip: "hortis.checklist.withCopy.renderTooltip({copyButton}, {hortis.checklist})",
+                    copyToClipboard: "hortis.checklist.withCopy.copyToClipboard({copyButton},{hortis.checklist})"
+                },
+                listeners: {
+                    "onCreate.bindHover": "hortis.checklist.withCopy.bindHover"
+                }
+            }
+        }
+    }
+});
+
+hortis.checklist.withCopy.bindHover = function (that) {
+    that.container.on("mouseenter", function (e) {
+        that.hoverEvent = e;
+        that.hovered.value = true;
+    });
+    that.container.on("mouseleave", function () {
+        that.hovered.value = null;
+    });
+    that.container.on("click", that.copyToClipboard);
+};
+
+hortis.checklist.withCopy.deriveTooltipKey = function (hovered, inCopy) {
+    return inCopy ? "inCopy" : hovered;
+};
+
+hortis.checklist.withCopy.inCopyEffect = function (container, inCopy) {
+    const node = container.querySelector("use");
+    if (inCopy) {
+        node.setAttribute("href", "#copy-check");
+        container.classList.add("imerss-copy-checklist-copied");
+    } else {
+        node.setAttribute("href", "#copy-clipboard");
+        container.classList.remove("imerss-copy-checklist-copied");
+    }
+};
+
+hortis.checklist.withCopy.renderTooltip = function (copyButton, checklist) {
+    if (copyButton.inCopy.value) {
+        return "Copied!";
+    } else {
+        const leaves = checklist.allLeaves.value;
+        const limit = 5;
+        const truncate = leaves.length > limit;
+        const message = fluid.stringTemplate(checklist.options.copyButtonMessage, {
+            rows: leaves.length
+        }) + ":\n" + (truncate ? [...leaves.slice(0, limit), "..."].join("\n") : leaves.join("\n"));
+        return message.replaceAll("\n", "<br/>");
+    }
+};
+
+hortis.checklist.withCopy.copyToClipboard = function (copyButton, checklist) {
+    copyButton.inCopy.value = true;
+    window.setTimeout(() => copyButton.inCopy.value = null, 2000);
+
+    const leaves = checklist.allLeaves.value.join("\n");
+    navigator.clipboard.writeText(leaves).then(function () {
+        console.log("Copying to clipboard was successful!");
+    }, function (err) {
+        console.error("Could not copy text: ", err);
+    });
+};
+
+hortis.checklist.bindCheckboxClick = function (checklist, checklistContainer) {
+    checklistContainer.on("click", ".pretty input", function () {
         const id = this.dataset.rowId;
         fluid.log("Checkbox clicked with row " + id);
         checklist.check(id, this.checked);
         // checklist.applier.change(["idToState", id], this.checked);
     });
 
-    checklist.container.on("click", ".checklist-fold-control.active", function () {
+    checklistContainer.on("click", ".checklist-fold-control.active", function () {
         const id = this.dataset.rowId;
         fluid.log("Fold clicked with row " + id);
         checklist.toggleFold(id);
@@ -342,6 +430,12 @@ hortis.checklist.check = function (checklist, id, checked) {
     });
 };
 
+hortis.checklist.reset = function (checklist) {
+    // TODO: Somehow the root entry itself is not populated
+    const rootId = checklist.rootEntry.value.children[0].row.id;
+    hortis.checklist.check(checklist, rootId, false);
+};
+
 hortis.checklist.toggleFold = function (checklist, id) {
     const idToStateUp = fluid.copy(checklist.idToStateUI.value);
     const state = idToStateUp[id];
@@ -387,6 +481,7 @@ hortis.checklist.computeRootEntry = function (that, rowById, rootId, filterTaxon
     };
     filteredEntries.forEach(indexEntry);
     // "Wouldn't it be good" if we could return 2 signals
+    // TODO: Problem - why don't we supply row: rootRow here as would be consistent?
     return {children: filteredEntries};
 };
 
@@ -486,4 +581,19 @@ hortis.checklist.checksToSelection = function (idToState) {
         }
     });
     return selected === 0 ? selectAll : selection;
+};
+
+hortis.checklist.computeLeaves = function (idToEntry, selection) {
+    const leaves = [];
+    const appendLeaves = function (id) {
+        const entry = idToEntry[id];
+        if (entry.children.length === 0) {
+            leaves.push(entry.row.iNaturalistTaxonName);
+        } else {
+            entry.children.forEach(child => appendLeaves(child.row.id));
+        }
+    };
+
+    Object.keys(selection).forEach(id => appendLeaves(id));
+    return leaves;
 };

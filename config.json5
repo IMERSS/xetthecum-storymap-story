@@ -116,14 +116,14 @@
         source: "%maxwell/node_modules/@imerss/inat-components/dist/standalone.min.js",
         target: "%maxwell/docs/js/inat-components-standalone.min.js"
     }, {
-        source: "%maxwell/node_modules/papaparse/papaparse.min.js",
-        target: "%maxwell/docs/js/papaparse.min.js"
-    }, {
         source: "%maxwell/src/css/*.css",
         target: "%maxwell/docs/css"
     }, {
         source: "%maxwell/src/js/client/*.js",
         target: "%maxwell/docs/js"
+    }, {
+        source: "%infusion/src/lib/jquery/core/js/jquery.js",
+        target: "%maxwell/docs/js/jquery.js"
     }, {
         source: "%imerss-bioinfo/docs/js/imerss-viz-lib.js",
         target: "%maxwell/docs/js/imerss-viz-lib.js"
@@ -133,11 +133,11 @@
         replaceSource: "\"sourceRoot\":\"../..\"",
         replaceTarget: "\"sourceRoot\":\"../../../bagatelle/\""
     }, {
-        source: "%imerss-bioinfo/docs/js/imerss-viz-new.js",
-        target: "%maxwell/docs/js/imerss-viz-new.js"
+        source: "%imerss-bioinfo/docs/js/imerss-viz-new-core.js",
+        target: "%maxwell/docs/js/imerss-viz-new-core.js"
     }, {
-        source: "%imerss-bioinfo/docs/js/imerss-viz-new.js.map",
-        target: "%maxwell/docs/js/imerss-viz-new.js.map",
+        source: "%imerss-bioinfo/docs/js/imerss-viz-new-core.js.map",
+        target: "%maxwell/docs/js/imerss-viz-new-core.js.map",
         replaceSource: "\"sourceRoot\":\"../..\"",
         replaceTarget: "\"sourceRoot\":\"../../../bagatelle/\""
     }, {
@@ -165,8 +165,8 @@
         source: "%imerss-bioinfo/docs/css/imerss-viz-lib.css",
         target: "%maxwell/docs/css/imerss-viz-lib.css"
     }, {
-        source: "%imerss-bioinfo/docs/css/imerss-core.css",
-        target: "%maxwell/docs/css/imerss-core.css"
+        source: "%imerss-bioinfo/docs/css/imerss-viz-new-core.css",
+        target: "%maxwell/docs/css/imerss-viz-new-core.css"
     }, {
         source: "%imerss-bioinfo/docs/css/xetthecum-core.css",
         target: "%maxwell/docs/css/xetthecum-core.css"
