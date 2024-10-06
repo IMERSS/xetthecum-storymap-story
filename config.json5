@@ -24,62 +24,62 @@
             },
             paneHandlers: {
                 Welcome: {
-                    type: "maxwell.taxonDisplayPane",
+                    type: "maxwell.xetthecumStoryPane",
                     hideLegend: true
                 },
                 Caves: {
-                    type: "maxwell.taxonDisplayPane",
+                    type: "maxwell.xetthecumStoryPane",
                     hideLegend: true
                 },
                 Respect: {
-                    type: "maxwell.taxonDisplayPane",
+                    type: "maxwell.xetthecumStoryPane",
                     hideLegend: true
                 },
                 Acknowledgment: {
-                    type: "maxwell.taxonDisplayPane",
+                    type: "maxwell.xetthecumStoryPane",
                     hideLegend: true
                 },
                 Xetthecum: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Cultural_Activities_pI: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Cultural_Activities_pII: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Cove_pI: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Cove_pII: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Delta_pI: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Delta_pII: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Eelgrass_pI: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Eelgrass_pII: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Greig: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Laughlin: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Community_Connections: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Future_Vision_pI: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Future_Vision_pII: {
-                    type: "maxwell.taxonDisplayPane"
+                    type: "maxwell.xetthecumStoryPane"
                 },
                 Forests: {
                     type: "maxwell.xetthecumEcologicalPane",

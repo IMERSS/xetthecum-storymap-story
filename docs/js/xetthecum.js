@@ -16,7 +16,7 @@ maxwell.paneHandler.instantiateLegends = function (paneHandler, map, regionLoade
     });
 };
 
-fluid.defaults("maxwell.taxonDisplayPane", {
+fluid.defaults("maxwell.xetthecumStoryPane", {
     gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay"],
     markupTemplate: "%resourceBase/html/imerss-viz-story-taxon.html",
     hideLegend: false,
@@ -29,6 +29,7 @@ fluid.defaults("maxwell.taxonDisplayPane", {
     listeners: {
         "onCreate.slingDataPane": "maxwell.paneHandler.slingDataPane({that})"
     },
+    contentClass: "imerss-story-pane",
     defaultPanel: "dataPanel"
 });
 
@@ -191,7 +192,7 @@ maxwell.listenReturnToMain = function (storyPage) {
 };
 
 maxwell.storyPage.constructRanges = function (storyPage) {
-    const storyPanes = fluid.queryIoCSelector(storyPage, "maxwell.taxonDisplayPane", true);
+    const storyPanes = fluid.queryIoCSelector(storyPage, "maxwell.xetthecumStoryPane", true);
     const regionPanes = fluid.queryIoCSelector(storyPage, "maxwell.xetthecumEcologicalPane", true);
 
     const toIndex = paneHandler => maxwell.paneKeyToIndex(paneHandler, storyPage);

@@ -132,6 +132,20 @@ audio {
     color: #F2FCD6;
 }
 
+.imerss-story-pane .mxcw-sectionColumn {
+    overflow-y: visible;
+}
+
+.imerss-story-pane .imerss-container {
+    overflow-y: visible;
+}
+
+.imerss-story-pane .mxcw-sectionInner {
+    overflow-y: auto;
+    /* Make sure inner items don't shrink to parent height */
+    align-items: start;
+}
+
 .mxcw-sectionColumn.mxcw-vizColumn ::-webkit-scrollbar-thumb {
     background-color: #5A5244;
 }
@@ -150,6 +164,10 @@ audio {
 
 .imerss-container a:hover {
     color: #F2FCD6;
+}
+
+.imerss-ecological-pane .section-button-desc {
+    color: #5A5244;
 }
 
 .mxcw-return-to-main {

@@ -98,7 +98,7 @@ h2 {
 .mxcw-sectionColumn.mxcw-vizColumn {
     overflow-y: visible;
     border: solid 1px black;
-    padding: 8px 8px 8px 0;
+    padding: 8px 4px 8px 0;
 }
 
 @media screen and ( max-width: 620px ) {
@@ -228,7 +228,8 @@ h2 {
 }
 
 .mxcw-content .section {
-    padding: 8px;
+    /* We've got the scrollbar at the right, eat into it a bit */
+    padding: 8px 0 8px 8px;
 }
 
 .mxcw-content img {
