@@ -5,9 +5,10 @@
         options: {
             template: "%maxwell/src/html/template.html",
             checkLinks: false,
+            vizColumn: "right",
             storyPageOptions: {
                 gradeNames: ["maxwell.storyPage.withPaneTaxon", "maxwell.storyPage.withSplitNavigation"],
-                mapFlavourGrade: "hortis.libreMap.withRegionLegend",
+                mapFlavourGrade: "maxwell.xetthecumMapGrade",
                 zoomDuration: 1500,
                 // Slow zooms for bigger transitions
                 slowZoomDuration: 5000,

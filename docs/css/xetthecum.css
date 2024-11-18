@@ -94,11 +94,6 @@ audio {
 
 /** Definitions for "section buttons in panel sides" **/
 
-.mxcw-section-nav {
-    position: absolute;
-    top: 5px;
-    width: calc(100% + 50px);
-}
 
 .mxcw-content-holder {
     background-color: var(--panel-background);
@@ -107,7 +102,6 @@ audio {
     min-width: 100%;
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
 .mxcw-sectionColumn.mxcw-vizColumn {

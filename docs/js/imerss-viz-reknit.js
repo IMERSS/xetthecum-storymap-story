@@ -6,6 +6,28 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
+fluid.defaults("maxwell.storyPage.withVizLoader", {
+    components: {
+        vizLoader: {
+            type: "hortis.blitzVizLoader",
+            container: ".imerss-container",
+            options: {
+                components: {
+                    // Assume that it must be a vizLoaderWithMap
+                    map: {
+                        // Forward these options which used to be assigned to our nested map
+                        options: {
+                            gradeNames: ["hortis.libreMap.inStoryPage", "{storyPage}.options.mapFlavourGrade"]
+                        }
+                    }
+                }
+            }
+        },
+        // Inject out the inner map so that modelListeners etc. can bind to it
+        map: "{storyPage}.vizLoader.map"
+    }
+});
+
 // A pane holding some kind of viz from imerss-viz - now just a simple template loader
 fluid.defaults("maxwell.storyVizPane", {
     gradeNames: ["maxwell.templatePaneHandler"],
@@ -291,6 +313,17 @@ fluid.defaults("hortis.taxonDisplay.withClose", {
         }
     }
 });
+
+// TODO: Make general purpose widget instantiator
+// This iterates through any matching containers in the knitted markup and constructs legends in them, since,
+// e.g. in Xetthecum the designs allow for an inline legend.
+maxwell.paneHandler.instantiateLegends = function (paneHandler, map, regionLoader) {
+    const containers = paneHandler.findAll("legends");
+    containers.forEach(target => {
+        const control = maxwell.legendKey.drawLegend(map, regionLoader.rows.value, signal(true));
+        fluid.spliceContainer(target, control.container, true);
+    });
+};
 
 // Abstractish base grade common between those which can display info on a taxon in toggleable panel
 fluid.defaults("maxwell.paneWithTaxonDisplay", {

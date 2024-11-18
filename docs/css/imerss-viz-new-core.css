@@ -774,6 +774,7 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
     display: none
 }
 
+/* Commented out since WebStorm can't parse it
 @media (hover:none), (width <= 480px) {
     .maplibregl-cooperative-gesture-screen .maplibregl-desktop-message {
         display: none
@@ -783,6 +784,7 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
         display: block
     }
 }
+*/
 
 .maplibregl-pseudo-fullscreen {
     height: 100% !important;

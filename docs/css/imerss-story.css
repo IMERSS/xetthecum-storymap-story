@@ -20,6 +20,11 @@ h2 {
     width: 100%;
     align-items: center;
     padding-bottom: 1rem;
+
+    position: absolute;
+    top: 5px;
+    width: calc(100% + 50px);
+
 }
 
 .mxcw-section-nav .mxcw-hidden {
@@ -142,6 +147,7 @@ h2 {
     align-items: center;
     transition-property: height;
     transition-duration: 800ms;
+    position: relative;
 }
 
 .section-button {

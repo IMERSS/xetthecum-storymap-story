@@ -1,17 +1,12 @@
 "use strict";
-/* global maplibregl, Plotly */
+
+/* global Plotly, signal */
 
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var maxwell = fluid.registerNamespace("maxwell");
 
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
-
-maxwell.asyncForEach = async function (array, callback) {
-    for (let index = 0; index < array.length; index++) {
-        await callback(array[index], index, array);
-    }
-};
 
 /**
  * An integer
@@ -143,7 +138,7 @@ maxwell.findPlotlyWidgets = function (storyPage, sectionHolders) {
 
     console.log("Found " + widgets.length + " plotly widgets");
     widgets.forEach(function (widget) {
-        const pane = widget.closest("section");
+        const pane = widget.closest(".section");
         const widgetId = maxwell.findPlotlyWidgetId(widget);
         const index = sections.indexOf(pane);
 
@@ -325,23 +320,13 @@ hortis.libreMap.layerToLabel = function (layers) {
     return Object.fromEntries(layers.filter(layer => layer.label).map(layer => [layer.id, layer.label]));
 };
 
-// Basic style: https://github.com/maplibre/maplibre-gl-js/issues/638
-fluid.defaults("hortis.libreMap", {
-    gradeNames: ["fluid.viewComponent", "hortis.withTooltip"],
-    mapOptions: {
-        style: {
-            version: 8,
-            layers: [],
-            sources: {}
-        }
-    },
+fluid.defaults("hortis.libreMap.withRegions", {
+    gradeNames: ["hortis.withTooltip"],
     members: {
-        map: "@expand:hortis.libreMap.make({that}.container.0, {that}.options.mapOptions, {that}.options.zoomDuration, {that}.mapLoaded, {that}.loadFillPatterns)",
-        layerToLabel: "@expand:hortis.libreMap.layerToLabel({that}.options.mapOptions.style.layers)",
-        mapLoaded: "@expand:signal()",
-        hasBounds: false,
         selectedRegion: "@expand:signal()",
-        hoverRegion: "@expand:signal(null)"
+        hoverRegion: "@expand:signal(null)",
+        layerToLabel: "@expand:hortis.libreMap.layerToLabel({that}.options.mapOptions.style.layers)"
+
     },
     tooltipKey: "hoverRegion",
     invokers: {
@@ -351,12 +336,7 @@ fluid.defaults("hortis.libreMap", {
                 const label = layerToLabel[id];
                 return label ? `<div class="imerss-tooltip">${label}</div>` : null;
             }
-        },
-        urlForFillPattern: {
-            args: ["{that}.options.fillPatternPath", "{arguments}.0"],
-            func: (fillPatternPath, fillPattern) => fillPatternPath + fillPattern + ".png"
-        },
-        loadFillPatterns: "hortis.libreMap.loadFillPatterns({that}, {that}.options.fillPatternPath, {that}.options.fillPatterns)"
+        }
     },
     modelListeners: {
         paneToRegion: {
@@ -369,26 +349,6 @@ fluid.defaults("hortis.libreMap", {
         "onCreate.bindRegionSelect": "hortis.libreMap.bindRegionSelect({that})"
     }
 });
-
-// TODO: Consolidate with imerss-new.js hortis.libreMap which we currently override - this initialisation
-// needs to be eventised somehow
-hortis.libreMap.make = function (container, mapOptions, zoomDuration, mapLoaded, loadFillPatterns) {
-    const emptyOptions = fluid.copy(fluid.defaults("hortis.libreMap").mapOptions);
-    const map = new maplibregl.Map({container, ...emptyOptions});
-    // Very long-standing bugs with mapbox load event: https://github.com/mapbox/mapbox-gl-js/issues/6707
-    // and https://github.com/mapbox/mapbox-gl-js/issues/9779
-    map.on("load", async function () {
-        console.log("Map loaded");
-        await loadFillPatterns();
-        // Have to do this after fill patterns are loaded otherwise images are not resolved
-        map.setStyle(mapOptions.style);
-        map.once("styledata", () => {
-            mapLoaded.value = 1;
-        });
-    });
-    hortis.libreMap.zoomControls(map, zoomDuration);
-    return map;
-};
 
 maxwell.paneToRegion = function (storyPage, map, activePane) {
     const paneHandler = maxwell.paneHandlerForIndex(storyPage, activePane);
@@ -426,17 +386,7 @@ hortis.libreMap.bindRegionSelect = function (that) {
     map.getCanvas().addEventListener("mouseleave", () => hortis.clearAllTooltips(that));
 };
 
-hortis.libreMap.loadFillPatterns = function (map, fillPatternPath, fillPatterns) {
-    return maxwell.asyncForEach(Object.keys(fillPatterns || {}), async fillPattern => {
-        const url = map.urlForFillPattern(fillPattern);
-        const image = await map.map.loadImage(url);
-        console.log("Loaded image ", url);
-        // Explained in https://github.com/mapbox/mapbox-gl-js/pull/9372
-        // Drawn in here: https://github.com/mapbox/mapbox-gl-js/blob/3f1d023894f1fa4d0d2dae0f9ca284a8bab19eaf/js/render/draw_fill.js#L139
-        // Or maybe in here, looks very different in libre: https://github.com/maplibre/maplibre-gl-js/blob/main/src/render/draw_fill.ts#L112
-        map.map.addImage(fillPattern, image.data, {pixelRatio: 6});
-    });
-};
+
 
 fluid.defaults("hortis.libreMap.inStoryPage", {
     gradeNames: "hortis.libreMap",
@@ -475,6 +425,12 @@ maxwell.resolveMapboxData = function () {
     return fluid.copyImmutableResource(data);
 };
 
+fluid.defaults("hortis.libreMap.withMapboxData", {
+    mapOptions: {
+        style: "{that}.options.mapboxData.rootMap.x.layout.mapbox.style"
+    }
+});
+
 fluid.defaults("maxwell.storyPage", {
     gradeNames: ["fluid.viewComponent", "fluid.resourceLoader"],
     container: "body",
@@ -506,10 +462,8 @@ fluid.defaults("maxwell.storyPage", {
         map: {
             type: "hortis.libreMap",
             options: {
-                gradeNames: ["hortis.libreMap.inStoryPage", "{storyPage}.options.mapFlavourGrade"],
-                mapOptions: {
-                    style: "{that}.options.mapboxData.rootMap.x.layout.mapbox.style"
-                }
+                gradeNames: ["hortis.libreMap.inStoryPage", "{storyPage}.options.mapFlavourGrade"]
+
             }
         },
         hashManager: {
@@ -525,15 +479,18 @@ fluid.defaults("maxwell.storyPage", {
         }
     },
     members: {
+        // Special flag used in maxwell.updateActiveMapPane due to lack of zoom callback API
+        mapHasBounds: false,
         sectionHolders: "@expand:maxwell.mapSectionHolders({that})",
         paneKeyToIndex: "@expand:maxwell.sectionHoldersToIndex({that}.sectionHolders)",
+        navRangeHolder: "@expand:maxwell.storyPage.navRangeHolder({that})",
         allContentClassHash: "@expand:maxwell.computeAllContentClassHash({that})",
         activePane: "@expand:signal()",
         // "model listeners"
         updateActiveMapPane: "@expand:fluid.effect(maxwell.updateActiveMapPane, {that}, {that}.map, {that}.activePane, {that}.map.mapLoaded)"
     },
     invokers: {
-        navSection: "maxwell.navSection({that}.splitRanges, {arguments}.0, {arguments}.1)"
+        navSection: "maxwell.navSection({that}.navRangeHolder, {arguments}.0, {arguments}.1)"
     },
     model: {
         // Currently this is at the head of updates - > activePane in model and then activePane signal
@@ -547,6 +504,7 @@ fluid.defaults("maxwell.storyPage", {
         plotlyReady: "{that}.resources.plotlyReady.parsed"
     },
     modelListeners: {
+
         updateSectionClasses: {
             path: "activeSection",
             funcName: "maxwell.updateSectionClasses",
@@ -569,13 +527,14 @@ fluid.defaults("maxwell.storyPage", {
             funcName: "maxwell.updateMapVisible",
             args: ["{that}", "{change}.value"],
             priority: "first" // ensure map becomes visible before we attempt to set its initial bounds
-        },
-        legendVisible: {
+        },/*
+        // TODO move to withLegend, hoist up
+                legendVisible: {
             path: "activePane",
             funcName: "maxwell.updateLegendVisible",
             args: ["{that}", "{change}.value"],
             priority: "first"
-        },
+        },*/
         contentClass: {
             path: "activePane",
             funcName: "maxwell.updateContentClass",
@@ -755,13 +714,21 @@ maxwell.updateContentClass = function (that, activePane) {
     });
 };
 
-// Compute the destination section for a navigation operation, given a "splitRange" record, the current active section and the desired offset
-maxwell.navSection = function (splitRanges, activeSection, offset) {
-    const navRangeIndex = splitRanges.indexToRange[activeSection];
-    const navRange = splitRanges.navRanges[navRangeIndex];
+// Compute the destination section for a navigation operation, given a "Range" record, the current active section and the desired offset
+maxwell.navSection = function (navRangeHolder, activeSection, offset) {
+    const navRangeIndex = navRangeHolder.indexToRange[activeSection];
+    const navRange = navRangeHolder.navRanges[navRangeIndex];
     const navIndex = navRange.indexOf(activeSection);
     return navRange[navIndex + offset];
 };
+
+maxwell.storyPage.navRangeHolder = function (storyPage) {
+    const navRanges = [Object.values(storyPage.paneKeyToIndex)];
+    const indexToRange = fluid.generate(navRanges.length, 0);
+
+    return {navRanges, indexToRange};
+};
+
 
 maxwell.listenSectionButtons = function (that) {
     const sectionLeft = that.locate("sectionLeft")[0];

@@ -154,6 +154,7 @@ maxwell.parseMapboxWidgets = function (container) {
             parent.appendChild(span);
         }
     });
+    rootMap = rootMap || {};
     const layers = Object.values(layerHash);
     maxwell.sortLayers(layers);
     fluid.set(rootMap, "x.layout.mapbox.style.sources", sources);
@@ -171,7 +172,7 @@ maxwell.makeCreateElement = function (dokkument) {
 };
 
 // Move all children other than the heading itself into nested "sectionInner" node to enable 2-column layout
-maxwell.encloseSections = function (container) {
+maxwell.encloseSections = function (container, vizColumn) {
     const h = maxwell.makeCreateElement(container.ownerDocument);
     const sections = [...container.querySelectorAll(".section.level2")];
     sections.forEach(function (section) {
@@ -182,8 +183,10 @@ maxwell.encloseSections = function (container) {
         const innerColumn = h("div", {"class": "mxcw-sectionColumn"});
         inner.appendChild(innerColumn);
         children.forEach(child => innerColumn.appendChild(child));
-        const vizColumn = h("div", {"class": "mxcw-sectionColumn mxcw-vizColumn"});
-        inner.appendChild(vizColumn);
+        if (vizColumn === "right") {
+            const vizColumn = h("div", {"class": "mxcw-sectionColumn mxcw-vizColumn"});
+            inner.appendChild(vizColumn);
+        }
     });
 };
 
@@ -231,7 +234,7 @@ maxwell.reknitFile = async function (infile, outfile, options, config) {
     const document = maxwell.parseDocument(fluid.module.resolvePath(infile));
     const container = document.querySelector(".main-container");
     const mapboxData = maxwell.parseMapboxWidgets(container);
-    maxwell.encloseSections(container);
+    maxwell.encloseSections(container, options.vizColumn);
     maxwell.writeJSONSync("mapboxData.json", mapboxData);
     const mapboxDataVar = "maxwell.mapboxData = " + JSON.stringify(mapboxData) + ";\n";
 

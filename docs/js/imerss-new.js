@@ -328,18 +328,61 @@ fluid.defaults("hortis.taxa", {
         // rows: injected
         rowByIdPre:   "@expand:fluid.computed(hortis.indexTree, {that}.rows)",
         // Note, actually just fills in entries in rows - we claim the output is rowById because it is what is consumed everywhere
-        rowById:  "@expand:fluid.computed(hortis.taxa.map, {that}.rows, {that}.rowByIdPre)",
+        rowById:   "@expand:fluid.computed(hortis.taxa.map, {that}.rows, {that}.rowByIdPre)",
         entries:   "@expand:fluid.computed(hortis.computeEntries, {that}.rows, {that}.acceptRow)",
         entryById: "@expand:fluid.computed(hortis.indexEntries, {that}.entries)"
     },
     invokers: {
-        acceptRow: "hortis.acceptRow({that}, {arguments}.0)"
+        // Currently disused - we may one day want to support pre-filtering of taxa - perhaps we will supply "entries" as an argument to lookupTaxon
+        acceptRow: "hortis.acceptTaxonRow({that}, {arguments}.0)",
+        //                                                     query, maxSuggestions
+        lookupTaxon: "hortis.lookupTaxon({that}.entries.value, {arguments}.0, {arguments}.1)"
     }
 });
 
-hortis.acceptRow = function (/*that, row*/) {
+hortis.acceptTaxonRow = function (/*that, row*/) {
     // TODO: in Sunburst used to check nativeData
     return true;
+};
+
+hortis.nameOverrides = {
+    "Chromista": "Chromists"
+};
+
+hortis.labelForRow = function (row, commonNames) {
+    let name = commonNames && row.commonName ? row.commonName : row.iNaturalistTaxonName;
+    if (row.hulqName) {
+        name += " - " + row.hulqName;
+    }
+    name = hortis.nameOverrides[row.iNaturalistTaxonName] || name;
+    return hortis.capitalize(name);
+    // return row.rank ? (row.rank === "Life" ? "Life" : row.rank + ": " + name) : name;
+};
+
+hortis.autocompleteInputForTaxonRow = function (row) {
+    return row ? hortis.labelForRow(row) + (row.commonName ? " (" + row.commonName + ")" : "") : row;
+};
+
+hortis.autocompleteSuggestionForTaxonRow = function (row) {
+    return hortis.autocompleteInputForTaxonRow(row) + (row.childCount > 1 ? " (" + row.childCount + " species)" : "");
+};
+
+hortis.lookupTaxon = function (entries, query, maxSuggestions) {
+    maxSuggestions = maxSuggestions || 1;
+    const output = [];
+    query = query.toLowerCase();
+    for (let i = 0; i < entries.length; ++i) {
+        const entry = entries[i],
+            row = entry.row;
+        const display = hortis.autocompleteInputForTaxonRow(row);
+        if (display.toLowerCase().indexOf(query) !== -1) {
+            output.push(row);
+        }
+        if (output.length >= maxSuggestions) {
+            break;
+        }
+    }
+    return maxSuggestions === 1 ? output[0] : output;
 };
 
 // Accepts array of rows and returns array of "entries", where entry is {row, children: array of entry}
@@ -378,7 +421,7 @@ hortis.indexTree = function (flatTree) {
     return index;
 };
 
-// cf. hortis.flattenTreeRecurse - the tree now comes in flat
+// cf. hortis.flattenTreeRecurse - the tree now comes in flat and sorted
 hortis.taxa.map = function (rows, byId) {
     rows.forEach((row, i) => {
         row.flatIndex = i;
@@ -391,12 +434,15 @@ hortis.taxa.map = function (rows, byId) {
             fluid.pushArray(parent, "children", row);
         }
     });
-    const assignDepth = function (node, depth) {
+    const assignDepth = function (node, childCount, depth) {
         node.depth = depth;
-        node.children.forEach(child => assignDepth(child, depth + 1));
+        // TODO: source this from summary properly
+        const isLeaf = node.children.length === 0;
+        node.childCount = node.children.reduce((childCount, child) => assignDepth(child, childCount, depth + 1), isLeaf ? 1 : 0);
+        return node.childCount + childCount;
     };
     if (rows.length > 0) {
-        assignDepth(rows[0], 0);
+        assignDepth(rows[0], 0, 0);
     }
     return byId;
 };
@@ -492,6 +538,7 @@ hortis.expandBounds = function (bounds, factor, latMin, longMin) {
 fluid.defaults("hortis.libreMap", {
     gradeNames: "fluid.viewComponent",
     zoomDuration: 1000,
+    zoomControlsPosition: "top-left",
     mapOptions: {
         style: {
             version: 8,
@@ -499,13 +546,44 @@ fluid.defaults("hortis.libreMap", {
             sources: {}
         }
     },
+    events: {
+        onLoad: null
+    },
+    listeners: {
+        "onLoad.setStyle": {
+            priority: "last",
+            listener: "hortis.libreMap.setStyle",
+            args: ["{that}.map", "{that}.options.mapOptions", "{that}.mapLoaded"]
+        }
+    },
     members: {
-        map: "@expand:hortis.libreMap.make({that}.container.0, {that}.options.mapOptions, {that}.options.zoomDuration, {that}.mapLoaded)",
-        mapLoaded: "@expand:signal()"
+        map: "@expand:hortis.libreMap.make({that}, {that}.events.onLoad, {that}.container.0)",
+        mapLoaded: "@expand:signal()",
+        zoomControls: "@expand:hortis.libreMap.zoomControls({that}.map, {that}.options.zoomDuration, {that}.options.zoomControlsPosition)"
     }
-
 });
 
+hortis.libreMap.setStyle = function (map, mapOptions, mapLoaded) {
+    // Have to do this after fill patterns are loaded otherwise images are not resolved
+    map.setStyle(mapOptions.style);
+    map.once("styledata", () => {
+        mapLoaded.value = 1;
+    });
+};
+
+hortis.libreMap.make = function (that, onLoad, container) {
+    // Apply some blank options to start with just to get the map going - will need to wait for e.g. fillPatterns
+    // to load before the real ones can be interpreted
+    const emptyOptions = fluid.copy(fluid.defaults("hortis.libreMap").mapOptions);
+    const map = new maplibregl.Map({container, ...emptyOptions});
+    // Very long-standing bugs with mapbox load event: https://github.com/mapbox/mapbox-gl-js/issues/6707
+    // and https://github.com/mapbox/mapbox-gl-js/issues/9779
+    map.on("load", function () {
+        console.log("Map loaded");
+        fluid.promise.fireTransformEvent(onLoad, null, {that});
+    });
+    return map;
+};
 
 const initNavigationControl = function (options) {
     this.options = options;
@@ -555,22 +633,39 @@ const makeNavigationControl = function (options) {
 };
 
 
-hortis.libreMap.zoomControls = function (map, zoomDuration) {
-    map.addControl(makeNavigationControl({showCompass: false, showZoom: true, zoomDuration}));
+hortis.libreMap.zoomControls = function (map, zoomDuration, zoomControlsPosition) {
+    const controls = makeNavigationControl({showCompass: false, showZoom: true, zoomDuration});
+    map.addControl(controls, zoomControlsPosition);
     // disable map rotation using right click + drag
     map.dragRotate.disable();
     // disable map rotation using touch rotation gesture
     map.touchZoomRotate.disableRotation();
 };
 
-hortis.libreMap.make = function (container, mapOptions, zoomDuration, mapLoaded) {
-    const map = new maplibregl.Map({container, ...mapOptions});
-    map.on("load", function () {
-        console.log("Map loaded");
-        mapLoaded.value = 1;
+fluid.defaults("hortis.libreMap.withFillPatterns", {
+    fillPatternPixelRatio: 6,
+    invokers: {
+        urlForFillPattern: {
+            args: ["{that}.options.fillPatternPath", "{arguments}.0"],
+            func: (fillPatternPath, fillPattern) => fillPatternPath + fillPattern + ".png"
+        },
+        loadFillPatterns: "hortis.libreMap.loadFillPatterns({that}, {that}.options.fillPatternPath, {that}.options.fillPatterns)"
+    },
+    listeners: {
+        "onLoad.loadFillPatterns": "{that}.loadFillPatterns"
+    }
+});
+
+hortis.libreMap.loadFillPatterns = function (map, fillPatternPath, fillPatterns) {
+    return hortis.asyncForEach(Object.keys(fillPatterns || {}), async fillPattern => {
+        const url = map.urlForFillPattern(fillPattern);
+        const image = await map.map.loadImage(url);
+        console.log("Loaded image ", url);
+        // Explained in https://github.com/mapbox/mapbox-gl-js/pull/9372
+        // Drawn in here: https://github.com/mapbox/mapbox-gl-js/blob/3f1d023894f1fa4d0d2dae0f9ca284a8bab19eaf/js/render/draw_fill.js#L139
+        // Or maybe in here, looks very different in libre: https://github.com/maplibre/maplibre-gl-js/blob/main/src/render/draw_fill.ts#L112
+        map.map.addImage(fillPattern, image.data, {pixelRatio: map.options.fillPatternPixelRatio});
     });
-    hortis.libreMap.zoomControls(map, zoomDuration);
-    return map;
 };
 
 fluid.defaults("hortis.libreMap.withTiles", {
@@ -595,7 +690,7 @@ fluid.defaults("hortis.libreMap.usEcoL3Tiles", {
             tileSize: 512,
             maxzoom: 8,
             paint: {
-                "raster-opacity": 0.5
+                "raster-opacity": 0.3
             }
         }
     }
@@ -640,9 +735,19 @@ fluid.defaults("hortis.libreMap.withObsGrid", {
     gradeNames: ["hortis.withTooltip"],
     tooltipKey: "hoverCell",
     fillStops: hortis.libreMap.viridisStops,
-    fillOpacity: 0.7,
+    fillOpacity: 0.5,
     outlineColour: "black",
     legendStops: 5,
+    legendPosition: "bottom-right",
+    gridResolution: 100,
+    components: {
+        obsQuantiser: {
+            type: "hortis.obsQuantiser",
+            options: {
+                gridResolution: "{hortis.libreMap}.options.gridResolution"
+            }
+        }
+    },
     members: {
         // TODO: "Trundling dereferencer" in the framework
         gridBounds: "@expand:fluid.derefSignal({obsQuantiser}.grid, bounds)",
@@ -651,7 +756,7 @@ fluid.defaults("hortis.libreMap.withObsGrid", {
 
         memoStops: "@expand:fluid.colour.memoStops({that}.options.fillStops, 256)",
         // cf. maxwell.legendKey.addLegendControl in reknit-client.js - produces a DOM node immediately, renders as effect
-        control: "@expand:hortis.libreMap.withObsGrid.addLegendControl({map}, {obsQuantiser}.grid, {that}.gridVisible)",
+        control: "@expand:hortis.libreMap.withObsGrid.addLegendControl({map}, {that}.options.legendPosition)",
 
         hoverCell: "@expand:signal(null)",
         gridVisible: "@expand:signal(true)"
@@ -676,7 +781,7 @@ hortis.legend.rowTemplate = `
 
 // Very similar to maxwell.legendKey.addLegendControl and in practice generic, see if we can fold up - parameterised by
 // rendering function, whatever signal args it has, and also visibility func
-hortis.libreMap.withObsGrid.addLegendControl = function (map) {
+hortis.libreMap.withObsGrid.addLegendControl = function (map, legendPosition) {
     const control = map.drawObsGridLegend();
     control.onAdd = () => control.container;
     control.onRemove = () => {
@@ -684,7 +789,7 @@ hortis.libreMap.withObsGrid.addLegendControl = function (map) {
         control.cleanup();
     };
 
-    map.map.addControl(control, "bottom-right");
+    map.map.addControl(control, legendPosition);
 
     return control;
 };
@@ -862,6 +967,10 @@ hortis.longitudeLength = function (latitude) {
     return Math.PI * hortis.WGS84a * Math.cos(latrad) / (180 * Math.sqrt(1 - hortis.WGS84e2 * sinrad * sinrad));
 };
 
+hortis.metresToLong = function (long, latitude) {
+    return long / hortis.longitudeLength(latitude);
+};
+
 /** Length in metres for a degree of latitude at given latitude **/
 
 hortis.latitudeLength = function (latitude) {
@@ -891,17 +1000,21 @@ hortis.gridBucket = () => ({obsCount: 0, byTaxonId: {}});
 hortis.indexObs = function (bucket, row, index) {
     // TODO: some kind of mapping for standard rows, lightweight version of readCSVWithMap - current standard is for
     // "iNaturalist taxon ID" as seen in "assigned" data in Xetthecum story map
-    fluid.pushArray(bucket.byTaxonId, row.iNatTaxonId, index);
+    fluid.pushArray(bucket.byTaxonId, row.iNaturalistTaxonId, index);
 };
 
 fluid.defaults("hortis.obsQuantiser", {
     gradeNames: "fluid.modelComponent",
+    gridResolution: 100,
     members: {
         // Not invokers for performance
         newBucket: hortis.gridBucket,
         indexObs: hortis.indexObs,
+        // Contains unbound references to vizLoader - in time we want to break this and inject these manually:
+        // obsRows
+        // filteredObsRows
         baseLatitude: "@expand:signal(37.5)",
-        longResolution: "@expand:signal(0.005)",
+        longResolution: "@expand:fluid.computed(hortis.metresToLong, {that}.options.gridResolution, {that}.baseLatitude)",
         latResolution: "@expand:fluid.computed(hortis.longToLat, {that}.longResolution, {that}.baseLatitude)",
         maxBounds: "@expand:fluid.computed(hortis.obsBounds, {vizLoader}.obsRows)",
         grid: {
@@ -961,17 +1074,5 @@ hortis.obsQuantiser.indexObs = function (that, rows, latRes, longRes) {
 };
 
 fluid.defaults("hortis.libreObsMap", {
-    gradeNames: ["hortis.libreMap", "hortis.libreMap.withObsGrid"],
-    components: {
-        obsQuantiser: {
-            type: "hortis.obsQuantiser",
-            options: {
-                members: {
-                    longResolution: "@expand:signal(0.075)"
-                }
-            }
-        }
-    }
+    gradeNames: ["hortis.libreMap", "hortis.libreMap.withObsGrid"]
 });
-
-

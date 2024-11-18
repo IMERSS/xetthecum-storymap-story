@@ -1,20 +1,13 @@
 "use strict";
 
-/* global signal */
-
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
-// TODO: Make general purpose widget instantiator
-maxwell.paneHandler.instantiateLegends = function (paneHandler, map, regionLoader) {
-    const containers = paneHandler.findAll("legends");
-    containers.forEach(target => {
-        const control = maxwell.legendKey.drawLegend(map, regionLoader.rows.value, signal(true));
-        fluid.spliceContainer(target, control.container, true);
-    });
-};
+fluid.defaults("maxwell.xetthecumMapGrade", {
+    gradeNames: ["hortis.libreMap.withFillPatterns", "hortis.libreMap.withMapboxData", "hortis.libreMap.withRegionLegend", "hortis.libreMap.withRegions"]
+});
 
 fluid.defaults("maxwell.xetthecumStoryPane", {
     gradeNames: ["maxwell.storyVizPane", "maxwell.paneWithTaxonDisplay"],
@@ -155,7 +148,7 @@ fluid.defaults("maxwell.xetthecumEcologicalPane", {
 fluid.defaults("maxwell.storyPage.withSplitNavigation", {
     // TODO: Need to construct a default single-range in the base class
     members: {
-        splitRanges: "@expand:maxwell.storyPage.constructRanges({that})"
+        navRangeHolder: "@expand:maxwell.storyPage.constructSplitRanges({that})"
     },
     selectors: {
         "returnToMain": ".mxcw-return-to-main"
@@ -173,7 +166,7 @@ fluid.defaults("maxwell.storyPage.withSplitNavigation", {
 });
 
 maxwell.updateReturnVisible = function (storyPage, activePane) {
-    const currentRange = storyPage.splitRanges.indexToRange[activePane];
+    const currentRange = storyPage.navRangeHolder.indexToRange[activePane];
     const returnToMain = storyPage.locate("returnToMain")[0];
     maxwell.toggleClass(returnToMain, "mxcw-hidden", currentRange === 0);
     if (currentRange === 0) {
@@ -191,7 +184,7 @@ maxwell.listenReturnToMain = function (storyPage) {
         storyPage.vizLoader.resourcesLoaded);
 };
 
-maxwell.storyPage.constructRanges = function (storyPage) {
+maxwell.storyPage.constructSplitRanges = function (storyPage) {
     const storyPanes = fluid.queryIoCSelector(storyPage, "maxwell.xetthecumStoryPane", true);
     const regionPanes = fluid.queryIoCSelector(storyPage, "maxwell.xetthecumEcologicalPane", true);
 

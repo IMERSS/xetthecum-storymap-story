@@ -698,6 +698,12 @@ a.ui-button:active,
     --imerss-scrollbar-width: 12px;
 }
 
+.imerss-container *,
+.imerss-container *:before,
+.imerss-container *:after {
+    box-sizing: border-box;
+}
+
 .imerss-container ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: var(--imerss-scrollbar-width);
@@ -798,17 +804,18 @@ a.ui-button:active,
     transform: scale(.6);
 }
 
-.pretty .state label:after, .pretty .state label:before {
+/* Need to beat builtin definitions even though we are included earlier */
+.pretty.pretty .state label:after, .pretty.pretty .state label:before {
     width: calc(1em + 0px);
     height: calc(1em + 0px);
 }
 
-.pretty.p-icon .state .icon {
+.pretty.pretty.p-icon .state .icon {
     width: calc(1em + 0px);
     height: calc(1em + 0px);
 }
 
-.pretty {
+.pretty.pretty {
     margin-right: 0.3em;
     /* Cancel the wrapping behaviour at higher checklist level */
     text-indent: 0;
@@ -1116,6 +1123,12 @@ a.ui-button:active,
     cursor: pointer;
     width: 20px;
     height: 20px;
+    border-radius: 6px;
+}
+
+.imerss-filter-clear:hover {
+    /** TODO consolidate these, e.g. imerss-reset-filter */
+    background: #d0d7de33;
 }
 
 .imerss-filter-clear.imerss-hidden {
@@ -1148,6 +1161,12 @@ a.ui-button:active,
     width: 100%;
 }
 
+/** Override core definition in tabs.css to stop tab content overflowing
+ * TODO: Check that Xetthecum Phase III is still all right etc.
+ */
+.ui-tabs .ui-tabs-panel {
+    display: flex;
+}
 
 #fli-tab-checklist.ui-tabs-panel, #fli-tab-simple-checklist.ui-tabs-panel {
     padding: 0;
@@ -1164,6 +1183,7 @@ a.ui-button:active,
 
 .imerss-checklist-holder {
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding: 6px;

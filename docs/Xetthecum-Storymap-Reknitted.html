@@ -93,7 +93,7 @@ maxwell.rawPaneHandlers = {"Welcome":{"type":"maxwell.xetthecumStoryPane","hideL
     fluid.defaults("maxwell.storyPage-maxwellRoot", {
         gradeNames: "fluid.component",
         distributeOptions: {
-            record: {"gradeNames":["maxwell.storyPage.withPaneTaxon","maxwell.storyPage.withSplitNavigation"],"mapFlavourGrade":"hortis.libreMap.withRegionLegend","zoomDuration":1500,"slowZoomDuration":5000,"selectableRegions":["Forests","Freshwater","Marine","Woodlands"],"fillPatternPath":"img/fillPatterns/","components":{"vizLoader":{"type":"hortis.vizLoader.withRegions","options":{"obsFile":"data/reintegrated-obs-assigned.csv","taxaFile":"data/reintegrated-final-taxa.csv","regionFile":"data/communityStyling.csv"}}}},
+            record: {"gradeNames":["maxwell.storyPage.withPaneTaxon","maxwell.storyPage.withSplitNavigation"],"mapFlavourGrade":"maxwell.xetthecumMapGrade","zoomDuration":1500,"slowZoomDuration":5000,"selectableRegions":["Forests","Freshwater","Marine","Woodlands"],"fillPatternPath":"img/fillPatterns/","components":{"vizLoader":{"type":"hortis.vizLoader.withRegions","options":{"obsFile":"data/reintegrated-obs-assigned.csv","taxaFile":"data/reintegrated-final-taxa.csv","regionFile":"data/communityStyling.csv"}}}},
             target: "{/ maxwell.storyPage}.options"
         }
     });
