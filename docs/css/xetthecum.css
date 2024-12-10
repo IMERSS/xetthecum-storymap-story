@@ -341,8 +341,15 @@ audio {
 /* Make margins agree with label and header */
 .imerss-checklist-holder {
     margin: 0.5em 1.2em;
+    /* TODO: This should be default in core recheck */
+    width: auto;
 }
 
 .checklist-hulq-name {
     font-weight: bold;
+}
+
+.nav-link.active {
+    text-decoration: underline;
+    text-decoration-thickness: 5px;
 }

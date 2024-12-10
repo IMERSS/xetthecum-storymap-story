@@ -817,7 +817,7 @@ hortis.libreMap.withObsGrid.drawLegend = function (map, gridSignal, gridVisibleS
         });
         const longRes = quant.longResolution.value;
         const baseLat = quant.baseLatitude.value;
-        const longLen = Math.floor(longRes * hortis.longitudeLength(baseLat));
+        const longLen = Math.round(longRes * hortis.longitudeLength(baseLat));
 
         const markup = `<div class="imerss-legend-title">Observation count</div>` +
             regionMarkupRows.join("\n") +
