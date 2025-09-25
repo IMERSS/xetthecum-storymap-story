@@ -356,24 +356,6 @@ futureVisionMap
 <p>Envisioning a vibrant future for Xetthecum.</p>
 </div>
 
-## Ecological Communities - Hwuiumqa' / Marine
-
-<p>Surrounded by water, Galiano Islanders see the ocean as intrinsic to living and loving life on this island. Sightings of [q'ul-lhanamutsum](#taxon:Orcinus orca) (orcas) and other marine mammals are treasured hallmarks of island life. However, for many community members, the ocean is first and foremost a source of food and livelihood. Both Indigenous and non-Indigenous people on Galiano enjoy fish such as thuqi' (sockeye salmon), haan (pink salmon), tuqwtuqw (red snapper) and other [t’q’as](#taxon:Sebastes) (rockfish). Also prized are [s-axwa'](#taxon:Saxidomus gigantea) (butter clam), kwuneem'mun' (scallops), [ey'x](#taxon:Metacarcinus magister) (dungeness crab), [thikwt](#taxon:Apostichopus californicus) (sea cucumber) and seaweeds such as [lhuq'us](#taxon:Pyropia) (red laver). Thiyuas (Florence James) shared that ['e s-hw](#taxon:Phoca vitulina richardii) (harbour seal) is also prized as a dark meat.</p> 
-
-<p>Xetthecum (Retreat Cove) is one of the few marine locations on the shoreline of Galiano itself that has been an important place for fishing and harvesting shellfish. Its importance as a habitat for [t’q’as](#taxon:Sebastes) (rockfish) in particular has since become so notable that it has been designated a marine protected area, where fishing is banned to protect these long-lived species that are so slow to reproduce. As the tide is not too fast, Xetthecum was once also a good area for harvesting other creatures, such as [pun'eq'](#taxon:Panopea generosa) (geoduck) and dog fish. It is important that community members are able to harvest and consume these foods without getting sick, therefore the environmental health of the ocean is vital.</p>
-
-<p>Culturally significant beaches and shorelines on Galiano Island, such as those near Xetthecum are used as places to congregate for picnics, social events, ceremonial sites, and as food gathering sites by local First Nations peoples. Bays, inlets, and coves like Xetthecum are also a place of safe harbour during storms, or places to moor one's boat during winters.</p>
-
-<p>Many, if not all, of the Indigenous families associated with Galiano have been fishing since time out of mind. The Seafood Fest has been an extremely significant annual cultural event for decades primarily because so many of the island’s inhabitants have been passing down the skills, knowledge and secret locations of where to find the best sources of seafood for generations. Unfortunately, due to over-fishing, destruction of marine habitat, pollution and other industrial causes, the bounty of the sea has become so limited that few members of the next generation can make a living fishing, and most of the menu for the Seafood Fest now has to be purchased from elsewhere.</p>
-
-<p>In the past, no one would ever reveal the locations of where to harvest seafood, but now such knowledge is often recounted as memories of now lost or declining biodiversity. Locations of significance include Porlier Pass and Walker Hook off of Saltspring for [t’q’as](#taxon:Sebastes) (rockfish) and Pinnacle Rock on the south side of Porlier Pass for ['eeyt](#taxon:Ophiodon elongatus) (lingcod). As for salmon, Cable Bay was once a good location for kw'a'luhw (chum salmon), as was Enterprise Reef off of Mayne Island and areas around Valdes Island. Yet many fishing areas that have been important for Indigenous community members on Galiano over the past hundred years are much farther away, necessitating long periods of time that families are separated. The closest of these locations include the west coast of Vancouver Island such as Jordan River, Race Rocks, San Juan Harbour near Port Renfrew, and areas near River’s Inlet to the Skeena.</p> 
-
-```{r, echo=FALSE, message=FALSE}
-highlightedLayers <- c("Marine")
-marineMap <- plot_mapbox_map("Marine", project_bbox, allSources, communityStyling, highlightedLayers)
-marineMap
-```
-
 ## Ecological Communities - Thuthiqut / Forests
 
 <p>Shaped by interactions between water, soil, terrain, climate and the multitudes of beings that live within them, forests are a sanctuary for hundreds of thousands of species of plants, fungi, mammals, birds, insects and microorganisms. Forests provide shelter, clean water, and food, the foundations for a complex web of life in which we are intricately interconnected. Humans have been stewarding forests on Galiano since time out of mind, in order to ensure key species that we depend on can flourish and help us thrive.</p>
@@ -404,6 +386,24 @@ forestsMap
 highlightedLayers <- c("Freshwater")
 freshwaterMap <- plot_mapbox_map("Freshwater", project_bbox, allSources, communityStyling, highlightedLayers)
 freshwaterMap
+```
+
+## Ecological Communities - Hwuiumqa' / Marine
+
+<p>Surrounded by water, Galiano Islanders see the ocean as intrinsic to living and loving life on this island. Sightings of [q'ul-lhanamutsum](#taxon:Orcinus orca) (orcas) and other marine mammals are treasured hallmarks of island life. However, for many community members, the ocean is first and foremost a source of food and livelihood. Both Indigenous and non-Indigenous people on Galiano enjoy fish such as thuqi' (sockeye salmon), haan (pink salmon), tuqwtuqw (red snapper) and other [t’q’as](#taxon:Sebastes) (rockfish). Also prized are [s-axwa'](#taxon:Saxidomus gigantea) (butter clam), kwuneem'mun' (scallops), [ey'x](#taxon:Metacarcinus magister) (dungeness crab), [thikwt](#taxon:Apostichopus californicus) (sea cucumber) and seaweeds such as [lhuq'us](#taxon:Pyropia) (red laver). Thiyuas (Florence James) shared that ['e s-hw](#taxon:Phoca vitulina richardii) (harbour seal) is also prized as a dark meat.</p> 
+
+<p>Xetthecum (Retreat Cove) is one of the few marine locations on the shoreline of Galiano itself that has been an important place for fishing and harvesting shellfish. Its importance as a habitat for [t’q’as](#taxon:Sebastes) (rockfish) in particular has since become so notable that it has been designated a marine protected area, where fishing is banned to protect these long-lived species that are so slow to reproduce. As the tide is not too fast, Xetthecum was once also a good area for harvesting other creatures, such as [pun'eq'](#taxon:Panopea generosa) (geoduck) and dog fish. It is important that community members are able to harvest and consume these foods without getting sick, therefore the environmental health of the ocean is vital.</p>
+
+<p>Culturally significant beaches and shorelines on Galiano Island, such as those near Xetthecum are used as places to congregate for picnics, social events, ceremonial sites, and as food gathering sites by local First Nations peoples. Bays, inlets, and coves like Xetthecum are also a place of safe harbour during storms, or places to moor one's boat during winters.</p>
+
+<p>Many, if not all, of the Indigenous families associated with Galiano have been fishing since time out of mind. The Seafood Fest has been an extremely significant annual cultural event for decades primarily because so many of the island’s inhabitants have been passing down the skills, knowledge and secret locations of where to find the best sources of seafood for generations. Unfortunately, due to over-fishing, destruction of marine habitat, pollution and other industrial causes, the bounty of the sea has become so limited that few members of the next generation can make a living fishing, and most of the menu for the Seafood Fest now has to be purchased from elsewhere.</p>
+
+<p>In the past, no one would ever reveal the locations of where to harvest seafood, but now such knowledge is often recounted as memories of now lost or declining biodiversity. Locations of significance include Porlier Pass and Walker Hook off of Saltspring for [t’q’as](#taxon:Sebastes) (rockfish) and Pinnacle Rock on the south side of Porlier Pass for ['eeyt](#taxon:Ophiodon elongatus) (lingcod). As for salmon, Cable Bay was once a good location for kw'a'luhw (chum salmon), as was Enterprise Reef off of Mayne Island and areas around Valdes Island. Yet many fishing areas that have been important for Indigenous community members on Galiano over the past hundred years are much farther away, necessitating long periods of time that families are separated. The closest of these locations include the west coast of Vancouver Island such as Jordan River, Race Rocks, San Juan Harbour near Port Renfrew, and areas near River’s Inlet to the Skeena.</p> 
+
+```{r, echo=FALSE, message=FALSE}
+highlightedLayers <- c("Marine")
+marineMap <- plot_mapbox_map("Marine", project_bbox, allSources, communityStyling, highlightedLayers)
+marineMap
 ```
 
 ## Ecological Communities - Shthuliim / Woodlands

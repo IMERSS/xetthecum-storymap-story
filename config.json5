@@ -24,6 +24,8 @@
                 }
             },
             paneHandlers: {
+                // This order needs to agree with that in markdown - in future framework version will be generated
+                // at R end
                 Welcome: {
                     type: "maxwell.xetthecumStoryPane",
                     hideLegend: true
@@ -201,5 +203,3 @@
     }
     ]
 }
-
-

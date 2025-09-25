@@ -118,12 +118,14 @@ hortis.checklistItem = function (entry, options, state) {
     const footer = "</li>";
     const fold = options.unfoldable ? hortis.rowFold(rowid, rowState.folded) : "";
     const check = options.selectable ? hortis.rowCheckbox(id, rowState.selected) : "";
-    return header + fold + check + name + subList + footer;
+    const decoration = options.decoration ? options.decoration(record) : "";
+    return header + fold + check + decoration + name + subList + footer;
 };
 
 hortis.checklistList = function (entries, options, state) {
-    return entries.length ?
-        "<ul>" + entries.map(function (entry) {
+    const showing = entries.filter(entry => state.idToState[entry.row.id].folded !== "hidden");
+    return showing.length ?
+        "<ul>" + showing.map(function (entry) {
             return hortis.checklistItem(entry, options, state);
         }).join("") + "</ul>" : "";
 };
@@ -186,7 +188,7 @@ hortis.sortChecklistLevel = function (entries) {
 hortis.filterTaxonomy = function (rows, depth, acceptChecklistRow, filterTaxonomy, showRoot) {
     const togo = [];
     fluid.each(rows, function (row) {
-        if (acceptChecklistRow(row) || depth === 0 && showRoot) {
+        if (acceptChecklistRow(row) || depth === 0 && showRoot || row.id === 0) {
             togo.push({
                 row: row,
                 children: filterTaxonomy(row.children, depth + 1)
@@ -238,8 +240,9 @@ fluid.defaults("hortis.checklist", {
     },
     members: {
         // Can't return 2 signals from computeRootEntry, do this collaterally
-        idToEntry: {},
-        rootEntry: "@expand:fluid.computed(hortis.checklist.computeRootEntry, {that}, {that}.rowById, {that}.rootId, {that}.filterTaxonomy)",
+        idToEntry: {}, // Volatile hash computed in computeRootEntry
+        // Added throwaway dependency here since acceptChecklistRow may depend on rowFocus and it isn't computed until we have rows filtered by filters
+        rootEntry: "@expand:fluid.computed(hortis.checklist.computeRootEntry, {that}, {that}.rowById, {that}.rootId, {that}.filterTaxonomy, {that}.rowFocus)",
         idToStateUIOld: null,
         idToStateUI: "@expand:signal(null)", // Must supply an initial value or else computation never starts
         scheduleRender: "@expand:signal()",
@@ -247,16 +250,93 @@ fluid.defaults("hortis.checklist", {
         idToStateOld: null, // Cache of old value used to transfer user's selection state, preact-signals doesn't allow "peek" at self
         idToState: "@expand:fluid.computed(hortis.checklist.idToState, {that}, {that}.idToStateUI, {that}.rootEntry, {that}.rowFocus)",
         // rowById: required for tooltips
-        // rowFocus
+        // rowFocus: awkward - injected in and depends on filtered obs
+
         rowSelection: "@expand:fluid.computed(hortis.checklist.checksToSelection, {that}.idToState)",
         subscribeChecks: "@expand:fluid.effect(hortis.checklist.subscribeChecks, {that}, {that}.idToStateUI)",
         subscribeSelected: "@expand:hortis.checklist.subscribeSelected({that}, {that}.selectedId, {that}.rowById)",
-        allLeaves: "@expand:fluid.computed(hortis.checklist.computeLeaves, {that}.idToEntry, {that}.rowSelection)",
         renderEffect: "@expand:fluid.effect(fluid.identity, {that}.idToState)"
     },
     listeners: {
         "onCreate.bindTaxonHover": "hortis.bindTaxonHover({that}, {layoutHolder})",
         "onCreate.bindCheckboxClick": "hortis.checklist.bindCheckboxClick({that}, {that}.dom.checklist)"
+    }
+});
+
+fluid.defaults("hortis.checklist.withSearch", {
+    selectors: {
+        search: ".imerss-search-checklist"
+    },
+    components: {
+        taxonNameLookup: {
+            type: "hortis.taxonNameLookup",
+            options: {
+                members: {
+                    // throwaway dependency since idToEntry is volatile
+                    rows: "@expand:fluid.computed(hortis.checklist.idToEntryToRows, {withSearch}.idToEntry, {withSearch}.rootEntry)"
+                }
+            }
+        },
+        search: {
+            // Repurpose "filter" component largely because it has a consistent autocomplete setup - we eliminate "clear" functionality
+            // and rely on its "filterState" for integration
+            type: "fluid.checklist.search",
+            container: "{that}.dom.search",
+            options: {
+                controlId: "{withSearch}.options.searchControlId",
+                components: {
+                    taxonNameLookup: "{withSearch}.taxonNameLookup"
+                },
+                selectEffect: "@expand:fluid.effect(hortis.checklist.searchSelect, {that}.filterState, {that}, {checklist})"
+            }
+        }
+    }
+});
+
+hortis.checklist.idToEntryToRows = idToEntry => Object.values(idToEntry).map(entry => entry.row).filter(row => row.id !== 0);
+
+hortis.duffFilterState = null;
+
+hortis.checklist.searchSelect = function (filterState, search, checklist) {
+    if (filterState === hortis.duffFilterState) {
+        console.log("Got duff notification from preact-signals");
+    } else if (filterState) {
+        hortis.duffFilterState = filterState;
+        console.log("Selected filter state", filterState);
+        const entry = checklist.idToEntry[filterState.id];
+        console.log("Got entry ", entry);
+        hortis.checklist.check(checklist, filterState.id, true);
+        fluid.invokeLater(() => {
+            hortis.duffFilterState = null;
+            hortis.autocompleteFilter.reset(search);
+        });
+    }
+};
+
+fluid.defaults("fluid.checklist.search", {
+    gradeNames: "hortis.taxonFilter",
+    markup: {
+        container: `
+        <span>
+            <span class="imerss-filter-autocomplete">
+                <span class="imerss-filter-clear"></span>
+            </span>
+            <svg width="32" height="32" >
+                <use href="#search-icon" />
+            </svg>
+        </span>
+        `
+    },
+    controlId: "{withSearch}.searchControlId",
+    components: {
+        taxonNameLookup: "{withSearch}.taxonNameLookup",
+        autocomplete: {
+            options: {
+                widgetOptions: {
+                    placeholder: "Search taxa ..."
+                }
+            }
+        }
     }
 });
 
@@ -270,11 +350,38 @@ fluid.defaults("hortis.checklist.withOBA", {
     }
 });
 
+fluid.defaults("hortis.checklist.withDownload", {
+    selectors: {
+        downloadButton: ".imerss-download-button"
+    },
+    members: {
+        allLeaves: "@expand:fluid.computed(hortis.checklist.computeLeaves, {that}.idToEntry, {that}.rowSelection, {that}.options.copyChecklistRanks)"
+    },
+    listeners: {
+        "onCreate.bindDownloadClick": "hortis.checklist.withDownload.bindClick"
+    }
+});
+
+hortis.checklist.withDownload.bindClick = function (that) {
+    that.dom.locate("downloadButton").on("click", () =>
+        hortis.checklist.withDownload.triggerDownload(that)
+    );
+};
+
+hortis.checklist.withDownload.triggerDownload = function (checklist) {
+    const content = ["taxon", ...checklist.allLeaves.value].join("\n");
+    hortis.triggerDownload(content, "text/csv", "taxa.csv");
+};
+
 fluid.defaults("hortis.checklist.withCopy", {
     selectors: {
         copyButton: ".imerss-copy-checklist"
     },
+    members: {
+        allLeaves: "@expand:fluid.computed(hortis.checklist.computeLeaves, {that}.idToEntry, {that}.rowSelection, {that}.options.copyChecklistRanks)"
+    },
     // copyButtonMessage
+    // copyChecklistRanks: array
     components: {
         copyButton: {
             type: "fluid.viewComponent",
@@ -290,7 +397,7 @@ fluid.defaults("hortis.checklist.withCopy", {
                 },
                 invokers: {
                     renderTooltip: "hortis.checklist.withCopy.renderTooltip({copyButton}, {hortis.checklist})",
-                    copyToClipboard: "hortis.checklist.withCopy.copyToClipboard({copyButton},{hortis.checklist})"
+                    copyToClipboard: "hortis.checklist.withCopy.copyToClipboard({copyButton}, {hortis.checklist})"
                 },
                 listeners: {
                     "onCreate.bindHover": "hortis.checklist.withCopy.bindHover"
@@ -414,26 +521,39 @@ hortis.checklist.check = function (checklist, id, checked) {
         entry.children.forEach(child => setChildState(child, state));
     };
     setChildState(entry, upState);
+    const parents = [entry];
 
     // Traverse upward, cascading indeterminate as well as flag
     let parent = entry.parent;
     while (parent.row) {
+        parents.unshift(parent);
         const allChildrenState = hortis.checklist.allChildrenState(idToStateUp, parent, upState);
         idToStateUp[parent.row.id].selected = allChildrenState ? upState : "indeterminate";
         parent = parent.parent;
     }
     batch( () => {
         checklist.idToStateUI.value = idToStateUp;
-        if (upState === "selected" && idToStateUp[id].folded === "folded") {
-            hortis.checklist.toggleFold(checklist, id);
+        if (upState === "selected") {
+            let idToStateMove = idToStateUp;
+            parents.forEach(parent => {
+                const thisFold = idToStateMove[parent.row.id].folded;
+                if (thisFold !== "unfolded" && thisFold !== "fixed") {
+                    idToStateMove = hortis.checklist.toggleFold(checklist, parent.row.id);
+                }
+            });
         }
     });
 };
 
+// TODO: Pretty ropy, should use that.rootId
 hortis.checklist.reset = function (checklist) {
     // TODO: Somehow the root entry itself is not populated
     const rootId = checklist.rootEntry.value.children[0].row.id;
     hortis.checklist.check(checklist, rootId, false);
+};
+
+hortis.checklist.defaultFold = function (entry, unfoldable, foldByDefault) {
+    return entry.children.length === 0 || !unfoldable ? "fixed" : entry.children.every(child => foldByDefault(child.row)) ? "folded" : "unfolded";
 };
 
 hortis.checklist.toggleFold = function (checklist, id) {
@@ -443,12 +563,17 @@ hortis.checklist.toggleFold = function (checklist, id) {
     state.folded = newFolded;
     const entry = checklist.idToEntry[id];
     // nb. duplicates some logic in initial defaultFold
-    const defaultNewFold = entry => entry.children.length === 0 ? "fixed" : "folded";
+    const defaultNewFold = entry => {
+        const val = entry.children.length === 0 ? "fixed" : "folded";
+        console.log("dNF for entry ", entry.row, ": ", val);
+        return val;
+    };
     entry.children.forEach(child => idToStateUp[child.row.id].folded = newFolded === "folded" ? "hidden" : defaultNewFold(child));
     // Triggers update through idToState
     checklist.idToStateUI.value = idToStateUp;
     // Schedule full render
     checklist.scheduleRender.value = true;
+    return idToStateUp;
 };
 
 // This used to read:
@@ -465,11 +590,17 @@ hortis.checklist.subscribeSelected = function (that, selectedIdSignal, rowByIdSi
     }, selectedIdSignal, rowByIdSignal);
 };
 
+// A fake ID to hold the checklist's root so we can display a polyphyletic set
+// TODO not currently used - we always seem to have a real root, recheck this
+hortis.checklist.ROOT_ID = Number.NEGATIVE_INFINITY;
+
+hortis.checklist.NO_TAXON_ROW = Object.freeze({id: "0", taxonName: "None", children: []});
+
 hortis.checklist.computeRootEntry = function (that, rowById, rootId, filterTaxonomy) {
     // TODO: Use of ROOT_ID to display polyphyletic set needed?
     const rootRow = rowById[rootId];
     fluid.log("Generating checklist for id " + rootId);
-    const filteredEntries = filterTaxonomy([rootRow], 0);
+    const filteredEntries = filterTaxonomy([rootRow, hortis.checklist.NO_TAXON_ROW], 0);
     const idToEntry = that.idToEntry;
     fluid.clear(idToEntry);
     let entryIndex = 0;
@@ -506,6 +637,7 @@ hortis.checklist.idToState = function (that, idToStateUI, rootEntry, rowFocus) {
 hortis.checklist.generate = function (that, element, idToState, rootEntry, selectedId) {
     const selectable = that.options.selectable,
         unfoldable = that.options.unfoldable,
+        decoration = that.decoration,
         simple = !!that.options.filterRanks;
 
     const rootEntries = rootEntry.children;
@@ -514,6 +646,7 @@ hortis.checklist.generate = function (that, element, idToState, rootEntry, selec
         simple,
         selectable,
         unfoldable,
+        decoration,
         accessRow: that.accessRow
     };
     const state = {
@@ -536,20 +669,14 @@ hortis.checklist.generate = function (that, element, idToState, rootEntry, selec
     that.idToStateUI.value = idToState;
 };
 
-// A fake ID to hold the checklist's root so we can display a polyphyletic set
-// TODO not currently used - we always seem to have a real root, recheck this
-hortis.checklist.ROOT_ID = Number.NEGATIVE_INFINITY;
-
-hortis.checklist.defaultFold = function (entry, unfoldable, foldByDefault) {
-    return entry.children.length === 0 || !unfoldable ? "fixed" : entry.children.every(child => foldByDefault(child.row)) ? "folded" : "unfolded";
-};
-
 hortis.checklist.computeInitialModel = function (rootEntry, rowFocus, oldIdToState, unfoldable, foldByDefault) {
     const idToState = {};
     const indexEntry = function (entry, parentFolded) {
         const id = entry.row.id;
-        if (!id) {
+        if (id === undefined) {
             fluid.log("Warning, discarding row ", entry.row, " without id set");
+        } else if (id === 0) { // NO_TAXON entry - currently don't show but may one day
+            idToState[id] = {selected: "unselected", folded: "hidden"};
         } else if (rowFocus[id]) {
             const defaultFolded = (parentFolded === "folded" || parentFolded === "hidden") ? "hidden" :
                 parentFolded === "root" ? "fixed" : hortis.checklist.defaultFold(entry, unfoldable, foldByDefault);
@@ -569,7 +696,7 @@ fluid.defaults("hortis.checklist.withHolder", {
 // From the individual signals of each checkbox, compute the effective rowSelection - taking into account the "no selection is all selection" idiom
 hortis.checklist.checksToSelection = function (idToState) {
     const selection = {};
-    const selectAll = {};
+    const selectAll = {0: true};
     let selected = 0;
     fluid.each(idToState, (state, key) => {
         if (state.folded !== "hidden") {
@@ -583,17 +710,28 @@ hortis.checklist.checksToSelection = function (idToState) {
     return selected === 0 ? selectAll : selection;
 };
 
-hortis.checklist.computeLeaves = function (idToEntry, selection) {
-    const leaves = [];
+// Used to compute names of leaf entries for copy checklist interaction
+hortis.checklist.computeLeaves = function (idToEntry, selection, copyChecklistRanks) {
+    const leaves = {};
+    const parentRow = row => idToEntry[row.parentId]?.row;
+    const strikeParents = function (row) {
+        row = parentRow(row);
+        while (row) {
+            delete leaves[row.id];
+            row = parentRow(row);
+        }
+    };
     const appendLeaves = function (id) {
         const entry = idToEntry[id];
         if (entry.children.length === 0) {
-            leaves.push(entry.row.iNaturalistTaxonName);
+            leaves[entry.row.id] = entry.row;
         } else {
             entry.children.forEach(child => appendLeaves(child.row.id));
         }
     };
 
     Object.keys(selection).forEach(id => appendLeaves(id));
-    return leaves;
+    Object.values(leaves).map(leaf => strikeParents(leaf));
+    const rankFiltered = Object.values(leaves).filter(leaf => copyChecklistRanks.includes(leaf.rank));
+    return rankFiltered.map(leaf => leaf.iNaturalistTaxonName).sort();
 };

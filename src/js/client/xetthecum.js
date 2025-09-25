@@ -234,7 +234,7 @@ maxwell.nativeTaxaFromObs = function (obsRows, rowById, nativeDataOnly) {
     obsRows.forEach(row => {
         const id = row["iNaturalist taxon ID"];
         const taxon = rowById[id];
-        if (taxon.hulquminumName || !nativeDataOnly) {
+        if (taxon && taxon.hulquminumName || !nativeDataOnly) {
             taxonIds[id] = true;
         }
     });

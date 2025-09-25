@@ -1,6 +1,6 @@
 "use strict";
 
-/* global Plotly, signal */
+/* global Plotly */
 
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var maxwell = fluid.registerNamespace("maxwell");
@@ -843,7 +843,7 @@ fluid.defaults("hortis.vizLoader.withRegions", {
     gradeNames: "hortis.vizLoader",
     components: {
         regionLoader: {
-            type: "hortis.urlCsvReader",
+            type: "hortis.csvReader",
             options: {
                 url: "{vizLoader}.options.regionFile"
             }

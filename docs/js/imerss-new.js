@@ -7,7 +7,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-/* global Papa, maplibregl, preactSignalsCore */
+/* global Papa, maplibregl, preactSignalsCore, pako */
 
 "use strict";
 
@@ -51,34 +51,44 @@ Object.defineProperty(fluid, "log", {
     }
 });
 
+hortis.inflateUint8Array = async function (url) {
+    const response = await fetch(url);
+
+    const arrayBuffer = await response.arrayBuffer();
+    const byteArray = new Uint8Array(arrayBuffer);
+
+    const inflated = pako.inflate(byteArray, { to: "string" });
+    return inflated;
+};
+
 hortis.toggleClass = function (container, clazz, value, inverse) {
     container.classList[value ^ inverse ? "add" : "remove"](clazz);
 };
 
-hortis.csvReader.parse = function (that, csvOptions, url) {
-    const options = {
-        ...csvOptions,
-        complete: function (results) {
-            that.parsed = results;
-            that.data = results.data;
-            that.headers = results.meta.fields;
-            that.completionPromise.resolve(that.data);
-            that.rows.value = that.data;
-        },
-        error: function (err) {
-            that.completionPromise.reject();
-            fluid.fail("Error parsing CSV file ", url, ": ", err);
-        }
+hortis.csvReader.parse = async function (that, csvOptions, url) {
+    const complete = function (results) {
+        that.parsed = results;
+        that.data = results.data;
+        that.headers = results.meta.fields;
+        that.completionPromise.resolve(that.data);
+        that.rows.value = that.data;
     };
-    Papa.parse(url, options);
-};
-
-fluid.defaults("hortis.urlCsvReader", {
-    gradeNames: "hortis.csvReader",
-    csvOptions: {
-        download: true
+    const error = function (err) {
+        that.completionPromise.reject();
+        fluid.fail("Error parsing CSV file ", url, ": ", err);
+    };
+    const download = {download: true};
+    const downloadOptions = {...csvOptions, ...download, complete, error};
+    if (url.endsWith(".csv")) {
+        Papa.parse(url, downloadOptions);
+    } else if (url.endsWith(".viz")) {
+        const data = await hortis.inflateUint8Array(url);
+        const results = Papa.parse(data, {...csvOptions});
+        complete(results);
+    } else {
+        fluid.fail("Unrecognised CSV URL suffix for ", url);
     }
-});
+};
 
 fluid.defaults("hortis.vizLoader", {
     gradeNames: ["fluid.component"],
@@ -86,13 +96,13 @@ fluid.defaults("hortis.vizLoader", {
     // taxaFile
     components: {
         taxaLoader: {
-            type: "hortis.urlCsvReader",
+            type: "hortis.csvReader",
             options: {
                 url: "{vizLoader}.options.taxaFile"
             }
         },
         obsLoader: {
-            type: "hortis.urlCsvReader",
+            type: "hortis.csvReader",
             options: {
                 url: "{vizLoader}.options.obsFile"
             }
@@ -110,10 +120,12 @@ fluid.defaults("hortis.vizLoader", {
         onResourcesLoaded: null
     },
     members: {
+        rendered: "@expand:signal()",
+        idle: "@expand:signal(true)",
         resourcesLoaded: "@expand:signal()",
         taxaRows: "@expand:signal()",
         obsRows: "@expand:signal()",
-        // Overridden by overall loader def to equal {filters}.allOutput
+        // Don't put filters here - Xetthecum doesn't have any and hortis.filters doesn't have any base grades
         filteredObs: "{that}.obsRows",
         // Proposed syntax: @compute:hortis.filterObs(*{that}.obs, {that}.obsFilter, *{that}.obsFilterVersion)
         finalFilteredObs: "@expand:fluid.computed({that}.filterObsByTaxa, {that}.filteredObs)"
@@ -130,7 +142,7 @@ fluid.defaults("hortis.vizLoader", {
     }
 });
 
-// Do this by hand since we will have compressed viz one day
+// Do this by hand since we will have all-in-one compressed viz one day
 hortis.vizLoader.bindResources = async function (that) {
     const resourceLoaders = fluid.queryIoCSelector(that, "hortis.bareResourceLoader", true);
     const promises = resourceLoaders.map(resourceLoader => resourceLoader.completionPromise);
@@ -140,9 +152,23 @@ hortis.vizLoader.bindResources = async function (that) {
         that.obsRows.value = obs;
         that.resourcesLoaded.value = true;
         that.events.onResourcesLoaded.fire();
+        $(".imerss-container").tooltip({
+            position: {
+                my: "left top+5"
+            }
+        });
     });
 };
 
+// Approach taken from https://stackoverflow.com/a/64908345/1381443
+hortis.triggerDownload = function (content, mimeType, filename) {
+    const a = document.createElement("a");
+    const blob = new Blob([content], {type: mimeType});
+    const url = URL.createObjectURL(blob);
+    a.setAttribute("href", url);
+    a.setAttribute("download", filename);
+    a.click(); // Start downloading
+};
 
 hortis.taxonTooltipTemplate =
 `<div class="imerss-tooltip">
@@ -322,98 +348,26 @@ hortis.bindTaxonHover = function (that, layoutHolder) {
     });
 };
 
-fluid.defaults("hortis.taxa", {
+fluid.defaults("hortis.taxonNameLookup", {
     gradeNames: "fluid.component",
-    members: {
-        // rows: injected
-        rowByIdPre:   "@expand:fluid.computed(hortis.indexTree, {that}.rows)",
-        // Note, actually just fills in entries in rows - we claim the output is rowById because it is what is consumed everywhere
-        rowById:   "@expand:fluid.computed(hortis.taxa.map, {that}.rows, {that}.rowByIdPre)",
-        entries:   "@expand:fluid.computed(hortis.computeEntries, {that}.rows, {that}.acceptRow)",
-        entryById: "@expand:fluid.computed(hortis.indexEntries, {that}.entries)"
-    },
     invokers: {
-        // Currently disused - we may one day want to support pre-filtering of taxa - perhaps we will supply "entries" as an argument to lookupTaxon
-        acceptRow: "hortis.acceptTaxonRow({that}, {arguments}.0)",
         //                                                     query, maxSuggestions
-        lookupTaxon: "hortis.lookupTaxon({that}.entries.value, {arguments}.0, {arguments}.1)"
+        lookupTaxon: "hortis.lookupTaxon({that}.rows.value, {arguments}.0, {arguments}.1)"
     }
 });
 
-hortis.acceptTaxonRow = function (/*that, row*/) {
-    // TODO: in Sunburst used to check nativeData
-    return true;
-};
-
-hortis.nameOverrides = {
-    "Chromista": "Chromists"
-};
-
-hortis.labelForRow = function (row, commonNames) {
-    let name = commonNames && row.commonName ? row.commonName : row.iNaturalistTaxonName;
-    if (row.hulqName) {
-        name += " - " + row.hulqName;
+fluid.defaults("hortis.taxa", {
+    gradeNames: "hortis.taxonNameLookup",
+    members: {
+        // rows: injected
+        rowByIdPre:   "@expand:fluid.computed(hortis.indexTaxaById, {that}.rows)",
+        // Note, actually just fills in entries in rows - we claim the output is rowById because it is what is consumed everywhere
+        rowById:   "@expand:fluid.computed(hortis.taxa.map, {that}.rows, {that}.rowByIdPre)"
     }
-    name = hortis.nameOverrides[row.iNaturalistTaxonName] || name;
-    return hortis.capitalize(name);
-    // return row.rank ? (row.rank === "Life" ? "Life" : row.rank + ": " + name) : name;
-};
-
-hortis.autocompleteInputForTaxonRow = function (row) {
-    return row ? hortis.labelForRow(row) + (row.commonName ? " (" + row.commonName + ")" : "") : row;
-};
-
-hortis.autocompleteSuggestionForTaxonRow = function (row) {
-    return hortis.autocompleteInputForTaxonRow(row) + (row.childCount > 1 ? " (" + row.childCount + " species)" : "");
-};
-
-hortis.lookupTaxon = function (entries, query, maxSuggestions) {
-    maxSuggestions = maxSuggestions || 1;
-    const output = [];
-    query = query.toLowerCase();
-    for (let i = 0; i < entries.length; ++i) {
-        const entry = entries[i],
-            row = entry.row;
-        const display = hortis.autocompleteInputForTaxonRow(row);
-        if (display.toLowerCase().indexOf(query) !== -1) {
-            output.push(row);
-        }
-        if (output.length >= maxSuggestions) {
-            break;
-        }
-    }
-    return maxSuggestions === 1 ? output[0] : output;
-};
-
-// Accepts array of rows and returns array of "entries", where entry is {row, children: array of entry}
-// Identical algorithm as for hortis.filterRanks - no doubt a functional programmer would fold this up
-// Was hortis.computeSunburstEntries
-hortis.computeEntries = function (rows, acceptRow) {
-    const togo = [];
-    fluid.each(rows, function (row) {
-        if (acceptRow(row)) {
-            togo.push({
-                row: row,
-                children: hortis.computeEntries(row.children, acceptRow)
-            });
-        } else {
-            const dChildren = hortis.computeEntries(row.children, acceptRow);
-            Array.prototype.push.apply(togo, dChildren);
-        }
-    });
-    return hortis.sortChecklistLevel(togo);
-};
-
-hortis.indexEntries = function (entries) {
-    const index = {};
-    entries.forEach(function (entry) {
-        index[entry.row.id] = entry;
-    });
-    return index;
-};
+});
 
 // Copied from imerss-viz.js
-hortis.indexTree = function (flatTree) {
+hortis.indexTaxaById = function (flatTree) {
     const index = {};
     flatTree.forEach(function (row) {
         index[row.id] = row;
@@ -421,6 +375,8 @@ hortis.indexTree = function (flatTree) {
     return index;
 };
 
+// Left over from imerss-viz.js - looks like still disused in "new" since nothing reads childCount and this should
+// doubtless be done in "entries".
 // cf. hortis.flattenTreeRecurse - the tree now comes in flat and sorted
 hortis.taxa.map = function (rows, byId) {
     rows.forEach((row, i) => {
@@ -447,15 +403,53 @@ hortis.taxa.map = function (rows, byId) {
     return byId;
 };
 
+hortis.nameOverrides = {
+    "Chromista": "Chromists"
+};
+
+hortis.labelForRow = function (row, commonNames) {
+    let name = commonNames && row.commonName ? row.commonName : row.iNaturalistTaxonName;
+    if (row.hulqName) {
+        name += " - " + row.hulqName;
+    }
+    name = hortis.nameOverrides[row.iNaturalistTaxonName] || name;
+    return hortis.capitalize(name);
+    // return row.rank ? (row.rank === "Life" ? "Life" : row.rank + ": " + name) : name;
+};
+
+hortis.autocompleteInputForTaxonRow = function (row) {
+    return row ? hortis.labelForRow(row) + (row.commonName ? " (" + row.commonName + ")" : "") : row;
+};
+
+hortis.autocompleteSuggestionForTaxonRow = function (row) {
+    return hortis.autocompleteInputForTaxonRow(row) + (row.childCount > 1 ? " (" + row.childCount + " species)" : "");
+};
+
+hortis.lookupTaxon = function (rows, query, maxSuggestions) {
+    maxSuggestions = maxSuggestions || 1;
+    const output = [];
+    query = query.toLowerCase();
+    for (let i = 0; i < rows.length; ++i) {
+        const row = rows[i];
+        const display = hortis.autocompleteInputForTaxonRow(row);
+        if (display.toLowerCase().indexOf(query) !== -1) {
+            output.push(row);
+        }
+        if (output.length >= maxSuggestions) {
+            break;
+        }
+    }
+    return maxSuggestions === 1 ? output[0] : output;
+};
+
 // Holds model state shared with checklist and index - TODO rename after purpose, "layout" used to refer to sunburst root
 fluid.defaults("hortis.layoutHolder", {
-    gradeNames: ["fluid.modelComponent", "hortis.withTooltip"],
+    gradeNames: ["fluid.component", "hortis.withTooltip"],
     tooltipKey: "hoverId",
     events: {
         taxonSelect: null
     },
     members: {
-        // isAtRoot computed
         // entryById -> rowById now injected
         taxonHistory: "@expand:signal([])", // currently unused, inherit from blitz etc.
         historyIndex: "@expand:signal(0)",
@@ -468,13 +462,6 @@ fluid.defaults("hortis.layoutHolder", {
         hoverId: "@expand:signal(null)"
     },
     // rootId
-    modelRelay: {
-        isAtRoot: {
-            target: "isAtRoot",
-            args: ["{that}.model.layoutId", "{that}.options.rootId"],
-            func: (x, y) => x === y
-        }
-    },
     invokers: {
         renderTooltip: "hortis.renderTaxonTooltip({that}, {arguments}.0)"
     }
@@ -556,6 +543,9 @@ fluid.defaults("hortis.libreMap", {
             args: ["{that}.map", "{that}.options.mapOptions", "{that}.mapLoaded"]
         }
     },
+    invokers: {
+        sortLayers: "hortis.libreMap.sortLayers({that}.map)"
+    },
     members: {
         map: "@expand:hortis.libreMap.make({that}, {that}.events.onLoad, {that}.container.0)",
         mapLoaded: "@expand:signal()",
@@ -583,6 +573,22 @@ hortis.libreMap.make = function (that, onLoad, container) {
         fluid.promise.fireTransformEvent(onLoad, null, {that});
     });
     return map;
+};
+
+hortis.libreMap.sortLayers = function (map) {
+    // Reach into undocumented impl of mapLibre and quickly sort the layers into desired order
+    const style = map.style;
+    const layers = Object.values(style._layers);
+    console.log("Sorting layers ", layers);
+    const sorted = layers.sort((a, b) => {
+        const sortKeyA = a?.metadata?.sortKey ?? Infinity;
+        const sortKeyB = b?.metadata?.sortKey ?? Infinity;
+        return sortKeyA - sortKeyB;
+    });
+    const newOrder = sorted.map(sorted => sorted.id);
+    style._order = newOrder;
+    style._changed = true;
+    style._layerOrderChanged = true;
 };
 
 const initNavigationControl = function (options) {
@@ -678,7 +684,10 @@ fluid.defaults("hortis.libreMap.streetmapTiles", {
         baseMap: {
             tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
             attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
-            tileSize: 256
+            tileSize: 256,
+            metadata: {
+                sortKey: 0
+            }
         }
     }
 });
@@ -691,6 +700,9 @@ fluid.defaults("hortis.libreMap.usEcoL3Tiles", {
             maxzoom: 8,
             paint: {
                 "raster-opacity": 0.3
+            },
+            metadata: {
+                sortKey: 1
             }
         }
     }
@@ -698,9 +710,11 @@ fluid.defaults("hortis.libreMap.usEcoL3Tiles", {
 
 hortis.libreMap.addTileLayers = function (map, tileSets) {
     const tileKeys = Object.keys(tileSets);
-    tileKeys.reverse().forEach(function (key) {
+    tileKeys.forEach(function (key) {
         const tileSet = tileSets[key];
         const paint = tileSet.paint || {};
+        const metadata = tileSet.metadata || {};
+        console.log("Add tiles");
         map.addSource(key, {
             type: "raster",
             ...fluid.censorKeys(tileSet, ["paint"]) // TODO: "layout" too - https://docs.mapbox.com/style-spec/reference/layers/
@@ -709,7 +723,7 @@ hortis.libreMap.addTileLayers = function (map, tileSets) {
             id: key,
             type: "raster",
             source: key,
-            paint: paint
+            paint, metadata
         });
     });
 };
@@ -831,25 +845,6 @@ hortis.libreMap.withObsGrid.drawLegend = function (map, gridSignal, gridVisibleS
     return {container};
 };
 
-hortis.capitalize = function (string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-hortis.renderTaxonTooltip = function (that, hoverId) {
-    const row = that.rowById.value[hoverId];
-    const terms = {
-        imgUrl: row.iNaturalistTaxonImage || ""
-    };
-    if (row.rank) {
-        terms.taxonRank = hortis.capitalize(row.rank);
-    } else {
-        terms.taxonRank = "Species";
-    }
-    const names = [(row.taxonName || row.iNaturalistTaxonName), row.commonName, row.hulqName].filter(name => name);
-    terms.taxonNames = names.join(" / ");
-    return fluid.stringTemplate(hortis.taxonTooltipTemplate, terms);
-};
-
 // cf. hortis.libreMap.bindRegionSelect in reknit-client.js
 hortis.libreMap.bindGridSelect = function (that) {
     const map = that.map;
@@ -926,9 +921,15 @@ hortis.libreMap.updateObsGrid = function (map, obsQuantiser, grid) {
                 },
                 "fill-opacity": map.options.fillOpacity,
                 "fill-outline-color": map.options.outlineColour
+            },
+            metadata: {
+                sortKey: 100
             }
         };
         map.map.addLayer(layer);
+        // TODO: Rather unsatisfactory, but we assume that this is the point we have all layers we are expecting to
+        // Really need a dedicated addLayer wrapper
+        map.sortLayers();
     }
 
 };
