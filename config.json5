@@ -56,9 +56,9 @@
                     // pause, then make them fully opaque. Opacities are fractions of each layer's own opacity.
                     fadeInLayers: {
                         initialOpacity: 0.3,
-                        initialDuration: 2000,
-                        holdDuration: 1500,
-                        finalDuration: 2500
+                        initialDuration: 1200,
+                        holdDuration: 800,
+                        finalDuration: 1500
                     }
                 },
                 Cultural_Activities_pI: {

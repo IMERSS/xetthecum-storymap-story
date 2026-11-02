@@ -408,7 +408,8 @@ fluid.defaults("hortis.libreMap.regionLegend", {
     members: {
         regionRows: "{vizLoader}.regionLoader.rows",
         control: "@expand:maxwell.legendKey.addLegendControl({map}, {that}.regionRows, {that}.isVisible)",
-        isVisible: "@expand:signal(true)"
+        // Start hidden - maxwell.updateLegendVisible reveals it once the first pane is known
+        isVisible: "@expand:signal(false)"
     }
 });
 
@@ -443,8 +444,26 @@ maxwell.addExtraBasemaps = function (data, extraBasemaps) {
                 id: layerId,
                 type: "raster",
                 source: layerId,
-                paint: {"raster-opacity": 0}
+                paint: {"raster-opacity": 0},
+                metadata: {mxOrigOpacity: 1}
             });
+        }
+    });
+};
+
+/**
+ * Make every layer of the initial style fully transparent, recording each layer's designed opacity in its metadata, so
+ * that nothing is drawn until maxwell.updateActiveMapPane has decided what the active pane should show.
+ * @param {Object} data - The mapbox data whose root style is to be modified in place
+ */
+maxwell.startLayersTransparent = function (data) {
+    const layers = fluid.get(data, "rootMap.x.layout.mapbox.style.layers") || [];
+    layers.forEach(layer => {
+        const opacityProp = maxwell.layerOpacityProperty(layer);
+        if (opacityProp && layer.metadata?.mxOrigOpacity === undefined) {
+            layer.paint = layer.paint || {};
+            layer.metadata = {...layer.metadata, mxOrigOpacity: layer.paint[opacityProp] ?? 1};
+            layer.paint[opacityProp] = 0;
         }
     });
 };
@@ -452,6 +471,7 @@ maxwell.addExtraBasemaps = function (data, extraBasemaps) {
 maxwell.resolveMapboxData = function () {
     const data = maxwell.mapboxData;
     maxwell.addExtraBasemaps(data, maxwell.extraBasemaps);
+    maxwell.startLayersTransparent(data);
     return fluid.copyImmutableResource(data);
 };
 
@@ -675,7 +695,7 @@ maxwell.layerTargetOpacity = function (layer, layerVisibility, paneOptions) {
     } else {
         const opacityProp = maxwell.layerOpacityProperty(layer);
         const visible = layerVisibility[layer.id] && !paneOptions.hideVectorLayers;
-        return visible ? (layer.paint?.[opacityProp] ?? 1) : 0;
+        return visible ? (layer.metadata?.mxOrigOpacity ?? layer.paint?.[opacityProp] ?? 1) : 0;
     }
 };
 
@@ -690,7 +710,7 @@ maxwell.layerTargetOpacity = function (layer, layerVisibility, paneOptions) {
  * @param {Integer} generation - Map update generation at which the fade was scheduled - abandoned if superseded
  */
 maxwell.fadeInLayers = function (that, map, vectorLayers, paneOptions, generation) {
-    const {initialOpacity = 0.3, initialDuration = 2000, holdDuration = 1500, finalDuration = 2500} = paneOptions.fadeInLayers;
+    const {initialOpacity = 0.3, initialDuration = 1200, holdDuration = 800, finalDuration = 1500} = paneOptions.fadeInLayers;
     const setAll = function (fraction, duration) {
         if (that.mapUpdateGeneration !== generation) {
             return;
@@ -701,10 +721,13 @@ maxwell.fadeInLayers = function (that, map, vectorLayers, paneOptions, generatio
         });
     };
     setAll(initialOpacity, initialDuration);
-    if (that.mapUpdateGeneration === generation && map.legend) {
-        map.legend.isVisible.value = !paneOptions.hideLegend;
-    }
     window.setTimeout(() => setAll(1, finalDuration), initialDuration + holdDuration);
+    // Reveal the legend only once the layers have become fully opaque
+    window.setTimeout(() => {
+        if (that.mapUpdateGeneration === generation && map.legend) {
+            map.legend.isVisible.value = !paneOptions.hideLegend;
+        }
+    }, initialDuration + holdDuration + finalDuration);
 };
 
 maxwell.updateActiveMapPane = function (that, map, activePane) {
@@ -718,7 +741,8 @@ maxwell.updateActiveMapPane = function (that, map, activePane) {
     // Used to abandon any fade-in scheduled by a pane which is no longer active
     that.mapUpdateGeneration = (that.mapUpdateGeneration || 0) + 1;
     const generation = that.mapUpdateGeneration;
-    const defaultTransition = {duration: map.options.zoomDuration, delay: 0};
+    // The first pane is applied instantly; later changes cross-fade
+    const defaultTransition = {duration: map.hasBounds ? map.options.zoomDuration : 0, delay: 0};
 
     // Invoked here rather than as a model listener on activePane, since the legend is a map control and needs the map
     if (paneHandler) {
@@ -811,7 +835,7 @@ maxwell.updateLegendVisible = function (that, activePane) {
     }
     const {hideLegend, basemapLayer, hideVectorLayers, fadeInLayers} = paneHandler.options;
     // Panes showing only an alternative basemap have no layers to explain. Panes which fade their layers in reveal the
-    // legend from maxwell.fadeInLayers once the layers begin to appear.
+    // legend from maxwell.fadeInLayers once the layers are fully opaque.
     const noLayersShown = basemapLayer && hideVectorLayers;
     that.map.legend.isVisible.value = !hideLegend && !noLayersShown && !fadeInLayers;
 };
