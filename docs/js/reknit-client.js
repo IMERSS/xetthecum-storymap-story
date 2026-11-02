@@ -700,9 +700,8 @@ maxwell.layerTargetOpacity = function (layer, layerVisibility, paneOptions) {
 };
 
 /**
- * Bring a pane's vector layers in gradually once the map has arrived at the pane's view - first partially transparent,
- * then, after a pause, fully opaque. Configured via the pane option `fadeInLayers`, whose members are
- * fractions/durations in ms: {initialOpacity, initialDuration, holdDuration, finalDuration}.
+ * Fade a pane's vector layers in smoothly once the map has arrived at the pane's view, then reveal the legend.
+ * Configured via the pane option `fadeInLayers`: {duration} in ms.
  * @param {maxwell.storyPage} that - The story page
  * @param {Object} map - The libreMap component
  * @param {Object[]} vectorLayers - Array of {layer, opacityProp, target} records for layers to be faded in
@@ -710,24 +709,20 @@ maxwell.layerTargetOpacity = function (layer, layerVisibility, paneOptions) {
  * @param {Integer} generation - Map update generation at which the fade was scheduled - abandoned if superseded
  */
 maxwell.fadeInLayers = function (that, map, vectorLayers, paneOptions, generation) {
-    const {initialOpacity = 0.3, initialDuration = 1200, holdDuration = 800, finalDuration = 1500} = paneOptions.fadeInLayers;
-    const setAll = function (fraction, duration) {
-        if (that.mapUpdateGeneration !== generation) {
-            return;
-        }
-        vectorLayers.forEach(({layer, opacityProp, target}) => {
-            map.map.setPaintProperty(layer.id, opacityProp + "-transition", {duration, delay: 0});
-            map.map.setPaintProperty(layer.id, opacityProp, target * fraction);
-        });
-    };
-    setAll(initialOpacity, initialDuration);
-    window.setTimeout(() => setAll(1, finalDuration), initialDuration + holdDuration);
+    const {duration = 2500} = paneOptions.fadeInLayers;
+    if (that.mapUpdateGeneration !== generation) {
+        return;
+    }
+    vectorLayers.forEach(({layer, opacityProp, target}) => {
+        map.map.setPaintProperty(layer.id, opacityProp + "-transition", {duration, delay: 0});
+        map.map.setPaintProperty(layer.id, opacityProp, target);
+    });
     // Reveal the legend only once the layers have become fully opaque
     window.setTimeout(() => {
         if (that.mapUpdateGeneration === generation && map.legend) {
             map.legend.isVisible.value = !paneOptions.hideLegend;
         }
-    }, initialDuration + holdDuration + finalDuration);
+    }, duration);
 };
 
 maxwell.updateActiveMapPane = function (that, map, activePane) {

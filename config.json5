@@ -52,13 +52,10 @@
                 Xetthecum: {
                     type: "maxwell.xetthecumStoryPane",
                     basemapLayer: "satellite",
-                    // Once zoomed in over the satellite imagery, bring in the habitat layers partially transparent,
-                    // pause, then make them fully opaque. Opacities are fractions of each layer's own opacity.
+                    // Once zoomed in over the satellite imagery, fade the habitat layers in smoothly over this many ms,
+                    // then show the legend
                     fadeInLayers: {
-                        initialOpacity: 0.3,
-                        initialDuration: 1200,
-                        holdDuration: 800,
-                        finalDuration: 1500
+                        duration: 2500
                     }
                 },
                 Cultural_Activities_pI: {
