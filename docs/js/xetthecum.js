@@ -5,6 +5,19 @@ var maxwell = fluid.registerNamespace("maxwell");
 // noinspection ES6ConvertVarToLetConst // otherwise this is a duplicate on minifying
 var hortis = fluid.registerNamespace("hortis");
 
+// Satellite imagery basemap, selected by panes with `basemapLayer: "satellite"` in config.json5
+maxwell.extraBasemaps = maxwell.extraBasemaps || {};
+maxwell.extraBasemaps.satellite = {
+    source: {
+        type: "raster",
+        tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],
+        tileSize: 256,
+        // Beyond this the imagery is overzoomed rather than requested, avoiding "Map data not yet available" tiles
+        maxzoom: 18,
+        attribution: "Imagery &copy; <a target=\"_blank\" href=\"https://www.esri.com/\">Esri</a>, Maxar, Earthstar Geographics, and the GIS User Community"
+    }
+};
+
 fluid.defaults("maxwell.xetthecumMapGrade", {
     gradeNames: ["hortis.libreMap.withFillPatterns", "hortis.libreMap.withMapboxData", "hortis.libreMap.withRegionLegend", "hortis.libreMap.withRegions"]
 });

@@ -28,22 +28,38 @@
                 // at R end
                 Welcome: {
                     type: "maxwell.xetthecumStoryPane",
-                    hideLegend: true
+                    hideLegend: true,
+                    basemapLayer: "satellite",
+                    hideVectorLayers: true
                 },
                 Caves: {
                     type: "maxwell.xetthecumStoryPane",
-                    hideLegend: true
+                    hideLegend: true,
+                    basemapLayer: "satellite",
+                    hideVectorLayers: true
                 },
                 Respect: {
                     type: "maxwell.xetthecumStoryPane",
-                    hideLegend: true
+                    hideLegend: true,
+                    basemapLayer: "satellite",
+                    hideVectorLayers: true
                 },
                 Acknowledgment: {
                     type: "maxwell.xetthecumStoryPane",
-                    hideLegend: true
+                    hideLegend: true,
+                    basemapLayer: "satellite"
                 },
                 Xetthecum: {
-                    type: "maxwell.xetthecumStoryPane"
+                    type: "maxwell.xetthecumStoryPane",
+                    basemapLayer: "satellite",
+                    // Once zoomed in over the satellite imagery, bring in the habitat layers partially transparent,
+                    // pause, then make them fully opaque. Opacities are fractions of each layer's own opacity.
+                    fadeInLayers: {
+                        initialOpacity: 0.3,
+                        initialDuration: 2000,
+                        holdDuration: 1500,
+                        finalDuration: 2500
+                    }
                 },
                 Cultural_Activities_pI: {
                     type: "maxwell.xetthecumStoryPane"

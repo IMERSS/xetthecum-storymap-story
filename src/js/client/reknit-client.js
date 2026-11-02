@@ -420,8 +420,38 @@ fluid.defaults("hortis.libreMap.withRegionLegend", {
     }
 });
 
+/**
+ * Additional raster basemaps which are not produced by the R build, keyed by layer id. Each entry holds a MapLibre
+ * raster `source` definition. They are inserted into the style directly above the R-generated basemap, and are hidden
+ * unless a pane selects one via its `basemapLayer` option. A site-specific script may populate this before the
+ * storyPage is constructed.
+ * @type {Object<String, {source: Object}>}
+ */
+maxwell.extraBasemaps = maxwell.extraBasemaps || {};
+
+maxwell.addExtraBasemaps = function (data, extraBasemaps) {
+    const style = fluid.get(data, "rootMap.x.layout.mapbox.style");
+    if (!style) {
+        return;
+    }
+    Object.entries(extraBasemaps).forEach(([layerId, basemap]) => {
+        if (!style.layers.some(layer => layer.id === layerId)) {
+            style.sources[layerId] = basemap.source;
+            // Place it immediately after the last existing raster layer so that it sits beneath all vector layers
+            const lastRaster = style.layers.reduce((acc, layer, index) => layer.type === "raster" ? index : acc, -1);
+            style.layers.splice(lastRaster + 1, 0, {
+                id: layerId,
+                type: "raster",
+                source: layerId,
+                paint: {"raster-opacity": 0}
+            });
+        }
+    });
+};
+
 maxwell.resolveMapboxData = function () {
     const data = maxwell.mapboxData;
+    maxwell.addExtraBasemaps(data, maxwell.extraBasemaps);
     return fluid.copyImmutableResource(data);
 };
 
@@ -624,7 +654,54 @@ maxwell.subPanesToEffective = function (activePane, activeSubPanes) {
 
 maxwell.layerOpacityProperty = function (layer) {
     return layer.type === "line" ? "line-opacity" :
-        layer.type === "fill" ? "fill-opacity" : null;
+        layer.type === "fill" ? "fill-opacity" :
+            layer.type === "raster" ? "raster-opacity" : null;
+};
+
+/**
+ * Compute the opacity a layer should have when fully shown in the given pane, or 0 if it should be hidden.
+ * Pane options consulted:
+ *   basemapLayer {String} - id of the raster layer to use as basemap for this pane, replacing the R-generated one
+ *   hideVectorLayers {Boolean} - if true, show only the basemap and none of the pane's vector layers
+ * @param {Object} layer - The style layer
+ * @param {Object} layerVisibility - Hash of layer ids to truthy for layers belonging to this pane
+ * @param {Object} paneOptions - Options of the pane's paneHandler
+ * @return {Number} The target opacity
+ */
+maxwell.layerTargetOpacity = function (layer, layerVisibility, paneOptions) {
+    if (layer.type === "raster") {
+        const visible = paneOptions.basemapLayer ? layer.id === paneOptions.basemapLayer : !!layerVisibility[layer.id];
+        return visible ? 1 : 0;
+    } else {
+        const opacityProp = maxwell.layerOpacityProperty(layer);
+        const visible = layerVisibility[layer.id] && !paneOptions.hideVectorLayers;
+        return visible ? (layer.paint?.[opacityProp] ?? 1) : 0;
+    }
+};
+
+/**
+ * Bring a pane's vector layers in gradually once the map has arrived at the pane's view - first partially transparent,
+ * then, after a pause, fully opaque. Configured via the pane option `fadeInLayers`, whose members are
+ * fractions/durations in ms: {initialOpacity, initialDuration, holdDuration, finalDuration}.
+ * @param {maxwell.storyPage} that - The story page
+ * @param {Object} map - The libreMap component
+ * @param {Object[]} vectorLayers - Array of {layer, opacityProp, target} records for layers to be faded in
+ * @param {Object} fadeOptions - The pane's `fadeInLayers` option
+ * @param {Integer} generation - Map update generation at which the fade was scheduled - abandoned if superseded
+ */
+maxwell.fadeInLayers = function (that, map, vectorLayers, fadeOptions, generation) {
+    const {initialOpacity = 0.3, initialDuration = 2000, holdDuration = 1500, finalDuration = 2500} = fadeOptions;
+    const setAll = function (fraction, duration) {
+        if (that.mapUpdateGeneration !== generation) {
+            return;
+        }
+        vectorLayers.forEach(({layer, opacityProp, target}) => {
+            map.map.setPaintProperty(layer.id, opacityProp + "-transition", {duration, delay: 0});
+            map.map.setPaintProperty(layer.id, opacityProp, target * fraction);
+        });
+    };
+    setAll(initialOpacity, initialDuration);
+    window.setTimeout(() => setAll(1, finalDuration), initialDuration + holdDuration);
 };
 
 maxwell.updateActiveMapPane = function (that, map, activePane) {
@@ -632,16 +709,33 @@ maxwell.updateActiveMapPane = function (that, map, activePane) {
 
     const mapboxData = map.options.mapboxData;
 
+    const paneHandler = maxwell.paneHandlerForIndex(that, activePane);
+    const paneOptions = paneHandler?.options || {};
+    const fadeOptions = paneOptions.fadeInLayers;
+    // Used to abandon any fade-in scheduled by a pane which is no longer active
+    that.mapUpdateGeneration = (that.mapUpdateGeneration || 0) + 1;
+    const generation = that.mapUpdateGeneration;
+    const defaultTransition = {duration: map.options.zoomDuration, delay: 0};
+
     const layers = map.options.mapOptions.style.layers;
     const layerVisibility = mapboxData.layersByPaneId[activePaneName] || {};
+    const fadingLayers = [];
     layers.forEach((layer) => {
         const opacityProp = maxwell.layerOpacityProperty(layer);
         if (opacityProp) {
             // TODO: possible optimisation here from maplibre-gl-dev.js
             //         this.style.setPaintProperty(layerId, name, value, options);
             //         return this._update(true);
-            const origOpacity = layer.paint[opacityProp];
-            map.map.setPaintProperty(layer.id, opacityProp, layerVisibility[layer.id] ? origOpacity : 0);
+            const target = maxwell.layerTargetOpacity(layer, layerVisibility, paneOptions);
+            // Restore the standard transition in case an earlier fade-in overrode it
+            map.map.setPaintProperty(layer.id, opacityProp + "-transition", defaultTransition);
+            if (fadeOptions && layer.type !== "raster" && target > 0) {
+                // Hold the layer hidden until the map has arrived, then fade it in
+                map.map.setPaintProperty(layer.id, opacityProp, 0);
+                fadingLayers.push({layer, opacityProp, target});
+            } else {
+                map.map.setPaintProperty(layer.id, opacityProp, target);
+            }
         }
     });
 
@@ -680,6 +774,9 @@ maxwell.updateActiveMapPane = function (that, map, activePane) {
     }
 
     zoom.then(function () {
+        if (fadingLayers.length > 0) {
+            maxwell.fadeInLayers(that, map, fadingLayers, fadeOptions, generation);
+        }
         // TODO: We probably just want this to happen immediately
         // This is a hack to cause SVG plotly widgets to resize themselves e.g. the Species Reported bar -
         // find a better solution
