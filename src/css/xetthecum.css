@@ -311,6 +311,12 @@ audio {
     pointer-events: all;
 }
 
+/* The map legend shares MapLibre's bottom-right control area with the attribution, which can be wide - keep the legend
+   at the right edge rather than centred across that area */
+.mxcw-map-holder .mxcw-legend {
+    margin: 0 10px 10px auto;
+}
+
 @media screen and ( max-height: 560px ) {
     .mxcw-map-holder .mxcw-legend {
         display: none

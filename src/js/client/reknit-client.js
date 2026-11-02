@@ -686,11 +686,11 @@ maxwell.layerTargetOpacity = function (layer, layerVisibility, paneOptions) {
  * @param {maxwell.storyPage} that - The story page
  * @param {Object} map - The libreMap component
  * @param {Object[]} vectorLayers - Array of {layer, opacityProp, target} records for layers to be faded in
- * @param {Object} fadeOptions - The pane's `fadeInLayers` option
+ * @param {Object} paneOptions - Options of the pane's paneHandler, holding `fadeInLayers` and `hideLegend`
  * @param {Integer} generation - Map update generation at which the fade was scheduled - abandoned if superseded
  */
-maxwell.fadeInLayers = function (that, map, vectorLayers, fadeOptions, generation) {
-    const {initialOpacity = 0.3, initialDuration = 2000, holdDuration = 1500, finalDuration = 2500} = fadeOptions;
+maxwell.fadeInLayers = function (that, map, vectorLayers, paneOptions, generation) {
+    const {initialOpacity = 0.3, initialDuration = 2000, holdDuration = 1500, finalDuration = 2500} = paneOptions.fadeInLayers;
     const setAll = function (fraction, duration) {
         if (that.mapUpdateGeneration !== generation) {
             return;
@@ -701,6 +701,9 @@ maxwell.fadeInLayers = function (that, map, vectorLayers, fadeOptions, generatio
         });
     };
     setAll(initialOpacity, initialDuration);
+    if (that.mapUpdateGeneration === generation && map.legend) {
+        map.legend.isVisible.value = !paneOptions.hideLegend;
+    }
     window.setTimeout(() => setAll(1, finalDuration), initialDuration + holdDuration);
 };
 
@@ -716,6 +719,11 @@ maxwell.updateActiveMapPane = function (that, map, activePane) {
     that.mapUpdateGeneration = (that.mapUpdateGeneration || 0) + 1;
     const generation = that.mapUpdateGeneration;
     const defaultTransition = {duration: map.options.zoomDuration, delay: 0};
+
+    // Invoked here rather than as a model listener on activePane, since the legend is a map control and needs the map
+    if (paneHandler) {
+        maxwell.updateLegendVisible(that, activePane);
+    }
 
     const layers = map.options.mapOptions.style.layers;
     const layerVisibility = mapboxData.layersByPaneId[activePaneName] || {};
@@ -775,7 +783,7 @@ maxwell.updateActiveMapPane = function (that, map, activePane) {
 
     zoom.then(function () {
         if (fadingLayers.length > 0) {
-            maxwell.fadeInLayers(that, map, fadingLayers, fadeOptions, generation);
+            maxwell.fadeInLayers(that, map, fadingLayers, paneOptions, generation);
         }
         // TODO: We probably just want this to happen immediately
         // This is a hack to cause SVG plotly widgets to resize themselves e.g. the Species Reported bar -
@@ -798,8 +806,14 @@ maxwell.updateLegendVisible = function (that, activePane) {
     if (!paneHandler) {
         fluid.fail("No pane handler found for section with index ", activePane);
     }
-    const hideLegend = paneHandler.options.hideLegend;
-    that.map.legend.isVisible.value = !hideLegend;
+    if (!that.map.legend) {
+        return;
+    }
+    const {hideLegend, basemapLayer, hideVectorLayers, fadeInLayers} = paneHandler.options;
+    // Panes showing only an alternative basemap have no layers to explain. Panes which fade their layers in reveal the
+    // legend from maxwell.fadeInLayers once the layers begin to appear.
+    const noLayersShown = basemapLayer && hideVectorLayers;
+    that.map.legend.isVisible.value = !hideLegend && !noLayersShown && !fadeInLayers;
 };
 
 maxwell.updateContentClass = function (that, activePane) {
